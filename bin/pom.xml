@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.princess</groupId>
 	<artifactId>TeamPrincess</artifactId>
-	<version>2.7.16</version>
 	<name>TeamPrincess</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
