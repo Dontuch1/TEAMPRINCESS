@@ -1,4 +1,4 @@
-package com.princess.product.controller;
+package com.princess.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
