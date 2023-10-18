@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 11
+Implementation-Title: TeamPrincess
+Implementation-Version: 2.7.16
+Created-By: Maven Integration for Eclipse
+
