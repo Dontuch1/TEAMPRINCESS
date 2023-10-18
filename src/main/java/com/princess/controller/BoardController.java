@@ -5,21 +5,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/product/")
-public class ProductController {
+@RequestMapping("/board")
+public class BoardController {
 
-	@RequestMapping("/getProductList")
-	public void getProductList() {
+	@RequestMapping("/getBoardList")
+	public void getBoardList() {
 		
 	}
 	
-	@GetMapping("/getProduct")
-	public void getProduct() {
+	@GetMapping("/getBoard")
+	public void getBoard() {
 		
 	}
 	
-	@GetMapping("/insertProduct")
-	public void insertProduct() {
+	@GetMapping("/insertBoard")
+	public void insertBoard() {
 		
 	}
 	
