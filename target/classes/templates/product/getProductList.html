@@ -4,9 +4,16 @@
 <title>제품 목록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body>
+<body th:align="center">
 	<h1>제품 목록</h1>
-
+	<br>
+	<hr>
+	<br>
+	<div style="border: 1; padding: 5; margin: 5"><a th:href="@{/product/getProduct}"><img alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a></div>
+	<div style="border: 1; padding: 5; margin: 5"><a th:href="@{/product/getAuction}"><img alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a></div>
+	<br>
+	<hr>
+	<br>
 	<a th:href="@{/product/insertProduct}">제품 등록</a>
 </body>
 </html>
