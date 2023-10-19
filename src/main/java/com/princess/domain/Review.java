@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString (exclude = {"reviewId", "buyId", "pNo"})
 @Entity
 public class Review {
-	
+	// 푸시 돼라
 	@Id @GeneratedValue
 	private Long reviewNo;
 	
