@@ -4,4 +4,105 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <title>새 게시글 입력</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+<style>
+
+/* wrapper */
+	#wrapper{
+		justify-content: center;
+		width:100%;
+		display:grid;
+		grid-template-columns:repeat(4, 1fr);
+		grid-template-rows:repeat(1);
+		grid-template-areas:
+			"box1 box2 box2 box2";
+		margin: 0px auto;
+		padding: 0px;	
+	}
+	.box{
+		padding:15px;
+	}
+	.box1{
+		grid-area:box1
+	}
+	.box2{
+		grid-area:box2
+	}
+
+</style>
+<body th:align="center">
+	<br>
+	<br>
+	<h1> 게시판 등록 </h1>
+	<br>
+	<br>
+	<hr>
+<div id="wrapper">
+	<div class="box box1"> 카 <br> 테 <br> 고 <br> 리</div>
+	<div class="box box2">		
+	<div th:align="center">
+		<form action="@{/board/insertBoard}" method="post">
+	    	<table th:align="center" class="board_detail" style="border:1px solid black; padding:50px; margin:10px; width:1000px; height:500px">
+				<colgroup  th:align="center" style="border:2px solid black; padding:50px; margin:10px; width:1000px; height:500px" >
+					<col width="40%"/>
+					<col width="60%"/>
+
+				</colgroup>
+				<caption th:align="center">게시글 상세내용</caption>
+				<tbody th:align="center" style="padding:50px">
+					<tr height="20px">
+						<th scope="row">글 번호</th>
+						<td>1</td>
+						
+					</tr>
+					<tr height="20px">
+						<th scope="row">조회수</th>
+						<td>4</td>
+					</tr>
+					<tr height="20px">
+						<th scope="row">작성자</th>
+						<td>강</td>
+					</tr>	
+					<tr height="20px">
+						<th scope="row">작성일</th>
+						<td>2023-10-19</td>
+					</tr>	
+					<tr>
+					<td colspan="2">
+						<div class="align">
+							<label><input type="radio" name="category" value="공지사항"> 🚨공지사항 </label>
+							<label><input type="radio" name="category" value="잃어버렸어요"> 😥잃어버렸어요 </label>
+							<label><input type="radio" name="category" value="여기 맛나요"> 🍔여기 맛나요</label>
+							<label><input type="radio" name="category" value="궁금해요"> ❓ 궁금해요</label>
+							<label><input type="radio" name="category" value="우리 만나요"> 🙋‍♀️우리 만나요</label>
+						</div>
+					</td>
+				</tr>
+					<tr>
+						<th scope="row">제목</th>
+						<td>
+							<input type="text" id="title" name="title" value="게시글 1 입니다." />
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">내용</th>
+						<td>
+							<textarea title="내용" id="contents" name="contents" rows="4" cols="50"	>board.content</textarea>
+						</td>
+					</tr>
+				</tbody>
+				<tr >
+					<td colspan="2" align="center"> [ 파일 업로드 ]</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2" align="center">
+					<input type="submit" value="게시글 등록"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+		<a style="margin:5px" th:href="@{/getBoradList}">글 목록</a>
+	</div>	
+</div>
+</body>
 </html>
