@@ -32,15 +32,15 @@ public class Product {
 	
 	private String upload;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String sold;
 	
 	private Date AucDuration;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String delevery;
 	
-	@Enumerated()
+	//Enumerated()
 	private String display;
 	
 	private Date regdate = new Date();

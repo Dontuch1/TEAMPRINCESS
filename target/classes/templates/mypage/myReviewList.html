@@ -2,10 +2,62 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 <body th:align="center">
-
-<h2>내 리뷰 보기</h2>
+	<div class="d-flex" id="wrapper">
+		<!-- Sidebar -->
+		<div th:insert="~{fragment/sidebar :: sidebar}"></div>
+		<!-- Page content wrapper-->
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<h1 class="mt-4">내 리뷰</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Review</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>물건 상태가 좋아요.</td>
+							<td>2023-10-16</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>판매자분이 제가 있는 곳까지 와서 거래했어요! 매우 친절쓰</td>
+							<td>2023-10-15</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>쓴 흔적이 좀 많은데.. 그래도 그냥 쓸만 해요</td>
+							<td>2023-10-12</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>잘 쓸게요~</td>
+							<td>2023-10-11</td>
+						</tr>
+					</tbody>
+				</table>
+				<p style="color: blue">1 2 3 4 5</p>
+				<p style="color: white">Make sure to keep all page content
+					within the The top navbar is optional, and just for demonstration.
+					Just create an element with the ID which will toggle the menu when
+					clicked.clicked.clicked.</p>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

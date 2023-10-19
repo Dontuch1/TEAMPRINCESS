@@ -20,7 +20,7 @@ public class Board {
 	@Id @GeneratedValue
 	private Long postNum;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String cmCategory;
 	
 	private String userid;
@@ -33,7 +33,7 @@ public class Board {
 	
 	private Long great;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String display;
 	
 	private Date regdate = new Date();

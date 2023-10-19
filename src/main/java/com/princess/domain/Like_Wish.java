@@ -17,7 +17,7 @@ import lombok.ToString;
 @Entity
 public class Like_Wish {
 	
-	@Enumerated
+	//@Enumerated
 	private String type;
 	
 	private String likeId;

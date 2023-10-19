@@ -17,10 +17,10 @@ public class Sales {
 	
 	private String thunderId;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String salesType;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String comment;
 	
 	private Date salesRegdate = new Date();

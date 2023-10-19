@@ -22,7 +22,7 @@ public class Report {
 	
 	private String rptId;
 	
-	@Enumerated
+	//@Enumerated
 	private String type;
 
 	private Long postNo;

@@ -17,7 +17,7 @@ public class Review {
 	
 	private Long reviewNo;
 	
-	@Enumerated()
+	//@Enumerated()
 	private String reviewType;
 	
 	private String content;

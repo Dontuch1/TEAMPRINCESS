@@ -2,10 +2,61 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 <body th:align="center">
-
-<h2>내 커뮤니티 게시글 리스트</h2>
+	<div class="d-flex" id="wrapper">
+		<!-- Sidebar -->
+		<div th:insert="~{fragment/sidebar :: sidebar}"></div>
+		<!-- Page content wrapper-->
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<h1 class="mt-4">내 커뮤니티 게시글</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>category</th>
+							<th>title</th>
+							<th>like</th>
+							<th>date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>우리만나요</td>
+							<td>오늘 같이 스타듀밸리 하실 분</td>
+							<td>5</td>
+							<td>2023-10-16</td>
+						</tr>
+						<tr>
+							<td>잃어버렸어요</td>
+							<td>신림역 7번출구 앞에서 에어팟 잃어버렸어요</td>
+							<td>2</td>
+							<td>2023-10-14</td>
+						</tr>
+						<tr>
+							<td>궁금해요</td>
+							<td>신림동 정전인가요?</td>
+							<td>3</td>
+							<td>2023-10-12</td>
+						</tr>
+					</tbody>
+				</table>
+				<p style="color:blue"> 1 2 3 4 5 </p>
+				<p style="color: white">Make sure to keep all page content
+					within the The top navbar is optional, and just for demonstration.
+					Just create an element with the ID which will toggle the menu when
+					clicked.clicked.clicked.</p>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

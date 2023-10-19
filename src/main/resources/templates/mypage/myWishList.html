@@ -2,10 +2,127 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+#mypage-product-list {
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	column-gap: 20px;
+	row-gap: 20px;
+	display: grid;
+}
+</style>
 </head>
 <body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<!-- Sidebar -->
+		<div th:insert="~{fragment/sidebar :: sidebar}"></div>
+		<!-- Page content wrapper-->
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<h1 class="mt-4">🛒찜목록</h1>
+				<br>
+				<div id="mypage-product-list">
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fdnvefa72aowie.cloudfront.net%2Forigin%2Farticle%2F202202%2F1FE08DC0147B5DCF21B44C9CCEABA56ADF24C3008884CDA08CEAE567C92F4BC8.jpg%3Fq%3D95%26s%3D1440x1440%26t%3Dinside&type=a340"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">코듀로이 패딩</h5>
+							<h5 class="card-text">15000원</h5>
+							<p class="card-text">의류/잡화 2023-10-17</p>
 
-<h2>내 리뷰 보기</h2>
+							<a href="#" class="btn btn-primary">판매중</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8636429%2F86364296072.jpg&type=f372_372"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">갤럭시 버즈 프로2</h5>
+							<h5 class="card-text">80000원</h5>
+							<p class="card-text">디지털/가전 2023-10-19</p>
+							<a href="#" class="btn btn-secondary">판매완료</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fdnvefa72aowie.cloudfront.net%2Forigin%2Farticle%2F202202%2F1FE08DC0147B5DCF21B44C9CCEABA56ADF24C3008884CDA08CEAE567C92F4BC8.jpg%3Fq%3D95%26s%3D1440x1440%26t%3Dinside&type=a340"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">코듀로이 패딩</h5>
+							<h5 class="card-text">15000원</h5>
+							<p class="card-text">의류/잡화 2023-10-17</p>
+
+							<a href="#" class="btn btn-primary">판매중</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8636429%2F86364296072.jpg&type=f372_372"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">갤럭시 버즈 프로2</h5>
+							<h5 class="card-text">80000원</h5>
+							<p class="card-text">디지털/가전 2023-10-19</p>
+							<a href="#" class="btn btn-secondary">판매완료</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fdnvefa72aowie.cloudfront.net%2Forigin%2Farticle%2F202202%2F1FE08DC0147B5DCF21B44C9CCEABA56ADF24C3008884CDA08CEAE567C92F4BC8.jpg%3Fq%3D95%26s%3D1440x1440%26t%3Dinside&type=a340"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">코듀로이 패딩</h5>
+							<h5 class="card-text">15000원</h5>
+							<p class="card-text">의류/잡화 2023-10-17</p>
+
+							<a href="#" class="btn btn-primary">판매중</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8636429%2F86364296072.jpg&type=f372_372"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">갤럭시 버즈 프로2</h5>
+							<h5 class="card-text">80000원</h5>
+							<p class="card-text">디지털/가전 2023-10-19</p>
+							<a href="#" class="btn btn-secondary">판매완료</a>
+						</div>
+					</div>
+					<div class="card">
+						<img
+							src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fdnvefa72aowie.cloudfront.net%2Forigin%2Farticle%2F202202%2F1FE08DC0147B5DCF21B44C9CCEABA56ADF24C3008884CDA08CEAE567C92F4BC8.jpg%3Fq%3D95%26s%3D1440x1440%26t%3Dinside&type=a340"
+							class="card-img-top" alt="..." style="max-height: 250px">
+						<div class="card-body">
+							<h5 class="card-title">코듀로이 패딩</h5>
+							<h5 class="card-text">15000원</h5>
+							<p class="card-text">의류/잡화 2023-10-17</p>
+
+							<a href="#" class="btn btn-primary">판매중</a>
+						</div>
+					</div>
+
+				</div>
+				<p style="color: blue">1 2</p>
+				<p style="color: white">Make sure to keep all page content
+					within the The top navbar is optional, and just for demonstration.
+					Just create an element with the ID which will toggle the menu when
+					clicked.clicked.clicked.</p>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>
