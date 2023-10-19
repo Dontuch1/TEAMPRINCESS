@@ -1,40 +1,69 @@
 package com.princess.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.ColumnDefault;
+
+import com.princess.domain.CheckCondition.CmCategory;
+import com.princess.domain.CheckCondition.Display;
+
+import lombok.Data;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
+@ToString(exclude = "userId")
 @Entity
 public class Board {
 	
 	@Id @GeneratedValue
+	@Column(name = "POSTNUM")
 	private Long postNum;
 	
-	//@Enumerated()
-	private String cmCategory;
+	@Enumerated(EnumType.STRING)
+	@ColumnDefault("ETC")
+	private CmCategory cmCategory;
 	
-	private String userid;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	private Member userId;
 	
+	@Column(nullable = false)
 	private String title;
 	
+	@Column(nullable = false)
 	private String content;
 	
 	private String photoPath;
 	
 	private Long great;
 	
-	//@Enumerated()
-	private String display;
+	@Enumerated(EnumType.STRING)
+	@ColumnDefault("Y")
+	private Display display;
 	
 	private Date regdate = new Date();
+	
+	// 연관관계 설정
+	
+	@OneToMany (mappedBy = "postNum")
+	private List<Reply> replyList = new ArrayList<Reply>();
+	
+	public void setUserId (Member id) { // Member
+		this.userId = id;
+		userId.getBoardList().add(this);
+	}
+	
 }
