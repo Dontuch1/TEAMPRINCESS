@@ -35,7 +35,7 @@ public class Reply {
 	private String replyContent;
 	
 	@ManyToOne
-	@JoinColumn(name = "MEMBER_ID")
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member userId;
 	
 	private Date regdate = new Date();

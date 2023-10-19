@@ -14,10 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.princess.domain.CheckCondition.YorN;
-import com.princess.domain.CheckCondition.pCategory;
+import org.hibernate.annotations.ColumnDefault;
 
-import com.princess.domain.CheckCondition.display;
+import com.princess.domain.CheckCondition.Display;
+import com.princess.domain.CheckCondition.PCategory;
+import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
 import lombok.ToString;
@@ -32,33 +33,41 @@ public class Product {
 	private Long pNo;
 	
 	@Enumerated(EnumType.STRING)
+	@ColumnDefault("N")
 	private YorN auction;
 	
 	@Enumerated(EnumType.STRING)
-	private pCategory pCategory;
+	@ColumnDefault("ETC")
+	private PCategory pCategory;
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member salesId;
 	
+	@Column(nullable = false)
 	private String title;
 	
 	private String content;
 	
+	@Column(nullable = false)
 	private int price;
 	
 	private String upload;
 	
 	@Enumerated(EnumType.STRING)
+	@ColumnDefault("N")
 	private YorN sold;
 	
+	@ColumnDefault("1")
 	private Date AucDuration;
 	
 	@Enumerated(EnumType.STRING)
+	@ColumnDefault("N")
 	private YorN delevery;
 	
 	@Enumerated(EnumType.STRING)
-	private display display;
+	@ColumnDefault("Y")
+	private Display display;
 	
 	private Date regdate = new Date();
 	

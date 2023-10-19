@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
+@ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList", "authList"})
 @Entity
 public class Member {
 	
@@ -44,4 +44,7 @@ public class Member {
 	
 	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
+	
+	@OneToMany(mappedBy = "userId") // Auth
+	private List<Auth> authList = new ArrayList<Auth>();
 }

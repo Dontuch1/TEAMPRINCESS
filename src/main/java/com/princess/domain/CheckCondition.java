@@ -6,11 +6,11 @@ public class CheckCondition {
 		Y, N
 	}
 	
-	public enum display {
+	public enum Display {
 		Y, N, H
 	}
 	
-	public enum cmCategory {
+	public enum CmCategory {
 		NOTICE, LOST, FOOD, TMI, QNA, MEET
 	}
 	
@@ -18,8 +18,11 @@ public class CheckCondition {
 		PRODUCT, COMMUNITY
 	}
 	
-	public enum pCategory {
+	public enum PCategory {
 		DIGI, FURN, CLOT, BEAU, ETC
 	}
 	
+	public enum Role {
+		MEMBER, THUNDER, ADMIN
+	}
 }

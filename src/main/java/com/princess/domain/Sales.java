@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,6 +38,7 @@ public class Sales {
 	private String thunderId;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private YorN cmt;
 	
 	private Date salesRegdate = new Date();

@@ -2,6 +2,7 @@ package com.princess.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ public class Auction {
 	@JoinColumn(name = "PRODUCT_PNO", nullable = false, updatable = false)
 	private Product pNo;
 	
+	@Column(nullable = false)
 	private int auctionPrice;
 	
 	private Date regdate = new Date();

@@ -14,8 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.princess.domain.CheckCondition.cmCategory;
-import com.princess.domain.CheckCondition.display;
+import org.hibernate.annotations.ColumnDefault;
+
+import com.princess.domain.CheckCondition.CmCategory;
+import com.princess.domain.CheckCondition.Display;
 
 import lombok.Data;
 import lombok.ToString;
@@ -30,14 +32,17 @@ public class Board {
 	private Long postNum;
 	
 	@Enumerated(EnumType.STRING)
-	private cmCategory cmCategory;
+	@ColumnDefault("ETC")
+	private CmCategory cmCategory;
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member userId;
 	
+	@Column(nullable = false)
 	private String title;
 	
+	@Column(nullable = false)
 	private String content;
 	
 	private String photoPath;
@@ -45,7 +50,8 @@ public class Board {
 	private Long great;
 	
 	@Enumerated(EnumType.STRING)
-	private display display;
+	@ColumnDefault("Y")
+	private Display display;
 	
 	private Date regdate = new Date();
 	

@@ -2,6 +2,7 @@ package com.princess.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,6 +25,7 @@ public class LikeWish {
 	private Long likeSeq;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Type type;
 	
 	@ManyToOne
