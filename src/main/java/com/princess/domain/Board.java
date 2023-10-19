@@ -20,9 +20,16 @@ import com.princess.domain.CheckCondition.display;
 import lombok.Data;
 import lombok.ToString;
 
+<<<<<<< HEAD
 @Data
 @ToString(exclude = "userId")
 @Entity
+=======
+@Getter
+@Setter
+@ToString
+//@Entity
+>>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
 public class Board {
 	
 	@Id @GeneratedValue

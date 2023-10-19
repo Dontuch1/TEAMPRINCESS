@@ -15,9 +15,16 @@ import com.princess.domain.CheckCondition.Type;
 import lombok.Data;
 import lombok.ToString;
 
+<<<<<<< HEAD
 @Data
 @ToString(exclude = "rptId")
 @Entity
+=======
+@Getter
+@Setter
+@ToString
+//@Entity
+>>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
 public class Report {
 	
 	@Id @GeneratedValue
