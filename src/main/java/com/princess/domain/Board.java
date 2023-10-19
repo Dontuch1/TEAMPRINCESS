@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity
+//@Entity
 public class Board {
 	
 	@Id @GeneratedValue
