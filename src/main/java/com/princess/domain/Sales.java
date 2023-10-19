@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,7 +27,6 @@ public class Sales {
 	private Long traNo;
 	
 	@ManyToOne
-	@Column (name = "SALESID")
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member salesId;
 	
@@ -39,13 +37,13 @@ public class Sales {
 	private String thunderId;
 	
 	@Enumerated(EnumType.STRING)
-	private YorN comment;
+	private YorN cmt;
 	
 	private Date salesRegdate = new Date();
 	
 	// 연관관계 설정
 	
-	@OneToMany (mappedBy = "salesId") // Review
+	@OneToMany (mappedBy = "buyId") // Review
 	private List<Review> reviewList = new ArrayList<Review>();
 	
 	public void setSalesId(Member id) { // Member

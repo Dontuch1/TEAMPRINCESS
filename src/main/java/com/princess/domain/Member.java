@@ -21,27 +21,27 @@ public class Member {
 	
 	// 연관관계 설정
 	
-	@OneToMany(mappedBy = "id") // Product
+	@OneToMany(mappedBy = "salesId") // Product
 	private List<Product> productList = new ArrayList<Product>();
 	
-	@OneToMany(mappedBy = "id") // Board
+	@OneToMany(mappedBy = "userId") // Board
 	private List<Board> boardList = new ArrayList<Board>();
 	
-	@OneToMany(mappedBy = "id") // Auction
+	@OneToMany(mappedBy = "auctionId") // Auction
 	private List<Auction> auctionList = new ArrayList<Auction>();
 	
-	@OneToMany(mappedBy = "id") // Sales
+	@OneToMany(mappedBy = "salesId") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
-	@OneToMany(mappedBy = "id") // Review
+	@OneToMany(mappedBy = "reviewId") // Review
 	private List<Review> reviewList = new ArrayList<Review>();
 	
-	@OneToMany(mappedBy = "id") // LikeWish
+	@OneToMany(mappedBy = "likeId") // LikeWish
 	private List<LikeWish> likeWishList = new ArrayList<LikeWish>();
 	
-	@OneToMany(mappedBy = "id") // Report
+	@OneToMany(mappedBy = "rptId") // Report
 	private List<Report> reportList = new ArrayList<Report>();
 	
-	@OneToMany(mappedBy = "id") // Reply
+	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
 }

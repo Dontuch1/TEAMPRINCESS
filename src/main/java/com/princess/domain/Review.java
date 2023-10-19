@@ -24,7 +24,7 @@ public class Review {
 	private Member reviewId;
 	
 	@ManyToOne
-	@JoinColumn(name = "SALES_SALESID", nullable = false, updatable = false)
+	@JoinColumn(name = "SALES_SALES_ID", nullable = false, updatable = false)
 	private Sales buyId;
 	
 	@ManyToOne

@@ -29,18 +29,20 @@ public class Reply {
 	private Board postNum;
 	
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "REPLY_REPLYNUM")
+	@JoinColumn(referencedColumnName = "REPLYNUM")
 	private Reply reference;
 	
 	private String replyContent;
 	
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID")
 	private Member userId;
 	
 	private Date regdate = new Date();
 	
 	// 연관관계 설정
 	
-	@OneToMany(mappedBy = "replyNum") // Reply
+	@OneToMany(mappedBy = "reference") // Reply
 	private List<Reply> referenceList = new ArrayList<Reply>();
 	
 	public void setUserId(Member id) { // Member

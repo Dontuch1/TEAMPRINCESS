@@ -64,13 +64,13 @@ public class Product {
 	
 	// 연관관계 설정
 	
-	@OneToMany(mappedBy = "PNO") // Auction
+	@OneToMany(mappedBy = "pNo") // Auction
 	private List<Auction> auctionList = new ArrayList<Auction>();
 	
-	@OneToMany(mappedBy = "PNO") // Sales
+	@OneToMany(mappedBy = "salesNo") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
-	@OneToMany(mappedBy = "PNO") // Review
+	@OneToMany(mappedBy = "pNo") // Review
 	private List<Review> reviewList = new ArrayList<Review>();
 	
 	public void setSalesId(Member id) { // Member
