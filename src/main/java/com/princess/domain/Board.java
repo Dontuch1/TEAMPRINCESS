@@ -2,28 +2,36 @@ package com.princess.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.princess.domain.CheckCondition.cmCategory;
+import com.princess.domain.CheckCondition.display;
+
+import lombok.Data;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
+@ToString(exclude = "userId")
 @Entity
 public class Board {
 	
 	@Id @GeneratedValue
+	@Column(name = "POSTNUM")
 	private Long postNum;
 	
-	@Enumerated()
-	private String cmCategory;
+	@Enumerated(EnumType.STRING)
+	private cmCategory cmCategory;
 	
-	private String userid;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	private Member userId;
 	
 	private String title;
 	
@@ -33,8 +41,15 @@ public class Board {
 	
 	private Long great;
 	
-	@Enumerated()
-	private String display;
+	@Enumerated(EnumType.STRING)
+	private display display;
 	
 	private Date regdate = new Date();
+	
+	// 연관관계 설정
+	
+	public void setUserId (Member id) { // Member
+		this.userId = id;
+		userId.getBoardList().add(this);
+	}
 }

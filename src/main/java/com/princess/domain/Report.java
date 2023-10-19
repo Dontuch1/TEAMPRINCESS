@@ -3,31 +3,43 @@ package com.princess.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.princess.domain.CheckCondition.Type;
+
+import lombok.Data;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
+@ToString(exclude = "rptId")
 @Entity
 public class Report {
 	
 	@Id @GeneratedValue
 	private Long rptNo;
 	
-	private String rptId;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	private Member rptId;
 	
-	@Enumerated
-	private String type;
+	@Enumerated(EnumType.STRING)
+	private Type type;
 
 	private Long postNo;
 	
 	private String rptCon;
 	
 	private Date rptDate = new Date();
+	
+	// 연관관계 설정
+	
+	public void setRptId(Member id) { // Member
+		this.rptId = id;
+		rptId.getReportList().add(this);
+	}
 }

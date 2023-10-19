@@ -1,28 +1,45 @@
 package com.princess.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.princess.domain.CheckCondition.YorN;
+import com.princess.domain.CheckCondition.pCategory;
+
+import com.princess.domain.CheckCondition.display;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
-//@Entity
+@ToString (exclude = {"salesId", "auctionList", "salesList", "reviewList"})
+@Entity
 public class Product {
 	
 	@Id @GeneratedValue
+	@Column (name = "PNO")
 	private Long pNo;
 	
-	@Enumerated()
-	private String auction;
+	@Enumerated(EnumType.STRING)
+	private YorN auction;
 	
-	@Enumerated()
-	private String pCategory;
+	@Enumerated(EnumType.STRING)
+	private pCategory pCategory;
 	
-	private String salesId;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	private Member salesId;
 	
 	private String title;
 	
@@ -32,18 +49,32 @@ public class Product {
 	
 	private String upload;
 	
-	@Enumerated()
-	private String sold;
+	@Enumerated(EnumType.STRING)
+	private YorN sold;
 	
 	private Date AucDuration;
 	
-	@Enumerated()
-	private String delevery;
+	@Enumerated(EnumType.STRING)
+	private YorN delevery;
 	
-	@Enumerated()
-	private String display;
+	@Enumerated(EnumType.STRING)
+	private display display;
 	
 	private Date regdate = new Date();
 	
-	// 매핑 필요
+	// 연관관계 설정
+	
+	@OneToMany(mappedBy = "PNO") // Auction
+	private List<Auction> auctionList = new ArrayList<Auction>();
+	
+	@OneToMany(mappedBy = "PNO") // Sales
+	private List<Sales> salesList = new ArrayList<Sales>();
+	
+	@OneToMany(mappedBy = "PNO") // Review
+	private List<Review> reviewList = new ArrayList<Review>();
+	
+	public void setSalesId(Member id) { // Member
+		this.salesId = id;
+		salesId.getProductList().add(this);
+	}
 }
