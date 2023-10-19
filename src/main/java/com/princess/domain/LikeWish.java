@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class Like_Wish {
+public class LikeWish {
 	
 	@Enumerated
 	private String type;
