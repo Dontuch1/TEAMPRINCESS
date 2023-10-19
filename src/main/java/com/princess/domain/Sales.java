@@ -58,5 +58,4 @@ public class Sales {
 		this.salesNo = pNo;
 		salesNo.getSalesList().add(this);
 	}
-	
 }
