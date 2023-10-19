@@ -28,7 +28,7 @@ public class ProductController {
 
 	@PostMapping("/insertProduct")
 	public String insertProduct(Product product) {
-		return "redirect:product/getProductList";
+		return "redirect:getProductList";
 	}
 
 	@GetMapping("/getAuction")

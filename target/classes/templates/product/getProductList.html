@@ -3,14 +3,80 @@
 <head>
 <title>제품 목록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+	.container {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+	}
+	
+	div {
+		border: solid 2px gray;
+	}
+	
+	.img {
+		height: 380px;
+	}
+</style>
 </head>
 <body th:align="center">
+	<hr>
+	<br>
 	<h1>제품 목록</h1>
 	<br>
 	<hr>
+	<!-- 검색시작 -->
 	<br>
-	<div style="border: 1; padding: 5; margin: 5"><a th:href="@{/product/getProduct}"><img alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a></div>
-	<div style="border: 1; padding: 5; margin: 5"><a th:href="@{/product/getAuction}"><img alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a></div>
+	<form th:action="@{/product/getProductList}" method="post">
+	<table th:align="right" th:cellpadding="0" th:cellspacing="0" th:width="700">
+		<tr>
+			<td align="right">
+				<select name="searchCondition">
+					<option value="">전체</option>
+					<option value="TITLE">제목</option>
+					<option value="CONTENT">내용</option>
+				</select>
+				<input name="searchKeyword" type="text"/>
+				<input type="submit" value="검색"/>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<br>
+	<hr>
+	<!-- 검색	 종료 -->
+	<br>
+	<div class="container">
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getProduct}"><img class="img" alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getAuction}"><img class="img" alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getProduct}"><img class="img" alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getAuction}"><img class="img" alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getProduct}"><img class="img" alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getAuction}"><img class="img" alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getProduct}"><img class="img" alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getAuction}"><img class="img" alt="얍" src="/images/sadsiva.jpg"><br>제품 상세(경매)</a>
+		</div>
+		<div style="padding: 5px; margin: 50px">
+			<a th:href="@{/product/getProduct}"><img class="img" alt="얍" src="/images/musclesiva.jpg"><br>제품 상세(중고)</a>
+		</div>
+	</div>
+	<br>
+	<h3>[페] [이] [지] [네] [이] [션]</h3>
 	<br>
 	<hr>
 	<br>
