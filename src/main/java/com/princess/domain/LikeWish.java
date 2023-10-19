@@ -17,31 +17,27 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = "rptId")
+@ToString(exclude = "likeId")
 @Entity
-public class Report {
+public class LikeWish {
 	
 	@Id @GeneratedValue
-	private Long rptNo;
-	
-	@ManyToOne
-	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
-	private Member rptId;
+	private Long likeSeq;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Type type;
-
-	private Long postNo;
 	
-	private String rptCon;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	private Member likeId;
 	
-	private Date rptDate = new Date();
+	private Date regdate = new Date();
 	
 	// 연관관계 설정
 	
-	public void setRptId(Member id) { // Member
-		this.rptId = id;
-		rptId.getReportList().add(this);
+	public void setLikeId(Member id) { // Member
+		this.likeId = id;
+		likeId.getLikeWishList().add(this);
 	}
 }
