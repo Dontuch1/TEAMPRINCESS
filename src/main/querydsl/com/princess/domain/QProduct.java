@@ -22,7 +22,7 @@ public class QProduct extends EntityPathBase<Product> {
 
     public static final QProduct product = new QProduct("product");
 
-    public final DateTimePath<java.util.Date> AucDuration = createDateTime("AucDuration", java.util.Date.class);
+    public final NumberPath<Integer> AucDuration = createNumber("AucDuration", Integer.class);
 
     public final EnumPath<CheckCondition.YorN> auction = createEnum("auction", CheckCondition.YorN.class);
 
