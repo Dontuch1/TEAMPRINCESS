@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>게시물 글 목록</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body th:align="center">
+<h1>게시글 목록</h1>
+<table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0"
+th:width="700">
+<tr>
+<th bgcolor="pink" width="100">신고번호</th>
+<th bgcolor="pink" width="200">신고자</th>
+<th bgcolor="pink" width="150">글종류</th>
+<th bgcolor="pink" width="150">글번호</th>
+<th bgcolor="pink" width="100">신고내용</th>
+<th bgcolor="pink" width="150">신고일자</th>
+</tr>
+
+<tr th:each="board : ${boardList}">
+<td th:text="${board.seq}">
+<td th:text="${board.title}">
+<td th:text="${board.writer}">
+<td th:text="${board.createDate}">
+<td th:text="${board.cnt}">
+</tr>
+
+</table>
+<a th:href="@{/getReportList}"> 신고 목록</a>&nbsp;&nbsp;&nbsp;<br>
+
+</body>
+</html>
+
+
