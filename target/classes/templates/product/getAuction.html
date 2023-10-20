@@ -4,4 +4,76 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <title>제품 상세(경매)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+<style>
+.container {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+	}
+	div {
+		border: solid 2px gray;
+	}
+	.grid {
+		height: 600px;
+		padding: 20px;
+		margin: 30px;
+	}
+	.align {
+		display: flex;
+		justify-content: space-around;
+	}
+	button {
+		padding: 10px 50px 10px 50px;
+		border: 2px gray soid;
+		border-radius: 40%;
+		background-color: transparent;
+	}
+</style>
+<body th:align="center">
+	<hr>
+	<br>
+	<h1>제품 상세 (경매)</h1>
+	<br>
+	<hr>
+	<br>
+	<div class="container">
+		<!-- 파일 사진 영역 -->
+		<div class="grid">
+			<input multiple="multiple" type="file" onchange='readURL(this);' name="file" id="file"
+				style="display: none;" accept="image/*">
+			<img id="imgShow" src="/images/camera_icon.png" onclick='imgclick();' style="width: 500px; height: 500px;">
+			<div style="height: 30px;"></div>
+		</div>
+		<!-- 파일 사진 영역 끝 -->
+		<!-- 글 영역 -->
+		<div class="grid">
+		<form id="productForm" th:action="@{/product/insertProduct}" method="post">
+			<table th:align="center" th:cellpadding="10px" style="width: 100%;">
+				<tr>
+					<td><input type="text" name="title" style="width: 100%;"/></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="align">
+							<label>카테고리 1</label>
+							<label>시작가 : 10,000</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="height: 100%;">
+					<textarea name="content" style="width: 100%; resize: none;" rows="30"></textarea>
+					</td>
+				</tr>
+			</table>
+		</form>
+	<!-- 글 영역 끝 -->
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<button type="submit" onclick="location.href='/product/deleteProduct'">글 삭제</button>&nbsp;&nbsp;&nbsp;
+	<button type="button" onclick="location.href='/product/getProductList'">글 목록 보기</button>
+	<div style="height: 30px;">
+	</div>
 </html>

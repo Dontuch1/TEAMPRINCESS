@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>커뮤니티 게시글</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<style>
+/* wrapper */
+	#wrapper{
+		justify-content: center;
+		width:100%;
+		display:grid;
+		grid-template-columns:repeat(4, 1fr);
+		grid-template-rows:repeat(1);
+		grid-template-areas:
+			"box1 box2 box2 box2";
+		margin: 0px auto;
+		padding: 0px;	
+	}
+	.box{
+		padding:15px;
+	}
+	.box1{
+		grid-area:box1
+	}
+	.box2{
+		grid-area:box2
+	}
+
+    </style>
+<body th:align="center">
+	<br>
+	<br>
+	<h1> 게시판 목록 </h1>
+	<br>
+	<br>
+	<hr>
+<div id="wrapper">
+	<div class="box box1"> 카 <br> 테 <br> 고 <br> 리</div>
+	<div class="box box2">	
+		
+		<div th:align="center"  th:cellpadding="0" th:callspacing="0" class="container">
+		    	<table th:align="center" class="board_detail" style="border:1px solid black; padding:50px; margin:10px; width:1000px; height:500px">
+					<colgroup  th:align="center" style="border:2px solid black; padding:50px; margin:10px; width:1000px; height:500px" >
+						<col width="40%"/>
+						<col width="60%"/>
+					</colgroup>
+					<caption th:align="center">게시글 상세내용</caption>
+					<tbody th:align="center" style="padding:50px">
+						<tr height="20px">
+							<th scope="row">글 번호</th>
+							<td>board.seq "1"<hr></td>
+						</tr>
+						<tr height="20px">
+							<th scope="row">조회수</th>
+							<td>board.cnt "4"</td>
+						</tr>
+						<tr height="20px">
+							<th scope="row">좋아요.</th>
+							<td>board.great "2"</td>
+						</tr>
+						<tr height="20px">
+							<th scope="row">작성자</th>
+							<td>board.userId "강"</td>
+						</tr>	
+						<tr height="20px">
+							<th scope="row">작성일</th>
+							<td>board.createdDatetime "2023-10-18"</td>
+						</tr>	
+						<tr>
+							<th scope="row">제목<hr></th>
+							<td>board.title "게시물 1 입니다."<hr>
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2"><img alt="안보임" src="/images/cerby.jpg" height="400px"></th>
+						</tr>
+						<tr >
+							<th scope="row">내용</th>
+							<td colspan="2">
+							board.content <br>
+							"글을 씁니다."
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		</div>
+			<a style="margin:5px" th:href="@{/insertBorad}">새 게시글</a>
+			<a style="margin:5px" th:href="@{/deleteBorad}">글 삭제</a>
+			<a style="margin:5px" th:href="@{/getBoradList}">글 목록</a>
+	</div>	
+</div>
+</body>
+
+</html>
+

@@ -10,14 +10,14 @@ public class ProductController {
 
 	@RequestMapping("/getProductList")
 	public void getProductList() {
-		
+
 	}
 	
 	@GetMapping("/getProduct")
 	public void getProduct() {
-		
+
 	}
-	
+
 	@GetMapping("/insertProduct")
 	public void insertProduct() {
 		
