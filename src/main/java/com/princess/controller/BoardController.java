@@ -23,4 +23,13 @@ public class BoardController {
 		
 	}
 	
+	@GetMapping("/deleteBoard")
+	public void deleteBoard() {
+		
+	}
+	
+	@GetMapping("/updateBoard")
+	public void updateBoard() {
+		
+	}
 }
