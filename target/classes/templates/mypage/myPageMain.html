@@ -5,26 +5,16 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<style>
-#mypage-main-view {
-	padding: 10px;
-	display: grid;
-	grid-template-columns: 1fr 1fr 2.5fr;
-	column-gap: 20px;
-	display: grid;
-}
-</style>
+<link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
-		<!-- Sidebar -->
-		<div th:insert="~{fragment/sidebar :: sidebar}"></div>
 		<!-- Page content wrapper-->
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">마이페이지</h1>
+				<h4 class="mt-4">영은님의 마이페이지</h4>
 				<br>
 				<h4>&nbsp; 내 상품</h4>
 				<div id="mypage-main-view">
@@ -82,16 +72,12 @@
 						</table>
 					</div>
 				</div>
-				<p style="color: white">Make sure to keep all page content
-					within the The top navbar is optional, and just for demonstration.
-					Just create an element with the ID which will toggle the menu when
-					clicked.clicked.clicked.</p>
-
 			</div>
 		</div>
 	</div>
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
