@@ -33,11 +33,11 @@ public class Product {
 	private Long pNo;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("N")
+	@ColumnDefault("'N'")
 	private YorN auction;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("ETC")
+	@ColumnDefault("'ETC'")
 	private PCategory pCategory;
 	
 	@ManyToOne
@@ -55,18 +55,18 @@ public class Product {
 	private String upload;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("N")
+	@ColumnDefault("'N'")
 	private YorN sold;
 	
 	@ColumnDefault("1")
-	private Date AucDuration;
+	private int AucDuration;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("N")
+	@ColumnDefault("'N'")
 	private YorN delevery;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("Y")
+	@ColumnDefault("'Y'")
 	private Display display;
 	
 	private Date regdate = new Date();
