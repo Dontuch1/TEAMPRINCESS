@@ -1,6 +1,8 @@
 package com.princess.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +27,8 @@ public class Auth {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member userId;
 	
-	@ColumnDefault("MEMBER")
+	@Enumerated(EnumType.STRING)
+	@ColumnDefault("'MEMBER'")
 	private Role role;
 	
 	// 연관관계 설정
