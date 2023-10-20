@@ -2,7 +2,10 @@ package com.princess.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -10,6 +13,8 @@ import javax.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.ToString;
+
+import com.princess.domain.CheckCondition.Rating;;
 
 @Data
 @ToString (exclude = {"reviewId", "buyId", "pNo"})
@@ -32,6 +37,10 @@ public class Review {
 	private Product pNo;
 	
 	private String content;
+	
+	@Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false)
+	private Rating review;
 	
 	private Date reviewRegdate = new Date();
 	

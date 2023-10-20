@@ -1,12 +1,20 @@
 package com.princess.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.ColumnDefault;
+
+import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
 import lombok.ToString;
@@ -18,6 +26,40 @@ public class Member {
 	
 	@Id @GeneratedValue
 	private String id;
+	
+	@Column(nullable = false)
+	private String nickName;
+	
+	@Column(nullable = false)
+	private String location;
+	
+	@Column(nullable = false)
+	@ColumnDefault("50")
+	private int battry;
+	
+	@Column(nullable = false)
+	private String userName;
+	
+	@Column(nullable = false)
+	private Date birth;
+	
+	@Column(nullable = false)
+	private String phone;
+	
+	@Column(nullable = false)
+	private String password;
+	
+	@Column(nullable = false)
+	private String email;
+	
+	@Enumerated(EnumType.STRING)
+	private YorN agree;
+	
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int deposit;
+	
+	private Date regdate = new Date();
 	
 	// 연관관계 설정
 	
