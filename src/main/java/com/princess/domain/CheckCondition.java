@@ -25,4 +25,8 @@ public class CheckCondition {
 	public enum Role {
 		MEMBER, THUNDER, ADMIN
 	}
+	
+	public enum Rating {
+		DOWN, UP
+	}
 }

@@ -3,5 +3,186 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>천둥맨 찾아요!</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- 스타일 -->
+ <style>
+h2 { font-weight: border; }
+.hr1 { border: 0;
+height: 2px;
+background:  #d3d3d3;}
+    .grey { 
+     color: #727272;}
+     #strong { font-weight: 900;}
+
+            table {
+            width: 100%;
+            border-top: 1px solid #d3d3d3;
+            border-collapse: collapse;
+            }
+            th { background-color: #d3d3d3 ; 
+            border-top: 3px solid #727272;
+            }
+            th, td {
+            border-bottom: 1px solid #d3d3d3;
+            padding: 10px;
+            }
+
+  .greylist {
+  width: 50px;
+  height: 30px;
+  font-weight: 900;
+  color: white;
+  text-align: center;
+  background: grey;
+  border: solid 2px white;
+  border-radius: 5px;
+  }
+  .gradient {
+  width: 80px;
+  height: 30px;
+  font-weight: 900;
+  color: white;
+  text-align: center;
+  background: linear-gradient( to bottom, grey, black );
+  border: solid 2px white;
+  border-radius: 5px;
+  }
+
+  .left {text-align: left;}
+  .right {  float: right;}
+  .center { text-align: center;}
+
+	a {color:black;
+	text-decoration-line : none;}
+
+/* wrapper */
+	#wrapper{
+		justify-content: center;
+		width:100%;
+		display:grid;
+		grid-template-columns:repeat(4, 1fr);
+		grid-template-rows:repeat(1);
+		grid-template-areas:
+			"box1 box2 box2 box2";
+		margin: 0px auto;
+		padding: 0px;	
+	}
+	.box{
+		padding:15px;
+	}
+	.box1{
+		grid-area:box1
+	}
+	.box2{
+		grid-area:box2
+	}
+
+    </style>
+    
 </head>
+<body th:align="center">
+	<br>
+	<br>
+	<h1> 천둥맨 물품 수배지 </h1>
+	<br>
+	<br>
+<div id="wrapper">
+	<div class="box box1"> 카 <br> 테 <br> 고 <br> 리</div>
+	<div class="box box2">	
+	
+	    <h2> 물품 수배서 </h2>
+
+<hr class ="hr1" noshade> 
+
+<form>
+<span> ▷ 총 6개의 게시물이 있습니다. </span>
+<span class="right"> 
+            <span class="grey" id="strong">SELECT</span>
+    <select>
+    <option value="제목" name="제목" >제목</option>
+    <option value="작성자" name="작성자">작성자</option>
+    </select>
+<input type="text"> <input type="button" name="검색" class="gradient" value="검색" >
+</span>
+</form>
+
+<br>
+<table>
+    <tr>
+        <th>순서</th>
+        <th>제목</th>
+        <th>판매자</th>
+        <th>상품번호</th>
+        <th>가격</th>
+        <th>일시</th>
+        <th>조회수</th>
+    </tr>
+    <tr>
+        <td class="center">1</td>
+        <td class="left">중고 게시글 팔아요.(신고용 게시글)</td>
+        <td class="center">강</td>
+        <td class="center">431</td>
+        <td class="center">20,000원</td>
+        <td class="center">2023-10-18</td>
+        <td class="center">150</td>   
+    </tr>
+    <tr>
+        <td class="center">2</td>
+        <td class="left">슈퍼맨 팝니다.</td>
+        <td class="center">호영</td>
+        <td class="center">451</td>
+        <td class="center">50,000원</td>
+        <td class="center">2023-10-19</td>
+        <td class="center">130</td>   
+    </tr>
+    <tr>
+        <td class="center">3</td>
+        <td class="left">super 수퍼 어때요? 이 아이디어 팔게요.</td>
+        <td class="center">영은</td>
+       	<td class="center">491</td>
+        <td class="center">50,000원</td>
+        <td class="center">2023-10-21</td>
+        <td class="center">110</td>   
+    </tr>
+    <tr>
+        <td class="center">4</td>
+        <td class="left">느린 우체통 팔아요.</td>
+        <td class="center">지연</td>
+        <td class="center">519</td>
+        <td class="center">700,000원</td>
+        <td class="center">2023-10-21</td>
+        <td class="center">90</td>   
+    </tr>
+ 	<tr>
+        <td class="center">5</td>
+        <td class="left">구름이 사진 팝니다.</td>
+        <td class="center">강</td>
+        <td class="center">520</td>
+        <td class="center">900,000원</td>
+        <td class="center">2023-10-22</td>
+        <td class="center">80</td>   
+    </tr>
+    <tr>
+        <td class="center">6</td>
+        <td class="left">블랙보리 중고 팝니다.</td>
+        <td class="center">강</td>
+        <td class="center">567</td>
+        <td class="center">3,000원</td>
+        <td class="center">2023-10-23</td>
+        <td class="center">50</td>   
+    </tr>
+</table>
+<br>
+		<div class="page">
+            <span><a href="#!">◀ 이전</a></span>
+            <span><a href="#!">1</a></span>
+            <span><a href="#!">다음 ▶</a></span>
+        </div>
+	<hr>
+	</div>	
+</div>
+	<br>
+	<br>
+	<hr>	
+	</body>
 </html>
