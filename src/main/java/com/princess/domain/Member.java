@@ -35,7 +35,7 @@ public class Member {
 	
 	@Column(nullable = false)
 	@ColumnDefault("50")
-	private int battry;
+	private int battery;
 	
 	@Column(nullable = false)
 	private String userName;

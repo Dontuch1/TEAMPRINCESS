@@ -1,16 +1,22 @@
 package com.princess.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
 import com.princess.domain.Search;
-import com.princess.domain.CheckCondition.Display;
 import com.princess.persistence.ProductRepository;
 import com.querydsl.core.BooleanBuilder;
 
@@ -20,8 +26,21 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepo;
+	
+	@Value("${file.direc}")
+	private String path;
 
-	public void insertProduct(Product product) {
+	public void insertProduct(Product product, MultipartFile file) {
+		if (!file.isEmpty()) {
+			String filename = path + UUID.randomUUID().toString() + file.getOriginalFilename();
+			System.out.println(filename);
+			try {
+				file.transferTo(new File(filename));
+				product.setUpload(filename);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		productRepo.save(product);
 	}
 
@@ -56,11 +75,13 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
 			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("ID")) {
+			builder.and(qProduct.salesId.id.like("%" + search.getSearchKeyword() +"%"));
 		}
 		
-		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "seq");
+		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "pNo");
 		
-		return null; //productRepo.findAll(builder, pageable);;
+		return productRepo.findAll(builder, pageable);
 	}
 
 }

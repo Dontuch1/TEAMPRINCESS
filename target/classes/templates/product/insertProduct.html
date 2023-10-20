@@ -36,10 +36,12 @@
 	<br>
 	<hr>
 	<br>
+	<!-- 새글 박스 -->
 	<div class="container">
+		<form id="productForm" th:action="@{/product/insertProduct}" method="post" enctype="multipart/form-data">
 		<!-- 파일 업로드 영역 -->
 		<div class="grid">
-			<input multiple="multiple" type="file" onchange='readURL(this);' name="file" id="file"
+			<input type="file" onchange='readURL(this);' name="file" id="file"
 				style="display: none;" accept="image/*">
 			<img id="imgShow" src="/images/camera_icon.png" onclick='imgclick();' style="width: 500px; height: 500px;">
 			<div style="height: 30px;"></div>
@@ -50,7 +52,7 @@
 		<!-- 파일 업로드 영역 끝 -->
 		<!-- 글 영역 -->
 		<div class="grid">
-		<form id="productForm" th:action="@{/product/insertProduct}" method="post">
+		<input type="hidden" name="salesId.id" value="admin"/>
 			<table th:align="center" th:cellpadding="10px" style="width: 100%;">
 				<tr>
 					<td><input type="text" name="title" style="width: 100%;"/></td>
@@ -58,10 +60,11 @@
 				<tr>
 					<td>
 						<div class="align">
-							<label><input type="radio" name="category" value="카테고리1"> 카테고리 1</label>
-							<label><input type="radio" name="category" value="카테고리2"> 카테고리 2</label>
-							<label><input type="radio" name="category" value="카테고리3"> 카테고리 3</label>
-							<label><input type="radio" name="category" value="기타"> 기타</label>
+							<label><input type="radio" name="category" value="DIGI"> 디지털/가전</label>
+							<label><input type="radio" name="category" value="FURN"> 가구</label>
+							<label><input type="radio" name="category" value="CLOT"> 의류/잡화</label>
+							<label><input type="radio" name="category" value="BEAU"> 뷰티</label>
+							<label><input type="radio" name="category" value="ETC"> 기타</label>
 						</div>
 					</td>
 				</tr>
@@ -71,10 +74,11 @@
 					</td>
 				</tr>
 			</table>
-		</form>
 	<!-- 글 영역 끝 -->
 		</div>
+		</form>
 	</div>
+	<!-- 새 글 박스 끝 -->
 	<br>
 	<hr>
 	<br>
@@ -105,12 +109,7 @@
 				document.getElementById('imgShow').src = e.target.result;
 			};
 			reader.readAsDataURL(input.files[0]);
-			imgSet();
 			$("#content").val("");
-			$("#tag").val("")
-			$("#tags").html("")
-			$("#tagsend").html("")
-			$("#tagcnt").val(0)
 		} else {
 			document.getElementById('imgShow').src = "/images/camera_icon.png";
 		}
