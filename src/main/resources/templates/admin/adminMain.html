@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>관리자 페이지</title>
+</head>
+<body th:align="center">
+
+<h2>관리자님 페이지입니다</h2>
+  <h5>관리님 안녕하세요</h5>
+  <form th:action="login" method="post">
+<table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
+
+<tr>
+ <td bgcolor="pink" th:text="아이디"></td>
+ <td><input type="text" name="id"  size="30" placeholder="아이디를 입력해주세요."><br/></td>
+</tr>
+<tr>
+ <td bgcolor="pink" th:text="비밀번호"></td>
+ <td><input type="password" name="password"  size="30" placeholder="비밀번호를 입력해주세요."></td>
+</tr>
+
+<tr>
+ <td colspan="10" align="center">
+ <input type="submit" value="로그인">
+ </tr>
+ 
+ 
+</table>
+
+</form>
+</body>
+</html>
