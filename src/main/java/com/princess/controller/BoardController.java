@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
-
+  
 	@RequestMapping("/getBoardList")
 	public void getBoardList() {
 		
