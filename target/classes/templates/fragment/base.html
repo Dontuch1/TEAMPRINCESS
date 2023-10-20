@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>기본틀</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+
+</head>
+<body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+
+			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+
+
+
+
+
+
+
+
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
