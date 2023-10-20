@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>시스템 페이지</title>
+</head>
+<style>
+
+</style>
+<body th:align="center">
+
+	<h2>회원 등록</h2>
+	
+ <h4>회원정보를 위해서 정보를 입력해주세요</h4>
+<body>
+
+	<div class="container">
+	
+		<form action="/system/register" method="post">
+		
+			<label for="name">이름</label> 
+			<input type="text" id="name" name="name" placeholder="이름을입력하세요"> 
+
+			
+			<label for="name">닉네임</label> 
+			<input type="text" id="name" name="name" placeholder="닉네임을 입력하세요">
+			
+			<label for="name">비밀번호</label> 
+			<input type="text" id="name" name="name" placeholder="비밀번호를 입력하세요">
+			
+			<label for="name">생년월일</label> 
+			<input type="text" id="name" name="name" placeholder="비밀번호를 입력하세요">
+			
+			<label for="name">전화번호</label> 
+			<input type="text" id="name" name="name" placeholder="비밀번호를 입력하세요">
+			
+			<input type="checkbox" name="man" value="남자">남자&nbsp;	
+			<input type="checkbox" name="woman" value="여자">	여자&nbsp;	
+
+			<button type="submit">등록</button>
+			
+		</form>
+		
+	</div>
+</body>
+</html>
