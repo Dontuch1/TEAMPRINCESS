@@ -6,21 +6,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/System/")
-public class SystemController {
-
-
+@RequestMapping("/system")
+public class SystemController{
 	
-	@GetMapping("/loginView")
-	public void loginView() {
-	}
-	@PostMapping("/login")
+	@RequestMapping("/login")
 	public void login() {
 		
 	}
 	
-	@GetMapping("/register")
+	@PostMapping("/register")
 	public void register() {
 		
+		
+		
 	}
+	
+	@GetMapping("/register")
+	public String registerView() {
+		return "forward:register";
+	}
+	
 }
