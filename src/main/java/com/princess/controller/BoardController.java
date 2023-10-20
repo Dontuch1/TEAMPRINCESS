@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
-
+  
 	@RequestMapping("/getBoardList")
 	public void getBoardList() {
 		
@@ -23,4 +23,13 @@ public class BoardController {
 		
 	}
 	
+	@GetMapping("/deleteBoard")
+	public void deleteBoard() {
+		
+	}
+	
+	@GetMapping("/updateBoard")
+	public void updateBoard() {
+		
+	}
 }
