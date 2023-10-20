@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Product;
+import com.princess.domain.QProduct;
 import com.princess.domain.Search;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.persistence.ProductRepository;
@@ -46,32 +47,20 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	@Override
-	public Product getAuction(Product product) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Page<Product> getProductList(Search search) {
-		// TODO Auto-generated method stub
-		return null;
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		QProduct qProduct = QProduct.product;
+		
+		if (search.getSearchCondition().equals("TITLE")) {
+			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("CONTENT")) {
+			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
+		}
+		
+		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "seq");
+		
+		return null; //productRepo.findAll(builder, pageable);;
 	}
-
-//	public Page<Product> getProductList(Search search) {
-//		return BooleanBuilder builder = new BooleanBuilder();
-//		
-//		QBoard qProduct = QBoard.board;
-//		
-//		if (search.getSearchCondition().equals("TITLE")) {
-//			builder.and(qboard.title.like("%" + search.getSearchKeyword() + "%"));
-//		} else if (search.getSearchCondition().equals("CONTENT")) {
-//			builder.and(qboard.content.like("%" + search.getSearchKeyword() + "%"));
-//		}
-//		
-//		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "seq");
-//		
-//		return boardRepo.findAll(builder, pageable);;
-//	}
 
 }
