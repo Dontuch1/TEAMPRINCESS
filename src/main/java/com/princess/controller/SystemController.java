@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.princess.domain.Member;
+
 @Controller
 @RequestMapping("/system")
 public class SystemController{
@@ -14,16 +16,14 @@ public class SystemController{
 		
 	}
 	
-	@PostMapping("/register")
+	@GetMapping("/register")
 	public void register() {
-		
-		
 		
 	}
 	
-	@GetMapping("/register")
-	public String registerView() {
-		return "forward:register";
+	@PostMapping("/register")
+	public String register(Member member) {
+		return "forward:login";
 	}
 	
 }
