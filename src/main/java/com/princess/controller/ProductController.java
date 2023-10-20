@@ -32,7 +32,7 @@ public class ProductController {
 		model.addAttribute("productList", productList);
 		return "product/getProductList";
 	}
-
+	
 	@GetMapping("/getProduct")
 	public void getProduct() {
 
@@ -40,7 +40,7 @@ public class ProductController {
 
 	@GetMapping("/insertProduct")
 	public void insertProduct() {
-
+		
 	}
 
 	@PostMapping("/insertProduct")
