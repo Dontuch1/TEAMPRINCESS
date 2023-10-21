@@ -5,81 +5,67 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<style>
-#myDetailForm {
-	width: 600px;
-	margin-left: 20px;
-}
-
-.form-control {
-	width: 50%;
-}
-</style>
+<link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body>
 	<div class="d-flex" id="wrapper">
-		<!-- Sidebar -->
-		<div th:insert="~{fragment/sidebar :: sidebar}"></div>
-		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<div th:insert="~{fragment/header :: header}"></div>
-			<!-- Page content-->
-			<div class="container-fluid">
-				<h1 class="mt-4">내 정보</h1>
-				<form action="" method="post" id="myDetailForm">
-					<br> <br>
-					<div class="mb-3 row">
-						<label for="myId" class="col-sm-2 col-form-label">아이디</label>
-						<div class="col-sm-10">
-							<input type="text" readonly class="form-control-plaintext"
-								id="myId" value="jojo">
+		<div class="containerMain">
+			<!-- Page content wrapper-->
+			<div id="page-content-wrapper">
+				<div th:insert="~{fragment/header :: header}"></div>
+				<!-- Page content-->
+				<div class="container-fluid">
+					<h1 class="mt-4">내 정보</h1>
+					<form action="" method="post" id="myDetailForm">
+						<br> <br>
+						<div class="mb-3 row">
+							<label for="myId" class="col-sm-2 col-form-label">아이디</label>
+							<div class="col-sm-10">
+								<input type="text" readonly class="form-control-plaintext"
+									id="myId" value="jojo">
+							</div>
 						</div>
-					</div>
-					<div class="mb-3 row">
-						<label for="nickname" class="col-sm-2 col-form-label">닉네임</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="nickname"
-								value="마루귀여워">
+						<div class="mb-3 row">
+							<label for="nickname" class="col-sm-2 col-form-label">닉네임</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="nickname"
+									value="마루귀여워">
+							</div>
 						</div>
-					</div>
-					<div class="mb-3 row">
-						<label for="email" class="col-sm-2 col-form-label">이메일</label>
-						<div class="col-sm-10">
-							<input type="text" readonly class="form-control-plaintext"
-								id="email" value="jojo@naver.com">
+						<div class="mb-3 row">
+							<label for="email" class="col-sm-2 col-form-label">이메일</label>
+							<div class="col-sm-10">
+								<input type="text" readonly class="form-control-plaintext"
+									id="email" value="jojo@naver.com">
+							</div>
 						</div>
-					</div>
-					<div class="mb-3 row">
-						<label for="location" class="col-sm-2 col-form-label">지역</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="location"
-								value="관악구 신림동" readonly>
+						<div class="mb-3 row">
+							<label for="location" class="col-sm-2 col-form-label">지역</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="location"
+									value="관악구 신림동" readonly>
+							</div>
 						</div>
-					</div>
-					<div class="mb-3 row">
-						<label for="phone" class="col-sm-2 col-form-label">전화번호</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="phone"
-								value="010-0000-0000">
+						<div class="mb-3 row">
+							<label for="phone" class="col-sm-2 col-form-label">전화번호</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="phone"
+									value="010-0000-0000">
+							</div>
 						</div>
-					</div>
-					<div class="mb-3 row">
-						<label for="regdate" class="col-sm-2 col-form-label">가입일</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control-plaintext"
-								value="2023-10-25" readonly id="regdate">
+						<div class="mb-3 row">
+							<label for="regdate" class="col-sm-2 col-form-label">가입일</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control-plaintext"
+									value="2023-10-25" readonly id="regdate">
+							</div>
 						</div>
-					</div>
-					<button class="btn btn-primary" type="submit">수정</button>
-				</form>
+						<button class="btn btn-primary" type="submit">수정</button>
+					</form>
 
+				</div>
 			</div>
-			<p style="color: white">Make sure to keep all page content within
-				the The top navbar is optional, and just for demonstration. Just
-				create an element with the ID which will toggle the menu when
-				clicked.clicked.clicked.</p>
 		</div>
-
 	</div>
 	<!-- Bootstrap core JS-->
 	<script
