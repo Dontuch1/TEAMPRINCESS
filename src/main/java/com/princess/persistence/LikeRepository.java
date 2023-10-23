@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.princess.domain.Product;
 
-public interface ProductRepository extends CrudRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+public interface LikeRepository extends CrudRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 
 }
