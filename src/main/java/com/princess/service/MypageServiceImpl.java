@@ -9,14 +9,15 @@ import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Review;
+import com.princess.domain.Search;
 import com.princess.persistence.MemberRepository;
+import com.princess.persistence.ProductRepository;
+import com.querydsl.core.BooleanBuilder;
+
 
 @Service
 public class MypageServiceImpl implements MypageService {
 
-
-//	@Autowired
-//	private BoardRepository boardRepo;
 
 	@Autowired
 	private MemberRepository memberRepo;
