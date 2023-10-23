@@ -3,12 +3,8 @@ package com.princess.persistence;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-import com.princess.domain.Board;
+import com.princess.domain.Product;
 
-public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
-
-
-
-
+public interface LikeRepository extends CrudRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 
 }
