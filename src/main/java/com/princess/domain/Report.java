@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.princess.domain.CheckCondition.Type;
 
 import lombok.Data;
@@ -36,6 +38,7 @@ public class Report {
 	
 	private String rptCon;
 	
+	@ColumnDefault("sysdate")
 	private Date rptDate = new Date();
 	
 	// 연관관계 설정

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -38,6 +40,7 @@ public class Reply {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member userId;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정
