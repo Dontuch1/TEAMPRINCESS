@@ -63,7 +63,7 @@ background:  #d3d3d3;}
 		grid-template-columns:repeat(4, 1fr);
 		grid-template-rows:repeat(1);
 		grid-template-areas:
-			"box1 box2 box2 box2";
+			"box2 box2 box2 box2";
 		margin: 0px auto;
 		padding: 0px;	
 	}
@@ -79,15 +79,22 @@ background:  #d3d3d3;}
 
     </style>
     
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+
 </head>
 <body th:align="center">
-	<br>
-	<br>
-	<h1> 천둥맨 물품 수배지 </h1>
-	<br>
-	<br>
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->    
+    
+
 <div id="wrapper">
-	<div class="box box1"> 카 <br> 테 <br> 고 <br> 리</div>
 	<div class="box box2">	
 	
 	    <h2> 물품 수배서 </h2>
@@ -181,8 +188,13 @@ background:  #d3d3d3;}
 	<hr>
 	</div>	
 </div>
-	<br>
-	<br>
-	<hr>	
-	</body>
+
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
