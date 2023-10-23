@@ -24,7 +24,7 @@ public class MypageServiceImpl implements MypageService {
 	// 회원정보 가져오기
 	@Override
 	public Member getMember(Member member) {
-		return null;
+		return memberRepo.findById(member.getId()).get();
 	}
 
 	// 회원정보 수정 //예치금 수정
@@ -35,7 +35,6 @@ public class MypageServiceImpl implements MypageService {
 		findMember.setDeposit(member.getDeposit());
 		findMember.setEmail(member.getEmail());
 		findMember.setPhone(member.getPhone());
-		findMember.setUserName(member.getUserName());
 		
 		memberRepo.save(findMember);
 	}

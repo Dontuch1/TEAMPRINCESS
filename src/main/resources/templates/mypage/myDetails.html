@@ -16,48 +16,65 @@
 				<!-- Page content-->
 				<div class="container-fluid">
 					<h1 class="mt-4">내 정보</h1>
-					<form action="" method="post" id="myDetailForm">
+					<form th:action="@{/mypage/updateDetails}" method="post"
+						id="myDetailForm">
 						<br> <br>
 						<div class="mb-3 row">
 							<label for="myId" class="col-sm-2 col-form-label">아이디</label>
 							<div class="col-sm-10">
 								<input type="text" readonly class="form-control-plaintext"
-									id="myId" value="jojo">
+									name="id" id="myId" th:value="${member.id}">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="nickname" class="col-sm-2 col-form-label">닉네임</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="nickname"
-									value="마루귀여워">
+									name="nickName" th:value="${member.nickName}">
+							</div>
+						</div>
+						<div class="mb-3 row">
+							<label for="birth" class="col-sm-2 col-form-label">생년월일</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control-plaintext" id="birth"
+									th:value="${#dates.format(member.birth,'yyyy-MM-dd')}" >
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="email" class="col-sm-2 col-form-label">이메일</label>
 							<div class="col-sm-10">
 								<input type="text" readonly class="form-control-plaintext"
-									id="email" value="jojo@naver.com">
+									id="email" th:value="${member.email}" name="email">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="location" class="col-sm-2 col-form-label">지역</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="location"
-									value="관악구 신림동" readonly>
+								<input type="text" class="form-control-plaintext" id="location"
+									th:value="${member.location}" readonly name="location">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="phone" class="col-sm-2 col-form-label">전화번호</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="phone"
-									value="010-0000-0000">
+									th:value="${member.phone}" name="phone">
 							</div>
 						</div>
+						<div class="mb-3 row">
+							<label for="deposit" class="col-sm-2 col-form-label">예치금</label>
+							<div class="col-sm-10">
+								<input type="text" id="deposit" style="border:0; width:30px" th:value="${member.deposit}"
+									readonly name="deposit"> &nbsp; <a href="/mypage/myDeposit" class="btn btn-outline-warning btn-sm">충전하기</a>
+
+							</div>
+						</div>
+
 						<div class="mb-3 row">
 							<label for="regdate" class="col-sm-2 col-form-label">가입일</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control-plaintext"
-									value="2023-10-25" readonly id="regdate">
+									th:value="${#dates.format(member.regdate,'yyyy-MM-dd')}" readonly id="regdate">
 							</div>
 						</div>
 						<button class="btn btn-primary" type="submit">수정</button>
@@ -67,7 +84,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 
 
