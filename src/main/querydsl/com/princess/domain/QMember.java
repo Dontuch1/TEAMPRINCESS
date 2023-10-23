@@ -26,7 +26,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<Auth, QAuth> authList = this.<Auth, QAuth>createList("authList", Auth.class, QAuth.class, PathInits.DIRECT2);
 
-    public final NumberPath<Integer> battry = createNumber("battry", Integer.class);
+    public final NumberPath<Integer> battery = createNumber("battery", Integer.class);
 
     public final DateTimePath<java.util.Date> birth = createDateTime("birth", java.util.Date.class);
 

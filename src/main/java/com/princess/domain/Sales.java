@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
@@ -42,6 +44,7 @@ public class Sales {
 	@Column(nullable = false)
 	private YorN cmt;
 	
+	@ColumnDefault("sysdate")
 	private Date salesRegdate = new Date();
 	
 	// 연관관계 설정
