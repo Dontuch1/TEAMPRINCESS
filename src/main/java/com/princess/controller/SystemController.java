@@ -22,10 +22,9 @@ public class SystemController{
 	}
 	
 	//로그아웃
-	@PostMapping("/logout")
-		public String logout{
-			
-		}
+	//@PostMapping("/logout")
+	//	public String logout{	
+	//	}
 	
 	
 	

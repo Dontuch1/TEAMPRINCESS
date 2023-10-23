@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Product;
-import com.princess.domain.QProduct;
 import com.princess.domain.Search;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.persistence.ProductRepository;
