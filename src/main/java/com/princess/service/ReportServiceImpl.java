@@ -7,11 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Report;
 import com.princess.domain.Search;
-import com.princess.persistence.ProductRepository;
-import com.querydsl.core.BooleanBuilder;
+import com.princess.persistence.ReportRepository;
 
 @Service
 public class ReportServiceImpl implements ReportService{
@@ -37,7 +35,7 @@ public class ReportServiceImpl implements ReportService{
 		return reportRepo.findById(report.getRptNo()).get();
 	}
 	public Page<Report> getReportList(Search search) {
-		Pageable pageable = PageRequest.of(0, 0)
+		//Pageable pageable = PageRequest.of(0, 10,Sort.Direction.DESC,"rptNo");
 		return null;
 		
 	}
