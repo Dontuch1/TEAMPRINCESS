@@ -18,6 +18,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.princess.domain.CheckCondition.CmCategory;
 import com.princess.domain.CheckCondition.Display;
+import com.princess.persistence.BoardRepository;
+import com.princess.service.BoardService;
 
 import lombok.Data;
 import lombok.ToString;
