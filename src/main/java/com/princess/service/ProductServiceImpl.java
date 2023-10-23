@@ -32,11 +32,10 @@ public class ProductServiceImpl implements ProductService {
 
 	public void insertProduct(Product product, MultipartFile file) {
 		if (!file.isEmpty()) {
-			String filename = path + UUID.randomUUID().toString() + file.getOriginalFilename();
-			System.out.println(filename);
+			String filename = UUID.randomUUID().toString() + file.getOriginalFilename();
 			try {
-				file.transferTo(new File(filename));
-				product.setUpload(filename);
+				file.transferTo(new File(path + filename));
+				product.setUpload("/upload/" + filename);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
@@ -76,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 		} else if (search.getSearchCondition().equals("CONTENT")) {
 			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("ID")) {
-			builder.and(qProduct.salesId.id.like("%" + search.getSearchKeyword() +"%"));
+			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
 		}
 		
 		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "pNo");

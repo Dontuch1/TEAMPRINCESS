@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -42,6 +44,7 @@ public class Review {
 	@Column(nullable = false)
 	private Rating review;
 	
+	@ColumnDefault("sysdate")
 	private Date reviewRegdate = new Date();
 	
 	// 연관관계 설정

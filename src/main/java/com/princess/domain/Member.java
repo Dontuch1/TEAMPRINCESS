@@ -59,6 +59,7 @@ public class Member {
 	@ColumnDefault("0")
 	private int deposit;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

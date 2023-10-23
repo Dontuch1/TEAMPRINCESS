@@ -17,7 +17,7 @@ import com.princess.service.ProductService;
 @Controller
 @RequestMapping("/product/")
 public class ProductController {
-	
+
 	@Autowired
 	ProductService productService;
 
@@ -27,12 +27,12 @@ public class ProductController {
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
-		
+
 		Page<Product> productList = productService.getProductList(search);
 		model.addAttribute("productList", productList);
 		return "product/getProductList";
 	}
-	
+
 	@GetMapping("/getProduct")
 	public void getProduct() {
 
@@ -40,7 +40,7 @@ public class ProductController {
 
 	@GetMapping("/insertProduct")
 	public void insertProduct() {
-		
+
 	}
 
 	@PostMapping("/insertProduct")
@@ -53,5 +53,4 @@ public class ProductController {
 	public void getAuction() {
 
 	}
-
 }

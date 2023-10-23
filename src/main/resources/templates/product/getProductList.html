@@ -1,71 +1,67 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>제품 목록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-	.container {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
-	}
-	
-	div {
-		border: solid 2px gray;
-	}
-	
-	.img {
-		height: 380px;
-	}
-</style>
+<title>상품 리스트</title>
 </head>
+<th:block th:replace="~{fragment/header :: config}"></th:block>
 <body th:align="center">
-	<hr>
-	<br>
-	<h1>제품 목록</h1>
-	<br>
-	<hr>
-	<!-- 검색시작 -->
-	<br>
-	<form th:action="@{/product/getProductList}" method="post">
-	<table th:align="right" th:cellpadding="0" th:cellspacing="0" th:width="700">
-		<tr>
-			<td align="right">
-				<select name="searchCondition">
-					<option value="TITLE">제목</option>
-					<option value="CONTENT">내용</option>
-					<option value="ID">아이디</option>
-				</select>
-				<input name="searchKeyword" type="text"/>
-				<input type="submit" value="검색"/>
-			</td>
-		</tr>
-	</table>
-	</form>
-	<br>
-	<hr>
-	<!-- 검색	 종료 -->
-	<br>
-	<div class="container">
-		<div th:each = "product, state : ${productList}" class="card">
-			<img
-				src="https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8636429%2F86364296072.jpg&type=f372_372"
-				class="card-img-top" alt="..." style="max-height: 250px">
-			<div class="card-body">
-				<h5 class="card-title" th:text="${product.title}"></h5>
-				<h5 class="card-text" th:text="${product.price}"></h5>
-				<p class="card-text" th:text="${product.pCategory}"></p>
-				<small class="card-text" th:text="${product.regdate}"></small><br>
-				<small class="card-text" >중고/경매</small><br>
-				<a href="#" class="btn btn-secondary" >거래완료</a>
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+			<hr>
+			<br>
+			<h1>제품 목록</h1>
+			<br>
+			<hr>
+			<!-- 검색시작 -->
+			<br>
+			<form th:action="@{/product/getProductList}" method="post" >
+			<table th:align="right" th:cellpadding="0" th:cellspacing="0" th:width="700">
+				<tr>
+					<td align="right">
+						<select id="searchBox" name="searchCondition">
+							<option value="TITLE">제목</option>
+							<option value="CONTENT" >내용</option>
+							<option value="NICKNAME" >닉네임</option>
+						</select>
+						<input name="searchKeyword" type="text"/>
+						<input type="submit" value="검색"/>
+					</td>
+				</tr>
+			</table>
+			</form>
+			<br>
+			<hr>
+			<!-- 검색	 종료 -->
+			<br>
+			<div id="product-main-view" th:align="center">
+				<div th:each = "product, state : ${productList}" class="card" style="width: 250px; margin: 20px;">
+					<div style="margin: 0; padding: 0; width: 100%; height: 250px; overflow: hidden;">
+						<img th:src="@{${product.upload}}" class="card-img-top" alt="..." style="width: 100%; height: 100%; object-fit: cover;">
+					</div>
+						<div class="card-body">
+							<h5 class="card-title" th:text="${product.title}"></h5>
+							<h5 class="card-text" th:text="${product.price}"></h5>
+							<p class="card-text" th:text="${product.pCategory}"></p>
+							<small class="card-text" th:text="${product.salesId.nickName}"></small><br>
+							<small class="card-text" th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small><br><br>
+							<a href="#" class="btn btn-secondary" >거래완료</a>
+						</div>
+				</div>
+			</div>
+			<br>
+			<h3>[페] [이] [지] [네] [이] [션]</h3>
+			<br>
+			<hr>
+			<br>
+			<a th:href="@{/product/insertProduct}">제품 등록</a>
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
 			</div>
 		</div>
 	</div>
-	<br>
-	<h3>[페] [이] [지] [네] [이] [션]</h3>
-	<br>
-	<hr>
-	<br>
-	<a th:href="@{/product/insertProduct}">제품 등록</a>
+
 </body>
 </html>
