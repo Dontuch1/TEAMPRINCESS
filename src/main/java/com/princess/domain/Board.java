@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,7 +32,7 @@ public class Board {
 	private Long postNum;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("ETC")
+	@ColumnDefault("'ETC'")
 	private CmCategory cmCategory;
 	
 	@ManyToOne
@@ -51,7 +50,7 @@ public class Board {
 	private Long great;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("Y")
+	@ColumnDefault("'Y'")
 	private Display display;
 	
 	private Date regdate = new Date();

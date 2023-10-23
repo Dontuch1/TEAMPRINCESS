@@ -19,13 +19,22 @@ public class SystemController{
 	@GetMapping("/register")
 	public void register() {
 		
-		
-		
 	}
+	
+	//로그아웃
+	@PostMapping("/logout")
+		public String logout{
+			
+		}
+	
+	
+	
 	
 	@PostMapping("/register")
 	public String register(Member member) {
 		return "forward:login";
 	}
+	
+	
 	
 }
