@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -31,6 +33,7 @@ public class Auction {
 	@Column(nullable = false)
 	private int auctionPrice;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	

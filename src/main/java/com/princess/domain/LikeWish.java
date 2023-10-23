@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.princess.domain.CheckCondition.Type;
 
 import lombok.Data;
@@ -32,6 +34,7 @@ public class LikeWish {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member likeId;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정
