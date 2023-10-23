@@ -35,7 +35,7 @@ public class Member {
 	
 	@Column(nullable = false)
 	@ColumnDefault("50")
-	private int battry;
+	private int battery;
 	
 	@Column(nullable = false)
 	private String userName;
@@ -59,6 +59,7 @@ public class Member {
 	@ColumnDefault("0")
 	private int deposit;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

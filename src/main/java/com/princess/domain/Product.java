@@ -69,6 +69,7 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정
