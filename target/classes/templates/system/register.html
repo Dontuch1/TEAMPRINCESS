@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>시스템 페이지</title>
+</head>
+<style>
+/* wrapper */
+#wrapper {
+	justify-content: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(1);
+	grid-template-areas: "box1 box2 box2 box2";
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.box {
+	padding: 15px;
+}
+
+.box1 {
+	grid-area: box1
+}
+
+.box2 {
+	grid-area: box2
+}
+</style>
+<body th:align="center">
+
+	<h2>회원 등록</h2>
+<body>
+	<div class="container">
+		<form action="/system/register" method="post">
+				<label for="name">이름</label> <input type="text" id="name"
+					name="name" placeholder="이름을입력하세요"> <label for="name">닉네임</label>
+				<input type="text" id="name" name="name" placeholder="닉네임을 입력하세요">
+				<label for="name">비밀번호</label> <input type="text" id="name"
+					name="name" placeholder="비밀번호를 입력하세요">
+
+				<button type="submit">등록</button>
+		</form>
+	</div>
+</body>
+</html>
