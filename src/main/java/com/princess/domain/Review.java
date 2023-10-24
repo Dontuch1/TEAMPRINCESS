@@ -46,6 +46,7 @@ public class Review {
 	@Column(nullable = false)
 	private Rating review;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date reviewRegdate = new Date();

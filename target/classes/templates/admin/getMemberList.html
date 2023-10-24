@@ -1,12 +1,109 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>관리자 페이지</title>
+<title>회원관리</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
 <body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
 
-<h2>회원관리 페이지</h2>
+			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 
+	<h2>회원관리 페이지</h2>
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">회원 정보 입력</div>
+		<div class="panel-body">
+			<!-- action="확장자 방식의 서블릿요청주소 -->
+			<form action="memberinsert.it" method="post">
+				<div class="form-group">
+					<!-- name="" 속성은 JSP 프로그램 진행시 필수 속성 -->
+					<!-- 식별자는 자료형 클래스의 멤버명으로 작성할 것 -->
+					<!-- 동일 자료 동일 식별자 원칙 -->
+					<label for="name">이름:</label> <input type="text"
+						class="form-control" id="name" name="name" required>
+				</div>
+				<div class="form-group">
+					<label for="phone">전화번호:</label> <input type="text"
+						class="form-control" id="phone" name="phone" required>
+				</div>
+				<div class="form-group">
+					<label for="email">이메일:</label> <input type="text"
+						class="form-control" id="email" name="email" required>
+				</div>
+
+				<!-- submit 버튼은 JSP 프로그램 진행시 필수 요소 -->
+				<!-- 폼 태그 범위 안에 위치해야 한다. -->
+				<button type="submit"  class="btn btn-success">Submit</button>
+
+			</form>
+		</div>
+	</div>
+	<table class="table table-hover">
+
+
+		<tr>
+
+			<th>번호</th>
+			<th>아이디</th>
+			<th>사용자이름</th>
+			<th>전화번호</th>
+			<th>등록일</th>
+		</tr>
+
+		<tr>
+			<td class="center">1</td>
+			<td class="left">jiji</td>
+			<td class="center">지연</td>
+			<td class="center">010-1111-2222</td>
+			<td class="center">2023-10/20</td>
+		</tr>
+
+		<tr>
+			<td class="center">2</td>
+			<td class="left">jo</td>
+			<td class="center">영은</td>
+			<td class="center">010-2222-3333</td>
+			<td class="center">2023-10/20</td>
+		</tr>
+
+		<tr>
+			<td class="center">3</td>
+			<td class="left">ho</td>
+			<td class="center">호영</td>
+			<td class="center">010-3333-4444</td>
+			<td class="center">2023-10/20</td>
+		</tr>
+
+		<tr>
+			<td class="center">4</td>
+			<td class="left">ri</td>
+			<td class="center">강</td>
+			<td class="center">010-5555-6666</td>
+			<td class="center">2023-10/20</td>
+		</tr>
+	</table>
+
+
+
+
+
+
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

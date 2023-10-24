@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.repository.Temporal;
@@ -34,6 +36,7 @@ public class Auction {
 	@Column(nullable = false)
 	private int auctionPrice;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	private Date regdate;
 	

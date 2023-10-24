@@ -40,6 +40,7 @@ public class Report {
 	
 	private String rptCon;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date rptDate = new Date();

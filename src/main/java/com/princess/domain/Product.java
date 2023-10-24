@@ -60,8 +60,8 @@ public class Product {
 	@ColumnDefault("'N'")
 	private YorN sold;
 	
-	@ColumnDefault("1")
-	private int AucDuration;
+//	@ColumnDefault("1")
+	private int AucDuration = 1;
 	
 	@Enumerated(EnumType.STRING)
 	@ColumnDefault("'N'")
@@ -71,6 +71,7 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();

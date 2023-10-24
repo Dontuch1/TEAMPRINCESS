@@ -42,6 +42,7 @@ public class Reply {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member userId;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();
