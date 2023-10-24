@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>새 게시글 입력</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,102 +7,104 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <style>
 
 /* wrapper */
-	#wrapper{
-		justify-content: center;
-		width:100%;
-		display:grid;
-		grid-template-columns:repeat(4, 1fr);
-		grid-template-rows:repeat(1);
-		grid-template-areas:
-			"box1 box2 box2 box2";
-		margin: 0px auto;
-		padding: 0px;	
-	}
-	.box{
-		padding:15px;
-	}
-	.box1{
-		grid-area:box1
-	}
-	.box2{
-		grid-area:box2
-	}
+#wrapper {
+	justify-content: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(1);
+	grid-template-areas: "box2 box2 box2 box2";
+	margin: 0px auto;
+	padding: 0px;
+}
 
+.box {
+	padding: 15px;
+}
+
+.box1 {
+	grid-area: box1
+}
+
+.box2 {
+	grid-area: box2
+}
 </style>
-<body th:align="center">
-	<br>
-	<br>
-	<h1> 게시판 등록 </h1>
-	<br>
-	<br>
-	<hr>
-<div id="wrapper">
-	<div class="box box1"> 카 <br> 테 <br> 고 <br> 리</div>
-	<div class="box box2">		
-	<div th:align="center">
-		<form action="@{/board/insertBoard}" method="post">
-	    	<table th:align="center" class="board_detail" style="border:1px solid black; padding:50px; margin:10px; width:1000px; height:500px">
-				<colgroup  th:align="center" style="border:2px solid black; padding:50px; margin:10px; width:1000px; height:500px" >
-					<col width="40%"/>
-					<col width="60%"/>
 
-				</colgroup>
-				<caption th:align="center">게시글 상세내용</caption>
-				<tbody th:align="center" style="padding:50px">
-					<tr height="20px">
-						<th scope="row">글 번호</th>
-						<td>1</td>
-						
-					</tr>
-					<tr height="20px">
-						<th scope="row">조회수</th>
-						<td>4</td>
-					</tr>
-					<tr height="20px">
-						<th scope="row">작성자</th>
-						<td>강</td>
-					</tr>	
-					<tr height="20px">
-						<th scope="row">작성일</th>
-						<td>2023-10-19</td>
-					</tr>	
-					<tr>
-					<td colspan="2">
-						<div class="align">
-							<label><input type="radio" name="category" value="공지사항"> 🚨공지사항 </label>
-							<label><input type="radio" name="category" value="잃어버렸어요"> 😥잃어버렸어요 </label>
-							<label><input type="radio" name="category" value="여기 맛나요"> 🍔여기 맛나요</label>
-							<label><input type="radio" name="category" value="궁금해요"> ❓ 궁금해요</label>
-							<label><input type="radio" name="category" value="우리 만나요"> 🙋‍♀️우리 만나요</label>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+
+</head>
+<body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+
+				<div id="wrapper">
+					<div class="box box2">
+						<div th:align="center">
+							<form action="@{/board/insertBoard}" method="post">
+								<br>
+								<br>
+								<h2 th:align="center" style="font-weight:700"> 커뮤니티 게시물 등록란 </h2>
+								<br>
+							<div class="input-group mb-3 w-75">
+								<span class="input-group-text boot" id="basic-addon1">작성자</span>
+								<input type="text" class="form-control" placeholder="{member.nickName}" aria-label="Username" aria-describedby="basic-addon1" readonly="readonly">
+							</div>	
+							
+							<div class="input-group w-75 mb-3">
+								<span class="input-group-text">카테고리</span> <!-- ** 카테고리 무조건 선택하게 하기. -->
+								<span id="flex1" class="form-control">
+								<label><input type="radio" name="category" value="공지사항">🚨공지사항 &nbsp;</label> 
+								<label><input type="radio" name="category" value="잃어버렸어요"> 😥잃어버렸어요 &nbsp;</label> 
+								<label><input type="radio" name="category" value="여기 맛나요"> 🍔여기 맛나요 &nbsp;</label>
+								<label><input type="radio" name="category" value="궁금해요">❓ 궁금해요 &nbsp;</label> 
+								<label><input type="radio" name="category" value="우리 만나요"> 🙋‍♀️우리 만나요</label>
+								</span>
+							</div>
+								
+							<div class="input-group mb-3 w-75">
+								<span class="input-group-text boot" id="basic-addon1">제목</span>
+								<input type="text" class="form-control" placeholder="제목을 작성해주세요." aria-label="Username" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="input-group w-75 mb-3 h-75">
+								<span class="input-group-text">내용</span>
+								<textarea class="form-control" aria-label="With textarea" placeholder="내용을 작성하는 칸입니다."></textarea>
+							</div>
+							<div class="grid">
+								<button type="submit" value="게시글 등록" class="btn btn-outline-secondary mb-3">게시글 등록</button>
+								<a th:href="@{/getBoardList}"><button type="submit" class="btn btn-outline-secondary mb-3">글 목록</button></a>
+								<input multiple="multiple" type="file" onchange='readURL(this);' name="file" id="file"
+									style="display: none;" accept="image/*">
+								<button type="button" class="btn btn-outline-secondary mb-3" id="imgShow" onclick='imgclick();'>파일 업로드</button>
+							</div>
+							</form>	
 						</div>
-					</td>
-				</tr>
-					<tr>
-						<th scope="row">제목</th>
-						<td>
-							<input type="text" id="title" name="title" value="게시글 1 입니다." />
-						</td>
-					</tr>
-					<tr>
-						<th scope="row">내용</th>
-						<td>
-							<textarea title="내용" id="contents" name="contents" rows="4" cols="50"	>board.content</textarea>
-						</td>
-					</tr>
-				</tbody>
-				<tr >
-					<td colspan="2" align="center"> [ 파일 업로드 ]</td>
-				</tr>
-				
-				<tr>
-					<td colspan="2" align="center">
-					<input type="submit" value="게시글 등록"></td>
-				</tr>
-			</table>
-		</form>
+						
+					</div>
+				</div>
+
+				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
 	</div>
-		<a style="margin:5px" th:href="@{/getBoradList}">글 목록</a>
-	</div>	
-</div>
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+	/*=============================================
+	 * 이미지 등록 이미지 클릭
+	 *=============================================*/
+	function imgclick() {
+		$("#file").click();
+	}
+	</script>
 </body>
 </html>

@@ -8,23 +8,27 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
+import com.princess.domain.CheckCondition.Role;
 import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
 import lombok.ToString;
 
+@DynamicInsert 
 @Data
-@ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList", "authList"})
+@ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
 @Entity
 public class Member {
 	
-	@Id @GeneratedValue
+	@Id
 	private String id;
 	
 	@Column(nullable = false)
@@ -33,15 +37,14 @@ public class Member {
 	@Column(nullable = false)
 	private String location;
 	
-	@Column(nullable = false)
-	@ColumnDefault("50")
-	private int battery;
+	
+	private int battery = 50;
 	
 	@Column(nullable = false)
 	private String userName;
 	
 	@Column(nullable = false)
-	private Date birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private String phone;
@@ -55,12 +58,16 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private YorN agree;
 	
-	@Column(nullable = false)
-	@ColumnDefault("0")
-	private int deposit;
+//	@ColumnDefault("'1'")
+	private int deposit = 1;
 	
+	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
+	
+	@ColumnDefault("'MEMBER'")
+	@Enumerated(EnumType.STRING)
+	private Role auth;
 	
 	// 연관관계 설정
 	
@@ -87,7 +94,4 @@ public class Member {
 	
 	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
-	
-	@OneToMany(mappedBy = "userId") // Auth
-	private List<Auth> authList = new ArrayList<Auth>();
 }
