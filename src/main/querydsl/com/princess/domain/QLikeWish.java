@@ -26,7 +26,7 @@ public class QLikeWish extends EntityPathBase<LikeWish> {
 
     public final NumberPath<Long> likeSeq = createNumber("likeSeq", Long.class);
 
-    public final DateTimePath<java.util.Date> regdate = createDateTime("regdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final EnumPath<CheckCondition.Type> type = createEnum("type", CheckCondition.Type.class);
 

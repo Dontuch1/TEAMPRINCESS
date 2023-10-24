@@ -26,12 +26,12 @@ public class MyPageController {
 		session.setAttribute("id", "jojo");
 	}
 
-	@GetMapping("/myDetails")
-	public void myDetails(Model model, Member member) {
-		member.setId("jojo");
-		model.addAttribute("member", myService.getMember(member));
-
-	}
+//	@GetMapping("/myDetails")
+//	public void myDetails(Model model, Member member) {
+//		member.setId("jojo");
+//		model.addAttribute("member", myService.getMember(member));
+//
+//	}
 
 	@PostMapping("/updateDetails")
 	public String updateDetails(Member member) {

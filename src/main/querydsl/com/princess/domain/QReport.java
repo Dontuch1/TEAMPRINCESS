@@ -26,7 +26,7 @@ public class QReport extends EntityPathBase<Report> {
 
     public final StringPath rptCon = createString("rptCon");
 
-    public final DateTimePath<java.util.Date> rptDate = createDateTime("rptDate", java.util.Date.class);
+    public final DatePath<java.util.Date> rptDate = createDate("rptDate", java.util.Date.class);
 
     public final QMember rptId;
 

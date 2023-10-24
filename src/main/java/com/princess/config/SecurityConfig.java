@@ -20,17 +20,17 @@ public class SecurityConfig {
    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       http.userDetailsService(userDetailsService);
       http.csrf().disable();
-      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getBoardList", true);
+      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList", true);
       http.logout().logoutUrl("/system/logout");
       http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       
       http.authorizeHttpRequests()
          .antMatchers("/","/system/**").permitAll()
          .antMatchers("/board/**").authenticated()
+         .antMatchers("/product/**").authenticated()
+         .antMatchers("/mypage/**").authenticated()
          .antMatchers("/admin/**").hasRole("ADMIN")
-      .antMatchers("/product/**").authenticated()
-      .antMatchers("/mypage/**").authenticated()
-      .antMatchers("/thunder/**").hasAnyRole("THUNDER","ADMIN");
+         .antMatchers("/thunder/**").hasAnyRole("THUNDER","ADMIN");
       
       return http.build();
    }
