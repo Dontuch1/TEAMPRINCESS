@@ -10,8 +10,7 @@ import com.princess.domain.Review;
 public interface MypageService {
 
 	
-	// 회원정보 가져오기
-	Member getMember(Member member);
+
 
 	// 회원정보 수정
 	void updateMember(Member member);
