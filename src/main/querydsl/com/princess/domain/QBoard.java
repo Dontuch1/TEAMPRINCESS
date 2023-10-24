@@ -34,7 +34,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Long> postNum = createNumber("postNum", Long.class);
 
-    public final DateTimePath<java.util.Date> regdate = createDateTime("regdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final ListPath<Reply, QReply> replyList = this.<Reply, QReply>createList("replyList", Reply.class, QReply.class, PathInits.DIRECT2);
 

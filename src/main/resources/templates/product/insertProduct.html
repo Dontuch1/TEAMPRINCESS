@@ -1,75 +1,114 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>제품 등록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>기본틀</title>
 <style type="text/css">
-	.container {
-		display: grid;
-		grid-template-columns: 1fr 2fr;
-	}
-	div {
-		border: solid 2px gray;
-	}
-	.grid {
-		height: 600px;
-		padding: 20px;
-		margin: 30px;
-	}
 	.align {
 		display: flex;
 		justify-content: space-around;
 	}
-	button {
-		padding: 10px 50px 10px 50px;
-		border: 2px gray soid;
-		border-radius: 40%;
-		background-color: transparent;
+	.box {
+		width: 100%;
+		border: 2px #bbb solid;
+		border-radius: 20px;
+		margin: 10px;
+		padding: 5px;
+	}
+	
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	
+	/* Firefox  */
+	input[type='number'] {
+	  -moz-appearance: textfield;
 	}
 </style>
 </head>
 <body th:align="center">
-	<hr>
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<th:block th:replace="~{fragment/header :: header}"></th:block>
+			<!-- Page content-->
+			<div class="container-fluid">
+
+			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+<hr>
 	<br>
 	<h1>제품 등록</h1>
 	<br>
 	<hr>
 	<br>
+	<section class="py-5">
+	<form id="productForm" th:action="@{/product/insertProduct}" method="post" enctype="multipart/form-data">
+		<div class="container px-4 px-lg-5 my-5">
+	       <div>
+	           <div class="row gx-4 gx-lg-5 align-items-center">
+	           	<input type="file" onchange='readURL(this);' name="file" id="file" style="display: none;" accept="image/*"/>
+	  			<input type="hidden" name="salesId.id" value="${session.id.toString()}"/>
+	               <div th:align="center" class="col-md-6">
+		               <img style="width: 25em;" id="imgShow" class="card-img-top mb-5 mb-md-0" src="/images/upload.png" onclick='imgclick();' alt="...">
+		               <p></p>
+		               <small class="text-muted">(파일크기 : 10MB / 이미지 파일만 가능)</small>
+	               </div>
+	               <table class="col-md-6" style="padding-bottom: 20px;">
+	              		 <tr>
+	              		 	<td>제목&nbsp;</td>
+	              		 	<td><input class="box" type="text" name="title"/></td>
+	              		 </tr>
+	              		 <tr>
+	              		 	<td>카테고리</td>
+							<td style="display: flex; justify-content: space-around;">
+								<label><input type="radio" name="category" value="DIGI"> 디지털/가전</label>
+								<label><input type="radio" name="category" value="FURN"> 가구</label>
+								<label><input type="radio" name="category" value="CLOT"> 의류/잡화</label>
+								<label><input type="radio" name="category" value="BEAU"> 뷰티</label>
+								<label><input type="radio" name="category" value="ETC"> 기타</label>
+							</td>
+						 </tr>
+						 <tr>
+						 	<td>가격&nbsp;</td>
+						 	<td><input class="box" type="number" name="price"/></td>
+						 </tr>
+						 <tr>
+						 	<td>내용</td>
+						 	<td><textarea class="box" name="content" style="resize: none; width: 100%;" rows="30"></textarea></td>
+						 </tr>
+	               </table>
+	           </div>
+	       </div>
+	       </div>  
+       </form>
+     </section>
 	<!-- 새글 박스 -->
 	<div class="container">
-		<form id="productForm" th:action="@{/product/insertProduct}" method="post" enctype="multipart/form-data">
+		
 		<!-- 파일 업로드 영역 -->
-		<div class="grid">
-			<input type="file" onchange='readURL(this);' name="file" id="file"
-				style="display: none;" accept="image/*">
-			<img id="imgShow" src="/images/camera_icon.png" onclick='imgclick();' style="width: 500px; height: 500px;">
+		<!-- <div class="grid">
+			
 			<div style="height: 30px;"></div>
-			<small class="text-muted">(파일크기 : 10MB / 이미지 파일만 가능)</small> <small
+			 <small
 				id="file" class="text-info"></small>
 			<div style="height: 20px;"></div>
-		</div>
+		</div> -->
 		<!-- 파일 업로드 영역 끝 -->
 		<!-- 글 영역 -->
 		<div class="grid">
-		<input type="hidden" name="salesId.id" value="hoy"/>
 			<table th:align="center" th:cellpadding="10px" style="width: 100%;">
 				<tr>
-					<td><input type="text" name="title" style="width: 100%;"/></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td>
-						<div class="align">
-							<label><input type="radio" name="category" value="DIGI"> 디지털/가전</label>
-							<label><input type="radio" name="category" value="FURN"> 가구</label>
-							<label><input type="radio" name="category" value="CLOT"> 의류/잡화</label>
-							<label><input type="radio" name="category" value="BEAU"> 뷰티</label>
-							<label><input type="radio" name="category" value="ETC"> 기타</label>
-						</div>
+						
 					</td>
 				</tr>
 				<tr>
 					<td style="height: 100%;">
-					<textarea name="content" style="width: 100%; resize: none;" rows="30"></textarea>
+					
 					</td>
 				</tr>
 			</table>
@@ -84,6 +123,17 @@
 	<button type="submit" onclick="formsubmit();">등록</button>&nbsp;&nbsp;&nbsp;
 	<button type="button" onclick="location.href='/product/getProductList'">취소</button>
 	<div style="height: 30px;"></div>
+
+
+
+
+
+
+
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 	/*=============================================

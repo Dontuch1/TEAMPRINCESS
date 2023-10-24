@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -70,6 +72,7 @@ public class Product {
 	private Display display;
 	
 	@ColumnDefault("sysdate")
+	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

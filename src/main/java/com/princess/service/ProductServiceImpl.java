@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
 	public void insertProduct(Product product, MultipartFile file) {
 		if (!file.isEmpty()) {
-			String filename = UUID.randomUUID().toString() + file.getOriginalFilename();
+			String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
 			try {
 				file.transferTo(new File(path + filename));
 				product.setUpload("/upload/" + filename);
@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
 			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
-		} else if (search.getSearchCondition().equals("ID")) {
+		} else if (search.getSearchCondition().equals("NICKNAME")) {
 			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
 		}
 		

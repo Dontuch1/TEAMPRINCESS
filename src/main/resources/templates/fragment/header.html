@@ -1,93 +1,95 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<!-- config : bootstrap/css.link -->
-<th:block th:fragment="config">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link th:href="@{/css/main.css}" rel="stylesheet">
-	<link th:href="@{/css/product.css}" rel="stylesheet">
-</th:block>
-
 <!-- Top navigation-->
 <th:block th:fragment="header">
-<nav class="navbar navbar-expand-lg navbar-light border-bottom"
-	style="width: 1200px; background-color: transparent;">
-	<div class="container-fluid" style="background-color: transparent;">
-		<b> 🥕당나번공</b>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent"
-			style="flex-grow: 2;">
-			<ul class="navbar-nav ms-auto mt-2 mt-lg-0"
-				style="width: 70%; justify-content: space-between; margin: 0 auto">
+   <!-- config : bootstrap/css.link -->
+   <nav class="navbar navbar-expand-lg navbar-light border-bottom"
+      style="width: 1200px; background-color: transparent;">
+      <div class="container-fluid" style="background-color: transparent;">
+         <b> 🥕당나번공</b>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent"
+            style="flex-grow: 2;">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0"
+               style="width: 70%; justify-content: space-between; margin: 0 auto">
 
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">중고/경매</a>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="/product/getProductList">일반 상품</a>
-						<a class="dropdown-item" href="/product/getProductList">경매 상품</a>
-						</div>
-						</li>
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">중고/경매</a>
+                  <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="/product/getProductList">일반 상품</a>
+                     <a class="dropdown-item" href="/product/getProductList">경매 상품</a>
+                  </div></li>
 
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">커뮤니티</a>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="/board/getBoardList">공지사항</a> <a
-							class="dropdown-item" href="/board/getBoardList">우리 만나요</a> <a
-							class="dropdown-item" href="/board/getBoardList">여기 맛나요</a> <a
-							class="dropdown-item" href="/board/getBoardList">잃어버렸어요</a> <a
-							class="dropdown-item" href="/board/getBoardList">궁금해요</a>
-							</div></li>
-							
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">커뮤니티</a>
+                  <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="/board/getBoardList">공지사항</a> <a
+                        class="dropdown-item" href="/board/getBoardList">우리 만나요</a> <a
+                        class="dropdown-item" href="/board/getBoardList">여기 맛나요</a> <a
+                        class="dropdown-item" href="/board/getBoardList">잃어버렸어요</a> <a
+                        class="dropdown-item" href="/board/getBoardList">궁금해요</a>
+                  </div></li>
 
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">천둥맨</a>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#!">천둥맨 전환</a> <a
-							class="dropdown-item" href="#!">대기중인 상품보기</a><a
-							class="dropdown-item" href="#!">내 배달 내역</a></div></li>
 
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">마이페이지</a>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="/mypage/myDetails">내 정보</a> <a
-							class="dropdown-item" href="/mypage/myPostList">내가 쓴 글</a><a
-							class="dropdown-item" href="/mypage/myProductList">내 상품</a><a
-							class="dropdown-item" href="/mypage/myWishList">내가 찜한 상품</a> <a
-							class="dropdown-item" href="/mypage/myReviewList">내 후기</a><a
-							class="dropdown-item" href="/mypage/myDeposit">썬더페이</a></div></li>
-			</ul>
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">천둥맨</a>
+                  <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="#!">천둥맨 전환</a> <a
+                        class="dropdown-item" href="#!">대기중인 상품보기</a><a
+                        class="dropdown-item" href="#!">내 배달 내역</a>
+                  </div></li>
 
-		</div>
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">마이페이지</a>
+                  <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="/mypage/myDetails">내 정보</a> <a
+                        class="dropdown-item" href="/mypage/myPostList">내가 쓴 글</a><a
+                        class="dropdown-item" href="/mypage/myProductList">내 상품</a><a
+                        class="dropdown-item" href="/mypage/myWishList">내가 찜한 상품</a> <a
+                        class="dropdown-item" href="/mypage/myReviewList">내 후기</a><a
+                        class="dropdown-item" href="/mypage/myDeposit">썬더페이</a>
+                  </div></li>
+            </ul>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent"
-			style="flex-grow: 1">
-			<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">영은님</a>
-					<div class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="/mypage/myPageMain">마이페이지</a> <a
-							class="dropdown-item" href="#!">로그아웃</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#!">문의하기</a> <a
-							class="dropdown-item" href="#!">알림</a>
-					</div></li>
-			</ul>
-		</div>
-	</div>
-	
-</nav>
+         </div>
+
+         <div class="collapse navbar-collapse" id="navbarSupportedContent"
+            style="flex-grow: 1">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">영은님</a>
+                  <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="/mypage/myPageMain">마이페이지</a> <a
+                        class="dropdown-item" href="#!">로그아웃</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#!">문의하기</a> <a
+                        class="dropdown-item" href="#!">알림</a>
+                  </div></li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+         rel="stylesheet">
+      <link th:href="@{/css/main.css}" rel="stylesheet">
+      <link th:href="@{/css/product.css}" rel="stylesheet">
+<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </th:block>
+</html>

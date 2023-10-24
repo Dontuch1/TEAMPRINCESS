@@ -1,5 +1,8 @@
 package com.princess.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Product;
 import com.princess.domain.Search;
+import com.princess.service.BoardService;
 import com.princess.service.ProductService;
 
 @Controller
@@ -22,20 +26,25 @@ public class ProductController {
 	ProductService productService;
 
 	@RequestMapping("/getProductList")
-	public String getProductList(Model model, Search search) {
+	public String getProductList(Model model, Search search, HttpServletRequest request) {
 		if (search.getSearchCondition() == null)
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
-
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("id", "admin");
+		
 		Page<Product> productList = productService.getProductList(search);
 		model.addAttribute("productList", productList);
 		return "product/getProductList";
 	}
 
 	@GetMapping("/getProduct")
-	public void getProduct() {
-
+	public String getProduct(Product product, Model model) {
+		model.addAttribute("product", productService.getProduct(product));
+		System.out.println(productService.getProduct(product).toString());
+		return "product/getProduct";
 	}
 
 	@GetMapping("/insertProduct")
@@ -52,5 +61,11 @@ public class ProductController {
 	@GetMapping("/getAuction")
 	public void getAuction() {
 
+	}
+	
+	@GetMapping("/deleteProduct")
+	public String deleteProduct(Product product) {
+		productService.deleteProduct(product);
+		return "forward:getProductList";
 	}
 }

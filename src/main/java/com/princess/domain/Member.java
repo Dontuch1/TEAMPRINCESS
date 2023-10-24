@@ -8,9 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -24,7 +25,7 @@ import lombok.ToString;
 @Entity
 public class Member {
 	
-	@Id @GeneratedValue
+	@Id
 	private String id;
 	
 	@Column(nullable = false)
@@ -35,13 +36,13 @@ public class Member {
 	
 	@Column(nullable = false)
 	@ColumnDefault("50")
-	private int battery;
+	private int battery = 50;
 	
 	@Column(nullable = false)
 	private String userName;
 	
 	@Column(nullable = false)
-	private Date birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private String phone;
@@ -60,6 +61,7 @@ public class Member {
 	private int deposit;
 	
 	@ColumnDefault("sysdate")
+	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -45,6 +47,7 @@ public class Review {
 	private Rating review;
 	
 	@ColumnDefault("sysdate")
+	@Temporal(TemporalType.DATE)
 	private Date reviewRegdate = new Date();
 	
 	// 연관관계 설정

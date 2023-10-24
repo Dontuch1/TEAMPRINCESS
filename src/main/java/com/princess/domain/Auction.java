@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.jpa.repository.Temporal;
 
 import lombok.Data;
 import lombok.ToString;
@@ -34,7 +35,7 @@ public class Auction {
 	private int auctionPrice;
 	
 	@ColumnDefault("sysdate")
-	private Date regdate = new Date();
+	private Date regdate;
 	
 	
 	// 연관관계 설정
