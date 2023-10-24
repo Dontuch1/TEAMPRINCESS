@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.princess.domain.CheckCondition.YorN;
 
@@ -42,6 +46,8 @@ public class Sales {
 	@Column(nullable = false)
 	private YorN cmt;
 	
+	@Temporal(TemporalType.DATE)
+	@ColumnDefault("sysdate")
 	private Date salesRegdate = new Date();
 	
 	// 연관관계 설정

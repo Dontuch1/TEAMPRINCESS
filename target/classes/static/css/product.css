@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+*{
+	color: #444;
+	
+}
+
+#product-main-view {
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	column-gap: 20px;
+	display: grid;
+}
+
+.d-flex {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#myDetailForm {
+	width: 600px;
+	margin-left: 20px;
+}
+
+.form-control {
+	width: 50%;
+}
+
+#mypage-product-list {
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	column-gap: 20px;
+	row-gap:20px;
+	display: grid;
+}
+
+.thunderForm {
+	padding: 10px;
+	margin-left: 20px;
+}

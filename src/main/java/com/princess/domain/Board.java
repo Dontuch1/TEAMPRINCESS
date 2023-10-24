@@ -13,13 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.princess.domain.CheckCondition.CmCategory;
 import com.princess.domain.CheckCondition.Display;
-import com.princess.persistence.BoardRepository;
-import com.princess.service.BoardService;
 
 import lombok.Data;
 import lombok.ToString;
@@ -55,7 +55,9 @@ public class Board {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
-	private Date regdate = new Date();
+	@Temporal(TemporalType.DATE)
+	@ColumnDefault("sysdate")
+	private Date regdate;
 	
 	// 연관관계 설정
 	

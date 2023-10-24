@@ -10,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.princess.domain.CheckCondition.Type;
 
@@ -32,6 +36,8 @@ public class LikeWish {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member likeId;
 	
+	@Temporal(TemporalType.DATE)
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

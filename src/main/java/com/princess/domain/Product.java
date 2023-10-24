@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -58,8 +60,8 @@ public class Product {
 	@ColumnDefault("'N'")
 	private YorN sold;
 	
-	@ColumnDefault("1")
-	private int AucDuration;
+//	@ColumnDefault("1")
+	private int AucDuration = 1;
 	
 	@Enumerated(EnumType.STRING)
 	@ColumnDefault("'N'")
@@ -69,6 +71,8 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
+	@Temporal(TemporalType.DATE)
+	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정
