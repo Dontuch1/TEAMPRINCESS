@@ -24,11 +24,11 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<Auction, QAuction> auctionList = this.<Auction, QAuction>createList("auctionList", Auction.class, QAuction.class, PathInits.DIRECT2);
 
-    public final ListPath<Auth, QAuth> authList = this.<Auth, QAuth>createList("authList", Auth.class, QAuth.class, PathInits.DIRECT2);
+    public final EnumPath<CheckCondition.Role> auth = createEnum("auth", CheckCondition.Role.class);
 
     public final NumberPath<Integer> battery = createNumber("battery", Integer.class);
 
-    public final DateTimePath<java.util.Date> birth = createDateTime("birth", java.util.Date.class);
+    public final StringPath birth = createString("birth");
 
     public final ListPath<Board, QBoard> boardList = this.<Board, QBoard>createList("boardList", Board.class, QBoard.class, PathInits.DIRECT2);
 
@@ -50,7 +50,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<Product, QProduct> productList = this.<Product, QProduct>createList("productList", Product.class, QProduct.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.util.Date> regdate = createDateTime("regdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final ListPath<Reply, QReply> replyList = this.<Reply, QReply>createList("replyList", Reply.class, QReply.class, PathInits.DIRECT2);
 

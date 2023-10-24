@@ -28,7 +28,7 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final ListPath<Reply, QReply> referenceList = this.<Reply, QReply>createList("referenceList", Reply.class, QReply.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.util.Date> regdate = createDateTime("regdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final StringPath replyContent = createString("replyContent");
 
