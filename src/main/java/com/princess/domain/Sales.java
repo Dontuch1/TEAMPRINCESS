@@ -46,7 +46,6 @@ public class Sales {
 	@Column(nullable = false)
 	private YorN cmt;
 	
-	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date salesRegdate = new Date();

@@ -11,7 +11,6 @@ import com.princess.domain.Member;
 import com.princess.service.MemberService;
 
 @Controller
-public class SystemController{
 @RequestMapping("/system/")
 public class SystemController {
 	

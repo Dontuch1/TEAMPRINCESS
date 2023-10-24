@@ -37,8 +37,6 @@ public class Member {
 	@Column(nullable = false)
 	private String location;
 	
-
-	
 	private int battery = 50;
 	
 	@Column(nullable = false)

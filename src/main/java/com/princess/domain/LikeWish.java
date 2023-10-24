@@ -36,7 +36,6 @@ public class LikeWish {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member likeId;
 	
-	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();

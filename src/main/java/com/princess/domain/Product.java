@@ -71,7 +71,6 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
-	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	@Temporal(TemporalType.DATE)
 	private Date regdate = new Date();

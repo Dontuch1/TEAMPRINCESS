@@ -12,7 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.jpa.repository.Temporal;
 
 import lombok.Data;
 import lombok.ToString;
