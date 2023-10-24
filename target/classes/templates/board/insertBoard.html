@@ -83,7 +83,8 @@
 								<a th:href="@{/getBoardList}"><button type="submit" class="btn btn-outline-secondary mb-3">글 목록</button></a>
 								<input multiple="multiple" type="file" onchange='readURL(this);' name="file" id="file"
 									style="display: none;" accept="image/*">
-								<button type="button" class="btn btn-outline-secondary mb-3" id="imgShow" onclick='imgclick();'>파일 업로드</button>
+								<button type="button" class="btn btn-outline-secondary mb-3" id="imgShow" onclick='imgclick();'>
+								파일 업로드</button>
 							</div>
 							</form>	
 						</div>
@@ -102,9 +103,15 @@
 	/*=============================================
 	 * 이미지 등록 이미지 클릭
 	 *=============================================*/
-	function imgclick() {
-		$("#file").click();
+	function formsubmit() {
+		$("#productForm").submit();
 	}
+	/*=============================================
+	 * 이미지 등록 이미지 클릭
+	 *=============================================*/
+	 function imgclick() {
+		    document.getElementById('file').click();
+		}
 	</script>
 </body>
 </html>
