@@ -18,14 +18,14 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
-                    <form class="form-signin" th:action="@{/login}" method="post">
+                    <form class="form-signin" method="post">
                         <div class="form-label-group">
-                            <input type="text" th:name="username" class="form-control" placeholder="Email address" required autofocus>
+                            <input type="text" name="username" class="form-control" placeholder="Email address" required autofocus>
                             <label th:for="username">Email address</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" th:name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
                             <label th:for="password">Password</label>
                         </div>
 

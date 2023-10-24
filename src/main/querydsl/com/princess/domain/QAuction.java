@@ -30,7 +30,7 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final QProduct pNo;
 
-    public final DateTimePath<java.util.Date> regdate = createDateTime("regdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public QAuction(String variable) {
         this(Auction.class, forVariable(variable), INITS);

@@ -30,7 +30,7 @@ public class QSales extends EntityPathBase<Sales> {
 
     public final QProduct salesNo;
 
-    public final DateTimePath<java.util.Date> salesRegdate = createDateTime("salesRegdate", java.util.Date.class);
+    public final DatePath<java.util.Date> salesRegdate = createDate("salesRegdate", java.util.Date.class);
 
     public final StringPath thunderId = createString("thunderId");
 

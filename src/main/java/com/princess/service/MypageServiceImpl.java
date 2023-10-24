@@ -23,10 +23,7 @@ public class MypageServiceImpl implements MypageService {
 	private MemberRepository memberRepo;
 	
 	// 회원정보 가져오기
-	@Override
-	public Member getMember(Member member) {
-		return memberRepo.findById(member.getId()).get();
-	}
+
 
 	// 회원정보 수정 //예치금 수정
 	@Override
