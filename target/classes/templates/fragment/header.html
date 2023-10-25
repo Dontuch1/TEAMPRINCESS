@@ -66,8 +66,8 @@
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/mypage/myPageMain">마이페이지 홈</a> <a
 								class="dropdown-item" href="/mypage/myDetails">내 정보</a> <a
-								class="dropdown-item" href="/mypage/myPostList">내가 쓴 글</a><a
-								class="dropdown-item" href="/mypage/myProductList">내 상품</a><a
+								class="dropdown-item" th:href="@{/mypage/myPostList(id=${#authentication.principal.username})}">내가 쓴 글</a><a
+								class="dropdown-item" th:href="@{/mypage/myProductList(id=${#authentication.principal.username})}">내 상품</a><a
 								class="dropdown-item" href="/mypage/myWishList">내가 찜한 상품</a> <a
 								class="dropdown-item" href="/mypage/myReviewList">내 후기</a><a
 								class="dropdown-item" href="/mypage/myDeposit">썬더페이</a>
