@@ -23,11 +23,10 @@
 
 				<div id="modalContainer" class="hidden">
 					<div id="modalContent">
-						<h2> 천둥맨이 아니시군요!</h2>
-						<p> 배터리 잔량이 50% 이상인 회원만 천둥맨으로 전환이 가능합니다. </p>
+						<h2> ⚡천둥맨이 아니시군요!</h2>
+						<p> 배터리 잔량이 🔋60% 이상인 회원만 천둥맨으로 전환이 가능합니다. </p>
 						<button type="button" data-toggle="modal" data-target="#login">천둥맨으로 살기</button>
-						<button type="button" data-toggle="modal" data-target="#singup">일반인으로 살기</button>
-						<button id="modalCloseButton">닫기</button>
+						<button type="button" data-toggle="modal" onclick="history.back()">일반인으로 살기</button>
 					</div>
 				</div>
 
@@ -51,12 +50,12 @@
 						<br>
 						<table>
 							<tr>
-								<th>순서</th>
-								<th>후기</th>
-								<th>천둥맨</th>
-								<th>상품번호</th>
-								<th>일시</th>
-								<th>조회수</th>
+								<th class="center">순서</th>
+								<th class="center">후기</th>
+								<th class="center">천둥맨</th>
+								<th class="center">상품번호</th>
+								<th class="center">일시</th>
+								<th class="center">조회수</th>
 							</tr>
 							<tr>
 								<td class="center">1</td>
@@ -93,21 +92,15 @@
 		</div>
 	</div>
 	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
 
 	<!--  JS  -->
 	<script type="text/javascript">
-	
 	window.onload = function(){
 		modal.classList.remove('hidden');
 	}
-	
-/* 	$(document).ready(function(){
-		document.getElementById('modalOpenButton');
-	}); */
 	 
-	
 	const modalOpenButton = document.getElementById('modalOpenButton');
 	const modalCloseButton = document.getElementById('modalCloseButton');
 	const modal = document.getElementById('modalContainer');

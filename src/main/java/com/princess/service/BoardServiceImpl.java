@@ -6,10 +6,15 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
 
 @Service
@@ -34,7 +39,9 @@ public class BoardServiceImpl implements BoardService {
 		boardRepo.save(board);
 	}
 	 
-	public void getBoardList(Board board) {
+	public Page<Board> getBoardList(Search search) {
+		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "postnum");
+		return boardRepo.getBoardList(pageable);
 	}
 
 	public void updateBoard(Board board) {

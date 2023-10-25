@@ -1,12 +1,14 @@
 package com.princess.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.Search;
 
 public interface BoardService {
 	
-	void getBoardList(Board board); 
+	Page<Board> getBoardList(Search search); 
 	
 	void updateBoard(Board board);
 	
