@@ -8,8 +8,8 @@
 	padding: 10px;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
-	column-gap: 20px;
-	display: grid;
+	column-gap: 10px;
+	place-items: center;
 }
 
 .d-flex {

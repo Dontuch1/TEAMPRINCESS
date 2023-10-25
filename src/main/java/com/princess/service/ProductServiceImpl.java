@@ -7,13 +7,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.CheckCondition.Display;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
 import com.princess.domain.Search;
@@ -40,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("인서트 되는 : " + product.toString());
 		productRepo.save(product);
 	}
 
@@ -57,18 +57,21 @@ public class ProductServiceImpl implements ProductService {
 
 	public void deleteProduct(Product product) {
 		Product findProduct = productRepo.findById(product.getPNo()).get();
-		
 		findProduct.setDisplay(Display.N);
+		productRepo.save(findProduct);
 	}
 
 	public Product getProduct(Product product) {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	public Page<Product> getProductList(Search search) {
+	public Page<Product> getProductList(String type, Search search, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		
 		QProduct qProduct = QProduct.product;
+		if (type.equals("prod")) {
+			builder.and(qProduct.auction.eq(YorN.N));
+		} else builder.and(qProduct.auction.eq(YorN.Y));
 		
 		if (search.getSearchCondition().equals("TITLE")) {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
@@ -78,7 +81,9 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
 		}
 		
-		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "pNo");
+		builder.and(qProduct.display.eq(Display.Y));
+		
+		//Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 		
 		return productRepo.findAll(builder, pageable);
 	}

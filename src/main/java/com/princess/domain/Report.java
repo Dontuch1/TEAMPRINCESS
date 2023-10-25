@@ -42,7 +42,7 @@ public class Report {
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
-	private Date rptDate = new Date();
+	private Date regdate = new Date();
 	
 	// 연관관계 설정
 	
