@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,9 +30,10 @@ public class SecurityConfig {
          .antMatchers("/board/**").authenticated()
          .antMatchers("/product/**").authenticated()
          .antMatchers("/mypage/**").authenticated()
-         .antMatchers("/admin/**").hasRole("ADMIN")
-         .antMatchers("/thunder/**").hasAnyRole("THUNDER","ADMIN");
+         .antMatchers("/admin/**").hasAuthority("ADMIN")
+         .antMatchers("/thunder/**").hasAnyAuthority("ADMIN","THUNDER");
       
+
       return http.build();
    }
    @Bean

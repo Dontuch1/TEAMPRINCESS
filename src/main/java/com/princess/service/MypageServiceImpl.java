@@ -9,10 +9,7 @@ import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Review;
-import com.princess.domain.Search;
 import com.princess.persistence.MemberRepository;
-import com.princess.persistence.ProductRepository;
-import com.querydsl.core.BooleanBuilder;
 
 
 @Service
@@ -23,7 +20,9 @@ public class MypageServiceImpl implements MypageService {
 	private MemberRepository memberRepo;
 	
 	// 회원정보 가져오기
-
+	public Member getMember(Member member) {
+		return memberRepo.findById(member.getId()).get();
+	}
 
 	// 회원정보 수정 //예치금 수정
 	@Override
