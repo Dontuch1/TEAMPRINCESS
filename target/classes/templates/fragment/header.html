@@ -82,11 +82,11 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">영은님</a>
+						aria-expanded="false"><span th:text="${#authentication.principal.username}"/>님</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/mypage/myPageMain">마이페이지</a> <a
-								class="dropdown-item" href="#!">로그아웃</a>
+								class="dropdown-item" href="/">로그아웃</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#!">문의하기</a> <a
 								class="dropdown-item" href="#!">알림</a>
