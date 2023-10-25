@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
+import com.princess.domain.Member;
 import com.princess.domain.Product;
 
 public interface ProductRepository extends CrudRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 	
 	@Query("SELECT b FROM Board b")
-	   Page<Product> getBoardList(Pageable pageable);
+	Page<Product> getBoardList(Pageable pageable);
 
+	Page<Product> findBySalesId(Member member, Pageable pageable);
+	
 }
