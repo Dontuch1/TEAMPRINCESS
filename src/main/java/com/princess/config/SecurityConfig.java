@@ -30,14 +30,10 @@ public class SecurityConfig {
          .antMatchers("/board/**").authenticated()
          .antMatchers("/product/**").authenticated()
          .antMatchers("/mypage/**").authenticated()
-         .antMatchers("/thunder/standByList").hasAuthority("MEMBER")
-         .antMatchers("/thunder/**").hasAuthority("THUNDER")
-         .antMatchers("/admin/**").hasAuthority("ADMIN");
-      http.sessionManagement()
-	      .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // 세션 생성 전략
-	      .invalidSessionUrl("/session-invalid")                     // 유효하지 않은 세션 시 리다이렉트 URL
-	      .maximumSessions(1)                                        // 최대 허용 가능 세션 수, 1로 설정하면 동시 세션 접속 제한
-	      .expiredUrl("/session-expired");  
+         .antMatchers("/admin/**").hasAuthority("ADMIN")
+         .antMatchers("/thunder/**").hasAnyAuthority("ADMIN","THUNDER");
+      
+
       return http.build();
    }
    @Bean
