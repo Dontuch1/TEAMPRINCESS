@@ -16,6 +16,8 @@ public interface ProductService {
 
 	Product getProduct(Product product);
 
-	Page<Product> getProductList(Search search);
+	Page<Product> getProductList(String type, Search search);
+	
+//	List<Product> getProductList(Search search);
 
 }

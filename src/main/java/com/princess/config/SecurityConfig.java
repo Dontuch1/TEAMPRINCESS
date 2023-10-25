@@ -20,7 +20,7 @@ public class SecurityConfig {
    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       http.userDetailsService(userDetailsService);
       http.csrf().disable();
-      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList", true);
+      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList?type=prod", true);
       http.logout().logoutUrl("/system/logout");
       http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       

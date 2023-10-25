@@ -1,77 +1,59 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>제품 상세(중고)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-.container {
-		display: grid;
-		grid-template-columns: 1fr 2fr;
-	}
-	div {
-		border: solid 2px gray;
-	}
-	.grid {
-		height: 600px;
-		padding: 20px;
-		margin: 30px;
-	}
-	.align {
-		display: flex;
-		justify-content: space-around;
-	}
-	button {
-		padding: 10px 50px 10px 50px;
-		border: 2px gray soid;
-		border-radius: 40%;
-		background-color: transparent;
-	}
-</style>
+<title>🥕당근나라 번개공주</title>
 </head>
 <body th:align="center">
-	<hr>
-	<br>
-	<h1>제품 상세 (중고)</h1>
-	<br>
-	<hr>
-	<br>
-	<div class="container">
-		<!-- 파일 사진 영역 -->
-		<div class="grid">
-			<input multiple="multiple" type="file" onchange='readURL(this);' name="file" id="file"
-				style="display: none;" accept="image/*">
-			<img id="imgShow" src="/images/camera_icon.png" onclick='imgclick();' style="width: 500px; height: 500px;">
-			<div style="height: 30px;"></div>
-		</div>
-		<!-- 파일 사진 영역 끝 -->
-		<!-- 글 영역 -->
-		<div class="grid">
-		<form id="productForm" th:action="@{/product/insertProduct}" method="post">
-			<table th:align="center" th:cellpadding="10px" style="width: 100%;">
-				<tr>
-					<td><input type="text" name="title" style="width: 100%;"/></td>
-				</tr>
-				<tr>
-					<td>
-						<label>카테고리 1</label>
-					</td>
-				</tr>
-				<tr>
-					<td style="height: 100%;">
-					<textarea name="content" style="width: 100%; resize: none;" rows="30"></textarea>
-					</td>
-				</tr>
-			</table>
-		</form>
-	<!-- 글 영역 끝 -->
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<th:block th:replace="~{fragment/header :: header}"></th:block>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+				<hr>
+				<br>
+				<h1>제품 상세 (중고)</h1>
+				<br>
+				<hr>
+				<br>
+				<section class="py-5">
+		            <div class="container px-4 px-lg-5 my-5">
+		                <div class="row gx-4 gx-lg-5 align-items-center">
+		                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${product.upload}" alt="..."></div>
+		                    <div class="col-md-6">
+		                        <div class="small mb-1" th:text="${product.salesId.nickName}"></div>
+		                        <h1 class="display-5 fw-bolder" th:text="${product.title}"></h1>
+		                        <div class="fs-5 mb-5">
+		                            <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+		                        </div>
+		                        <p class="lead" th:text="${product.content}"></p>
+		                        <div class="d-flex">
+		                            <input class="form-control text-center me-3" style="width: 50px;"src="">
+		                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+		                                <span class="bi-cart-fill me-1">구매하기</span>
+		                            </button>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </section>
+				<br>
+				<hr>
+				<br>
+				<div th:align="center">
+					<button th:attr="style=${#authentication.principal.username == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
+						onclick="location.href='/product/deleteProduct'">삭제</button>
+					&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-outline-dark flex-shrink-0"
+						onclick="location.href='/product/getProductList'">목록</button>
+				</div>
+				<div style="height: 30px;"></div>
+				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
 		</div>
 	</div>
-	<br>
-	<hr>
-	<br>
-	<button type="submit" onclick="location.href='/product/deleteProduct'">글 삭제</button>&nbsp;&nbsp;&nbsp;
-	<button type="button" onclick="location.href='/product/getProductList'">글 목록 보기</button>
-	<div style="height: 30px;"></div>
 </body>
-</head>
+<script type="text/javascript">
+</script>
 </html>

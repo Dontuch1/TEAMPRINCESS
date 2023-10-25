@@ -22,20 +22,25 @@ public class ProductController {
 	ProductService productService;
 
 	@RequestMapping("/getProductList")
-	public String getProductList(Model model, Search search) {
+	public String getProductList(@RequestParam String type, Model model, Search search) {
 		if (search.getSearchCondition() == null)
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
-
-		Page<Product> productList = productService.getProductList(search);
+		
+		Page<Product> productList = productService.getProductList(type, search);
+	
+		//List<Product> productList = productService.getProductList(search);
 		model.addAttribute("productList", productList);
 		return "product/getProductList";
+		
 	}
 
 	@GetMapping("/getProduct")
-	public void getProduct() {
-
+	public String getProduct(Product product, Model model) {
+		model.addAttribute("product", productService.getProduct(product));
+		System.out.println(productService.getProduct(product).toString());
+		return "product/getProduct";
 	}
 
 	@GetMapping("/insertProduct")
@@ -44,8 +49,12 @@ public class ProductController {
 	}
 
 	@PostMapping("/insertProduct")
-	public String insertProduct(Product product, @RequestParam MultipartFile file) {
+	public String insertProduct(Product product, @RequestParam MultipartFile file, @RequestParam("strPrice") String strPrice) {
+		System.out.println("왕?");
+		product.setPrice(Integer.parseInt(strPrice));
+		System.out.println(product.toString());
 		productService.insertProduct(product, file);
+
 		return "redirect:getProductList";
 	}
 

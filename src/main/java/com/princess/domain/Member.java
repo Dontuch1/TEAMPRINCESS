@@ -94,4 +94,5 @@ public class Member {
 	
 	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
+	
 }
