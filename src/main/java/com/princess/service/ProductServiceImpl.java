@@ -7,9 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,15 +57,15 @@ public class ProductServiceImpl implements ProductService {
 
 	public void deleteProduct(Product product) {
 		Product findProduct = productRepo.findById(product.getPNo()).get();
-		
 		findProduct.setDisplay(Display.N);
+		productRepo.save(findProduct);
 	}
 
 	public Product getProduct(Product product) {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	public Page<Product> getProductList(String type, Search search) {
+	public Page<Product> getProductList(String type, Search search, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		
 		QProduct qProduct = QProduct.product;
@@ -83,25 +81,11 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
 		}
 		
-		Pageable pageable = PageRequest.of(0, 12, Sort.Direction.DESC, "pNo");
+		builder.and(qProduct.display.eq(Display.Y));
+		
+		//Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 		
 		return productRepo.findAll(builder, pageable);
 	}
 
-//	public List<Product> getProductList(Search search) {
-//		
-//		BooleanBuilder builder = new BooleanBuilder();
-//		
-//		QProduct qProduct = QProduct.product;
-//
-//	    if (search.getSearchCondition().equals("TITLE")) {
-//	        builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
-//	    } else if (search.getSearchCondition().equals("CONTENT")) {
-//	        builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
-//	    } else if (search.getSearchCondition().equals("ID")) {
-//	        builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
-//	    }
-//
-//	    return (List<Product>) productRepo.findAll(builder);
-//	}
 }

@@ -3,18 +3,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>🥕당근나라 번개공주</title>
 <style type="text/css">
-.scroll::-webkit-scrollbar { /* 스크롤 바 숨김 */
-	display: none;
-}
-
-.scroll_mobile {
-	overflow-y: auto; /* 세로 스크롤바만 생성*/
-}
-
-.scroll {
-	-ms-overflow-style: none; /* 인터넷 익스플로러 */
-	scrollbar-width: none; /* 파이어폭스 */
-}
 </style>
 </head>
 <body th:align="center">
@@ -24,7 +12,8 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div th:align="right">
-				<a style="margin: 40px 40px 0 0;"type="button" class="btn btn-outline-dark flex-shrink-0"
+				<a style="margin: 40px 40px 0 0;" type="button"
+					class="btn btn-outline-dark flex-shrink-0"
 					onclick="location.href='/product/insertProduct'">상품 등록</a>
 			</div>
 			<!-- 검색	 종료 -->
@@ -60,30 +49,18 @@
 					</div>
 				</div>
 			</div>
-			<br> <br>
-			<hr>
-			<br>
+
+			<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+				<a th:if="${page != nowPage}"
+					th:href="@{/product/getProductList?type=prod(page=${page - 1})}"
+					th:text="${page}"> </a>
+				<strong th:if="${page == nowPage}" th:text="${page}"
+					style="color: red"></strong>
+			</th:block>
 		</div>
 	</div>
 
-	<br>
 </body>
 <script type="text/javascript">
-	$(document).ready(function() {
-		console.log("시작");
-		//window는 "#searchPopup"등 으로 스크롤 주체로 변경가능
-		$('#product-main-view').scroll(function() {
-			var scrollTop = $('#product-main-view').scrollTop();
-			var innerHeight = $('#product-main-view').innerHeight();
-			var scrollHeight = $('#product-main-view').prop('scrollHeight');
-			if (scrollTop + innerHeight >= scrollHeight) {
-				moreData();
-			}
-		});
-	});
-	
-	function moreData() {
-		href.location="";
-	}
 </script>
 </html>

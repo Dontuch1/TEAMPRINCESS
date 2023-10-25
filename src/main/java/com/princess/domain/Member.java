@@ -59,7 +59,7 @@ public class Member {
 	private YorN agree;
 	
 //	@ColumnDefault("'1'")
-	private int deposit = 1;
+	private int deposit = 0;
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")

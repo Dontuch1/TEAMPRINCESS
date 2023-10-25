@@ -11,12 +11,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<!-- Page content-->
 			<div class="container-fluid">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<hr>
-				<br>
-				<h1>제품 상세 (중고)</h1>
-				<br>
-				<hr>
-				<br>
 				<section class="py-5">
 		            <div class="container px-4 px-lg-5 my-5">
 		                <div class="row gx-4 gx-lg-5 align-items-center">
@@ -42,11 +36,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				<hr>
 				<br>
 				<div th:align="center">
-					<button th:attr="style=${#authentication.principal.username == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
-						onclick="location.href='/product/deleteProduct'">삭제</button>
-					&nbsp;&nbsp;&nbsp;
-					<button type="button" class="btn btn-outline-dark flex-shrink-0"
-						onclick="location.href='/product/getProductList'">목록</button>
+					<a th:attr="style=${#authentication.principal.username == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
+						th:href=@{/product/deleteProduct(pNo=${product.pNo})}>삭제</a>
+					<a type="button" class="btn btn-outline-dark flex-shrink-0"
+						onclick="location.href='/product/getProductList?type=prod'">목록</a>
 				</div>
 				<div style="height: 30px;"></div>
 				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
