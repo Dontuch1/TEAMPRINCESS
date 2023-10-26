@@ -12,7 +12,7 @@ import com.princess.domain.Board;
 public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
 
 	@Query("SELECT b FROM Board b")
-	Page<Board> getBoardList(@Param("Board") Pageable pageable);
+	Page<Board> getBoardList(Pageable pageable);
 
 
 
