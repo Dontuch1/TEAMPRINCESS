@@ -26,7 +26,11 @@ import lombok.ToString;
 @Data
 @ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
 @Entity
+<<<<<<< HEAD
 public class Member{
+=======
+public class Member {
+>>>>>>> refs/heads/hoy
 	
 	@Id
 	private String id;
