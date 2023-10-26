@@ -29,7 +29,7 @@ public class MyPageController {
 
 	@RequestMapping("/myPageMain")
 	public void myPageMain(Model model, @RequestParam(name = "id") String id, Member member,
-			@PageableDefault(page = 0, size = 10,sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
+			@PageableDefault(page = 0, size = 10, sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		member.setId(id);
 
@@ -77,6 +77,7 @@ public class MyPageController {
 		int startPage = Math.max(nowPage - 4, 1);
 		int endPage = Math.min(nowPage + 5, productList.getTotalPages());
 
+		model.addAttribute("userPage", myService.getMember(member));
 		model.addAttribute("productList", productList);
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
@@ -106,6 +107,7 @@ public class MyPageController {
 		model.addAttribute("wishList", myService.getLikeWishList(member));
 
 	}
+
 	@GetMapping("/myBuyList")
 	public void myBuyList(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
 		member.setId(securityUser.getUsername());
