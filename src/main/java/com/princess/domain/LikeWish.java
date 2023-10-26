@@ -26,7 +26,7 @@ import lombok.ToString;
 public class LikeWish {
 	
 	@Id @GeneratedValue
-	private Long likeSeq;
+	private Long lNo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -39,6 +39,10 @@ public class LikeWish {
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
+	
+	@Column(nullable = false, updatable = false)
+	private Long pNo;
+	
 	
 	// 연관관계 설정
 	
