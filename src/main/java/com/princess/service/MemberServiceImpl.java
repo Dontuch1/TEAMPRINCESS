@@ -30,7 +30,6 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
-
 	public void getMemberList(Member member) {
 
 	}

@@ -30,7 +30,7 @@ table {
 }
 
 th {
-	background-color: #d3d3d3;
+	background-color: white;
 	border-top: 3px solid #727272;
 }
 
@@ -78,6 +78,15 @@ a {
 	text-decoration-line: none;
 }
 
+      .scroll::-webkit-scrollbar { /* 스크롤 바 숨김 */
+        display: none;
+      }
+      .scroll {
+        overflow-y:auto;
+        height: 1000px; /* 세로 스크롤바만 생성*/
+      }
+      
+
 /* wrapper */
 #wrapper {
 	justify-content: center;
@@ -103,13 +112,10 @@ a {
 }
 </style>
 
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
 <link th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
-<body th:align="center">
+<body th:align="center" style="width:100%; overflow-x:hidden;  overflow-y:hidden;">
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
@@ -117,60 +123,40 @@ a {
 			<div class="container-fluid">
 
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<div id="wrapper">
+				<div id="wrapper"   class="scroll" >
 					<div class="box box2">
 						<h2>게시판</h2>
 
 						<hr class="hr1" noshade>
 
-						<form>
-							<span> ▷ 총 4개의 게시물이 있습니다. </span> <span class="right"> <span
-								class="grey" id="strong">SELECT</span> <select>
-									<option value="제목" name="제목">제목</option>
-									<option value="글쓴이" name="글쓴이">글쓴이</option>
-							</select> <input type="text"> <input type="button" name="검색"
-								class="gradient" value="검색">
+						<form th:action="@{/board/getBoardList}" method="post">
+							<span> ▷ 총 4개의 게시물이 있습니다. </span> 
+							<span class="right"> <span class="grey" id="strong">SELECT</span> 
+						<select name="searchCondition">
+							<option value="제목" name="제목">제목</option>
+							<option value="글쓴이" name="글쓴이">글쓴이</option>
+						</select> 
+							<input name="searchKeyboard" type="text"> 
+							<input type="submit" name="검색"	class="gradient" value="검색">
 							</span>
 						</form>
-
-						<br>
 						<table>
 							<tr>
-								<th>번호</th>
-								<th>제목</th>
-								<th>글쓴이</th>
-								<th>일시</th>
-								<th>조회수</th>
+								<th class="center">번호</th>
+								<th class="center">제목</th>
+								<th class="center">글쓴이</th>
+								<th class="center">일시</th>
+								<th class="center">조회수</th>
 							</tr>
-							<tr>
-								<td class="center">1</td>
-								<td class="left"><a th:href="@{/board/getBoard}">게시글 1 입니다.</a></td>
-								<td class="center">강</td>
-								<td class="center">2023-10-18</td>
-								<td class="center">15</td>
-							</tr>
-							<tr>
-								<td class="center">2</td>
-								<td class="left">게시글 2 입니다.</td>
-								<td class="center">호영</td>
-								<td class="center">2023-10-18</td>
-								<td class="center">15</td>
-							</tr>
-							<tr>
-								<td class="center">3</td>
-								<td class="left">게시글 3 입니다.</td>
-								<td class="center">영은</td>
-								<td class="center">2023-10-18</td>
-								<td class="center">15</td>
-							</tr>
-							<tr>
-								<td class="center">4</td>
-								<td class="left">게시글 4 입니다.</td>
-								<td class="center">지연</td>
-								<td class="center">2023-10-18</td>
-								<td class="center">15</td>
+							<tr th:each="board, state : ${boardList}">
+								<td class="center" th:text="${state.count}"></td>
+								<td class="left"><a th:href="@{/board/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
+								<td class="center" th:text="${board.memberId}"></td>
+								<td class="center" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}"></td>
+								<td class="center" th:text="${board.cnt}"></td>
 							</tr>
 						</table>
+						
 						<br>
 						<hr>
 						<br> <a th:href="@{/board/insertBoard}">게시글 작성</a> <br>
@@ -186,8 +172,20 @@ a {
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+    console.log("시작");
+      //window는 "#searchPopup"등 으로 스크롤 주체로 변경가능
+      $('#mainbox').scroll(function(){
+        var scrollTop = $('#mainbox').scrollTop();
+        var innerHeight = $('#mainbox').innerHeight();
+        var scrollHeight = $('#mainbox').prop('scrollHeight');
+        if(scrollTop + innerHeight >= scrollHeight) {
+          moreData();
+        }
+      });
+    });
+ 
+</script>
 </html>
