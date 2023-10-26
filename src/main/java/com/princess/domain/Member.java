@@ -1,6 +1,5 @@
 package com.princess.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,7 @@ import lombok.ToString;
 @Data
 @ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
 @Entity
-public class Member implements Serializable{
+public class Member{
 	
 	@Id
 	private String id;

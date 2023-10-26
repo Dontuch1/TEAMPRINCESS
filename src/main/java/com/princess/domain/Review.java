@@ -15,10 +15,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import lombok.Data;
-import lombok.ToString;
+import com.princess.domain.CheckCondition.Rating;
 
-import com.princess.domain.CheckCondition.Rating;;
+import lombok.Data;
+import lombok.ToString;;
 
 @Data
 @ToString (exclude = {"reviewId", "buyId", "pNo"})

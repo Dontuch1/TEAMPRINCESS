@@ -38,10 +38,10 @@ public class ProductController {
 		int nowPage = productList.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage - 4, 1);
 		int endPage = Math.min(nowPage + 5, productList.getTotalPages());
-		System.out.println(productList);
-		System.out.println(nowPage);
-		System.out.println(startPage);
-		System.out.println(endPage);
+		/*
+		 * System.out.println(productList); System.out.println(nowPage);
+		 * System.out.println(startPage); System.out.println(endPage);
+		 */
 
 		model.addAttribute("productList", productList);
 		model.addAttribute("nowPage", nowPage);
