@@ -17,6 +17,7 @@ import com.princess.config.SecurityUser;
 import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
+import com.princess.domain.Review;
 import com.princess.service.MypageService;
 
 @Controller
@@ -27,8 +28,15 @@ public class MyPageController {
 	MypageService myService;
 
 	@RequestMapping("/myPageMain")
-	public void myPageMain() {
+	public void myPageMain(Model model, @RequestParam(name = "id") String id, Member member,
+			@PageableDefault(page = 0, size = 10,sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
 
+		member.setId(id);
+
+		model.addAttribute("userPage", myService.getMember(member));
+		model.addAttribute("boardList", myService.getBoardList(pageable, member));
+		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
+		model.addAttribute("productList", myService.getProductList(pageable, member));
 	}
 
 	@GetMapping("/myDetails")
@@ -76,12 +84,33 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myReviewList")
-	public void myReviewList() {
+	public void myReviewList(Model model, @RequestParam(name = "id") String id, Review review, Member member,
+			@PageableDefault(page = 0, size = 10, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
+		member.setId(id);
+		Page<Review> reviewListPage = myService.getReviewList(pageable, member);
+		int nowPage = reviewListPage.getPageable().getPageNumber() + 1;
+		int startPage = Math.max(nowPage - 4, 1);
+		int endPage = Math.min(nowPage + 5, reviewListPage.getTotalPages());
 
+		model.addAttribute("reviewList", reviewListPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 	}
 
 	@GetMapping("/myWishList")
-	public void myWishList() {
+	public void myWishList(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
+		System.out.println("/myWishList에서 매개변수로 넘어온 멤버 //" + member.toString());
+		member.setId(securityUser.getUsername());
+		System.out.println("/myWishList에서 setId한 멤버 //" + member.toString());
+		model.addAttribute("wishList", myService.getLikeWishList(member));
+
+	}
+	@GetMapping("/myBuyList")
+	public void myBuyList(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
+		member.setId(securityUser.getUsername());
+		System.out.println("/myBuyList에서 setId한 멤버 //" + member.toString());
+		model.addAttribute("buyList", myService.getBuyList(member));
 
 	}
 

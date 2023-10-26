@@ -41,7 +41,7 @@ public class Report {
 	private String rptCon;
 	
 	@Temporal(TemporalType.DATE)
-	@ColumnDefault("sysdate")
+	@ColumnDefault("SYSDATE")
 	private Date regdate = new Date();
 	
 	// 연관관계 설정

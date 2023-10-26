@@ -10,65 +10,96 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h4 class="mt-4"><span th:text="${#authentication.principal.username}">id</span>님의 마이페이지</h4>
-				<br
-				<h4>&nbsp; 내 상품</h4>
+				<h4 class="mt-4">
+					<span th:text="${userPage.nickName}" style="font-weight: bold">id</span>님의
+					마이페이지
+				</h4>
+				<br>
+				<h5>&nbsp; 🛍️ 최근 업로드한 상품</h5>
 				<div id="mypage-main-view">
-					<div class="card">
-						<div class="box">
-							<img
-								src="https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8636429%2F86364296072.jpg&type=f372_372"
-								class="card-img-top" alt="..." style="max-height: 250px">
+					<div th:if="${productList.empty}">
+						<p>업로드한 상품이 없습니다.</p>
+					</div>
+					<div class="card" th:each="product, iterStat : ${productList}"
+						th:if="${iterStat.index < 2}">
+						<div class="card-img-square">
+							<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
+								th:src="@{${product.upload}}" class="card-img-top" alt="..."
+								onerror="this.src='https://buly.kr/9BSKdMj'"></a>
 						</div>
 						<div class="card-body">
-							<h5 class="card-title">갤럭시 버즈 프로2</h5>
-							<h5 class="card-text">80000원</h5>
-							<p class="card-text">디지털/가전 2023-10-19</p>
+							<h5 class="card-title" th:text="${product.title}"></h5>
+							<h5 class="card-text" th:text="${product.price}">원</h5>
+							<p class="card-text" th:text="${product.pCategory}"></p>
 							<a href="#" class="btn btn-secondary">판매완료</a>
 						</div>
 					</div>
-					<div class="card">
-						<img
-							src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fdnvefa72aowie.cloudfront.net%2Forigin%2Farticle%2F202202%2F1FE08DC0147B5DCF21B44C9CCEABA56ADF24C3008884CDA08CEAE567C92F4BC8.jpg%3Fq%3D95%26s%3D1440x1440%26t%3Dinside&type=a340"
-							class="card-img-top" alt="..." style="max-height: 250px">
-						<div class="card-body">
-							<h5 class="card-title">코듀로이 패딩</h5>
-							<h5 class="card-text">15000원</h5>
-							<p class="card-text">의류/잡화 2023-10-17</p>
-
-							<a href="#" class="btn btn-primary">판매중</a>
-						</div>
+					<div th:if="${productList.content.size() == 1}">
+						<div></div>
 					</div>
-
 					<div>
-						<h4>최근 게시글</h4>
+						<h5>📜 최근 게시글</h5>
+
 						<table class="table">
 							<thead>
 								<tr>
+									<th>No.</th>
 									<th>category</th>
 									<th>title</th>
+									<th>like</th>
 									<th>date</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>우리만나요</td>
-									<td>오늘 같이 스타듀밸리 하실 분</td>
-									<td>2023-10-16</td>
-								</tr>
-								<tr>
-									<td>잃어버렸어요</td>
-									<td>신림역 7번출구 앞에서 에어팟 잃어버렸어요</td>
-									<td>2023-10-14</td>
-								</tr>
-								<tr>
-									<td>궁금해요</td>
-									<td>신림동 정전인가요?</td>
-									<td>2023-10-12</td>
+								<div th:if="${productList.empty}">
+									<tr>
+										<td colspan="5">게시글이 없습니다.</td>
+									</tr>
+								</div>
+								<tr th:each="board, iterStat: ${boardList}"
+									th:if="${iterStat.index < 5}">
+									<td th:text="${board.postNum}"/>
+									<td th:switch="${board.cmCategory.toString()}">
+										<span th:case="NOTICE">🚨공지사항</span>
+										<span th:case="LOST">😥잃어버렸어요 </span> 
+										<span th:case="FOOD">🍔여기맛나요</span> 
+										<span th:case="TMI">🔉알려드려요</span> 
+										<span th:case="QNA">❓궁금해요</span>
+										<span th:case="MEET">🙋‍♀우리만나요</span></td>
+										<td><a style="text-decoration: none; color: #333"
+										th:href="@{/board/getBoard(postNum=${board.postNum})}"
+										th:text="${board.title}" />
+									<td th:text="${board.great}">
+									<td th:text="${board.regdate}">
 								</tr>
 							</tbody>
 						</table>
+						<br>
+						<h5>🎭 받은 리뷰</h5>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Review</th>
+									<th>Date</th>
+									<th>Thumb</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="review: ${reviewList}">
+									<td th:text="${review.reviewNo}">
+									<td th:text="${review.content}">
+									<td th:text="${review.regdate}">
+									<td th:switch="${review.review.toString()}">
+										<span th:case="UP">👍</span>
+										<span th:case="DOWN">👎</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
 					</div>
+
 				</div>
 			</div>
 		</div>
