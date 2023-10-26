@@ -14,43 +14,28 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">내 리뷰</h1>
+				<h3 class="mt-4">🕶️내 리뷰</h3>
 				<table class="table">
 					<thead>
 						<tr>
 							<th>No.</th>
+							<th>Buyer</th>
 							<th>Review</th>
 							<th>Date</th>
+							<th>Thumb</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>물건 상태가 좋아요.</td>
-							<td>2023-10-16</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>판매자분이 제가 있는 곳까지 와서 거래했어요! 매우 친절쓰</td>
-							<td>2023-10-15</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>쓴 흔적이 좀 많은데.. 그래도 그냥 쓸만 해요</td>
-							<td>2023-10-12</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>잘 쓸게요~</td>
-							<td>2023-10-11</td>
+						<tr th:each="review: ${reviewList}">
+							<td th:text="${review.reviewNo}">
+							<td th:text="${review.buyer}">
+							<td th:text="${review.content}">
+							<td th:text="${review.regdate}">
+							<td th:switch="${review.review.toString()}"><span
+								th:case="UP">👍</span> <span th:case="DOWN">👎</span></td>
 						</tr>
 					</tbody>
 				</table>
-				<p style="color: blue">1 2 3 4 5</p>
-				<p style="color: white">Make sure to keep all page content
-					within the The top navbar is optional, and just for demonstration.
-					Just create an element with the ID which will toggle the menu when
-					clicked.clicked.clicked.</p>
 			</div>
 		</div>
 	</div>

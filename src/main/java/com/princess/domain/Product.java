@@ -82,7 +82,7 @@ public class Product {
 	@OneToMany(mappedBy = "pNo") // Auction
 	private List<Auction> auctionList = new ArrayList<Auction>();
 	
-	@OneToMany(mappedBy = "salesNo") // Sales
+	@OneToMany(mappedBy = "pNo") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
 	@OneToMany(mappedBy = "pNo") // Review

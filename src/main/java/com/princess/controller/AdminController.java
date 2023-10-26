@@ -10,21 +10,21 @@ public class AdminController {
 
 	@RequestMapping("/adminMain")
 	public void adminMain() {
-	
+
 	}
-	
-	
+
 	@GetMapping("/getMemberList")
 	public void getMemberList() {
-		
+
 	}
-	
+
 	@GetMapping("/getReportList")
 	public void getReportList() {
-	}	
-		//로그아웃
+	}
+
+	// 로그아웃
 	@RequestMapping("/logout")
-	public void logout(){	
-		
+	public void logout() {
+
 	}
 }
