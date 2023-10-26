@@ -8,11 +8,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.princess.domain.Board;
+import com.princess.domain.Member;
 
 public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
 
 	@Query("SELECT b FROM Board b")
 	Page<Board> getBoardList(Pageable pageable);
+	
+	Page<Board> findByUserId(Member member,Pageable pageable);
 
 
 

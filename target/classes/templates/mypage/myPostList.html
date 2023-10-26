@@ -10,38 +10,41 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">내 커뮤니티 게시글</h1>
+				<h3 class="mt-4">🏃‍♀️ 내 커뮤니티 게시글</h3>
+				<br>
+
 				<table class="table">
 					<thead>
 						<tr>
+							<th>No.</th>
 							<th>category</th>
+							<th>writer</th>
 							<th>title</th>
 							<th>like</th>
 							<th>date</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>우리만나요</td>
-							<td>오늘 같이 스타듀밸리 하실 분</td>
-							<td>5</td>
-							<td>2023-10-16</td>
+						<tr th:each="board: ${boardList}">
+							<td th:text="${board.postNum}">
+							<td th:text="${board.cmCategory}">
+							<td th:text="${board.userId.nickName}">
+							<td><a style="text-decoration: none; color: #333"
+								th:href="@{/board/getBoard(postNum=${board.postNum})}"
+								th:text="${board.title}" />
+							<td th:text="${board.great}">
+							<td th:text="${board.regdate}">
 						</tr>
-						<tr>
-							<td>잃어버렸어요</td>
-							<td>신림역 7번출구 앞에서 에어팟 잃어버렸어요</td>
-							<td>2</td>
-							<td>2023-10-14</td>
-						</tr>
-						<tr>
-							<td>궁금해요</td>
-							<td>신림동 정전인가요?</td>
-							<td>3</td>
-							<td>2023-10-12</td>
-						</tr>
-					</tbody>
 				</table>
-				<p style="color: blue">1 2 3 4 5</p>
+
+				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+					<a th:if="${page != nowPage}"
+						th:href="@{/mypage/myPostList(id=${#authentication.principal.username}, page=${page - 1})}"
+						th:text="${page}"> </a>
+
+					<strong th:if="${page == nowPage}" th:text="${page}"
+						style="color: red"></strong>
+				</th:block>
 			</div>
 		</div>
 	</div>

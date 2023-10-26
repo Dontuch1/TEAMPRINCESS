@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.PCategory;
@@ -25,6 +26,7 @@ import com.princess.domain.CheckCondition.YorN;
 import lombok.Data;
 import lombok.ToString;
 
+@DynamicInsert
 @Data
 @ToString (exclude = {"salesId", "auctionList", "salesList", "reviewList"})
 @Entity
@@ -43,7 +45,7 @@ public class Product {
 	private PCategory pCategory;
 	
 	@ManyToOne
-	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	@JoinColumn(name = "MEMBER_ID", updatable = false)
 	private Member salesId;
 	
 	@Column(nullable = false)
