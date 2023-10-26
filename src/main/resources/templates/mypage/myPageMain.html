@@ -10,12 +10,18 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
+<<<<<<< HEAD
 				<h4 class="mt-4">
 					<span th:text="${userPage.nickName}" style="font-weight: bold">id</span>님의
 					마이페이지
 				</h4>
 				<br>
 				<h5>&nbsp; 🛍️ 최근 업로드한 상품</h5>
+=======
+				<h4 class="mt-4"><span th:text="${#authentication.principal.username}">id</span>님의 마이페이지</h4>
+				<br>
+				<h4>&nbsp; 내 상품</h4>
+>>>>>>> refs/heads/hoy
 				<div id="mypage-main-view">
 					<div th:if="${productList.empty}">
 						<p>업로드한 상품이 없습니다.</p>
