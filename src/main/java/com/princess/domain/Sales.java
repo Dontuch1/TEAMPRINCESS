@@ -1,8 +1,6 @@
 package com.princess.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,7 +21,7 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString (exclude = {"salesId", "salesNo", "reviewList"})
+@ToString (exclude = {"buyer", "pNo"})
 @Entity
 public class Sales {
 	
@@ -33,35 +30,32 @@ public class Sales {
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
-	private Member salesId;
+	private Member buyer;
 	
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_PNO", nullable = false, updatable = false)
-	private Product salesNo;
+	private Product pNo;
 	
 	private String thunderId;
 	
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private YorN cmt;
+	private YorN rated;
 	
 	@Temporal(TemporalType.DATE)
-	@ColumnDefault("sysdate")
-	private Date salesRegdate = new Date();
+	@ColumnDefault("SYSDATE")
+	private Date regdate = new Date();
 	
 	// 연관관계 설정
 	
-	@OneToMany (mappedBy = "buyId") // Review
-	private List<Review> reviewList = new ArrayList<Review>();
-	
 	public void setSalesId(Member id) { // Member
-		this.salesId = id;
-		salesId.getSalesList().add(this);
+		this.buyer = id;
+		buyer.getSalesList().add(this);
 	}
 	
 	public void setSalesNo(Product pNo) { // Product
-		this.salesNo = pNo;
-		salesNo.getSalesList().add(this);
+		this.pNo = pNo;
+		pNo.getSalesList().add(this);
 	}
 }

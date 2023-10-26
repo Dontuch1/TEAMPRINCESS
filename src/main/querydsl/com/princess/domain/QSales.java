@@ -22,15 +22,13 @@ public class QSales extends EntityPathBase<Sales> {
 
     public static final QSales sales = new QSales("sales");
 
-    public final EnumPath<CheckCondition.YorN> cmt = createEnum("cmt", CheckCondition.YorN.class);
+    public final QMember buyer;
 
-    public final ListPath<Review, QReview> reviewList = this.<Review, QReview>createList("reviewList", Review.class, QReview.class, PathInits.DIRECT2);
+    public final QProduct pNo;
 
-    public final QMember salesId;
+    public final EnumPath<CheckCondition.YorN> rated = createEnum("rated", CheckCondition.YorN.class);
 
-    public final QProduct salesNo;
-
-    public final DatePath<java.util.Date> salesRegdate = createDate("salesRegdate", java.util.Date.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final StringPath thunderId = createString("thunderId");
 
@@ -54,8 +52,8 @@ public class QSales extends EntityPathBase<Sales> {
 
     public QSales(Class<? extends Sales> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.salesId = inits.isInitialized("salesId") ? new QMember(forProperty("salesId")) : null;
-        this.salesNo = inits.isInitialized("salesNo") ? new QProduct(forProperty("salesNo"), inits.get("salesNo")) : null;
+        this.buyer = inits.isInitialized("buyer") ? new QMember(forProperty("buyer")) : null;
+        this.pNo = inits.isInitialized("pNo") ? new QProduct(forProperty("pNo"), inits.get("pNo")) : null;
     }
 
 }

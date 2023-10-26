@@ -26,13 +26,18 @@
 						<div class="card-body">
 							<h5 class="card-title" th:text="${product.title}"></h5>
 							<h5 class="card-text" th:text="${product.price}">원</h5>
-							<p class="card-text" th:text="${product.pCategory}"></p>
+							<p class="card-text" th:switch="${product.pCategory.toString()}">
+								<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
+								<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
+								<span th:case="ETC">기타</span>
+							</p>
 							<a href="#" class="btn btn-secondary">판매완료</a>
 						</div>
 					</div>
 				</div>
 				<hr>
-				<th:block th:align="center" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+				<th:block th:align="center"
+					th:each="page : ${#numbers.sequence(startPage, endPage)}">
 					<a th:if="${page != nowPage}"
 						th:href="@{/mypage/myProductList(id=${#authentication.principal.username}, page=${page - 1})}"
 						th:text="${page}"> </a>
@@ -40,7 +45,12 @@
 					<strong th:if="${page == nowPage}" th:text="${page}"
 						style="color: red"></strong>
 				</th:block>
-				<br><br><br><br><br><br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 
 			</div>
 		</div>

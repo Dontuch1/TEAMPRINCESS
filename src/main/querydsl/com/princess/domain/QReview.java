@@ -22,19 +22,19 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review1 = new QReview("review1");
 
-    public final QSales buyId;
+    public final StringPath buyer = createString("buyer");
 
     public final StringPath content = createString("content");
 
     public final QProduct pNo;
 
-    public final EnumPath<CheckCondition.Rating> review = createEnum("review", CheckCondition.Rating.class);
+    public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
-    public final QMember reviewId;
+    public final EnumPath<CheckCondition.Rating> review = createEnum("review", CheckCondition.Rating.class);
 
     public final NumberPath<Long> reviewNo = createNumber("reviewNo", Long.class);
 
-    public final DatePath<java.util.Date> reviewRegdate = createDate("reviewRegdate", java.util.Date.class);
+    public final QMember seller;
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -54,9 +54,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.buyId = inits.isInitialized("buyId") ? new QSales(forProperty("buyId"), inits.get("buyId")) : null;
         this.pNo = inits.isInitialized("pNo") ? new QProduct(forProperty("pNo"), inits.get("pNo")) : null;
-        this.reviewId = inits.isInitialized("reviewId") ? new QMember(forProperty("reviewId")) : null;
+        this.seller = inits.isInitialized("seller") ? new QMember(forProperty("seller")) : null;
     }
 
 }
