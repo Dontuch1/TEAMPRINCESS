@@ -1,5 +1,6 @@
 package com.princess.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ import lombok.ToString;
 @Data
 @ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
 @Entity
-public class Member {
+public class Member implements Serializable{
 	
 	@Id
 	private String id;
@@ -59,7 +60,7 @@ public class Member {
 	private YorN agree;
 	
 //	@ColumnDefault("'1'")
-	private int deposit = 1;
+	private int deposit = 0;
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
@@ -74,7 +75,7 @@ public class Member {
 	@OneToMany(mappedBy = "salesId") // Product
 	private List<Product> productList = new ArrayList<Product>();
 	
-	@OneToMany(mappedBy = "userId") // Board
+	@OneToMany(mappedBy = "userId"	) // Board
 	private List<Board> boardList = new ArrayList<Board>();
 	
 	@OneToMany(mappedBy = "auctionId") // Auction
@@ -94,4 +95,5 @@ public class Member {
 	
 	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
+	
 }

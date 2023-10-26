@@ -12,11 +12,12 @@
 				<div th:insert="~{fragment/header :: header}"></div>
 				<!-- Page content-->
 				<div class="container-fluid">
-					<h1 class="mt-4">내 정보</h1>
+				<h3 class="mt-4">ℹ️ 회원정보 수정</h3>
+				<br>
 					
 					<form th:action="@{/mypage/updateDetails}" method="post"
 						id="myDetailForm">
-						<br> <br>
+
 						<div class="mb-3 row">
 							<label for="myId" class="col-sm-2 col-form-label">아이디</label>
 							<div class="col-sm-10">
@@ -24,6 +25,7 @@
 									name="id" id="myId" th:value="${loginUser.id}">
 							</div>
 						</div>
+
 						<div class="mb-3 row">
 							<label for="nickname" class="col-sm-2 col-form-label">닉네임</label>
 							<div class="col-sm-10">
@@ -31,18 +33,19 @@
 									name="nickName" th:value="${loginUser.nickName}">
 							</div>
 						</div>
+
 						<div class="mb-3 row">
 							<label for="birth" class="col-sm-2 col-form-label">생년월일</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control-plaintext" id="birth"
+								<input type="date" class="form-control " id="birth"
 									th:value="${loginUser.birth}">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="email" class="col-sm-2 col-form-label">이메일</label>
 							<div class="col-sm-10">
-								<input type="text" readonly class="form-control-plaintext"
-									id="email" th:value="${loginUser.email}" name="email">
+								<input type="text" class="form-control" id="email"
+									th:value="${loginUser.email}" name="email">
 							</div>
 						</div>
 						<div class="mb-3 row">
@@ -62,10 +65,10 @@
 						<div class="mb-3 row">
 							<label for="deposit" class="col-sm-2 col-form-label">예치금</label>
 							<div class="col-sm-10">
-								<input type="text" id="deposit" style="border: 0; width: 30px"
-									th:value="${loginUser.deposit}" readonly name="deposit">
-								&nbsp; <a href="/mypage/myDeposit"
-									class="btn btn-outline-warning btn-sm">충전하기</a>
+								<input type="text" id="deposit" style="border: 0; width: 100px; padding-left: 0; display: inline;"
+									th:value="${loginUser.deposit}" readonly name="deposit"
+									class="form-control"> &nbsp; <a
+									href="/mypage/myDeposit" class="btn btn-outline-warning btn-sm">충전하기</a>
 
 							</div>
 						</div>
@@ -78,14 +81,23 @@
 									readonly id="regdate">
 							</div>
 						</div>
+						<div class="mb-3 row">
+							<div class="col-sm-10">
+								<input class="form-check-input" type="checkbox" value="Y"
+									id="defaultCheck1" name="agree" checked ><label class="col-sm-10" for="defaultCheck1">&nbsp;이메일
+								수신동의</label>
+							</div>
+							
 
-						<input class="form-check-input" type="checkbox" value="Y"
-							id="defaultCheck1" name="agree" /> <label
-							class="form-check-label" for="defaultCheck1"> 이메일 수신동의 </label>
+						</div>
 						<button class="btn btn-primary" type="submit">수정</button>
-					</form> 
+					</form>
+
+
 
 				</div>
+
+
 			</div>
 		</div>
 	</div>
@@ -94,5 +106,3 @@
 
 
 </html>
-
-

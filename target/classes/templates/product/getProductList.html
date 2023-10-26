@@ -1,67 +1,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>상품 리스트</title>
+<title>🥕당근나라 번개공주</title>
+<style type="text/css">
+</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
+		<!-- Page content wrapper-->
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
-			<div class="container-fluid">
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<hr>
-				<br>
-				<h1>제품 목록</h1>
-				<br>
-				<hr>
-				<!-- 검색시작 -->
-				<br>
-				<form th:action="@{/product/getProductList}" method="post">
-					<table th:align="right" th:cellpadding="0" th:cellspacing="0"
-						th:width="700">
-						<tr>
-							<td align="right"><select id="searchBox"
-								name="searchCondition">
-									<option value="TITLE">제목</option>
-									<option value="CONTENT">내용</option>
-									<option value="NICKNAME">닉네임</option>
-							</select> <input name="searchKeyword" type="text" /> <input type="submit"
-								value="검색" /></td>
-						</tr>
-					</table>
-				</form>
-				<br>
-				<hr>
-				<!-- 검색	 종료 -->
-				<br>
-				<div id="product-main-view" th:align="center">
-					<div th:each="product, state : ${productList}" class="card"
-						style="width: 250px; margin: 20px;">
+			<div th:align="right">
+				<a style="margin: 40px 40px 0 0;" type="button"
+					class="btn btn-outline-dark flex-shrink-0"
+					onclick="location.href='/product/insertProduct'">상품 등록</a>
+			</div>
+			<!-- 검색	 종료 -->
+			<br>
+
+			<div id="product-main-view" th:align="center"
+				style="justify-content: center;">
+				<div th:each="product, state : ${productList}" class="card"
+					style="width: 250px; margin-bottom: 40px;">
+					<div
+						style="margin: 0; padding: 0; width: 100%; height: 250px; overflow: hidden;">
+						<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
+							th:src="@{${product.upload}}" class="card-img-top" alt="..."
+							onerror="this.src='/images/carrot.png'"
+							style="width: 100%; height: 100%; object-fit: cover;"></a>
+					</div>
+					<div class="card-body"
+						th:href="@{/product/getProduct(pNo=${product.pNo})}"
+						style="width: 250px;">
 						<div
-							style="margin: 0; padding: 0; width: 100%; height: 250px; overflow: hidden;">
-							<img th:src="@{${product.upload}}" class="card-img-top" alt="..."
-								style="width: 100%; height: 100%; object-fit: cover;">
+							style="width: 218px; overflow: hidden; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+							<a
+								style="font-size: 20; font-weight: bold; text-decoration: none;"
+								class="card-title" th:text="${product.title}"></a>
 						</div>
-						<div class="card-body">
-							<h5 class="card-title" th:text="${product.title}"></h5>
-							<h5 class="card-text" th:text="${product.price}"></h5>
-							<p class="card-text" th:text="${product.pCategory}"></p>
-							<small class="card-text" th:text="${product.salesId.nickName}"></small><br>
-							<small class="card-text"
-								th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small><br>
-							<br> <a href="#" class="btn btn-secondary">거래완료</a>
-						</div>
+						<h5 class="card-text"
+							th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></h5>
+						<br> <small class="card-text"
+							th:text="${product.salesId.nickName}"></small><br> <small
+							class="card-text"
+							th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small><br>
+						<br> <a href="#" class="btn btn-secondary">거래완료</a>
 					</div>
 				</div>
-				<br>
-				<h3>[페] [이] [지] [네] [이] [션]</h3>
-				<br>
-				<hr>
-				<br> <a th:href="@{/product/insertProduct}">제품 등록</a>
-				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
 			</div>
+
+			<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+				<a th:if="${page != nowPage}"
+					th:href="@{/product/getProductList?type=prod(page=${page - 1})}"
+					th:text="${page}"> </a>
+				<strong th:if="${page == nowPage}" th:text="${page}"
+					style="color: red"></strong>
+			</th:block>
 		</div>
 	</div>
+
 </body>
+<script type="text/javascript">
+</script>
 </html>

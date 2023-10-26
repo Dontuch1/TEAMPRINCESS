@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,7 +20,7 @@ public class SecurityConfig {
    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       http.userDetailsService(userDetailsService);
       http.csrf().disable();
-      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList", true);
+      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList?type=prod", true);
       http.logout().logoutUrl("/system/logout");
       http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       

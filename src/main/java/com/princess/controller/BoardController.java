@@ -19,16 +19,18 @@ import com.princess.service.BoardService;
 public class BoardController {
 	
 	@Autowired
-	private BoardService service; 
+	private BoardService boardservice; 
 	
 	@RequestMapping("/getBoardList")
 	public String getBoardList (Model model, Search search) {
 		if(search.getSearchCondition() == null) {
 			search.setSearchCondition("TITLE");
 		} else if(search.getSearchKeyword() == null) {
-			search.setSearchKeyword("");
+			search.setSearchKeyword(" ");
 		}
-		Page<Board> boardList = service.getBoardList(search);
+		Page<Board> boardList = boardservice.getBoardList(search);
+		System.out.println("boardList:"+boardList);
+		System.out.println("hi");
 		model.addAttribute("boardList", boardList);
 		return "board/getBoardList";
 	}
@@ -45,7 +47,7 @@ public class BoardController {
 	
 	@PostMapping("/insertBoard")
 	public String insertBoard(Board board, @RequestParam MultipartFile file) {
-		service.insertBoard(board, file);
+		boardservice.insertBoard(board, file);
 		return "redirect:getBoardList";
 	}
 	

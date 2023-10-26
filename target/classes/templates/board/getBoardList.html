@@ -78,6 +78,15 @@ a {
 	text-decoration-line: none;
 }
 
+      .scroll::-webkit-scrollbar { /* 스크롤 바 숨김 */
+        display: none;
+      }
+      .scroll {
+        overflow-y:auto;
+        height: 1000px; /* 세로 스크롤바만 생성*/
+      }
+      
+
 /* wrapper */
 #wrapper {
 	justify-content: center;
@@ -106,7 +115,7 @@ a {
 <link th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
-<body th:align="center">
+<body th:align="center" style="width:100%; overflow-x:hidden;  overflow-y:hidden;">
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
@@ -114,25 +123,23 @@ a {
 			<div class="container-fluid">
 
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<div id="wrapper">
+				<div id="wrapper"   class="scroll" >
 					<div class="box box2">
 						<h2>게시판</h2>
 
 						<hr class="hr1" noshade>
 
-						<form>
+						<form th:action="@{/board/getBoardList}" method="post">
 							<span> ▷ 총 4개의 게시물이 있습니다. </span> 
 							<span class="right"> <span class="grey" id="strong">SELECT</span> 
-						<select>
+						<select name="searchCondition">
 							<option value="제목" name="제목">제목</option>
 							<option value="글쓴이" name="글쓴이">글쓴이</option>
 						</select> 
-							<input type="text"> 
-							<input type="button" name="검색"	class="gradient" value="검색">
+							<input name="searchKeyboard" type="text"> 
+							<input type="submit" name="검색"	class="gradient" value="검색">
 							</span>
 						</form>
-
-						<br>
 						<table>
 							<tr>
 								<th class="center">번호</th>
@@ -149,6 +156,7 @@ a {
 								<td class="center" th:text="${board.cnt}"></td>
 							</tr>
 						</table>
+						
 						<br>
 						<hr>
 						<br> <a th:href="@{/board/insertBoard}">게시글 작성</a> <br>
@@ -165,4 +173,19 @@ a {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+    console.log("시작");
+      //window는 "#searchPopup"등 으로 스크롤 주체로 변경가능
+      $('#mainbox').scroll(function(){
+        var scrollTop = $('#mainbox').scrollTop();
+        var innerHeight = $('#mainbox').innerHeight();
+        var scrollHeight = $('#mainbox').prop('scrollHeight');
+        if(scrollTop + innerHeight >= scrollHeight) {
+          moreData();
+        }
+      });
+    });
+ 
+</script>
 </html>

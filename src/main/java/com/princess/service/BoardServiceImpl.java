@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.QBoard;
 import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
+import com.querydsl.core.BooleanBuilder;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -40,8 +42,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 	 
 	public Page<Board> getBoardList(Search search) {
-		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "postnum");
-		return boardRepo.getBoardList(pageable);
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		QBoard qboard = QBoard.board;
+		
+		if(search.getSearchCondition().equals("TITLE")) {
+			builder.and(qboard.title.like("%" + search.getSearchKeyword() + "%"));
+		} else if(search.getSearchCondition().equals("CONTENT")) {
+			builder.and(qboard.title.like("%" + search.getSearchKeyword() + "%"));
+		}
+		
+		Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "postNum");
+		System.out.println(pageable.toString());
+		System.out.println(builder.toString());
+		return boardRepo.findAll(builder, pageable);
 	}
 
 	public void updateBoard(Board board) {

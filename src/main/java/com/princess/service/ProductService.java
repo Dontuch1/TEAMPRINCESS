@@ -1,6 +1,7 @@
 package com.princess.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Product;
@@ -16,6 +17,6 @@ public interface ProductService {
 
 	Product getProduct(Product product);
 
-	Page<Product> getProductList(Search search);
+	Page<Product> getProductList(String type, Search search, Pageable pageable);
 
 }
