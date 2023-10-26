@@ -21,50 +21,46 @@ import lombok.Data;
 import lombok.ToString;;
 
 @Data
-@ToString (exclude = {"reviewId", "buyId", "pNo"})
+@ToString(exclude = { "seller", "pNo" })
 @Entity
 public class Review {
-	// 푸시 돼라
-	@Id @GeneratedValue
+
+	@Id
+	@GeneratedValue
 	private Long reviewNo;
-	
+
+	@Column(nullable = false)
+	private String buyer;
+
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
-	private Member reviewId;
-	
-	@ManyToOne
-	@JoinColumn(name = "SALES_SALES_ID", nullable = false, updatable = false)
-	private Sales buyId;
-	
+	private Member seller;
+
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_PNO", nullable = false, updatable = false)
 	private Product pNo;
-	
-	private String content;
-	
-	@Enumerated(EnumType.ORDINAL)
+
 	@Column(nullable = false)
+	private String content;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	@ColumnDefault("UP")
 	private Rating review;
-	
+
 	@Temporal(TemporalType.DATE)
-	@ColumnDefault("sysdate")
-	private Date reviewRegdate = new Date();
-	
+	@ColumnDefault("SYSDATE")
+	private Date regdate = new Date();
+
 	// 연관관계 설정
-	
-	public void getReviewId(Member id) { // Member
-		this.reviewId = id;
-		reviewId.getReviewList().add(this);
+	public void getSellerId(Member id) { // Member
+		this.seller = id;
+		seller.getReviewList().add(this);
 	}
-	
-	public void getBuyId(Sales salesId) { // Sales
-		this.buyId = salesId;
-		buyId.getReviewList().add(this);
-	}
-	
+
 	public void getPNo(Product pNo) { // Product
 		this.pNo = pNo;
 		pNo.getReviewList().add(this);
 	}
-	
+
 }

@@ -4,64 +4,82 @@
 <title>시스템 페이지</title>
 </head>
 <style>
-
 </style>
 <body th:align="center">
 
 	<h2>회원 관리</h2>
-	
- <h4>회원정보를 위해서 정보를 입력해주세요</h4>
+
+	<h4>회원정보를 위해서 정보를 입력해주세요</h4>
+</body>
 <body>
 
 	<div class="container">
-	
-		<form action="/system/register" method="post">
+
+		<form action="/system/register" method="post"></form>
 		<table th:align="center">
-		<tr>
-		
-			<td><label for="name">아이디</label> </td>
-			<td><input type="text" id="id" name="id" placeholder="이름을입력하세요"> </td>
-			</tr>
-		<tr>
-		
-			<td><label for="name">이름</label> </td>
-			<td><input type="text" id="userName" name="userName" placeholder="이름을입력하세요"> </td>
+
+			<tr>
+				<td><label for="name">아이디</label></td>
+				<td><input type="text" id="id" name="id"
+					placeholder="아이디를 입력하세요"></td>
 			</tr>
 
 			<tr>
-			<td><label for="name">닉네임</label> </td>
-			<td><input type="text" id="nickName" name="nickName" placeholder="닉네임을 입력하세요"></td>
-			
+
+				<td><label for="name">닉네임</label></td>
+				<td><input type="text" id="nickname" name="nickname"
+					placeholder="닉네임을 입력하세요"></td>
+			</tr>
+
 			<tr>
-			<td><label for="name">비밀번호</label></td>
-			<td><input type="text" id="password" name="password" placeholder="비밀번호를 입력하세요"></td>
-			
+
+				<td><label for="name">지역</label></td>
+				<td><input type="text" id="location" name="location"
+					placeholder="지역을 입력하세요"></td>
+			</tr>
+
 			<tr>
-			<td><label for="name">생년월일</label></td>
-			<td><input type="date" id="birth" name="birth" placeholder="생년월일을 입력하세요"></td>
-			
+
+				<td><label for="name">이름</label></td>
+				<td><input type="text" id="userName" name="userName"
+					placeholder="이름을입력하세요"></td>
+			</tr>
+
 			<tr>
-			<td><label for="name">이메일</label></td>
-			<td><input type="email" id="email" name="email" placeholder="이메일을 입력하세요"></td>
-			
+				<td><label for="name">생년월일</label></td>
+				<td><input type="date" id="birth" name="birth"
+					placeholder="생년월일을 입력하세요"></td>
 			<tr>
-			<td><label for="name">지역</label></td>
-			<td><input type="text" id="location" name="location" placeholder="지역을 입력하세요"></td>
-			
+				<td><label for="name">전화번호</label></td>
+				<td><input type="text" id="phone" name="phone"
+					placeholder="전화번호를 입력하세요"></td>
 			<tr>
-			<td><label for="name">전화번호</label></td>
-			<td><input type="text" id="phone" name="phone" placeholder="전화번호를 입력하세요"></td>
-			
+				<td><label for="name">비밀번호</label></td>
+				<td><input type="password" id="password" name="password"
+					placeholder="비밀번호를 입력하세요"></td>
 			<tr>
-			<td><input type="checkbox" name="man" value="남자">남자<td>
-			<td><input type="checkbox" name="woman" value="여자">	여자</td>
-			
-            <tr>
-			<td><button type="submit">등록</button></td>
-			<td><button type="submit">삭제</button></td>
-			</table>
-		</form>
-		
+				<td><label for="name">이메일</label></td>
+				<td><input type="email" id="email" name="email"
+					placeholder="이메일을 입력하세요"></td>
+			<tr>
+				<div class="form-check">
+					<td><input class="form-check-input" type="radio"
+						name="flexRadioDefault" id="flexRadioDefault1"> <label
+						class="form-check-label" for="flexRadioDefault1">수신동의 </label></td>
+				</div>
+				<div class="form-check">
+					<td><input class="form-check-input" type="radio"
+						name="flexRadioDefault" id="flexRadioDefault2" checked> <label
+						class="form-check-label" for="flexRadioDefault2">수신 비동의</label></td>
+				</div>
+
+			</tr>
+			<tr>
+				<td><button type="submit">등록</button></td>
+				<td><button type="submit">삭제</button></td>
+		</table>
+
+
 	</div>
 </body>
 </html>

@@ -58,10 +58,9 @@ public class Member{
 	@Enumerated(EnumType.STRING)
 	private YorN agree;
 	
-//	@ColumnDefault("'1'")
 	private int deposit = 0;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ColumnDefault("sysdate")
 	private Date regdate = new Date();
 	
@@ -80,10 +79,10 @@ public class Member{
 	@OneToMany(mappedBy = "auctionId") // Auction
 	private List<Auction> auctionList = new ArrayList<Auction>();
 	
-	@OneToMany(mappedBy = "salesId") // Sales
+	@OneToMany(mappedBy = "buyer") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
-	@OneToMany(mappedBy = "reviewId") // Review
+	@OneToMany(mappedBy = "seller") // Review
 	private List<Review> reviewList = new ArrayList<Review>();
 	
 	@OneToMany(mappedBy = "likeId") // LikeWish
