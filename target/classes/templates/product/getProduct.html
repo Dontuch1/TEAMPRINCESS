@@ -11,23 +11,57 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<!-- Page content-->
 			<div class="container-fluid">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<section class="py-5">
+				<section class="py-5" style="width: 1200px;">
 		            <div class="container px-4 px-lg-5 my-5">
 		                <div class="row gx-4 gx-lg-5 align-items-center">
-		                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${product.upload}" alt="..."></div>
+		                <div class="small mb-1" th:switch="${product.pCategory.toString()}">
+		                <span th:text="${product.auction.toString() == 'N'} ? '&nbsp;일반 ' : '&nbsp;경매 '" style="font-weight: bold; border-left: 4px solid #eee"></span>
+						    <span th:case="DIGI">디지털/가전</span>
+						    <span th:case="FURN">가구</span>
+						    <span th:case="CLOT">의류/잡화</span>
+						    <span th:case="BEAU">뷰티</span>
+						    <span th:case="ETC">기타</span>
+						</div>
+		                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
+		                    
 		                    <div class="col-md-6">
-		                        <div class="small mb-1" th:text="${product.salesId.nickName}"></div>
-		                        <h1 class="display-5 fw-bolder" th:text="${product.title}"></h1>
-		                        <div class="fs-5 mb-5">
-		                            <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+		                        <div class="fs-5 mb-5" th:if="${product.auction.toString() == 'Y'}"><span id="clock" style="color: red; font-weight: bold;"></span></div>
+		                       <!--  <div th:align="right"><small class="card-text" th:text="${#dates.format(product.regdate, 'yyyy-MM-dd')}"></small></div> -->
+		                        <h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"th:text="${product.title}"></h2>
+		                        
+		                        <div style="display: flex; margin-bottom: 20px;">
+			                        <table th:cellpadding="0" style="flex-grow: 1;">
+				                        <tr>
+				                        	<td rowspan="2" style="width: 60px;"><img src="/images/prcs-profile.png" alt="..." style="width: 50px;"></td>
+				                        	<td><a th:href="@{/mypage/myPageMain(id=${product.salesId.id})}"><label style="margin-top: 10px; font-weight: bold" th:text="${product.salesId.nickName}"></label></a></td>
+				                        </tr>
+				                        <tr>
+				                        	<td><label style="margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
+				                        </tr>
+			                         </table>
+			                         <div style="flex-grow: 1;">
+			                       		<div class="fs-5 mb-5" th:if="${product.auction.toString() == 'Y'}">
+				                            <div class="small mb-1" style="color: #aaa;">시작가 : <span style="color: #aaa; text-decoration: line-through;" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span></div>
+				                            &nbsp;→ 현재가 : <span style="font-weight: bold;" th:align="center" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+				                        </div>
+				                        <div th:align="right" class="fs-5"  style="margin-bottom: 5px;"th:unless="${product.auction.toString() == 'Y'}">
+				                            <span style="font-weight: bold;"th:align="right" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+				                        </div>
+				                        <div th:if="${product.sold.toString() == 'N'}">
+					                        <div th:if="${product.salesId.id != #authentication.principal.username}" th:align="right">
+					                        	<button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();">
+					                                <img id="like" alt="..." src="/images/empty_heart.png" style="width: 20px;">
+					                            </button>
+					                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+					                                <span style="font-size: 15px; padding: 0px;">🛒</span>
+					                            </button>
+			                       			</div>
+		                       			</div>
+			                        </div>
 		                        </div>
+		                        
 		                        <p class="lead" th:text="${product.content}"></p>
-		                        <div class="d-flex">
-		                            <input class="form-control text-center me-3" style="width: 50px;"src="">
-		                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-		                                <span class="bi-cart-fill me-1">구매하기</span>
-		                            </button>
-		                        </div>
+		                        
 		                    </div>
 		                </div>
 		            </div>
@@ -37,9 +71,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				<br>
 				<div th:align="center">
 					<a th:attr="style=${#authentication.principal.username == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
-						th:href=@{/product/deleteProduct(pNo=${product.pNo})}>삭제</a>
+						onclick="delConfirm();">삭제</a>
 					<a type="button" class="btn btn-outline-dark flex-shrink-0"
-						onclick="location.href='/product/getProductList?type=prod'">목록</a>
+						onclick="history.back();">이전</a>
 				</div>
 				<div style="height: 30px;"></div>
 				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
@@ -47,6 +81,52 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 		</div>
 	</div>
 </body>
+<script th:inline="javascript">
+function delConfirm() {
+	if (confirm("정말 삭제하시겠습니까?")) {
+		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+	} else {
+		return false;
+	}
+}
+
+let Target = document.getElementById("clock");
+
+function clock() {
+	let regdate = new Date(/*[[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]*/).getTime();
+	let aucDuration = /*[[${product.aucDuration}]]*/;
+	let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
+	let currentTime = new Date().getTime();
+    
+    let time = parseInt(regdate) + parseInt(aucDuToTime) - parseInt(currentTime);
+
+    if (time < 0) {
+    	Target.innerText = `경매 종료`;
+    	return
+    }
+    
+    let days = Math.floor(time / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    Target.innerText = `남은 시간 ${days >= 1 ? days + '일' : ''} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+    
+}
+clock();
+setInterval(clock, 1000); // 1초마다 실행
+</script>
 <script type="text/javascript">
+function like() {
+    let likeImage = $('#like');
+    if (likeImage.attr('src').endsWith("empty_heart.png")) {
+        likeImage.attr('src', "/images/full_heart.png");
+        // 좋아요 데이터 추가
+    } else {
+        likeImage.attr('src', "/images/empty_heart.png");
+        // 좋아요 데이터 삭제
+    }
+}
 </script>
 </html>

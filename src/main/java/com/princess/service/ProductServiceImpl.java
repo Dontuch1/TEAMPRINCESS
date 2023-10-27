@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
 		BooleanBuilder builder = new BooleanBuilder();
 		
 		QProduct qProduct = QProduct.product;
+		
 		if (type.equals("prod")) {
 			builder.and(qProduct.auction.eq(YorN.N));
 		} else builder.and(qProduct.auction.eq(YorN.Y));
