@@ -29,8 +29,8 @@ public class SecurityConfig {
          .antMatchers("/board/**").authenticated()
          .antMatchers("/product/**").authenticated()
          .antMatchers("/mypage/**").authenticated()
-         .antMatchers("/system/**").hasRole("ADMIN")
-         .antMatchers("/thunder/**").hasAnyRole("THUNDER","ADMIN");
+         .antMatchers("/system/**").hasAuthority("ADMIN")
+         .antMatchers("/thunder/**").hasAnyAuthority("THUNDER","ADMIN");
       
 
       return http.build();

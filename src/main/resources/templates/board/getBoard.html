@@ -54,7 +54,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								<span th:align="right" class="border-bottom" style="flex-grow: 1; font-size:0.9rem;" th:text="${board.regdate}"></span>	
 							</div>	
 							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" style="font-weight:860;font-size:1.2rem;" th:text="${board.userId.nickName}"></span>
+								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;" th:text="${board.userId.nickName}"></span>
 							</div>
 							<div th:align="center">
 									<th:block th:if="${board.photoPath} == null">

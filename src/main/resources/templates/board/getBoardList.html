@@ -125,15 +125,19 @@ a {
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 				<div id="wrapper"   class="scroll" >
 					<div class="box box2">
-
-						<h2 >🚨 공지사항</h2>
-
+						<th:block th:if="${type}=='notice'"> <h2 style="margin:20px">🚨 공지사항</h2> </th:block>
+						<th:block th:if="${type}=='lost'"> <h2 style="margin:20px">😥 잃어버렸어요</h2> </th:block>
+						<th:block th:if="${type}=='food'"> <h2 style="margin:20px">🍔 여기 맛나요</h2> </th:block>
+						<th:block th:if="${type}=='tmi'"> <h2 style="margin:20px">🔉 알려드려요</h2> </th:block>
+						<th:block th:if="${type}=='qna'"> <h2 style="margin:20px">❓ &nbsp;궁금해요</h2> </th:block>
+						<th:block th:if="${type}=='meet'"> <h2 style="margin:20px">🙋‍♀️ 우리만나요</h2> </th:block>
 						
 						
-						<hr class="hr1" noshade>
+
+						 
 
 						<form th:action="@{/board/getBoardList}" method="post">
-							<span> ▷ 총 4개의 게시물이 있습니다. </span> 
+
 							<span class="right"> <span class="grey" id="strong">SELECT</span> 
 						<select name="searchCondition">
 							<option value="제목" name="제목">제목</option>
@@ -154,7 +158,7 @@ a {
 							</tr>
 							<tr th:each="board, state : ${boardList1}">
 								<td class="center" th:text="${state.count}"></td>
-								<td class="center" th:text="${board.userId.nickName}"></td>
+								<td class="center"><a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}"  th:text="${board.userId.nickName}"></a></td>
 								<td class="center" ><a style="text-decoration: none; color: #333" th:href="@{/board/getBoard(postNum=${board.postNum})}" th:text="${board.title}"></a></td>
 								<td class="center" th:text="${board.great}"></td>
 								<td class="center" th:text="${board.regdate}"></td>

@@ -45,6 +45,7 @@ public class BoardController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("boardList1", boardList);
+		model.addAttribute("type", type);
 	}
 	
 	@GetMapping("/getBoard")
