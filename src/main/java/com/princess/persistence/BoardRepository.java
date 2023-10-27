@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.princess.domain.Board;
 import com.princess.domain.Member;
+import com.querydsl.core.BooleanBuilder;
 
 public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
 
@@ -15,6 +16,10 @@ public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPr
 	
 	@Query("SELECT b FROM Board b")
 	Page<Board> getBoardList(Pageable pageable);
+
+
+
+
 	
 
 }

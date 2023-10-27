@@ -88,5 +88,28 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productRepo.findAll(builder, pageable);
 	}
+	
+	
+	
+	// THUNDER Controller
+	@Override
+	public Page<Product> myThunderList(Search search, Pageable pageable) {
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		QProduct qProduct = QProduct.product;
+		if (search.getSearchCondition().equals("TITLE")) {
+			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("CONTENT")) {
+			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("ID")) {
+			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
+		}
+		builder.and(qProduct.display.eq(Display.Y));
+		builder.and(qProduct.delevery.eq(YorN.Y));
+		
+		return productRepo.findAll(builder, pageable);
+	}
+
+	
 
 }

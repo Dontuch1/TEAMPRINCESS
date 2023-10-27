@@ -13,8 +13,7 @@ public interface BoardService {
 	Member getMember(Member member);
 	
 	void updateBoard(Board board);
-	
-	void insertBorad(Board board);
+
 
 	void insertBoard(Board board, MultipartFile file);
 	

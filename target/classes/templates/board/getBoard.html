@@ -49,16 +49,25 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								<!-- NOTICE, LOST, FOOD, TMI, QNA, MEET if문 사용해서 해당하는 단어가 나오면 글자 띄우기 -->
 								<br>
 								
-							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" class="border-bottom" style="flex-grow: 1; font-size:0.9rem;">🚨 공지사항</span>	
-								<span th:align="right" class="border-bottom" style="flex-grow: 1; font-size:0.9rem;" th:text="${board.regdate}"></span>	
+							<div style="display:flex; width:1100" class="mb-3" th:switch="${board.cmCategory.toString()}">
+								<span th:case="NOTICE" th:align="left" class="border-bottom" style="flex-grow: 1;">🚨 공지사항</span>
+								<span th:case="LOST" th:align="left" class="border-bottom" style="flex-grow: 1;">😥 잃어버렸어요</span>
+								<span th:case="FOOD" th:align="left" class="border-bottom" style="flex-grow: 1;">🍔 여기 맛나요</span>
+								<span th:case="TMI" th:align="left" class="border-bottom" style="flex-grow: 1;">🔉 알려드려요</span>
+								<span th:case="QNA" th:align="left" class="border-bottom" style="flex-grow: 1;">❓ &nbsp;궁금해요</span>
+								<span th:case="MEET" th:align="left" class="border-bottom" style="flex-grow: 1;">🙋‍♀️ 우리만나요</span>
+							
+						
+
+								<span th:align="right" class="border-bottom" style="flex-grow: 1;" th:text="${board.regdate}"></span>	
 							</div>	
 							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;" th:text="${board.userId.nickName}"></span>
+								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
+								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
 							</div>
 							<div th:align="center">
 									<th:block th:if="${board.photoPath} == null">
-										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:300px; margin:50px;">
+										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:300px; margin-top:50px;">
 									</th:block>
 									<th:block th:if="${board.photoPath} != null">
 										<img th:src="@{${board.photoPath}}" alt="사진 출력에 오류가 있습니다."  style="width:500px;">
@@ -75,7 +84,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" onclick="history.back()">글 목록</button>
 			<!-- <a sec:authorize = "hasRole('ROLE_ADMIN')" th:href="@{/board/deleteBoard(seq=${board.seq})}">글삭제</a> -->
-			
 			</div>
 			<br><br><br>		
 	</div>	

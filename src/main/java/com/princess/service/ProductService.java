@@ -18,5 +18,7 @@ public interface ProductService {
 	Product getProduct(Product product);
 
 	Page<Product> getProductList(String type, Search search, Pageable pageable);
+	
+	Page<Product> myThunderList(Search search, Pageable pageable);
 
 }

@@ -83,9 +83,6 @@ public class BoardServiceImpl implements BoardService {
 	public void updateBoard(Board board) {
 	}
 
-	public void insertBorad(Board board) {
-	}
-
 
 
 }

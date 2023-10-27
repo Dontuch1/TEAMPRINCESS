@@ -1,4 +1,4 @@
-package com.princess.controller;
+ package com.princess.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class BoardController {
 	private BoardService boardservice; 
 	
 	@RequestMapping("/getBoardList")
-	public void getBoardList (@RequestParam String type, Model model, Search search,
+	public String getBoardList (@RequestParam String type, Model model, Search search,
 			@PageableDefault(page = 0, size = 10, sort = "postNum", direction = Sort.Direction.DESC) Pageable pageable) {
 		if(search.getSearchCondition()==null) {
 			search.setSearchCondition("TITLE");
@@ -39,14 +39,15 @@ public class BoardController {
 		
 		int nowPage = boardList.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage -4, 1);
-		int endPage = Math.min(nowPage +5, boardList.getTotalPages());
+		int endPage = Math.min(nowPage +4, boardList.getTotalPages());
 
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("boardList1", boardList);
 		model.addAttribute("type", type);
-	}
+		return "board/getBoardList";
+	}	
 	
 	@GetMapping("/getBoard")
 	public String getBoard(Model model, Board board) {
