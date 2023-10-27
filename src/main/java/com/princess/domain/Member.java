@@ -26,8 +26,7 @@ import lombok.ToString;
 @Data
 @ToString (exclude = {"productList", "boardList", "auctionList", "salesList", "reviewList", "likeWishList", "reportList", "replyList"})
 @Entity
-
-public class Member{
+public class Member {
 
 	
 	@Id
