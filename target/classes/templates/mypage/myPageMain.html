@@ -15,7 +15,7 @@
 					마이페이지
 				</h4>
 				<br>
-				<h5>&nbsp; 🛍️ 최근 업로드한 상품</h5>
+				<h5><a style="text-decoration: none; color: #333;" th:href="@{/mypage/myProductList(id=${userPage.id})}">&nbsp; 🛍️ 최근 업로드한 상품</a></h5>
 				<div id="mypage-main-view">
 					<div th:if="${productList.empty}">
 						<p>업로드한 상품이 없습니다.</p>
@@ -51,24 +51,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<div th:if="${productList.empty}">
-									<tr>
-										<td colspan="5">게시글이 없습니다.</td>
-									</tr>
-								</div>
+								<tr th:if="${productList.empty}">
+									<td colspan="5">게시글이 없습니다.</td>
+								</tr>
 								<tr th:each="board, iterStat: ${boardList}"
 									th:if="${iterStat.index < 5}">
-									<td th:text="${board.postNum}"/>
-									<td th:switch="${board.cmCategory.toString()}">
-										<span th:case="NOTICE">🚨공지사항</span>
-										<span th:case="LOST">😥잃어버렸어요 </span> 
-										<span th:case="FOOD">🍔여기맛나요</span> 
-										<span th:case="TMI">🔉알려드려요</span> 
-										<span th:case="QNA">❓궁금해요</span>
-										<span th:case="MEET">🙋‍♀우리만나요</span></td>
-										<td><a style="text-decoration: none; color: #333"
+									<td th:text="${board.postNum}" />
+									<td th:switch="${board.cmCategory.toString()}"><span
+										th:case="NOTICE">🚨공지사항</span> <span th:case="LOST">😥잃어버렸어요
+									</span> <span th:case="FOOD">🍔여기맛나요</span> <span th:case="TMI">🔉알려드려요</span>
+										<span th:case="QNA">❓궁금해요</span> <span th:case="MEET">🙋‍♀우리만나요</span></td>
+									<td><a style="text-decoration: none; color: #333"
 										th:href="@{/board/getBoard(postNum=${board.postNum})}"
-										th:text="${board.title}" />
+										th:text="${board.title}" ></a>
 									<td th:text="${board.great}">
 									<td th:text="${board.regdate}">
 								</tr>
@@ -86,14 +81,16 @@
 								</tr>
 							</thead>
 							<tbody>
+								<tr th:if="${reviewList.empty}">
+									<td colspan="4">받은 리뷰가 없습니다.</td>
+								</tr>
+
 								<tr th:each="review: ${reviewList}">
 									<td th:text="${review.reviewNo}">
 									<td th:text="${review.content}">
 									<td th:text="${review.regdate}">
-									<td th:switch="${review.review.toString()}">
-										<span th:case="UP">👍</span>
-										<span th:case="DOWN">👎</span>
-									</td>
+									<td th:switch="${review.review.toString()}"><span
+										th:case="UP">👍</span> <span th:case="DOWN">👎</span></td>
 								</tr>
 							</tbody>
 						</table>

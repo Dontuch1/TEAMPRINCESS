@@ -73,9 +73,9 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ColumnDefault("sysdate")
-	private Date regdate = new Date();
+	private Date regdate;
 	
 	// 연관관계 설정
 	
