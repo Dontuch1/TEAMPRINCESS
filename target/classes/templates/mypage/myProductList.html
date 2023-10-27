@@ -14,7 +14,7 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="product-main-view">
-				<h3 class="mt-4">내 판매물품</h3>
+				<h3 class="mt-4"><span th:text="${userPage.nickName}"></span>님의 판매물폼</h3>
 				<br>
 				<div id="mypage-product-list">
 					<div class="card" th:each="product: ${productList}">

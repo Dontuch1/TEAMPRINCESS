@@ -33,7 +33,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			                        <table th:cellpadding="0" style="flex-grow: 1;">
 				                        <tr>
 				                        	<td rowspan="2" style="width: 60px;"><img src="/images/prcs-profile.png" alt="..." style="width: 50px;"></td>
-				                        	<td><label style="margin-top: 10px; font-weight: bold" th:text="${product.salesId.nickName}"></label></td>
+				                        	<td><a th:href="@{/mypage/myPageMain(id=${product.salesId.id})}"><label style="margin-top: 10px; font-weight: bold" th:text="${product.salesId.nickName}"></label></a></td>
 				                        </tr>
 				                        <tr>
 				                        	<td><label style="margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
@@ -73,7 +73,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 					<a th:attr="style=${#authentication.principal.username == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
 						onclick="delConfirm();">삭제</a>
 					<a type="button" class="btn btn-outline-dark flex-shrink-0"
-						onclick="location.href='/product/getProductList?type=prod'">목록</a>
+						onclick="history.back();">이전</a>
 				</div>
 				<div style="height: 30px;"></div>
 				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
