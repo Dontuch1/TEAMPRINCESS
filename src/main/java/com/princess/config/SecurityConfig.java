@@ -28,15 +28,10 @@ public class SecurityConfig {
          .antMatchers("/","/system/**").permitAll()
          .antMatchers("/board/**").authenticated()
          .antMatchers("/product/**").authenticated()
-<<<<<<< HEAD
          .antMatchers("/mypage/**").authenticated()
          .antMatchers("/admin/**").hasAuthority("ADMIN")
          .antMatchers("/thunder/**").hasAnyAuthority("ADMIN","THUNDER");
-=======
-         .antMatchers("/mypage/**").authenticated()
-         .antMatchers("/system/**").hasRole("ADMIN")
-         .antMatchers("/thunder/**").hasAnyRole("THUNDER","ADMIN");
->>>>>>> refs/heads/jiy
+      
       
 
       return http.build();

@@ -1,5 +1,7 @@
 package com.princess.service;
 
+import java.util.List;
+
 import com.princess.domain.Member;
 
 public interface MemberService {
@@ -11,6 +13,6 @@ public interface MemberService {
 	void deleteMember(Member member);
 
 
-	void getMemberList(Member member);
+	List<Member> getMemberList(Member member);
 
 }

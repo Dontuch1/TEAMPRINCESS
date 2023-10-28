@@ -1,5 +1,7 @@
 package com.princess.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public void deleteMember(Member member) {
-
+		memberRepo.delete(member);
 	}
-
-	public void getMemberList(Member member) {
-
+	// 회원리스트 가져오기
+	public  List<Member> getMemberList(Member member) {
+		return  (List<Member>) memberRepo.findAll();
 	}
 
 }
