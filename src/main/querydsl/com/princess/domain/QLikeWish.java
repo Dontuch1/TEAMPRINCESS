@@ -24,7 +24,9 @@ public class QLikeWish extends EntityPathBase<LikeWish> {
 
     public final QMember likeId;
 
-    public final NumberPath<Long> likeSeq = createNumber("likeSeq", Long.class);
+    public final NumberPath<Long> lNo = createNumber("lNo", Long.class);
+
+    public final NumberPath<Long> pNo = createNumber("pNo", Long.class);
 
     public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 

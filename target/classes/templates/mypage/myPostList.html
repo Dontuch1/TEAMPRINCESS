@@ -27,7 +27,13 @@
 					<tbody>
 						<tr th:each="board: ${boardList}">
 							<td th:text="${board.postNum}">
-							<td th:text="${board.cmCategory}">
+							<td th:switch="${board.cmCategory.toString()}">
+										<span th:case="NOTICE">🚨공지사항</span>
+										<span th:case="LOST">😥잃어버렸어요 </span> 
+										<span th:case="FOOD">🍔여기맛나요</span> 
+										<span th:case="TMI">🔉알려드려요</span> 
+										<span th:case="QNA">❓궁금해요</span>
+										<span th:case="MEET">🙋‍♀우리만나요</span></td>
 							<td th:text="${board.userId.nickName}">
 							<td><a style="text-decoration: none; color: #333"
 								th:href="@{/board/getBoard(postNum=${board.postNum})}"
@@ -35,6 +41,7 @@
 							<td th:text="${board.great}">
 							<td th:text="${board.regdate}">
 						</tr>
+					</tbody>
 				</table>
 
 				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">

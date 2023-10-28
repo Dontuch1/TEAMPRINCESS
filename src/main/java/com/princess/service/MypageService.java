@@ -21,17 +21,20 @@ public interface MypageService {
 	// 내 게시글 리스트
 	Page<Board> getBoardList(Pageable pageable, Member member);
 
-	// 내 등록 상품 리스트 >> 상품서비스임플에서 가져오기
+	// 내 등록 상품 리스트
 	Page<Product> getProductList(Pageable pageable, Member member);
 	
 	// 내가 받은 후기
-	List<Review> getReviewList(Member member);
+	Page<Review> getReviewList(Pageable pageable, Member member);
 
 	// 찜 목록
 	List<Product> getLikeWishList(Member member);
 	
 	// 예치금 넣기
 	void updateDeposit(Member member);
+	
+	//구매 목록
+	List<Product> getBuyList(Member member);
 
 
 

@@ -73,16 +73,16 @@ public class Product {
 	@ColumnDefault("'Y'")
 	private Display display;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ColumnDefault("sysdate")
-	private Date regdate = new Date();
+	private Date regdate;
 	
 	// 연관관계 설정
 	
 	@OneToMany(mappedBy = "pNo") // Auction
 	private List<Auction> auctionList = new ArrayList<Auction>();
 	
-	@OneToMany(mappedBy = "salesNo") // Sales
+	@OneToMany(mappedBy = "pNo") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
 	@OneToMany(mappedBy = "pNo") // Review
