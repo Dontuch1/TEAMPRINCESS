@@ -2,6 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>신고리스트</title>
+
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -10,9 +11,8 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">신고 게시물</h1>
-				
-				
+				<h1 class="mt-4">신고 게시물</h1>	
+				</div>
 
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 
@@ -30,7 +30,7 @@
 					</thead>
 					
 					<tbody>
-					<br>
+				
 					
 						<tr>
 							<th scope="row">1</th>
@@ -74,7 +74,12 @@
 						</tr>
 					</tbody>
 				</table>
+		<!-- Add this at the beginning of your HTML code -->
+       <div th:with="pageSize=6, currentPage=2">
 
+<p style="color: blue"><a href="getReportList2">1 2 3 4 5</a></p>
+<p style="color: white">Make sure to keep all page content within the The top navbar is optional,
+ and just for demonstration. Just create an element with the ID which will toggle the menu when clicked.clicked.clicked.</p>
 
 
 
@@ -83,8 +88,5 @@
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

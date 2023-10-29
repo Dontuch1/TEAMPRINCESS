@@ -1,8 +1,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+.center-text {
+	text-align: center;
+}
+
+.box {
+	width: 700px;
+	height: 50px;
+	background-color: #e0e0e0;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 0 auto; /* 수평 가운데 정렬 */
+}
+
+.box {
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh; /* 화면 높이의 100%로 설정 (전체 화면에 가운데 정렬) */
+  }
+.grid {
+	/* Add any styles for the grid container here */
+	
+}
+
+.image-container {
+	display: flex;
+	justify-content: center; /* Horizontally center the image */
+	align-items: center; /* Vertically center the image */
+	width: 100%;
+	/* Make sure the container takes the full width of the grid */
+	height: 40%;
+	/* Make sure the container takes the full height of the grid */
+}
+</style>
+
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>관리자 페이지</title>
 </head>
+
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
 		<!-- Page content wrapper-->
@@ -10,37 +50,42 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">관리자 페이지</h1>
+				<!-- 파일 사진 영역 -->
+				<div class="grid">
+					<input multiple="multiple" type="file" onchange='readURL(this);'
+						name="file" id="file" style="display: none;" accept="image/*">
+					<div class="image-container">
+						<img id="imgShow" src="/images/carrot.png" onclick='imgclick();'
+							style="width: 200px; height: 200px;">
+					</div>
+				</div>
 
 
 
-
-<table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0">
-
-<tr>
- <td bgcolor="pink" th:text="아이디"></td>
- <td><input type="text" name="id"  size="30" placeholder="아이디를 입력해주세요."><br/></td>
-</tr>
-<tr>
- <td bgcolor="pink" th:text="비밀번호"></td>
- <td><input type="password" name="password"  size="30" placeholder="비밀번호를 입력해주세요."></td>
-</tr>
-
-<tr>
- <td colspan="10" align="center">
- <input type="submit" value="로그인">  
- <input type="submit" value="로그아웃"></input>
+				<!-- 가운데 정렬을 적용할 요소에 클래스 적용 -->
+				<h1 class="mt-4 center-text">!관리자님 페이지입니다!</h1>
+				<br>
+				<h4 class="center-text">당근나라 치킨공주 소개글</h4>
+				<table>
+				<br>
+				
+					<div class="box">당근나라 치킨공주 페이지 입니다</div>
 
 
- </tr>
- 
-</table>
+				</table>
 
-	</div>
+
+
+				<table th:align="center" border="1" th:cellpadding="0"
+					th:cellspacing="0">
+
+
+
+				</table>
+
+			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JS-->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

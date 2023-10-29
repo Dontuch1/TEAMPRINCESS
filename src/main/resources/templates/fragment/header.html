@@ -13,7 +13,7 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">중고/경매</a>
+						aria-expanded="false">일반/경매</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/product/getProductList?type=prod">일반
@@ -26,14 +26,16 @@
 						aria-expanded="false">커뮤니티</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/board/getBoardList">🚨 공지사항</a> <a
-								class="dropdown-item" href="/board/getBoardList">😥 잃어버렸어요</a> <a
-								class="dropdown-item" href="/board/getBoardList">🍔 여기 맛나요</a> <a
-								class="dropdown-item" href="/board/getBoardList">🔉 알려드려요</a> <a
-								class="dropdown-item" href="/board/getBoardList">❓
-								&nbsp;궁금해요</a> <a class="dropdown-item" href="/board/getBoardList">🙋‍♀️
-								우리만나요</a>
-						</div></li>
+
+							<a class="dropdown-item" href="/board/getBoardList?type=notice">🚨 공지사항</a> <a
+								class="dropdown-item" href="/board/getBoardList?type=lost">😥 잃어버렸어요</a> <a
+								class="dropdown-item" href="/board/getBoardList?type=food">🍔 여기 맛나요</a> <a
+								class="dropdown-item" href="/board/getBoardList?type=tmi">🔉 알려드려요</a> <a
+								class="dropdown-item" href="/board/getBoardList?type=qna">❓
+								&nbsp;궁금해요</a> <a class="dropdown-item" href="/board/getBoardList?type=meet">🙋‍♀️
+								우리만나요</a></div></li>
+
+
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -41,8 +43,8 @@
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="#!">천둥맨 전환</a> <a
-								class="dropdown-item" href="/thunder/myThunderList">대기중인
-								상품보기</a><a class="dropdown-item" href="/thunder/standByList">내
+								class="dropdown-item" href="/thunder/myThunderList">📤 대기중인
+								상품보기</a><a class="dropdown-item" href="/thunder/standByList">📦 내
 								배달 내역</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
@@ -60,6 +62,19 @@
 								<a class="dropdown-item" th:href="@{/mypage/myReviewList(id=${#authentication.principal.username})}">받은 후기</a>
 								<a class="dropdown-item" href="/mypage/myDeposit">썬더페이</a>
 						</div></li>
+
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">관리자</a>
+						<div class="dropdown-menu dropdown-menu-end"
+							aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/admin/adminMain">관리자 홈</a> <a
+								class="dropdown-item" href="/admin/getReportList">신고 목록</a> <a
+								class="dropdown-item"
+								href="/admin/getMemberList">회원관리</a>
+						</div></li>
+
 				</ul>
 			</div>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"

@@ -9,4 +9,7 @@ public class SecurityController {
 	@GetMapping("/system/login")
 	public void login() {
 	}
+	@GetMapping("/admin/loginview")
+	public void loginview() {
+	}
 }

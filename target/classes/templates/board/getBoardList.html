@@ -110,6 +110,11 @@ a {
 .box2 {
 	grid-area: box2
 }
+.flex-right{
+	display: flex;
+	justify-content: right;
+}
+
 </style>
 
 <link th:href="@{/css/main.css}" rel="stylesheet">
@@ -125,47 +130,65 @@ a {
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 				<div id="wrapper"   class="scroll" >
 					<div class="box box2">
-						<h2>게시판</h2>
-
-						<hr class="hr1" noshade>
-
-						<form th:action="@{/board/getBoardList}" method="post">
-							<span> ▷ 총 4개의 게시물이 있습니다. </span> 
-							<span class="right"> <span class="grey" id="strong">SELECT</span> 
-						<select name="searchCondition">
-							<option value="제목" name="제목">제목</option>
-							<option value="글쓴이" name="글쓴이">글쓴이</option>
-						</select> 
-							<input name="searchKeyboard" type="text"> 
-							<input type="submit" name="검색"	class="gradient" value="검색">
-							</span>
-						</form>
+						<th:block th:if="${type}=='notice'"> <h2 style="margin:30px 0px 0px 30px;">🚨 공지사항</h2> </th:block>
+						<th:block th:if="${type}=='lost'"> <h2 style="margin:30px 0px 0px 30px;">😥 잃어버렸어요</h2> </th:block>
+						<th:block th:if="${type}=='food'"> <h2 style="margin:30px 0px 0px 30px;">🍔 여기 맛나요</h2> </th:block>
+						<th:block th:if="${type}=='tmi'"> <h2 style="margin:30px 0px 0px 30px;">🔉 알려드려요</h2> </th:block>
+						<th:block th:if="${type}=='qna'"> <h2 style="margin:30px 0px 0px 30px;">❓ &nbsp;궁금해요</h2> </th:block>
+						<th:block th:if="${type}=='meet'"> <h2 style="margin:30px 0px 0px 30px;">🙋‍♀️ 우리만나요</h2> </th:block>
+						
+						<form th:action="@{/board/getBoardList}">
+							<div class="input-group mb-3 right w-25">
+								<select class="form-select flex-right " aria-label="Default" name="searchCondition">
+									  <option value="제목">제목</option>
+									  <option value="내용">내용</option>
+									  <option value="닉네임">닉네임</option>
+								</select>
+								  <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyboard">
+								  <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+							</div>
+						</form>	
+							
 						<table>
 							<tr>
-								<th class="center">번호</th>
-								<th class="center">제목</th>
-								<th class="center">글쓴이</th>
-								<th class="center">일시</th>
-								<th class="center">조회수</th>
+								<th class="center">No.</th>
+								<th class="center">writer</th>
+								<th class="center" style="width:550px;">title</th>
+								<th class="center">like</th>
+								<th class="center">date</th>
 							</tr>
-							<tr th:each="board, state : ${boardList}">
+							<tr th:each="board, state : ${boardList1}">
 								<td class="center" th:text="${state.count}"></td>
-								<td class="left"><a th:href="@{/board/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
-								<td class="center" th:text="${board.memberId}"></td>
-								<td class="center" th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}"></td>
-								<td class="center" th:text="${board.cnt}"></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/board/getBoard(postNum=${board.postNum})}" th:text="${board.title}"></a></td>
+								<td class="center" th:text="${board.great}"></td>
+								<td class="center" th:text="${board.regdate}"></td>
 							</tr>
 						</table>
 						
-						<br>
-						<hr>
-						<br> <a th:href="@{/board/insertBoard}">게시글 작성</a> <br>
-						<br>
-						<h3>안 보이는 스크롤 구현</h3>
-						<hr>
+						<!--  -->
+						<br> 
+						<div style="display:flex">	
+						<span class="center" style="flex-grow:12; margin:5px 0px 0px 80px; font-size:1.1rem">
+						[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
+							<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
+								th:href="@{/board/getBoardList(type=${type}, id=${#authentication.principal.username}, page=${page - 1})}"
+								th:text="${page}"> </a>
+		
+							<strong th:if="${page == nowPage}" th:text="${page}"
+								style="color: red"></strong> 
+						</th:block> ]
+						</span>
+						<!--  @{/board/getBoardList?type=${type}(id=${#authentication.principal.username}, page=${page - 1})-->
+						<span class="left" style="flex-grow:1; width:50px; margin-bottom:20px">
+							<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" >게시글 작성</button></a>
+						</span>
+						</div>
+						
+						
 					</div>
 				</div>
-
+			
 
 
 			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->

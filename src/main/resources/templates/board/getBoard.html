@@ -45,40 +45,45 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							<form action="@{/board/insertBoard}" method="post">
 								<br>
 								<br>
-								<h2 th:align="center" style="font-weight:700"> 게시글 1 입니다. </h2>
+								<h2 th:align="center" style="font-weight:700" th:text="${board.title}">  </h2>
 								<!-- NOTICE, LOST, FOOD, TMI, QNA, MEET if문 사용해서 해당하는 단어가 나오면 글자 띄우기 -->
 								<br>
 								
-							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" class="border-bottom" style="flex-grow: 1; font-size:0.85rem">🚨 공지사항</span>	
-								<span th:align="right" class="border-bottom" style="flex-grow: 1; font-size:0.85rem;">2023. 10. 23</span>	
+							<div style="display:flex; width:1100" class="mb-3" th:switch="${board.cmCategory.toString()}">
+								<span th:case="NOTICE" th:align="left" class="border-bottom" style="flex-grow: 1;">🚨 공지사항</span>
+								<span th:case="LOST" th:align="left" class="border-bottom" style="flex-grow: 1;">😥 잃어버렸어요</span>
+								<span th:case="FOOD" th:align="left" class="border-bottom" style="flex-grow: 1;">🍔 여기 맛나요</span>
+								<span th:case="TMI" th:align="left" class="border-bottom" style="flex-grow: 1;">🔉 알려드려요</span>
+								<span th:case="QNA" th:align="left" class="border-bottom" style="flex-grow: 1;">❓ &nbsp;궁금해요</span>
+								<span th:case="MEET" th:align="left" class="border-bottom" style="flex-grow: 1;">🙋‍♀️ 우리만나요</span>
+							
+						
+
+								<span th:align="right" class="border-bottom" style="flex-grow: 1;" th:text="${board.regdate}"></span>	
 							</div>	
 							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" style="font-weight:860">{member.nickName}</span>
+								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
+								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
 							</div>
-							
+							<div th:align="center">
+									<th:block th:if="${board.photoPath} == null">
+										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:300px; margin-top:50px;">
+									</th:block>
+									<th:block th:if="${board.photoPath} != null">
+										<img th:src="@{${board.photoPath}}" alt="사진 출력에 오류가 있습니다."  style="width:500px;">
+									</th:block>
+								</div>
 							<br><br>
-							<div style="width:860px" align="left">
-								<p class="text-break"></p>미야자키 하야오 감독의 바람이 분다 이후 10년 만의 장편 애니메이션이자 또 한번의 은퇴 번복작으로, 최초 개봉일은 
-								2023년 7월 14일이다.
-
-								<br> 2017년, 제작을 공식적으로 발표한 미야자키 하야오 감독은 신작 애니메이션의 내용에 대해 "그대들, 어떻게 살 것인가라는 책이 주인공에게 있어서 
-								큰 의미를 갖는다"고 설명했다. 이 책의 제목과 주제를 빌려온 것이지 내용은 미야자키 구상의 완전 오리지널이라고 한다. 장르는 모험 활극 판타지라고 밝혔다.
-
-								<br> 정말 딱 한 장면을 제외하고는 원작과 큰 관계가 없는 미야자키 하야오의 작품이다. 그래서 스태프 스크롤에 원작자도 미야자키 하야오라고 개시되어 있으
-								며, 미국판 제목은 'The Boy and the Heron'(소년과 왜가리)으로 약간 직설적으로 달라졌다. # 한국에서도 '그대들은 어떻게 살 것인가'로 개봉명이
-								 살짝 달라졌다.
+							<div style="width:860px" align="left" th:align="center">
+								<p th:text="${board.content}">
 							</div>
-							<br><br>	
-								<div th:align="center"><img src="/images/heron.jpg" alt="사진 출력에 오류가 있습니다."  style="width:700px;"></div>
 							</form>	
 						</div>	
 						<br>		
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
-			<a style="margin:5px" th:href="@{/board/getBoardList}"><button type="button" class="btn btn-outline-secondary">글 목록</button></a>
+			<button type="button" class="btn btn-outline-secondary" onclick="history.back()">글 목록</button>
 			<!-- <a sec:authorize = "hasRole('ROLE_ADMIN')" th:href="@{/board/deleteBoard(seq=${board.seq})}">글삭제</a> -->
-			
 			</div>
 			<br><br><br>		
 	</div>	
