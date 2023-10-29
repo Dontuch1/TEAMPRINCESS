@@ -15,7 +15,11 @@
 					마이페이지
 				</h4>
 				<br>
-				<h5><a style="text-decoration: none; color: #333;" th:href="@{/mypage/myProductList(id=${userPage.id})}">&nbsp; 🛍️ 최근 업로드한 상품</a></h5>
+				<h5>
+					<a style="text-decoration: none; color: #333;"
+						th:href="@{/mypage/myProductList(id=${userPage.id})}">&nbsp;
+						🛍️ 최근 업로드한 상품</a>
+				</h5>
 				<div id="mypage-main-view">
 					<div th:if="${productList.empty}">
 						<p>업로드한 상품이 없습니다.</p>
@@ -28,7 +32,8 @@
 								onerror="this.src='https://buly.kr/9BSKdMj'"></a>
 						</div>
 						<div class="card-body">
-							<h5 class="card-title" th:text="${product.title}"></h5>
+							<h5 class="card-title" th:text="${product.title}"
+								style="width: 220px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
 							<h5 class="card-text" th:text="${product.price}">원</h5>
 							<p class="card-text" th:text="${product.pCategory}"></p>
 							<a href="#" class="btn btn-secondary">판매완료</a>
@@ -38,7 +43,10 @@
 						<div></div>
 					</div>
 					<div>
-						<h5>📜 최근 게시글</h5>
+						<h5>
+							<a style="text-decoration: none; color: #333;"
+								th:href="@{/mypage/myPostList(id=${userPage.id})}">📜 최근 게시글</a>
+						</h5>
 
 						<table class="table">
 							<thead>
@@ -61,16 +69,24 @@
 										th:case="NOTICE">🚨공지사항</span> <span th:case="LOST">😥잃어버렸어요
 									</span> <span th:case="FOOD">🍔여기맛나요</span> <span th:case="TMI">🔉알려드려요</span>
 										<span th:case="QNA">❓궁금해요</span> <span th:case="MEET">🙋‍♀우리만나요</span></td>
-									<td><a style="text-decoration: none; color: #333"
-										th:href="@{/board/getBoard(postNum=${board.postNum})}"
-										th:text="${board.title}" ></a>
+									<td>
+										<div
+											style="width: 220px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+											<a style="text-decoration: none; color: #333"
+												th:href="@{/board/getBoard(postNum=${board.postNum})}"
+												th:text="${board.title}"></a>
+										</div>
 									<td th:text="${board.great}">
 									<td th:text="${board.regdate}">
 								</tr>
 							</tbody>
 						</table>
 						<br>
-						<h5>🎭 받은 리뷰</h5>
+						<h5>
+							<a style="text-decoration: none; color: #333;"
+								th:href="@{/mypage/myReviewList(id=${userPage.id})}">🎭 받은
+								리뷰 
+						</h5>
 						<table class="table">
 							<thead>
 								<tr>

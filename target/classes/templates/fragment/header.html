@@ -52,6 +52,7 @@
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">마이페이지</a>
 						<div class="dropdown-menu dropdown-menu-end"
+<<<<<<< HEAD
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${#authentication.principal.username})}">마이페이지 홈</a>
 								<a class="dropdown-item" href="/mypage/myDetails">내 정보</a> 
@@ -61,6 +62,21 @@
 								<a class="dropdown-item" href="/mypage/myWishList">내가 찜한 상품</a> 
 								<a class="dropdown-item" th:href="@{/mypage/myReviewList(id=${#authentication.principal.username})}">받은 후기</a>
 								<a class="dropdown-item" href="/mypage/myDeposit">썬더페이</a>
+=======
+							aria-labelledby="navbarDropdown">
+							<a class="dropdown-item"
+								th:href="@{/mypage/myPageMain(id=${currentUser.id})}">마이페이지
+								홈</a> <a class="dropdown-item" href="/mypage/myDetails">내 정보</a> <a
+								class="dropdown-item"
+								th:href="@{/mypage/myPostList(id=${currentUser.id})}">내 게시글</a>
+							<a class="dropdown-item"
+								th:href="@{/mypage/myProductList(id=${currentUser.id})}">내
+								판매상품</a> <a class="dropdown-item" href="/mypage/myBuyList">구매 내역</a>
+							<a class="dropdown-item" href="/mypage/myWishList">내가 찜한 상품</a> <a
+								class="dropdown-item"
+								th:href="@{/mypage/myReviewList(id=${currentUser.id})}">받은
+								후기</a> <a class="dropdown-item" href="/mypage/myDeposit">썬더페이</a>
+>>>>>>> refs/heads/jojo
 						</div></li>
 
 					<li class="nav-item dropdown"><a
@@ -77,14 +93,15 @@
 
 				</ul>
 			</div>
+
+
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"
 				style="flex-grow: 1">
 				<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"><span
-							th:text="${#authentication.principal.username}"></span>님</a>
+						aria-expanded="false"><span th:text="${currentUser.nickName}"></span>님</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/mypage/myPageMain">마이페이지</a> <a
@@ -95,6 +112,36 @@
 						</div></li>
 				</ul>
 			</div>
+			<!-- 배터리 -->
+			<div
+				th:if="${currentUser.battery >= 0 and currentUser.battery <= 20}">
+				<!-- 0~20 범위에 해당하는 경우 -->
+				<img  id="batt" class="battery_img_mini" src="/images/noThunder_red.png">
+			</div>
+			<div
+				th:if="${currentUser.battery >= 21 and currentUser.battery <= 40}">
+				<!-- 21~40 범위에 해당하는 경우 -->
+				<img id="batt" class="battery_img_mini" src="/images/noThunder_orange.png">
+			</div>
+			<div
+				th:if="${currentUser.battery >= 41 and currentUser.battery <= 60}">
+				<!-- 41~60 범위에 해당하는 경우 -->
+				<img id="batt" class="battery_img_mini" src="/images/noThunder_yellow.png">
+			</div>
+			<div
+				th:if="${currentUser.battery >= 61 and currentUser.battery <= 80}">
+
+				<!-- 61~80 범위에 해당하는 경우 -->
+				<img id="batt" class="battery_img_mini" src="/images/noThunder_green.png">
+			</div>
+			<div
+				th:if="${currentUser.battery >= 81 and currentUser.battery <= 100}">
+				<!-- 81~100 범위에 해당하는 경우 -->
+				<img id="batt" class="battery_img_mini" src="/images/noThunder_blue.png">
+			</div>
+			<!-- 배터리 끝 -->
+			&nbsp;<span style="font-size: small; font-weight: bold; color: #333"><span
+				th:text="${currentUser.battery}"></span>%</span>
 		</div>
 	</nav>
 	<!-- Css -->
@@ -111,5 +158,20 @@
 		src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript">
+		function blink() {
+			let batt = document.getElementById("batt");
+			let src = batt.getAttribute('src');
+		  if (src.startsWith('/images/no')) {
+			  let sub = src.substring(10, src.length);
+			  batt.setAttribute('src', '/images/yes' + sub);
+		  } else {
+			  let sub = src.substring(11, src.length);
+			  batt.setAttribute('src', '/images/no' + sub);
+		  }
+		}
+		blink();
+		setInterval(blink, 500);
+	</script>
 </th:block>
 </html>

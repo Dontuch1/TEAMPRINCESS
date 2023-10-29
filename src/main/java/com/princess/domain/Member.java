@@ -56,13 +56,14 @@ public class Member {
 	@Column(nullable = false)
 	private String email;
 	
+	@ColumnDefault("'N'")
 	@Enumerated(EnumType.STRING)
 	private YorN agree;
 	
 	private int deposit = 0;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@ColumnDefault("sysdate")
+	@ColumnDefault("SYSDATE")
 	private Date regdate = new Date();
 	
 	@ColumnDefault("'MEMBER'")
