@@ -10,3 +10,4 @@ public class SecurityController {
 	public void login() {
 	}
 }
+
