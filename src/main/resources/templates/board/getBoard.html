@@ -40,9 +40,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->  
 				
 <div id="wrapper">
-					<div class="box box2">
+					<div class="box box2"> 
 						<div th:align="center">
-							<form action="@{/board/insertBoard}" method="post">
+							<form th:action="@{/board/insertBoard}" method="post">
+								
 								<br>
 								<br>
 								<h2 th:align="center" style="font-weight:700" th:text="${board.title}">  </h2>
@@ -79,7 +80,25 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</div>
 							</form>	
 						</div>	
-						<br>		
+						<br>
+								
+				  <!-- 댓글 작성 폼 -->
+						<form id="replyForm">
+						    <input type="hidden" id="boardId" value="${board.postNum}" />
+						    <textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
+						    <button type="submit">댓글 작성</button>
+						</form>
+						
+						<!-- 댓글 목록 -->
+						<ul id="replyList">
+						    <th:Each items="${replies}" var="reply">
+						        <li>
+						            ${reply.replyContent}
+						            <button class="deleteReply" data-id="${reply.replyNum}">삭제</button>
+						        </li>
+						    </th:Each>
+						</ul>
+						
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" onclick="history.back()">글 목록</button>
@@ -94,5 +113,51 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+    // 댓글 작성
+    $('#replyForm').submit(function(e) {
+        e.preventDefault();
+
+        let replyData = {
+            "replyContent": $('#replyContent').val(),
+            "boardId": $('#boardId').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/board/getBoard",
+            data: JSON.stringify(replyData),
+            contentType: "application/json",
+            success: function(response) {
+                // 댓글 추가 코드 (예: 댓글 목록에 새로운 댓글 추가)
+            },
+            error: function(error) {
+                alert("댓글 작성 중 오류 발생");
+            }
+        });
+    });
+
+    // 댓글 삭제
+    $(document).on('click', '.deleteReply', function() {
+        let replyId = $(this).data('id');
+
+        $.ajax({
+            type: "DELETE",
+            url: "/board/delete?id=" + replyId,
+            success: function(response) {
+                // 댓글 삭제 코드 (예: 댓글 목록에서 해당 댓글 제거)
+            },
+            error: function(error) {
+                alert("댓글 삭제 중 오류 발생");
+            }
+        });
+    });
+});
+
+//=======================================
+
+
+</script>
 </html>
 

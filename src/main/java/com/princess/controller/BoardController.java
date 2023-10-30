@@ -1,5 +1,8 @@
  package com.princess.controller;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
-import com.princess.domain.Member;
+import com.princess.domain.CheckCondition.CmCategory;
 import com.princess.domain.Search;
 import com.princess.service.BoardService;
 	
@@ -46,6 +49,7 @@ public class BoardController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("boardList1", boardList);
 		model.addAttribute("type", type);
+		System.out.println("getBoardList"+type);
 		return "board/getBoardList";
 	}	
 	
@@ -61,9 +65,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("/insertBoard")
-	public String insertBoard(Board board, @RequestParam MultipartFile file) {
+	public String insertBoard(Board board, @RequestParam MultipartFile file, @RequestParam String type) {
 		boardservice.insertBoard(board, file);
-		return "redirect:getBoardList";
+		System.out.println("insertBoard : "+type);
+		return "board/getBoardList";
+		
+		
 	}
 	
 	@GetMapping("/deleteBoard")

@@ -3,7 +3,6 @@
 <head>
 <title>새 게시글 입력</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
 <style>
 
 /* wrapper */
@@ -40,37 +39,38 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-
+				
+				
 				<div id="wrapper">
 					<div class="box box2">
 						<div th:align="center">
-							<form action="@{/board/insertBoard}" method="post">
+							<form th:action="@{/board/insertBoard}" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="userId.id" th:value="${#authentication.principal.username}" />
+								<input type="hidden" name="type" th:value="${cate}" /> 
+								<!-- insert에 필요한 id와 getBoardList type 경로로 cate를 넘겨준다. -->
 								<br>
 								<br>
 								<h2 th:align="center" style="font-weight:700"> 커뮤니티 게시물 등록란 </h2>
 								<br>
 							<div class="input-group mb-3 w-75">
-								<span class="input-group-text boot" id="basic-addon1">제목</span>
-								<input type="text" class="form-control" placeholder="제목을 작성해주세요." aria-label="Username" aria-describedby="basic-addon1">
+								<span class="input-group-text boot">제목</span>
+								<input type="text" class="form-control" placeholder="제목을 작성해주세요." name="title">
 							</div>
 							
 							<div class="input-group w-75 mb-3">
 								<span class="input-group-text">카테고리</span> <!-- ** 카테고리 무조건 선택하게 하기. -->
 								<span id="flex1" class="form-control">
-									<label><input type="radio" name="category" value="잃어버렸어요"> 😥잃어버렸어요 &nbsp;</label> 
-									<label><input type="radio" name="category" value="여기 맛나요"> 🍔여기 맛나요 &nbsp;</label>
-									<label><input type="radio" name="category" value="알려드려요">🔉 알려드려요 &nbsp;</label> 
-									<label><input type="radio" name="category" value="궁금해요">❓ 궁금해요 &nbsp;</label> 
-									<label><input type="radio" name="category" value="우리 만나요"> 🙋‍♀️우리 만나요</label>
+									<label><input type="radio" name="cmCategory" value="LOST"> 😥잃어버렸어요 &nbsp;</label> 
+									<label><input type="radio" name="cmCategory" value="FOOD"> 🍔여기 맛나요 &nbsp;</label>
+									<label><input type="radio" name="cmCategory" value="TMI">🔉 알려드려요 &nbsp;</label> 
+									<label><input type="radio" name="cmCategory" value="QNA">❓ 궁금해요 &nbsp;</label> 
+									<label><input type="radio" name="cmCategory" value="MEET"> 🙋‍♀️우리 만나요</label>
 								</span>
 							</div>
 								
-							
-							
 							<div class="input-group w-75 mb-3 h-75">
 								<span class="input-group-text">내용</span>
-								<textarea class="form-control" aria-label="With textarea" placeholder="내용을 작성하는 칸입니다."></textarea>
+								<textarea class="form-control" aria-label="With textarea" placeholder="내용을 작성하는 칸입니다." name=content></textarea>
 							</div>
 							<div class="grid">
 								<button type="submit" value="게시글 등록" class="btn btn-outline-secondary mb-3">게시글 등록</button>
@@ -91,12 +91,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	/*=============================================
-	 * 이미지 등록 이미지 클릭
-	 *=============================================*/
-	function formsubmit() {
-		$("#productForm").submit();
-	}
 	/*=============================================
 	 * 이미지 등록 이미지 클릭
 	 *=============================================*/
