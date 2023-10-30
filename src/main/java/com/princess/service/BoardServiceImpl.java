@@ -2,6 +2,7 @@ package com.princess.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,15 @@ public class BoardServiceImpl implements BoardService {
 	// 회원정보 가져오기
 	public Member getMember(Member member) {
 		return memberRepo.findById(member.getId()).get();
+	}
+	
+	
+	public Board getBoard(Board board) {
+		return boardRepo.findById(board.getPostNum()).get();
+	}
+	
+	public Board getBoardId(Long boardId) {
+		return boardRepo.findById(boardId).get();
 	}
 	
 	public void insertBoard(Board board, MultipartFile file) {
@@ -76,13 +86,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardRepo.findAll(builder, pageable);
 	}
 	
-	public Board getBoard(Board board) {
-		return boardRepo.findById(board.getPostNum()).get();
-	}
+	
 
 	public void updateBoard(Board board) {
 	}
 
+	
+	
 
 
 }
