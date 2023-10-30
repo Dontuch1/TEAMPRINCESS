@@ -12,6 +12,4 @@ public class SecurityController {
 	@GetMapping("/admin/loginview")
 	public void loginview() {
 	}
-	 
 }
-

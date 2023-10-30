@@ -30,7 +30,7 @@ public class SecurityConfig {
          .antMatchers("/product/**").authenticated()
          .antMatchers("/mypage/**").authenticated()
          .antMatchers("/admin/**").hasAuthority("ADMIN")
-         .antMatchers("/thunder/**").hasAnyAuthority("THUNDER","ADMIN");
+         .antMatchers("/thunder/**").hasAnyAuthority("ADMIN","THUNDER");
       
 
       return http.build();
@@ -39,4 +39,7 @@ public class SecurityConfig {
    public PasswordEncoder passwordEncoder() {
       return PasswordEncoderFactories.createDelegatingPasswordEncoder();
    }
+   
+
+
 }
