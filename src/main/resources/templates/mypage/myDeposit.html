@@ -10,19 +10,22 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h3 class="mt-4">⚡썬더 페이</h3>
+				<h4 class="mt-4">⚡썬더 페이</h4>
 				<br>
 				<div class="thunderForm">
-					<p><b th:text="${loginUser.nickName}"></b>님의 보유 썬더: <span th:text="${loginUser.deposit}"></span>⚡</p>
+					<p>
+						<b th:text="${loginUser.nickName}"></b>님의 보유 썬더: <span
+							th:text="${loginUser.deposit}"></span>⚡
+					</p>
 					<br>
 
-					<form th:action="@{updateDeposit}" method="post">
-					<input type="hidden" th:value="${loginUser.id}" name="id">
+					<form th:action="@{updateDeposit}" method="post" onsubmit="subConfirm()">
+						<input type="hidden" th:value="${loginUser.id}" name="id">
 						<div class="form-check">
 							<input class="form-check-input" type="radio" value="10000"
-								name="deposit" id="flexRadioDefault2" checked>
-							<label class="form-check-label" for="flexRadioDefault2">
-								10000원 </label>
+								name="deposit" id="flexRadioDefault2" checked> <label
+								class="form-check-label" for="flexRadioDefault2"> 10000원
+							</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" value="30000"
@@ -52,10 +55,18 @@
 						<button type="submit" class="btn btn-primary">충전</button>
 
 					</form>
-					<br> 값 넘겨야함
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<script th:inline="javascript">
+	function subConfirm() {
+		if (confirm("정말 충전하시겠습니까?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+</script>
 </html>

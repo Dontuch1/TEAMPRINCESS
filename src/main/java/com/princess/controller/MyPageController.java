@@ -26,13 +26,12 @@ public class MyPageController {
 
 	@Autowired
 	MypageService myService;
-
+	
 	@RequestMapping("/myPageMain")
 	public void myPageMain(Model model, @RequestParam(name = "id") String id, Member member,
 			@PageableDefault(page = 0, size = 10, sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		member.setId(id);
-
 		model.addAttribute("userPage", myService.getMember(member));
 		model.addAttribute("boardList", myService.getBoardList(pageable, member));
 		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
@@ -65,7 +64,7 @@ public class MyPageController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-
+		model.addAttribute("userPage", myService.getMember(member));
 	}
 
 	@GetMapping("/myProductList")
@@ -97,6 +96,8 @@ public class MyPageController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("userPage", myService.getMember(member));
+
 	}
 
 	@GetMapping("/myWishList")

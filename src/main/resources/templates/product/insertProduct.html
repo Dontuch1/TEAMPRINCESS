@@ -14,6 +14,11 @@
 	border-radius: 20px;
 	margin: 10px;
 	padding: 5px;
+	transition: 0.2s;
+}
+.box:hover {
+	transform: scale(1.05);
+	transition: 0.3s;
 }
 /* Chrome, Safari, Edge, Opera */
 input#price::-webkit-outer-spin-button, input#price::-webkit-inner-spin-button
@@ -26,6 +31,12 @@ input#price::-webkit-outer-spin-button, input#price::-webkit-inner-spin-button
 input#price[type='number'] {
 	-moz-appearance: textfield;
 }
+
+#imgShow, #thunderBtn{
+	cursor:pointer;
+}
+
+
 </style>
 </head>
 <body th:align="center">
@@ -56,28 +67,31 @@ input#price[type='number'] {
 									<table class="col-md-6" style="padding-bottom: 20px;">
 										<tr>
 											<td>제목&nbsp;</td>
-											<td><input class="box" type="text" name="title" /></td>
+											<td><input class="box" type="text" name="title" id="title" onchange="titleChange();"/></td>
 										</tr>
 										<tr>
 											<td>카테고리</td>
 											<td style="display: flex; justify-content: space-around;">
 												<label><input type="radio" name="pCategory"
 													value="DIGI"> 디지털/가전</label> <label><input
-													type="radio" name="pCategory" value="FURN"> 가구</label> <label><input
+													type="radio" name="pCategory" value="FURN" checked> 가구</label> <label><input
 													type="radio" name="pCategory" value="CLOT"> 의류/잡화</label> <label><input
 													type="radio" name="pCategory" value="BEAU"> 뷰티</label> <label><input
 													type="radio" name="pCategory" value="ETC"> 기타</label>
 											</td>
 										</tr>
 										<tr>
-											<td>가격</td>
+											<td rowspan="2">가격</td>
 											<td><input id="price" class="box" type="number"
-												name="strPrice" /></td>
+												name="strPrice" min="1000" required="required" onchange="priceChange();"/>
+										</tr>
+										<tr>
+											<td th:align="center" style="padding-bottom: 10px;"><span id="warn" style=" font-weight: small; color: #bbb">가격은 최소 1000원부터 가능합니다.</span></td>
 										</tr>
 										<tr id="auc">
 											<td>종류</td>
 											<td	style="display: flex; justify-content: space-around;">
-												<label><input type="radio" name="auction" value="N" onclick="prodSelect(this);">
+												<label><input type="radio" name="auction" value="N" onclick="prodSelect(this);" checked>
 													중고</label> <label><input id="auctionRadio" type="radio"
 													name="auction" value="Y" onclick='auctionSelect(this);'> 경매</label>
 											</td>
@@ -90,13 +104,14 @@ input#price[type='number'] {
 										<tr>
 											<td><span id="checkMark"
 												style="font-weight: strong; font-size: 15px; color: #eee"></span></td>
-											<td style="text-align: center; margin-top: 10px;"><div
-													id="thunderBtn" class="box" onclick="thunder()">
-													<b>⚡ 도와줘요 천둥맨! ⚡</b> <input id="delevery"
-														style="display: none;" type="checkbox" name="delevery"
-														th:align="center" value="Y"><br> <small
-														th:align="center">천둥맨 이용시 배달비 1,500원이 차감됩니다.</small>
-												</div></td>
+											<td style="text-align: center; margin-top: 10px;">
+											<div
+												id="thunderBtn" class="box" onclick="thunder()">
+												<b>⚡ 도와줘요 천둥맨! ⚡</b> <input id="delevery"
+													style="display: none;" type="checkbox" name="delevery"
+													th:align="center" value="Y"><br> <small
+													th:align="center">천둥맨 이용시 배달비 1,500원이 차감됩니다.</small>
+											</div></td>
 										</tr>
 									</table>
 								</div>
@@ -119,10 +134,39 @@ input#price[type='number'] {
 </body>
 <script type="text/javascript">
 	/*=============================================
-	 * 이미지 등록 이미지 클릭
+	 * 폼 제출
 	 *=============================================*/
 	function formsubmit() {
-		$("#productForm").submit();
+		console.log('오니?');
+		if ($("#title").val() == "") {
+			console.log('오니?2');
+			$("#title").attr('style', 'border-color: #ed4b4b');
+			return false;
+		}
+		if ($("#price").val() >= 1000){
+			console.log('오니?3');
+			$("#productForm").submit();
+		}
+		else {
+			console.log('오니?4');
+			$("#warn").css('color', '#ed4b4b');
+			$("#price").attr('style', 'border-color: #ed4b4b');
+			return false;
+		} 
+		
+	}
+	/*=============================================
+	 * 제목 변동
+	 *=============================================*/
+	function titleChange() {
+			$("#title").attr('style', 'border-color: #eee');
+	}
+	/*=============================================
+	 * 가격 변동
+	 *=============================================*/
+	function priceChange() {
+			$("#price").attr('style', 'border-color: #eee');
+			$("#warn").css('color', '#bbb');
 	}
 	/*=============================================
 	 * 이미지 등록 이미지 클릭

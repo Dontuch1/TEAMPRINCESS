@@ -16,11 +16,11 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h3 class="mt-4"> 🛍️ 구매 목록</h3>
+				<h4 class="mt-4"> 🛍️ 구매 목록</h4>
 				<br>
-				<div th:if="${buyList.empty}">
+				<!-- <div th:if="${buyList.empty}">
 						<p>구매한 상품이 없습니다.</p>
-					</div>
+					</div> -->
 				<div id="mypage-product-list">
 					<div class="card" th:each="product: ${buyList}">
 						<div class="card-img-square">

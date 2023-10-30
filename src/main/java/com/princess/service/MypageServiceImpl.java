@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.princess.domain.Board;
 import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
@@ -51,7 +52,12 @@ public class MypageServiceImpl implements MypageService {
 		findMember.setDeposit(member.getDeposit());
 		findMember.setEmail(member.getEmail());
 		findMember.setPhone(member.getPhone());
-		findMember.setAgree(member.getAgree());
+		if(member.getAgree()==null) {
+			findMember.setAgree(YorN.N);
+		}else {
+			findMember.setAgree(member.getAgree());
+		}
+		findMember.setBirth(member.getBirth());
 		System.out.println(findMember.toString());
 		memberRepo.save(findMember);
 	}
