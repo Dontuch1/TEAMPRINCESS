@@ -21,7 +21,7 @@
                     <form class="form-signin" method="post">
                         <div class="form-label-group">
                             <input type="text" name="username" class="form-control" placeholder="Email address" required autofocus>
-                            <label th:for="username">login </label>
+                            <label th:for="username">Email address</label>
                         </div>
 
                         <div class="form-label-group">
@@ -33,7 +33,8 @@
                             <input type="checkbox" class="custom-control-input" id="customCheck1">
                             <label class="custom-control-label" for="customCheck1">Remember password</label>
                         </div>
-                       <a class="btn btn-lg btn-primary btn-block text-uppercase" type="button" th:href="@{/login}">Sign up</a>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                          <a class="btn btn-lg btn-primary btn-block text-uppercase" type="button" th:href="@{/system/register}">Sign up</a>
                         <hr class="my-4">
                     </form>
                 </div>
