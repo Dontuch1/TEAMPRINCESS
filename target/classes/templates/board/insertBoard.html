@@ -46,7 +46,6 @@
 						<div th:align="center">
 							<form th:action="@{/board/insertBoard}" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="userId.id" th:value="${#authentication.principal.username}" />
-								<input type="hidden" name="type" th:value="${cate}" /> 
 								<!-- insert에 필요한 id와 getBoardList type 경로로 cate를 넘겨준다. -->
 								<br>
 								<br>

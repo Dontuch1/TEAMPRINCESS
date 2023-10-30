@@ -43,7 +43,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 					<div class="box box2"> 
 						<div th:align="center">
 							<form th:action="@{/board/insertBoard}" method="post">
-								
 								<br>
 								<br>
 								<h2 th:align="center" style="font-weight:700" th:text="${board.title}">  </h2>
@@ -84,16 +83,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								
 				  <!-- 댓글 작성 폼 -->
 						<form id="replyForm">
-						    <input type="hidden" id="boardId" value="${board.postNum}" />
-						    <textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
+						 	
+						    <input type="hidden" id="boardId" th:value="${board.postNum}" />
+						   	<textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
 						    <button type="submit">댓글 작성</button>
 						</form>
 						
 						<!-- 댓글 목록 -->
 						<ul id="replyList">
 						    <th:Each items="${replies}" var="reply">
-						        <li>
-						            ${reply.replyContent}
+						        <li> 
 						            <button class="deleteReply" data-id="${reply.replyNum}">삭제</button>
 						        </li>
 						    </th:Each>
@@ -102,7 +101,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" onclick="history.back()">글 목록</button>
-			<!-- <a sec:authorize = "hasRole('ROLE_ADMIN')" th:href="@{/board/deleteBoard(seq=${board.seq})}">글삭제</a> -->
+			<a sec:authorize = "hasAuthority('ROLE_ADMIN')" th:href="@{/board/deleteBoard(postNum=${board.postNum})}">글삭제</a>
 			</div>
 			<br><br><br>		
 	</div>	
@@ -114,6 +113,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	</div>
 </body>
 <script type="text/javascript">
+let boardId = $('#boardId').val();
+
 $(document).ready(function() {
     // 댓글 작성
     $('#replyForm').submit(function(e) {
@@ -121,12 +122,12 @@ $(document).ready(function() {
 
         let replyData = {
             "replyContent": $('#replyContent').val(),
-            "boardId": $('#boardId').val()
+            "boardId": boardId
         };
 
         $.ajax({
             type: "POST",
-            url: "/board/getBoard",
+            url: "/reply/getBoard",
             data: JSON.stringify(replyData),
             contentType: "application/json",
             success: function(response) {
@@ -144,7 +145,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "DELETE",
-            url: "/board/delete?id=" + replyId,
+            url: "/reply/delete?id=" + replyId,
             success: function(response) {
                 // 댓글 삭제 코드 (예: 댓글 목록에서 해당 댓글 제거)
             },
