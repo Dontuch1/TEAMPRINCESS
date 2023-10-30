@@ -2,8 +2,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>🥕당근나라 번개공주</title>
-<style type="text/css">
-</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -34,7 +32,7 @@
 						th:href="@{/product/getProduct(pNo=${product.pNo})}"
 						style="width: 250px;">
 						<div
-							style="width: 218px; overflow: hidden; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+							style="width: 218px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<a
 								style="font-size: 20; font-weight: bold; text-decoration: none;"
 								class="card-title" th:text="${product.title}"></a>
@@ -52,8 +50,14 @@
 							class="card-text"
 							th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small><br>
 						<br>
-						<a th:if="${product.sold.toString() == 'N'}" class="btn btn-primary">거래중</a>
-						<a th:if="${product.sold.toString() == 'Y'}" class="btn btn-secondary">거래완료</a>						
+						<div th:if="${product.auction.toString() == 'N'}">
+							<a th:if="${product.sold.toString() == 'N'}" class="btn btn-primary">판매중</a>
+							<a th:if="${product.sold.toString() == 'Y'}" class="btn btn-secondary">거래완료</a>
+						</div>
+						<div th:if="${product.auction.toString() == 'Y'}">
+							<a th:if="${product.sold.toString() == 'N'}" class="btn btn-primary">경매중</a>
+							<a th:if="${product.sold.toString() == 'Y'}" class="btn btn-secondary">경매기간종료</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -67,6 +71,19 @@
 			</th:block>
 		</div>
 	</div>
-
 </body>
+<script type="text/javascript">
+function clock(regdate, duration) {
+	regdate = new Date(regdate).getTime();
+	let aucDuToTime = duration * 1000 * 60 * 60 * 24;
+	let currentTime = new Date().getTime();
+    
+    let time = parseInt(regdate) + aucDuToTime - parseInt(currentTime);
+
+    if (time < 0) {
+    	return false;
+    }
+    return true;
+}
+</script>
 </html>

@@ -2,7 +2,6 @@ package com.princess.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,12 +13,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
 import lombok.ToString;
 
+@DynamicInsert
 @Data
 @ToString (exclude = {"buyer", "pNo"})
 @Entity
@@ -38,9 +39,8 @@ public class Sales {
 	
 	private String thunderId;
 	
-
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@ColumnDefault("'Y'")
 	private YorN rated;
 	
 	@Temporal(TemporalType.DATE)
