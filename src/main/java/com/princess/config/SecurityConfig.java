@@ -21,7 +21,9 @@ public class SecurityConfig {
       http.userDetailsService(userDetailsService);
       http.csrf().disable();
       http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList?type=prod", true);
-      http.logout().logoutUrl("/system/logout");
+      http.logout()
+      .logoutUrl("/logout") // 로그아웃 URL을 /logout로 설정
+      .logoutSuccessUrl("/login"); // 로그아웃 후 리디렉션될 URL 설정 (예: 로그인 페이지)
       http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       
       http.authorizeHttpRequests()
