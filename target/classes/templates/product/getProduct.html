@@ -3,6 +3,22 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>🥕당근나라 번개공주</title>
+<style>
+#navbarDropdown{
+	cursor:pointer;
+}
+/* Chrome, Safari, Edge, Opera */
+input#bid::-webkit-outer-spin-button, input#bid::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox  */
+input#bid[type='number'] {
+	-moz-appearance: textfield;
+}
+</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -22,45 +38,72 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 						    <span th:case="BEAU">뷰티</span>
 						    <span th:case="ETC">기타</span>
 						</div>
-		                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
+		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
 		                    
 		                    <div class="col-md-6">
-		                        <div class="fs-5 mb-5" th:if="${product.auction.toString() == 'Y'}"><span id="clock" style="color: red; font-weight: bold;"></span></div>
-		                       <!--  <div th:align="right"><small class="card-text" th:text="${#dates.format(product.regdate, 'yyyy-MM-dd')}"></small></div> -->
+		                        <div class="" th:if="${product.auction.toString() == 'Y'}"><span id="clock" style="color: red; font-weight: bold;"></span></div>
 		                        <h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"th:text="${product.title}"></h2>
 		                        
 		                        <div style="display: flex; margin-bottom: 20px;">
 			                        <table th:cellpadding="0" style="flex-grow: 1;">
 				                        <tr>
 				                        	<td rowspan="2" style="width: 60px;"><img src="/images/prcs-profile.png" alt="..." style="width: 50px;"></td>
-				                        	<td><a th:href="@{/mypage/myPageMain(id=${product.salesId.id})}"><label style="margin-top: 10px; font-weight: bold" th:text="${product.salesId.nickName}"></label></a></td>
+				                        	<td style="vertical-align: bottom">
+					                        	<a  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+															aria-expanded="false" style="font-size: 18px; margin-top: 10px;">
+															<span th:text="${product.salesId.nickName}"></span></a>
+					                        		
+						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+														<div class="dropdown-item">
+														<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지 방문</a>
+														</div>
+													</div>
+					                    
+					                    
+				                        	</td>
 				                        </tr>
 				                        <tr>
-				                        	<td><label style="margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
+				                        	<td>&nbsp;<label style="font-size: 15px; margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
 				                        </tr>
 			                         </table>
-			                         <div style="flex-grow: 1;">
-			                       		<div class="fs-5 mb-5" th:if="${product.auction.toString() == 'Y'}">
-				                            <div class="small mb-1" style="color: #aaa;">시작가 : <span style="color: #aaa; text-decoration: line-through;" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span></div>
-				                            &nbsp;→ 현재가 : <span style="font-weight: bold;" th:align="center" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+			                         <div style="flex-grow: 1; height: 80px;">
+			                       		<div th:if="${product.auction.toString() == 'Y'}" th:align="right">
+				                            <div class="small" style="color: #aaa;"> 시작가 <span style="color: #aaa; text-decoration: line-through;" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span></div>
+				                            <span style="font-weight: bold;" th:align="center" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
 				                        </div>
-				                        <div th:align="right" class="fs-5"  style="margin-bottom: 5px;"th:unless="${product.auction.toString() == 'Y'}">
-				                            <span style="font-weight: bold;"th:align="right" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+				                        <div th:align="right" style="margin-bottom: 5px;"th:unless="${product.auction.toString() == 'Y'}">
+				                            <span  style="font-weight: bold;"th:align="right" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
 				                        </div>
 				                        <div th:if="${product.sold.toString() == 'N'}">
 					                        <div th:if="${product.salesId.id != #authentication.principal.username}" th:align="right">
-					                        	<button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();">
-					                                <img id="like" alt="..." src="/images/empty_heart.png" style="width: 20px;">
+					                        	<button th:align="center" class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();" style="height: 35px;">
+					                                <img id="like" alt="..." src="/images/empty_heart.png" style="width: 15px;">
 					                            </button>
-					                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-					                                <span style="font-size: 15px; padding: 0px;">🛒</span>
-					                            </button>
-			                       			</div>
-		                       			</div>
+						                            <a class="btn btn-outline-dark flex-shrink-0" id="navbarDropdown" href="#"
+															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+															aria-expanded="false"  th:if="${product.auction.toString() == 'Y'}" type="button">
+						                                <span style="font-size: 15px; padding: 0px;">💰</span>
+						                                
+						                            </a>
+						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+														<div class="dropdown-item">
+														<input id="bid" style="width: 100px; vertical-align: middle;" type="number" min="${auction.auctionPrice}">&nbsp;<a class="btn btn-outline-dark flex-shrink-0" type="button" onclick="bid();">입찰하기</a>
+														</div>
+													</div>
+						                            <button class="btn btn-outline-dark flex-shrink-0" th:if="${product.auction.toString() == 'N'}" type="button" onclick="buyBtn()">
+						                                <span style="font-size: 15px; padding: 0px;">🛒</span>
+						                            </button>
+						                            
+					                            </div>
+		                       				</div>
+		                       			<form id="buyForm" th:action="@{/product/buyProduct}" method="post">
+		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
+		                       				<input th:value="${#authentication.principal.username}" name="id" type="hidden">
+		                       			</form>
 			                        </div>
 		                        </div>
 		                        
-		                        <p class="lead" th:text="${product.content}"></p>
+		                        <pre style="max-height: 500px; white-space: pre-line; font-family: var(--bs-body-font-family);" class="lead" th:text="${product.content}"></pre>
 		                        
 		                    </div>
 		                </div>
@@ -116,8 +159,6 @@ function clock() {
 }
 clock();
 setInterval(clock, 1000); // 1초마다 실행
-</script>
-<script type="text/javascript">
 function like() {
     let likeImage = $('#like');
     if (likeImage.attr('src').endsWith("empty_heart.png")) {
@@ -127,6 +168,13 @@ function like() {
         likeImage.attr('src', "/images/empty_heart.png");
         // 좋아요 데이터 삭제
     }
+}
+function buyBtn() {
+	if (confirm("구매하시겠습니까?")) {
+		$('#buyForm').submit();
+	} else {
+		return false;
+	}
 }
 </script>
 </html>
