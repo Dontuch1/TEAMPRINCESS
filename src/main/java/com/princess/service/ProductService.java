@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Auction;
+import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Search;
 
@@ -29,5 +30,14 @@ public interface ProductService {
 	Auction getAuctionMaxPrice(Product product);
 	
 	void buyProduct(Product product, String buyer);
-
+	
+	int getAuctionCnt(Product product, String id);
+	
+	void insertAuction(Product product, String id, int bid);
+	
+	void setMemberDepoist(Member member);
+	
+	Member getMember(Member member);
+	
+	List<Auction> getBidList(Member member);
 }

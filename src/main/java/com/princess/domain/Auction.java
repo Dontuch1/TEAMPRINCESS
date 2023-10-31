@@ -12,10 +12,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import lombok.Data;
 import lombok.ToString;
 
+@DynamicInsert
 @Data
 @ToString(exclude = {"pNo", "auctionId"})
 @Entity
@@ -37,7 +39,7 @@ public class Auction {
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("sysdate")
-	private Date regdate;
+	private Date regdate = new Date();
 	
 	
 	// 연관관계 설정

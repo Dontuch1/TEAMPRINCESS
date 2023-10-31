@@ -40,7 +40,7 @@ public class Sales {
 	private String thunderId;
 	
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("'Y'")
+	@ColumnDefault("'N'")
 	private YorN rated;
 	
 	@Temporal(TemporalType.DATE)

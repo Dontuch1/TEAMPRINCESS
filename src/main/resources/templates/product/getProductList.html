@@ -37,8 +37,16 @@
 								style="font-size: 20; font-weight: bold; text-decoration: none;"
 								class="card-title" th:text="${product.title}"></a>
 						</div>
-						<h5 class="card-text"
+						<h5 class="card-text" th:if="${product.auction.toString() == 'N'}"
 							th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></h5>
+							<br>
+							<div th:if="${product.auction.toString() == 'Y'}">
+								<small>시작가</small>
+								<h5 class="card-text" 
+								th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">
+								</h5>
+								<br>
+							</div>
 						<div class="small mb-1"
 							th:switch="${product.pCategory.toString()}">
 							<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
