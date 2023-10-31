@@ -19,8 +19,8 @@ public class UserControllerAdvice {
 
 	@ModelAttribute("currentUser")
 	public Member getCurrentUser(@AuthenticationPrincipal User user, HttpServletRequest request) {
-		 if (!shouldSkipAdvice(request.getRequestURI())) {
-	            return memberRepo.findById(user.getUsername()).get();
+		 if (user!=null && !shouldSkipAdvice(request.getRequestURI())) {
+	            return memberRepo.findById(user.getUsername()).orElse(null);
 	        }
 	        return null;
 	}
@@ -28,7 +28,8 @@ public class UserControllerAdvice {
 	private boolean shouldSkipAdvice(String requestUri) {
 		// 여기에 특정 페이지 또는 URL 패턴에 대한 조건을 추가
 		// 조건을 만족하는 경우 advice를 스킵하고, 그렇지 않은 경우 실행
-		if (requestUri.equals("/system/login")||requestUri.equals("/system/register")) {
+		if (requestUri.equals("/system/login")||requestUri.equals("/system/register")
+				||requestUri.equals("/system/logout")) {
 			return true;
 		}
 		return false;
