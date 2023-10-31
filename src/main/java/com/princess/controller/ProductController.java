@@ -4,12 +4,14 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.princess.config.SecurityUser;
 import com.princess.domain.Auction;
 import com.princess.domain.CheckCondition.YorN;
+import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Search;
 import com.princess.service.ProductService;
@@ -30,6 +34,7 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
+
 
 	@RequestMapping("/getProductList")
 	public String getProductList(@RequestParam String type, Model model, Search search,
@@ -53,6 +58,7 @@ public class ProductController {
 				LocalDateTime expiredTime = localRegdate.plusDays(prod.getAucDuration()); // 7일 전 날짜 계산
 				if (expiredTime.isBefore(localNow))
 					prod.setSold(YorN.Y);
+					productService.updateProduct(prod);
 			}
 		}
 
@@ -70,19 +76,22 @@ public class ProductController {
 	}
 
 	@GetMapping("/getProduct")
-	public String getProduct(Product product, Model model) {
+	public String getProduct(Product product, Model model, @AuthenticationPrincipal SecurityUser securityUser) {
 		product = productService.getProduct(product);
-		System.out.println(product.getSold());
 		model.addAttribute("product", product);
+		System.out.println(product.toString());
+		Auction auc = new Auction();
 		if (product.getAuction().equals(YorN.Y)) {
-			Auction auc = new Auction();
 			if (productService.getAuctionMaxPrice(product) == null)
 				auc.setAuctionPrice(product.getPrice());
 			else 
 				auc = (productService.getAuctionMaxPrice(product));
-			productService.getAuctionMaxPrice(product);
-			model.addAttribute("auction", auc);
+			List<Auction> auctionList = productService.getAuctionList(product);
+			model.addAttribute("auctionList", auctionList);
+			int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
+			model.addAttribute("auctionCnt", auctionCnt);
 		}
+		model.addAttribute("auction", auc);
 		return "product/getProduct";
 	}
 
@@ -115,7 +124,33 @@ public class ProductController {
 	@PostMapping("/buyProduct")
 	public String buyProduct(Product product, @RequestParam String id) {
 		product = productService.getProduct(product);
+		if (product.getDelevery().equals(YorN.Y)) {
+			Member buyer = new Member();
+			buyer.setId(id);
+			buyer = productService.getMember(buyer);
+			buyer.setDeposit(buyer.getDeposit()-product.getPrice()-1500);
+			productService.setMemberDepoist(buyer);
+		}
 		productService.buyProduct(product, id);
 		return "redirect:/mypage/myBuyList";
+	}
+	
+	@PostMapping("/bidProduct")
+	public String bidProduct(Product product, @RequestParam String id, @RequestParam int bid) {
+		product = productService.getProduct(product);
+		Member buyer = new Member();
+		buyer.setId(id);
+		buyer = productService.getMember(buyer);
+		if (productService.getBidList(buyer) != null) {
+			
+		}
+		
+			if (product.getDelevery().equals(YorN.Y)) {
+				buyer.setDeposit(buyer.getDeposit() - bid - 1500);
+			} else buyer.setDeposit(buyer.getDeposit() - bid);
+		productService.setMemberDepoist(buyer);
+		
+		productService.insertAuction(product, id, bid);
+		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
 }

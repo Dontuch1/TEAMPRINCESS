@@ -21,6 +21,7 @@ import com.princess.domain.QProduct;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.AuctionRepository;
+import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ProductRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
@@ -37,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private SalesRepository saleseRepo;
 
+	@Autowired
+	private MemberRepository memberRepo;
+	
 	@Value("${file.direc}")
 	private String path;
 
@@ -134,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public List<Auction> getAuctionList(Product product) {
-		return null;
+		return auctionRepo.findBypNoOrderByAuctionNoDesc(product);
 	}
 
 	public void buyProduct(Product product, String buyer) {
@@ -148,4 +152,31 @@ public class ProductServiceImpl implements ProductService {
 		productRepo.save(product);
 	}
 
+	public int getAuctionCnt(Product product, String id) {
+		return auctionRepo.countByPNoAndId(product.getPNo(), id);
+	}
+	
+	public void insertAuction(Product product, String id, int bid) {
+		Auction auction = new Auction();
+		auction.setPNo(product);
+		Member member = new Member();
+		member.setId(id);
+		auction.setAuctionId(member);
+		auction.setAuctionPrice(bid);
+		auctionRepo.save(auction);
+	}
+	
+	public void setMemberDepoist(Member member) {
+		Member findMember = memberRepo.findById(member.getId()).get();
+		findMember.setDeposit(member.getDeposit());
+		memberRepo.save(findMember);
+	}
+	
+	public Member getMember(Member member) {
+		return memberRepo.findById(member.getId()).get();
+	}
+	
+	public List<Auction> getBidList(Member member) {
+		return auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member);
+	}
 }

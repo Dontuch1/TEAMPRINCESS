@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Member;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.persistence.MemberRepository;
 
 @Service
@@ -34,6 +35,10 @@ public class MemberServiceImpl implements MemberService {
 	// 회원리스트 가져오기
 	public  List<Member> getMemberList(Member member) {
 		return  (List<Member>) memberRepo.findAll();
+	}
+	
+	public Member getMember(Member member) {
+		return memberRepo.findById(member.getId()).get();
 	}
 
 }
