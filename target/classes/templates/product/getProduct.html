@@ -93,11 +93,11 @@ input#bid[type='number'] {
 					                            </button>
 						                            <a class="btn btn-outline-dark flex-shrink-0" id="navbarDropdown" href="#"
 															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false"  th:if="${product.auction.toString() == 'Y'}" type="button">
+															aria-expanded="false"  th:if="${product.auction.toString() == 'Y'}" type="button" onclick="isCurrBid();">
 						                                <span style="font-size: 15px; padding: 0px;">💰</span>
 						                                
 						                            </a>
-						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+						                            <div id="dropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 														<div class="dropdown-item">
 														<form id="bidForm" th:action="@{/product/bidProduct}" method="post">
 						                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
@@ -202,9 +202,14 @@ function like() {
     }
 }
 /*=============================================
- * 천둥맨 데이터 갖고오기
+ * 마지막 입찰자인지 확인
  *=============================================*/
-
+function isCurrBid() {
+	if (/*[[${currBidId == currentUser.id}]]*/) {
+		alert('연속으로 입찰할 수 없습니다.');
+		$("#dropdown").remove();
+	}
+}
 
 /*=============================================
  * 구매 버튼
@@ -213,17 +218,12 @@ function buyBtn() {
 	if (confirm("구매하시겠습니까?")) {
 		if ($('#delevery').length) {
 			if(/*[[${product.price + 1500 < currentUser.deposit}]]*/) {
-				console.log('2');
-				$('#thunder').val(1);
 				$('#buyForm').submit();
 			} else {
-				console.log('3');
 				alert('썬더페이 잔액이 부족합니다!');
 				return false;
 			}
 		} else {
-			console.log('4');
-			$('#thunder').val(0);
 			$('#buyForm').submit();
 		}
 	} else {
@@ -242,14 +242,14 @@ function buyBtn() {
 	} else {
 		if(confirm('정말 입찰하시겠습니까?')) {
 			if ($('#delevery').length) {
-				if($('#bid').val() + 1500 <= /*[[${currentUser.deposit}]]*/) {
+				if($('#bid').val() + 1500 <= /*[[${currentUser.deposit + bidList.get(0).getAuctionPrice}]]*/) {
 					$('#bidForm').submit();
 				} else {
 					alert('썬더페이 잔액이 부족합니다!');
 					return false;
 				}
 			} else {
-				if($('#bid').val() <= /*[[${currentUser.deposit}]]*/) {
+				if($('#bid').val() <= /*[[${currentUser.deposit + bidList.get(0).getAuctionPrice}]]*/) {
 					$('#bidForm').submit();
 				} else {
 					alert('썬더페이 잔액이 부족합니다!');

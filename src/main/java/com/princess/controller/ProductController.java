@@ -86,8 +86,10 @@ public class ProductController {
 				auc.setAuctionPrice(product.getPrice());
 			else 
 				auc = (productService.getAuctionMaxPrice(product));
-			List<Auction> auctionList = productService.getAuctionList(product);
-			model.addAttribute("auctionList", auctionList);
+			String currBidId = productService.getAuctionList(product).get(0).getAuctionId().getId();
+			model.addAttribute("currBidId", currBidId);
+			List<Auction> bidList = productService.getBidList(securityUser.getMember());
+			model.addAttribute("bidList", bidList);
 			int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
 			model.addAttribute("auctionCnt", auctionCnt);
 		}
@@ -142,14 +144,12 @@ public class ProductController {
 		buyer.setId(id);
 		buyer = productService.getMember(buyer);
 		if (productService.getBidList(buyer) != null) {
-			
+			buyer.setDeposit(buyer.getDeposit() + productService.getBidList(buyer).get(0).getAuctionPrice());
 		}
-		
-			if (product.getDelevery().equals(YorN.Y)) {
-				buyer.setDeposit(buyer.getDeposit() - bid - 1500);
-			} else buyer.setDeposit(buyer.getDeposit() - bid);
+		if (product.getDelevery().equals(YorN.Y)) {
+			buyer.setDeposit(buyer.getDeposit() - bid - 1500);
+		} else buyer.setDeposit(buyer.getDeposit() - bid);
 		productService.setMemberDepoist(buyer);
-		
 		productService.insertAuction(product, id, bid);
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
