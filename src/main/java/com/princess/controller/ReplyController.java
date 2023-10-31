@@ -64,27 +64,11 @@ public class ReplyController {
         return "board/getBoard";
     }
 
-<<<<<<< HEAD
 	@PostMapping("/delete")
     public String deleteReply(@RequestBody Map<String, Object> payload, Model model) {
 		Long boardId = Long.valueOf((String) payload.get("replyNum"));
 		System.out.println("boradID : "+boardId);
         replyService.deleteReply(boardId);
-=======
-	@GetMapping
-    public String getRepliesByBoard(@RequestParam("boardId") Long boardId, Model model) {
-        Board board = boardService.getBoardId(boardId); // BoardService를 사용하여 게시글 정보를 직접 가져옵니다.
-        System.out.println("boardId : "+boardId);
-        List<Reply> replies = replyService.findByBoard(board);
-        model.addAttribute("replies", replies);
-        model.addAttribute("board", board); // 게시글의 정보도 모델에 추가합니다.
-        return "/board/getBoard";
-    }
-
-    @PostMapping("/replyDelete")
-    public String deleteReply(@RequestParam("id") Long id, Model model) {
-        replyService.deleteReply(id);
->>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
         return "redirect:/board/getBoard"; 
     }
 }
