@@ -16,20 +16,29 @@ h2 {
 	font-weight: 900;
 }
 
-table {
+.table {
 	width: 100%;
-	border-top: 1px solid #d3d3d3;
+	
 	border-collapse: collapse;
 }
 
-th {
+.th {
 	background-color: white;
 	border-top: 3px solid #727272;
+	
 }
 
-th, td {
+.border1 {
+	border-top: 1px solid #d3d3d3;
 	border-bottom: 1px solid #d3d3d3;
-	padding: 10px;
+	height: 70px;
+}
+
+.textareahold {
+    width: 500px;
+    height: 3.25em;
+    border: none;
+    resize: none;
 }
 
 .greylist {
@@ -66,10 +75,7 @@ th, td {
 	text-align: center;
 }
 
-a {
-	color: black;
-	text-decoration-line: none;
-}
+
 
 /* wrapper ,display: grid */
 #wrapper {
@@ -119,7 +125,7 @@ a {
 #modalContent {
 	position: absolute;
 	background-color: #ffffff;
-	width: 500px;
+	width: 600px;
 	height: 300px;
 	padding: 30px;
 	border-radius: 15px

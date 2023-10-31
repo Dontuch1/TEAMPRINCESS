@@ -12,7 +12,7 @@ import com.querydsl.core.BooleanBuilder;
 
 public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
 
-	Page<Board> findByUserId(Member member,Pageable pageable);
+	Page<Board> findByUserId(Member member, Pageable pageable);
 	
 	@Query("SELECT b FROM Board b")
 	Page<Board> getBoardList(Pageable pageable);

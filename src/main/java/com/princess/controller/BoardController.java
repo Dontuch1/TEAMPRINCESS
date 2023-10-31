@@ -1,6 +1,7 @@
  package com.princess.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
 import com.princess.domain.CheckCondition.Display;
+import com.princess.domain.Reply;
+import com.princess.domain.Report;
 import com.princess.domain.Search;
 import com.princess.service.BoardService;
+import com.princess.service.ReplyService;
+import com.princess.service.ReportService;
 	
 @Controller
 @RequestMapping("/board/")
@@ -26,6 +31,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardservice; 
+	
+	@Autowired
+    private ReplyService replyService;
 	
 	@RequestMapping("/getBoardList")
 	public String getBoardList (@RequestParam String type, Model model, Search search,
@@ -54,8 +62,26 @@ public class BoardController {
 	}	
 	
 	@GetMapping("/getBoard")
-	public String getBoard(Model model, Board board) {
-		model.addAttribute("board", boardservice.getBoard(board));
+	public String getBoard(Model model, Board board,
+			@PageableDefault(page = 0, size = 10, sort = "postNum", direction = Sort.Direction.DESC) Pageable pageable) {
+		
+		Board board1= boardservice.getBoardId(board.getPostNum()); // board에서 postNum을 가져옴
+	    System.out.println("boardId : "+board1);
+		
+	    
+	    Board getBoard = boardservice.getBoard(board);
+	    
+	    Page<Reply> replies = replyService.findByPostNum(board1, pageable);
+	    
+	    int nowPage = replies.getPageable().getPageNumber() + 1;
+	    int startPage = Math.max(nowPage -4, 1);
+	    int endPage = Math.min(nowPage +4, replies.getTotalPages());
+	    		
+	    model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+	    model.addAttribute("replies1", replies);
+		model.addAttribute("board", getBoard);
 
 		return "board/getBoard";
 	}

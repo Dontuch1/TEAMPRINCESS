@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Reply;
+import com.princess.persistence.MemberRepository;
 import com.princess.service.BoardService;
+import com.princess.service.BoardServiceImpl;
+import com.princess.service.MemberService;
 import com.princess.service.ReplyService;
 
 @RestController
@@ -27,11 +30,12 @@ public class ReplyController {
 	
 	@Autowired
 	private BoardService boardService;
-
+	
+	
+	
 	@PostMapping("/getBoard")
     public String saveReply(@RequestBody Map<String, Object> payload,
                             Model model) {
-		
 		
 		String replyContent = (String) payload.get("replyContent");
 		String memberId = (String) payload.get("memberId");
@@ -44,7 +48,7 @@ public class ReplyController {
 		Member member = new Member();
 		member.setId(memberId);
 		
-        Board board = new Board();
+		Board board = new Board();
         board.setPostNum(boardId);
       
         Reply reply = new Reply();
@@ -60,18 +64,11 @@ public class ReplyController {
         return "board/getBoard";
     }
 
-	@GetMapping
-    public String getRepliesByBoard(@RequestParam("boardId") Long boardId, Model model) {
-        Board board = boardService.getBoardId(boardId); // BoardService를 사용하여 게시글 정보를 직접 가져옵니다.
-        List<Reply> replies = replyService.findByBoard(board);
-        model.addAttribute("replies", replies);
-        model.addAttribute("board", board); // 게시글의 정보도 모델에 추가합니다.
-        return "/board/getBoard";
-    }
-
-    @PostMapping("/replyDelete")
-    public String deleteReply(@RequestParam("id") Long id, Model model) {
-        replyService.deleteReply(id);
+	@PostMapping("/delete")
+    public String deleteReply(@RequestBody Map<String, Object> payload, Model model) {
+		Long boardId = Long.valueOf((String) payload.get("replyNum"));
+		System.out.println("boradID : "+boardId);
+        replyService.deleteReply(boardId);
         return "redirect:/board/getBoard"; 
     }
 }

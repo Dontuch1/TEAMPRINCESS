@@ -39,7 +39,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<div class="container-fluid">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->  
 				
-<div id="wrapper">
+			<div id="wrapper">
 					<div class="box box2"> 
 						<div th:align="center">
 							<form th:action="@{/board/insertBoard}" method="post">
@@ -81,26 +81,45 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 						</div>	
 						<br>
 								
-				  <!-- 댓글 작성 폼 -->
+				  		<!-- 댓글 작성 폼 -->	
 						<form id="replyForm">
-						 	
-						    <input type="hidden" id="boardId" th:value="${board.postNum}" />
-						   	<textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
-						    <button type="submit">댓글 작성</button>
+							<div th:align="center">
+								
+							 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
+							 	<input type="hidden" id="memberId" th:value="${#authentication.principal.username}" />
+							   	
+							   	<span th:text="${#authentication.principal.username}" ></span>
+							   	<textarea id="replyContent" placeholder="댓글을 입력하세요." style="white-space:pre-line" class="textareahold"></textarea>
+							    <button type="submit">댓글 작성</button>
+						    </div>
 						</form>
 						
 						<!-- 댓글 목록 -->
-						<ul id="replyList">
-						    <th:Each items="${replies}" var="reply">
-						        <li> 
-						            <button class="deleteReply" data-id="${reply.replyNum}">삭제</button>
-						        </li>
-						    </th:Each>
-						</ul>
-						
+						<div th:align="center">
+							<table id="replyList" style="width:800px">
+								<tr th:each="reply, state : ${replies1}" class="border1">
+							    	
+							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.id}"></td>
+							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
+							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
+							        <td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
+							    </tr>
+							</table>
+							
+							<span class="center" style="flex-grow:12; margin:5px 0px 0px 80px; font-size:1.1rem">
+							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
+								<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
+									th:href="@{/board/getBoard(postNum=${board.postNum}, id=${#authentication.principal.username}, page=${page - 1})}"
+									th:text="${page}"> </a>
+			
+								<strong th:if="${page == nowPage}" th:text="${page}"
+									style="color: red"></strong> 
+							</th:block> ]
+							</span>
+						</div>
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
-			<button type="button" class="btn btn-outline-secondary" onclick="history.back()">글 목록</button>
+			<button type="button" class="btn btn-outline-secondary" style="margin:20px" onclick="history.back()">글 목록</button>
 			<a sec:authorize = "hasAuthority('ROLE_ADMIN')" th:href="@{/board/deleteBoard(postNum=${board.postNum})}">글삭제</a>
 			</div>
 			<br><br><br>		
@@ -113,15 +132,41 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	</div>
 </body>
 <script type="text/javascript">
-let boardId = $('#boardId').val();
+function deleteReply(ele){	
+	console.log(ele);
+	console.log("value="+ele.value);
+	let no=ele.value;
+	console.log(no);
+	
+	 let replyData = {
+		"replyNum" : no 
+	 };
+	
+	$.ajax({
+        type: "POST",
+        url: "/reply/delete",
+        data: JSON.stringify(replyData),
+        contentType: "application/json",
+        success: function(response) {
+        	document.location.reload();
+        },
+        error: function(error) {
+            alert("댓글 삭제 중 오류 발생");
+        }
+    });
+}
 
-$(document).ready(function() {
-    // 댓글 작성
-    $('#replyForm').submit(function(e) {
+let boardId = $('#boardId').val();
+console.log(boardId);
+
+$(document).ready(function() { 
+	
+    $('#replyForm').submit(function(e) { // 댓글 작성
         e.preventDefault();
 
         let replyData = {
             "replyContent": $('#replyContent').val(),
+            "memberId":  $('#memberId').val(),
             "boardId": boardId
         };
 
@@ -131,29 +176,14 @@ $(document).ready(function() {
             data: JSON.stringify(replyData),
             contentType: "application/json",
             success: function(response) {
-                // 댓글 추가 코드 (예: 댓글 목록에 새로운 댓글 추가)
+            	document.location.reload();
             },
+
             error: function(error) {
                 alert("댓글 작성 중 오류 발생");
             }
         });
-    });
-
-    // 댓글 삭제
-    $(document).on('click', '.deleteReply', function() {
-        let replyId = $(this).data('id');
-
-        $.ajax({
-            type: "DELETE",
-            url: "/reply/delete?id=" + replyId,
-            success: function(response) {
-                // 댓글 삭제 코드 (예: 댓글 목록에서 해당 댓글 제거)
-            },
-            error: function(error) {
-                alert("댓글 삭제 중 오류 발생");
-            }
-        });
-    });
+	});
 });
 
 //=======================================
