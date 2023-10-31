@@ -12,7 +12,8 @@ public interface MemberService {
 
 	void deleteMember(Member member);
 
-
 	List<Member> getMemberList(Member member);
+	
+	Member getMember(Member meber);
 
 }
