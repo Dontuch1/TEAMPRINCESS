@@ -2,7 +2,6 @@ package com.princess.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.CheckCondition.CmCategory;
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Member;
 import com.princess.domain.QBoard;
 import com.princess.domain.Search;
-import com.princess.domain.CheckCondition.CmCategory;
-import com.princess.domain.CheckCondition.Display;
 import com.princess.persistence.BoardRepository;
 import com.princess.persistence.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
