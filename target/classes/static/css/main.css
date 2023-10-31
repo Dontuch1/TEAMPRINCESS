@@ -5,12 +5,11 @@
 	
 }
 
-#mypage-main-view {
+#mypage-main-view-inner {
 	padding: 10px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 2.5fr;
+	grid-template-columns: 1fr 1fr;
 	column-gap: 20px;
-	display: grid;
 }
 
 .d-flex {

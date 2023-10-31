@@ -63,6 +63,7 @@ public class ReplyController {
 	@GetMapping
     public String getRepliesByBoard(@RequestParam("boardId") Long boardId, Model model) {
         Board board = boardService.getBoardId(boardId); // BoardService를 사용하여 게시글 정보를 직접 가져옵니다.
+        System.out.println("boardId : "+boardId);
         List<Reply> replies = replyService.findByBoard(board);
         model.addAttribute("replies", replies);
         model.addAttribute("board", board); // 게시글의 정보도 모델에 추가합니다.

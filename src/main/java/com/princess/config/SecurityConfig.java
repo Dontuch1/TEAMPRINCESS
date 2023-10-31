@@ -20,9 +20,17 @@ public class SecurityConfig {
    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       http.userDetailsService(userDetailsService);
       http.csrf().disable();
-      http.formLogin().loginPage("/system/login").defaultSuccessUrl("/product/getProductList?type=prod", true);
-      http.logout().logoutUrl("/system/logout");
-      http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
+      http.formLogin()
+      .loginPage("/system/login")
+      .defaultSuccessUrl("/product/getProductList?type=prod", true);
+      
+      http
+      .logout()
+      .logoutUrl("/system/logout") // 로그아웃 URL
+      .logoutSuccessUrl("/system/login") // 로그아웃 성공 후 리디렉션할 URL
+      .invalidateHttpSession(true) // 세션 무효화
+      .deleteCookies("JSESSIONID"); // 세션 쿠키 삭제
+     
       
       http.authorizeHttpRequests()
          .antMatchers("/","/system/**").permitAll()

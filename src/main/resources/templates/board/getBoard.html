@@ -83,20 +83,18 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								
 				  <!-- 댓글 작성 폼 -->
 						<form id="replyForm">
-						 	
-						    <input type="hidden" id="boardId" th:value="${board.postNum}" />
+						 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
 						   	<textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
 						    <button type="submit">댓글 작성</button>
 						</form>
 						
 						<!-- 댓글 목록 -->
-						<ul id="replyList">
-						    <th:Each items="${replies}" var="reply">
-						        <li> 
-						            <button class="deleteReply" data-id="${reply.replyNum}">삭제</button>
-						        </li>
-						    </th:Each>
-						</ul>
+						<table id="replyList">
+						    <tr th:Each="reply : ${replies}">
+						    	<td th:text="${reply.replyContent}"></td>
+						        <td><button class="deleteReply" data-id="${reply.replyNum}">삭제</button></td>
+						    </tr>
+						</table>
 						
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>

@@ -2,6 +2,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지 메인</title>
+<style>
+.battery_img_big {
+	width: 50px;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+	rel="stylesheet">
+
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -11,37 +22,138 @@
 			<!-- Page content-->
 			<div class="container-fluid">
 				<h4 class="mt-4">
-					<span th:text="${userPage.nickName}" style="font-weight: bold">id</span>님의
+					🏠 <span th:text="${userPage.nickName}" style="font-weight: bold">id</span>님의
 					마이페이지
 				</h4>
-				<br>
-				<h5>
-					<a style="text-decoration: none; color: #333;"
-						th:href="@{/mypage/myProductList(id=${userPage.id})}">&nbsp;
-						🛍️ 최근 업로드한 상품</a>
-				</h5>
 				<div id="mypage-main-view">
-					<div th:if="${productList.empty}">
-						<p>업로드한 상품이 없습니다.</p>
-					</div>
-					<div class="card" th:each="product, iterStat : ${productList}"
-						th:if="${iterStat.index < 2}">
-						<div class="card-img-square">
-							<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
-								th:src="@{${product.upload}}" class="card-img-top" alt="..."
-								onerror="this.src='https://buly.kr/9BSKdMj'"></a>
+					<div id="mypage-main-view-inner">
+						<!-- 배터리 -->
+						<div>
+							<div
+								style="background-color: #ddd; border-radius: 10px; padding: 10px;"
+								th:align="center">
+								<span
+									style="font-family: VT323; font-weight: bold; font-size: 25pt;">battery:
+									<span th:text="${currentUser.battery}"></span>%
+								</span>
+								<div
+									th:if="${currentUser.battery >= 0 and currentUser.battery <= 20}">
+									<!-- 0~20 범위에 해당하는 경우 -->
+									<img id="batt" class="battery_img_big"
+										src="/images/battery_red.png">
+								</div>
+								<div
+									th:if="${currentUser.battery >= 21 and currentUser.battery <= 40}">
+									<!-- 21~40 범위에 해당하는 경우 -->
+									<img id="batt" class="battery_img_big"
+										src="/images/battery_orange.png">
+								</div>
+								<div
+									th:if="${currentUser.battery >= 41 and currentUser.battery <= 60}">
+									<!-- 41~60 범위에 해당하는 경우 -->
+									<img id="batt" class="battery_img_big"
+										src="/images/battery_yellow.png">
+								</div>
+								<div
+									th:if="${currentUser.battery >= 61 and currentUser.battery <= 80}">
+
+									<!-- 61~80 범위에 해당하는 경우 -->
+									<img id="batt" class="battery_img_big"
+										src="/images/battery_green.png">
+								</div>
+								<div
+									th:if="${currentUser.battery >= 81 and currentUser.battery <= 100}">
+									<!-- 81~100 범위에 해당하는 경우 -->
+									<img id="batt" class="battery_img_mini"
+										src="/images/battery_blue.png">
+								</div>
+							</div>
+							<!-- 받은 리뷰 -->
+							<br>
+							<h5>
+								<a style="text-decoration: none; color: #333;"
+									th:href="@{/mypage/myReviewList(id=${userPage.id})}">🎭 거래
+									후기 </a>
+							</h5>
+							<table class="table">
+								<thead>
+									<tr>
+										<th style="width: 20px;">No.</th>
+										<th>Review</th>
+										<th style="width: 80px;">Date</th>
+										<th style="width: 20px;">Thumb</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${reviewList.empty}">
+										<td colspan="4">받은 리뷰가 없습니다.</td>
+									</tr>
+
+									<tr th:each="review: ${reviewList}">
+										<td th:text="${review.reviewNo}">
+										<td th:text="${review.content}">
+										<td th:text="${review.regdate}">
+										<td th:switch="${review.review.toString()}"><span
+											th:case="UP">👍</span> <span th:case="DOWN">👎</span></td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- 받은 리뷰 -->
+
 						</div>
-						<div class="card-body">
-							<h5 class="card-title" th:text="${product.title}"
-								style="width: 220px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"></h5>
-							<h5 class="card-text" th:text="${product.price}">원</h5>
-							<p class="card-text" th:text="${product.pCategory}"></p>
-							<a href="#" class="btn btn-secondary">판매완료</a>
+						<!-- 배터리 끝 -->
+
+
+						<!-- 업로드한 상품 -->
+						<div
+							style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; padding: 10px; margin-left: 30px">
+							<h5>
+								<a style="text-decoration: none; color: #333;"
+									th:href="@{/mypage/myProductList(id=${userPage.id})}">
+									🛍️ 최근 업로드한 상품</a>
+							</h5>
+							<div></div>
+							<div th:if="${productList.empty}">
+								<p>업로드한 상품이 없습니다.</p>
+							</div>
+							<div class="card" th:each="product, iterStat : ${productList}"
+								th:if="${iterStat.index < 2}" style="width: 240px; height: 350px">
+								<div class="card-img-square">
+									<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
+										th:src="@{${product.upload}}" class="card-img-top" alt="..."
+										onerror="this.src='https://buly.kr/9BSKdMj'"></a>
+								</div>
+								<div class="card-body"
+									th:href="@{/product/getProduct(pNo=${product.pNo})}"
+									style="width: 200px; height: 150px">
+									<div
+										style="width: 218px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+										<a
+											style="font-size: 16; font-weight: bold; text-decoration: none;"
+											class="card-title" th:text="${product.title}"></a>
+									</div>
+									<h5 class="card-text"
+										th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></h5>
+									<div class="small mb-1"
+										th:switch="${product.pCategory.toString()}">
+										<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
+										<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
+										<span th:case="ETC">기타</span>
+									</div>
+									<small class="card-text" th:text="${product.salesId.nickName}"></small><br>
+									<small class="card-text"
+										th:text="${#dates.format(product.regdate, 'yyyy-MM-dd')}"></small><br>
+								</div>
+
+								<div th:if="${productList.content.size() == 1}">
+									<div></div>
+								</div>
+
+								<!-- 업로드한 상품 끝 -->
+							</div>
 						</div>
 					</div>
-					<div th:if="${productList.content.size() == 1}">
-						<div></div>
-					</div>
+					<!-- 최근 게시글 -->
 					<div>
 						<h5>
 							<a style="text-decoration: none; color: #333;"
@@ -55,7 +167,7 @@
 									<th>category</th>
 									<th>title</th>
 									<th>like</th>
-									<th>date</th>
+									<th style="width: 100px;">date</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -76,40 +188,13 @@
 												th:href="@{/board/getBoard(postNum=${board.postNum})}"
 												th:text="${board.title}"></a>
 										</div>
-									<td th:text="${board.great}">
+									<td>💜<span th:text="${board.great}"></span> </td>
 									<td th:text="${board.regdate}">
 								</tr>
 							</tbody>
 						</table>
-						<br>
-						<h5>
-							<a style="text-decoration: none; color: #333;"
-								th:href="@{/mypage/myReviewList(id=${userPage.id})}">🎭 받은
-								리뷰 
-						</h5>
-						<table class="table">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>Review</th>
-									<th>Date</th>
-									<th>Thumb</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:if="${reviewList.empty}">
-									<td colspan="4">받은 리뷰가 없습니다.</td>
-								</tr>
-
-								<tr th:each="review: ${reviewList}">
-									<td th:text="${review.reviewNo}">
-									<td th:text="${review.content}">
-									<td th:text="${review.regdate}">
-									<td th:switch="${review.review.toString()}"><span
-										th:case="UP">👍</span> <span th:case="DOWN">👎</span></td>
-								</tr>
-							</tbody>
-						</table>
+						<br> <br> <br> <br>
+						<!-- 최근 게시글 끝-->
 
 					</div>
 
