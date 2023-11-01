@@ -26,8 +26,6 @@ public class QSales extends EntityPathBase<Sales> {
 
     public final QProduct pNo;
 
-    public final EnumPath<CheckCondition.YorN> rated = createEnum("rated", CheckCondition.YorN.class);
-
     public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
     public final StringPath thunderId = createString("thunderId");

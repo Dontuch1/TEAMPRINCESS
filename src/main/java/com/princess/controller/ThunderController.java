@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.princess.domain.Product;
 import com.princess.domain.Search;
-import com.princess.persistence.ProductRepository;
 import com.princess.service.ProductService;
 
 @Controller

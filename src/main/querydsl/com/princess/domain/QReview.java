@@ -22,11 +22,11 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review1 = new QReview("review1");
 
-    public final StringPath buyer = createString("buyer");
-
     public final StringPath content = createString("content");
 
     public final QProduct pNo;
+
+    public final QMember receiver;
 
     public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
 
@@ -34,7 +34,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Long> reviewNo = createNumber("reviewNo", Long.class);
 
-    public final QMember seller;
+    public final StringPath sender = createString("sender");
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
@@ -55,7 +55,7 @@ public class QReview extends EntityPathBase<Review> {
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.pNo = inits.isInitialized("pNo") ? new QProduct(forProperty("pNo"), inits.get("pNo")) : null;
-        this.seller = inits.isInitialized("seller") ? new QMember(forProperty("seller")) : null;
+        this.receiver = inits.isInitialized("receiver") ? new QMember(forProperty("receiver")) : null;
     }
 
 }

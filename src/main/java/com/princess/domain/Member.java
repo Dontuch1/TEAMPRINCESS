@@ -85,7 +85,7 @@ public class Member {
 	@OneToMany(mappedBy = "buyer") // Sales
 	private List<Sales> salesList = new ArrayList<Sales>();
 	
-	@OneToMany(mappedBy = "seller") // Review
+	@OneToMany(mappedBy = "receiver") // Review
 	private List<Review> reviewList = new ArrayList<Review>();
 	
 	@OneToMany(mappedBy = "likeId") // LikeWish
