@@ -47,6 +47,7 @@ public class Board {
 	@Column(nullable = false)
 	private String content;
 	
+	@Column(length = 1000)
 	private String photoPath;
 	
 	private Long great;
