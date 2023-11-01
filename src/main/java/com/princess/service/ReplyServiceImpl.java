@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Board;
-import com.princess.domain.Member;
 import com.princess.domain.Reply;
-import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ReplyRepository;
 
 @Service

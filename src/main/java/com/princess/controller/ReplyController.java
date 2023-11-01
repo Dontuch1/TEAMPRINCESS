@@ -5,20 +5,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Reply;
-import com.princess.persistence.MemberRepository;
 import com.princess.service.BoardService;
-import com.princess.service.BoardServiceImpl;
-import com.princess.service.MemberService;
 import com.princess.service.ReplyService;
 
 @RestController
