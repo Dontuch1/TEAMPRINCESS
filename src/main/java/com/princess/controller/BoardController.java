@@ -63,11 +63,12 @@ public class BoardController {
 	
 	@GetMapping("/getBoard")
 	public String getBoard(Model model, Board board,
-			@PageableDefault(page = 0, size = 10, sort = "postNum", direction = Sort.Direction.DESC) Pageable pageable) {
+			@PageableDefault(page = 0, size = 5, sort = "replyNum", direction = Sort.Direction.DESC) Pageable pageable) {
 		
 		Board board1= boardservice.getBoardId(board.getPostNum()); // board에서 postNum을 가져옴
 	    System.out.println("boardId : "+board1);
-		
+		Reply reply= new Reply();
+		System.out.println(reply.toString());
 	    
 	    Board getBoard = boardservice.getBoard(board);
 	    

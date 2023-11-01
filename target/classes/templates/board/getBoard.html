@@ -83,7 +83,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								
 				  		<!-- 댓글 작성 폼 -->	
 						<form id="replyForm">
-<<<<<<< HEAD
 							<div th:align="center">
 								
 							 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
@@ -93,27 +92,21 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							   	<textarea id="replyContent" placeholder="댓글을 입력하세요." style="white-space:pre-line" class="textareahold"></textarea>
 							    <button type="submit">댓글 작성</button>
 						    </div>
-=======
-						 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
-						   	<textarea id="replyContent" placeholder="댓글을 입력하세요."></textarea>
-						    <button type="submit">댓글 작성</button>
->>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
 						</form>
 						
 						<!-- 댓글 목록 -->
-<<<<<<< HEAD
 						<div th:align="center">
 							<table id="replyList" style="width:800px">
 								<tr th:each="reply, state : ${replies1}" class="border1">
 							    	
-							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.id}"></td>
+							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.nickName}"></td>
 							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
 							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
 							        <td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
 							    </tr>
 							</table>
 							
-							<span class="center" style="flex-grow:12; margin:5px 0px 0px 80px; font-size:1.1rem">
+							<span class="center" style="flex-grow:12; font-size:1.1rem">
 							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
 								<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
 									th:href="@{/board/getBoard(postNum=${board.postNum}, id=${#authentication.principal.username}, page=${page - 1})}"
@@ -124,15 +117,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</th:block> ]
 							</span>
 						</div>
-=======
-						<table id="replyList">
-						    <tr th:Each="reply : ${replies}">
-						    	<td th:text="${reply.replyContent}"></td>
-						        <td><button class="deleteReply" data-id="${reply.replyNum}">삭제</button></td>
-						    </tr>
-						</table>
-						
->>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
+
 			<div th:align="center">		
 			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" style="margin:20px" onclick="history.back()">글 목록</button>
