@@ -89,7 +89,7 @@ input#bid[type='number'] {
 				                        <div th:if="${product.sold.toString() == 'N'}">
 					                        <div th:if="${product.salesId.id != currentUser.id}" th:align="right">
 					                        	<button th:align="center" class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();" style="height: 35px;">
-					                                <img id="like" alt="..." src="/images/empty_heart.png" style="width: 15px;">
+					                                <img id="like" th:if="${currentUser." alt="..." src="/images/empty_heart.png" style="width: 15px;">
 					                            </button>
 						                            <a class="btn btn-outline-dark flex-shrink-0" id="navbarDropdown" href="#"
 															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -97,12 +97,13 @@ input#bid[type='number'] {
 						                                <span style="font-size: 15px; padding: 0px;">💰</span>
 						                                
 						                            </a>
-						                            <div id="dropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+						                            <div id="dropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="--bs-dropdown-link-active-bg: none;">
 														<div class="dropdown-item">
 														<form id="bidForm" th:action="@{/product/bidProduct}" method="post">
 						                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
 						                       				<input th:value="${currentUser.id}" name="id" type="hidden">
 						                       				<input id="bid" name="bid" style="width: 100px; vertical-align: middle;" type="number" min="${auction.auctionPrice}">&nbsp;<a class="btn btn-outline-dark flex-shrink-0" type="button" onclick="bid();">입찰하기</a>
+						                       				<input type="text" style="display:none">
 						                       				<br><small>입찰은 최대 3번까지 가능합니다.</small>
 						                       			</form>
 														</div>
@@ -164,9 +165,9 @@ function delConfirm() {
 let Target = document.getElementById("clock");
 
 function clock() {
-	if (/*[[${product.auction.toString() == 'Y'}]]*/) {
-		let regdate = new Date(/*[[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]*/).getTime();
-		let aucDuration = /*[[${product.aucDuration}]]*/;
+	if ([[${product.auction.toString() == 'Y'}]]) {
+		let regdate = new Date([[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]).getTime();
+		let aucDuration = [[${product.aucDuration}]];
 		let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
 		let currentTime = new Date().getTime();
 	    
@@ -205,7 +206,7 @@ function like() {
  * 마지막 입찰자인지 확인
  *=============================================*/
 function isCurrBid() {
-	if (/*[[${currBidId == currentUser.id}]]*/) {
+	if ([[${currBid.auctionId != null && currBid.auctionId.id == currentUser.id}]]) {
 		alert('연속으로 입찰할 수 없습니다.');
 		$("#dropdown").remove();
 	}
@@ -217,16 +218,23 @@ function isCurrBid() {
 function buyBtn() {
 	if (confirm("구매하시겠습니까?")) {
 		if ($('#delevery').length) {
-			if(/*[[${product.price + 1500 < currentUser.deposit}]]*/) {
+			if([[${product.price + 1500 < currentUser.deposit}]]) {
 				$('#buyForm').submit();
 			} else {
 				alert('썬더페이 잔액이 부족합니다!');
-				return false;
+				if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+					$('#bid').val('');
+					window.location.href = '/mypage/myDeposit';
+				} else {
+					$('#bid').val('');
+					return false;
+				}
 			}
 		} else {
 			$('#buyForm').submit();
 		}
 	} else {
+		$('#bid').val('');
 		return false;
 	}
 }
@@ -235,24 +243,29 @@ function buyBtn() {
  * 입찰하기
  *=============================================*/
  function bid() {
-	if($('#bid').val() <= /*[[${auction.auctionPrice}]]*/) {
+	if($('#bid').val() <= [[${auction.auctionPrice}]]) {
 		alert("입찰가는 현재 경매가보다 높은 가격만 가능합니다!");
-	} else if (/*[[${auctionCnt > 3}]]*/){
+	} else if ([[${auctionCnt > 2}]]){
 		alert("더이상 입찰할 수 없습니다!");
+		$('#bid').val('');
 	} else {
 		if(confirm('정말 입찰하시겠습니까?')) {
-			if ($('#delevery').length) {
-				if($('#bid').val() + 1500 <= /*[[${currentUser.deposit + bidList.get(0).getAuctionPrice}]]*/) {
-					$('#bidForm').submit();
-				} else {
-					alert('썬더페이 잔액이 부족합니다!');
-					return false;
-				}
+			let deposit;
+			if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
+				deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
 			} else {
-				if($('#bid').val() <= /*[[${currentUser.deposit + bidList.get(0).getAuctionPrice}]]*/) {
-					$('#bidForm').submit();
+				deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];
+			}
+			if($('#bid').val() <= deposit) { // 입찰가 < 잔액
+				$('#bidForm').submit();	
+				return false;
+			} else { // 입찰가 > 잔액
+				alert('썬더페이 잔액이 부족합니다!');
+				if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+					$('#bid').val('');
+					window.location.href = '/mypage/myDeposit';
 				} else {
-					alert('썬더페이 잔액이 부족합니다!');
+					$('#bid').val('');
 					return false;
 				}
 			}

@@ -39,5 +39,5 @@ public interface ProductService {
 	
 	Member getMember(Member member);
 	
-	List<Auction> getBidList(Member member);
+	List<Auction> getBidList(Member member, Product product);
 }

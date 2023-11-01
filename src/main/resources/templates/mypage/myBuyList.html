@@ -2,46 +2,161 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link th:href="@{/css/main.css}" rel="stylesheet">
-
+<style type="text/css">
+.btn-outline-secondary, .btn-outline-primary {
+   width: 100px;
+   margin-top: 8px;
+}
+</style>
 </head>
-<body th:align="center">
-	<div class="d-flex" id="wrapper">
 
-		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<div th:insert="~{fragment/header :: header}"></div>
-			<!-- Page content-->
-			<div class="container-fluid">
-				<h4 class="mt-4"> 🛍️ 구매 목록</h4>
-				<br>
-				<!-- <div th:if="${buyList.empty}">
-						<p>구매한 상품이 없습니다.</p>
-					</div> -->
-				<div id="mypage-product-list">
-					<div class="card" th:each="product: ${buyList}">
-						<div class="card-img-square">
-							<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
-								th:src="@{${product.upload}}" class="card-img-top" alt="..."
-								onerror="this.src='https://buly.kr/9BSKdMj'"></a>
-						</div>
-						<div class="card-body">
-							<h5 class="card-title" th:text="${product.title}"></h5>
-							<h5 class="card-text" th:text="${product.price}">원</h5>
-							<p class="card-text" th:switch="${product.pCategory.toString()}">
-								<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
-								<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
-								<span th:case="ETC">기타</span>
-							</p>
-							<a href="#" class="btn btn-secondary">판매완료</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<body th:align="center">
+   <div class="d-flex" id="wrapper">
+
+      <!-- Page content wrapper-->
+      <div id="page-content-wrapper">
+         <div th:insert="~{fragment/header :: header}"></div>
+         <!-- Page content-->
+         <div class="container-fluid">
+            <h4 class="mt-4">🛍️ 구매 목록</h4>
+            <br>
+            <div th:if="${buyList.empty}">
+               <p>구매한 상품이 없습니다.</p>
+            </div>
+            <div id="mypage-product-list">
+               <div class="card" th:each="product: ${buyList}">
+                  <div class="card-img-square">
+                     <a th:href="@{/product/getProduct(pNo=${product.key.pNo})}"><img
+                        th:src="@{${product.key.upload}}" class="card-img-top" alt="..."
+                        onerror="this.src='https://buly.kr/9BSKdMj'"></a>
+                  </div>
+                  <div class="card-body">
+                     <h5 class="card-title" th:text="${product.key.title}"></h5>
+                     <h5 class="card-text" th:text="${product.key.price}">원</h5>
+                     <p class="card-text"
+                        th:switch="${product.key.pCategory.toString()}">
+                        <span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
+                        <span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
+                        <span th:case="ETC">기타</span>
+                     </p>
+                     <!-- 모달 시작 -->
+                     <form action="/mypage/insertReview" method="post">
+                        <input type="hidden" name="pNo" th:value="${product.key.pNo}">
+                        <div class="modal fade" id="exampleModalToggle"
+                           aria-labelledby="exampleModalToggleLabel" tabindex="-1"
+                           aria-hidden="true" style="display: none">
+                           <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+                                       후기 남기기</h1>
+                                    <button type="button" class="btn-close"
+                                       data-bs-dismiss="modal" aria-label="Close"></button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" name="rating"
+                                          id="inlineRadio1" value="UP" checked /> <label
+                                          class="form-check-label" for="inlineRadio1">👍 좋아요</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="radio" name="rating"
+                                          id="inlineRadio2" value="DOWN" /> <label
+                                          class="form-check-label" for="inlineRadio2">👎
+                                          별로에요</label>
+                                    </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button class="btn btn-primary"
+                                       data-bs-target="#exampleModalToggle2"
+                                       data-bs-toggle="modal">다음</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="modal fade" id="exampleModalToggle2"
+                           aria-labelledby="exampleModalToggleLabel2" tabindex="-1"
+                           aria-hidden="true" style="display: none">
+                           <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+                                       한 줄 평가</h1>
+                                    <button type="button" class="btn-close"
+                                       data-bs-dismiss="modal" aria-label="Close"></button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <input type="text" name="content" size="50pt" maxlength="50"
+                                       required="required" /> <span style="color: gray"> <br>최대
+                                       50자
+                                    </span>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <button class="btn btn-primary" type="submit">후기
+                                       보내기</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <input type="text" name="rec" id="whoIsSeller"
+                           th:value="${product.value[1]}"> <input type="text"
+                           name="rec" id="whoIsThunder"
+                           th:value="${product.value[0]}">
+
+                        <hr style="border: 1px dashed gray">
+
+                        <div th:align="center"
+                           th:attr="style=${product.key.delevery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
+                           <div>
+
+                              <span>판매자</span> <br>
+                              <button class="btn btn-outline-primary"
+                                 onclick="whoIsReceiver();"
+                                 th:if="${!product.value[1].isEmpty()}"
+                                 data-bs-target="#exampleModalToggle" data-bs-toggle="modal">작성</button>
+                              <button th:if="${product.value[1].isEmpty()}"
+                                 class="btn btn-outline-secondary"
+                                 data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                                 disabled>완료</button>
+                           </div>
+                           <div th:if="${product.key.delevery.toString() == 'Y'}">
+                              <span>천둥맨</span><br>
+                              <button class="btn btn-outline-primary"
+                                 onclick="whoIsReceiver();"
+                                 th:if="${!product.value[0].isEmpty()}"
+                                 data-bs-target="#exampleModalToggle" data-bs-toggle="modal">작성</button>
+                              <button th:if="${product.value[0].isEmpty()}"
+                                 class="btn btn-outline-secondary"
+                                 data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                                 disabled>완료</button>
+                           </div>
+                        </div>
+                     </form>
+                     <!-- 모달 끝 -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </body>
+<script th:inline="javascript">
+   function whoIsReceiver(val) {
+      console.log("시발");
+      if (val == 1) {
+         $('#whoIsThunder').remove();
+      } else {
+         $('#whoIsSeller').remove();
+      }
+   }
+</script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- Bootstrap JavaScript 및 jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </html>
