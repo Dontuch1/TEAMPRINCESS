@@ -29,8 +29,5 @@ public class PrincessUserDetailsService implements UserDetailsService {
          return new SecurityUser(member);
       }
       
-   }
-   
-   
-   
+   } 
 }

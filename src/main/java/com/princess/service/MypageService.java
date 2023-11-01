@@ -1,6 +1,7 @@
 package com.princess.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,20 +24,21 @@ public interface MypageService {
 
 	// 내 등록 상품 리스트
 	Page<Product> getProductList(Pageable pageable, Member member);
-	
+
 	// 내가 받은 후기
 	Page<Review> getReviewList(Pageable pageable, Member member);
 
 	// 찜 목록
 	List<Product> getLikeWishList(Member member);
-	
+
 	// 예치금 넣기
 	void updateDeposit(Member member);
-	
-	//구매 목록
-	List<Product> getBuyList(Member member);
 
+	// 구매 목록
+	Map<Product,String[]> getBuyList(Member member);
 
+	// 리뷰 등록
+	void insertReview(Review review, Product product);
 
-
+		
 }

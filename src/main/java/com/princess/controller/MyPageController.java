@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.princess.config.SecurityUser;
 import com.princess.domain.Board;
+import com.princess.domain.CheckCondition.Rating;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Review;
@@ -26,7 +27,7 @@ public class MyPageController {
 
 	@Autowired
 	MypageService myService;
-	
+
 	@RequestMapping("/myPageMain")
 	public void myPageMain(Model model, @RequestParam(name = "id") String id, Member member,
 			@PageableDefault(page = 0, size = 10, sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -114,7 +115,7 @@ public class MyPageController {
 		member.setId(securityUser.getUsername());
 		System.out.println("/myBuyList에서 setId한 멤버 //" + member.toString());
 		model.addAttribute("buyList", myService.getBuyList(member));
-
+	
 	}
 
 	@GetMapping("/myDeposit")
@@ -129,5 +130,29 @@ public class MyPageController {
 		System.out.println("updateDeposit 컨트롤러 : " + member.toString());
 		myService.updateDeposit(member);
 		return "redirect:myDeposit";
+	}
+
+	@PostMapping("/insertReview")
+	public String insertReview(Review review, @AuthenticationPrincipal SecurityUser securityUser,
+			@RequestParam(name = "rating") String rating, @RequestParam("receiver") String receiver, Product product) {
+		System.out.println("product : " + product.toString());
+		System.out.println("rating : " + rating);
+		System.out.println("컨트롤러 receiver: "+receiver);
+
+		review.setSender(securityUser.getUsername());
+		review.setPNo(product);
+		Member mem = new Member();
+		mem.setId(receiver);
+		review.setReceiver(mem);
+		if (rating.equals("UP"))
+			review.setReview(Rating.UP);
+		else
+			review.setReview(Rating.DOWN);
+
+		System.out.println("컨트롤러 review : " + review.toString());
+	
+		myService.insertReview(review, product);
+
+		return "redirect:myBuyList";
 	}
 }

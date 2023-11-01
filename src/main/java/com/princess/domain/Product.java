@@ -56,6 +56,7 @@ public class Product {
 	@Column(nullable = false)
 	private int price;
 	
+	@Column(length = 1000)
 	private String upload;
 	
 	@Enumerated(EnumType.STRING)
