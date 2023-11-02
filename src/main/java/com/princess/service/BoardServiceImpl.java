@@ -88,8 +88,15 @@ public class BoardServiceImpl implements BoardService {
 	
 
 	public void updateBoard(Board board) {
+		
 	}
 
+	public void deleteBoard(Board board) {
+		Board findboard = boardRepo.findById(board.getPostNum()).get();
+		System.out.println("findboard : "+findboard.toString());
+		findboard.setDisplay(Display.N);
+		boardRepo.save(findboard);
+	}
 	
 	
 

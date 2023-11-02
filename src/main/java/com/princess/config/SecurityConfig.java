@@ -23,6 +23,7 @@ public class SecurityConfig {
       http.formLogin()
       .loginPage("/system/login")
       .defaultSuccessUrl("/product/getProductList?type=prod", true);
+      http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       
       http
       .logout()

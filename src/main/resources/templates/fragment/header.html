@@ -57,8 +57,17 @@
 									<h2 class="center" style="margin:20px 0px 20px 0px"> ⚡천둥맨이 아니시군요!</h2>
 									<p style="margin-bottom:30px"> 배터리 잔량이 🔋60% 이상인 회원만 천둥맨으로 전환이 가능합니다. 당신도 천둥맨이 될 수 있어요!!</p>
 									<div class="center">
-										<button type="button" data-toggle="modal" data-target="#login" style="padding:20px 40px; margin-right:10px">🌠 천둥맨 되어보기</button>
-										<button type="button" data-toggle="modal" onclick="modalClose()" style="padding:20px 40px">👦 일반인으로 살기</button>
+									<input type="hidden" id="memberId" th:value="${currentUser.id}" />
+									<th:block th:if="${currentUser.battery >= 60}">
+		                               <button type="button" data-toggle="modal" onclick="transformThunder()" style="padding:20px 40px; margin-right:10px">🌠 천둥맨 되어보기</button>
+		                               <button type="button" data-toggle="modal" onclick="modalClose()" style="padding:20px 40px">👦 일반인으로 살기</button>
+		                            </th:block>
+		                            <th:block th:if="${currentUser.battery < 60}">
+		                               <button type="button" data-toggle="modal" data-target="#login" style="padding:20px 40px; margin-right:10px; font-size:1.1rem" >⛔ 천둥맨이 되기엔 배터리 용량이 부족해요! ⛔</button>
+		                            </th:block>   
+									
+										
+										
 									</div>
 								</div>
 							</div>
@@ -158,7 +167,10 @@
 		</div>
 	</nav>
 	<!-- Css -->
-	<link
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 		rel="stylesheet">
 	<link th:href="@{/css/standByList.css}" rel="stylesheet">	
@@ -196,6 +208,29 @@
 		function modalClose() { // modal창 닫기
 		    const modal = document.getElementById('modalContainer');
 		    modal.classList.add('hidden');
+		}
+		
+		function transformThunder() { // 천둥맨 변신!
+		    console.log("hi");
+			
+			 let replyData = {
+				"memberId" : $('#memberId').val()
+			 };
+			 
+			$.ajax({
+		       type: "POST",
+		       url: "/thunder/transformThunder",
+		       data: JSON.stringify(replyData),
+		       contentType: "application/json",
+		       success: function(response) {
+		    	   alert("환영합니다! 새로운 천둥맨!");
+		    	   location.href='/product/getProductList?type=prod';
+		       },
+		       error: function(error) {
+		           alert("thunder 임 ㅋㅋ");
+		       }
+		   });
+			
 		}
 	</script>
 </th:block>

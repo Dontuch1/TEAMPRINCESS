@@ -85,7 +85,16 @@ background:  #d3d3d3;}
 <link th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
-<body th:align="center">
+
+<!-- Qualification() 마무리되면 실행 -->
+<th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery < 60}">
+    <th:block th:if="${isThunderAndLowBattery}">
+		<body th:align="center" onload="Qualification()">
+	</th:block></th:block>
+<th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery >= 60}">
+    <th:block th:if="${isThunderAndLowBattery}">
+		<body th:align="center">
+	</th:block></th:block>
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
@@ -110,6 +119,9 @@ background:  #d3d3d3;}
 						</form>	
 
 					<br>
+					<input type="hidden" id="memberId" th:value="${currentUser.id}" />
+					
+					<p th:text="${currentUser.id}"></p>
 				<table>
 				    <tr>
 				        <th class="center">No.</th>
@@ -139,4 +151,27 @@ background:  #d3d3d3;}
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+function Qualification() {
+    console.log("hi");
+	
+	 let replyData = {
+		"memberId" : $('#memberId').val()
+	 };
+	
+	$.ajax({
+       type: "POST",
+       url: "/thunder/myThunderQualification",
+       data: JSON.stringify(replyData),
+       contentType: "application/json",
+       success: function(response) {
+       	   alert("배터리가 부족하여 천둥맨자격이 박탈됩니다.");
+       },
+       error: function(error) {
+           alert("thunder 임 ㅋㅋ");
+       }
+   });
+	
+}
+</script>
 </html>
