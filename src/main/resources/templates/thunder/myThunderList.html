@@ -166,6 +166,7 @@ function Qualification() {
        contentType: "application/json",
        success: function(response) {
        	   alert("배터리가 부족하여 천둥맨자격이 박탈됩니다.");
+       	   location.href='http://localhost:8081/product/getProductList?type=prod';
        },
        error: function(error) {
            alert("thunder 임 ㅋㅋ");

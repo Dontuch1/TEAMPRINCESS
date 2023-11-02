@@ -1,7 +1,6 @@
  package com.princess.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,13 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
 import com.princess.domain.CheckCondition.Display;
-import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Reply;
-import com.princess.domain.Report;
 import com.princess.domain.Search;
 import com.princess.service.BoardService;
 import com.princess.service.ReplyService;
-import com.princess.service.ReportService;
 	
 @Controller
 @RequestMapping("/board/")

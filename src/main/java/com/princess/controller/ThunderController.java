@@ -60,13 +60,6 @@ public class ThunderController {
 		return "redirect:/product/getProductList?type=prod";
 	}
 	
-	@PostMapping("/transformThunder")
-	public void transformThunder(@RequestBody Map<String, Object> payload, Member member) {
-		member.setId((String)payload.get("memberId"));
-		System.out.println("천둥맨 변신 중");
-		memberService.updateThunder(member);
-	}
-	
 	@GetMapping("/standByList")
 	public void standByList() {
 		

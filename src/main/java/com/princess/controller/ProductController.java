@@ -43,7 +43,9 @@ public class ProductController {
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
-
+		System.out.println("search : " + search.toString());
+		System.out.println("type : " + type.toString());
+		
 		Page<Product> productList = productService.getProductList(type, search, pageable);
 
 		for (Product prod : productList) {
@@ -70,7 +72,7 @@ public class ProductController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("productList", productList);
+		model.addAttribute("type", type);
 		return "product/getProductList";
 
 	}
@@ -86,12 +88,22 @@ public class ProductController {
 				auc.setAuctionPrice(product.getPrice());
 			else 
 				auc = (productService.getAuctionMaxPrice(product));
-			List<Auction> auctionList = productService.getAuctionList(product);
-			model.addAttribute("auctionList", auctionList);
-			int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
-			model.addAttribute("auctionCnt", auctionCnt);
 		}
 		model.addAttribute("auction", auc);
+		
+		Auction currBid = new Auction();
+		System.out.println("currbid-raw : " + productService.getAuctionList(product));
+		if (!productService.getAuctionList(product).isEmpty())
+			productService.getAuctionList(product).get(0);
+		System.out.println("currBid : " + currBid.toString());
+		model.addAttribute("currBid", currBid);
+		
+		List<Auction> bidList = productService.getBidList(securityUser.getMember(), product);
+		model.addAttribute("bidList", bidList);
+		
+		int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
+		model.addAttribute("auctionCnt", auctionCnt);
+		
 		return "product/getProduct";
 	}
 
@@ -141,15 +153,13 @@ public class ProductController {
 		Member buyer = new Member();
 		buyer.setId(id);
 		buyer = productService.getMember(buyer);
-		if (productService.getBidList(buyer) != null) {
-			
+		if (productService.getBidList(buyer, product) != null) {
+			buyer.setDeposit(buyer.getDeposit() + productService.getBidList(buyer, product).get(0).getAuctionPrice());
 		}
-		
-			if (product.getDelevery().equals(YorN.Y)) {
-				buyer.setDeposit(buyer.getDeposit() - bid - 1500);
-			} else buyer.setDeposit(buyer.getDeposit() - bid);
+		if (product.getDelevery().equals(YorN.Y)) {
+			buyer.setDeposit(buyer.getDeposit() - bid - 1500);
+		} else buyer.setDeposit(buyer.getDeposit() - bid);
 		productService.setMemberDepoist(buyer);
-		
 		productService.insertAuction(product, id, bid);
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}

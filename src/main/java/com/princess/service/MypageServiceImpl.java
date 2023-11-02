@@ -1,7 +1,9 @@
 package com.princess.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,9 +54,9 @@ public class MypageServiceImpl implements MypageService {
 		findMember.setDeposit(member.getDeposit());
 		findMember.setEmail(member.getEmail());
 		findMember.setPhone(member.getPhone());
-		if(member.getAgree()==null) {
+		if (member.getAgree() == null) {
 			findMember.setAgree(YorN.N);
-		}else {
+		} else {
 			findMember.setAgree(member.getAgree());
 		}
 		findMember.setBirth(member.getBirth());
@@ -88,7 +90,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Page<Review> getReviewList(Pageable pageable, Member member) {
 
-		return reviewRepo.findBySeller(member, pageable);
+		return reviewRepo.findByReceiver(member, pageable);
 	}
 
 	// 찜 목록
@@ -104,13 +106,58 @@ public class MypageServiceImpl implements MypageService {
 
 	// 구매 목록
 	@Override
-	public List<Product> getBuyList(Member member) {
+	public Map<Product, String[]> getBuyList(Member member) {
 		List<Sales> sales = salesRepo.findByBuyer(member);
-		List<Product> buyList = new ArrayList<Product>();
+		// List<Product> buyList = new ArrayList<Product>();
+		System.out.println("sales : "+sales.toString());
+		Map<Product, String[]> buyList = new LinkedHashMap<Product, String[]>();
+		String thun = "";
+		String tra = "";
+		Member receiver = new Member();
+
 		for (Sales sale : sales) {
-			buyList.add(productRepo.findById(sale.getPNo().getPNo()).get());
+			int thunder = 1;
+			if (sale.getThunderId()!=null) {// 썬더맨 이용 상품
+				receiver.setId(sale.getThunderId()); 
+				thunder = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(), receiver);
+				System.out.println("for문 안에 있는 thunder : "+thunder);
+				if(thunder==0) { // 썬더맨 이용상품 + 썬더맨 후기를 작성안했을때
+					thun = sale.getThunderId();
+				}else {
+					thun = "";
+				}
+			} 
+			
+			int trade = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(),
+					sale.getPNo().getSalesId());
+			
+			if (trade == 0) {
+				tra = sale.getPNo().getSalesId().getId();	
+			}else {
+				tra = "";
+			}
+				
+			System.out.println("sale: "+sale.toString());
+			System.out.println(" tra : "+tra);
+			System.out.println(" thun : "+thun);
+
+			String[] str = { thun, tra };
+			buyList.put(productRepo.findById(sale.getPNo().getPNo()).get(), str);
+
 		}
+
 		return buyList;
+	}
+
+	// 리뷰 등록
+	@Override
+	public void insertReview(Review review, Product product) {
+		product = productRepo.findById(product.getPNo()).get();
+
+		System.out.println("서비스"+review.toString());
+		System.out.println("getReceiver : " + review.getReceiver());
+		
+		reviewRepo.save(review);
 	}
 
 }

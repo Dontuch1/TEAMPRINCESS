@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.princess.domain.CheckCondition.Rating;
 
@@ -21,7 +22,8 @@ import lombok.Data;
 import lombok.ToString;;
 
 @Data
-@ToString(exclude = { "seller", "pNo" })
+@ToString(exclude = { "receiver", "pNo" })
+@DynamicInsert
 @Entity
 public class Review {
 
@@ -30,11 +32,11 @@ public class Review {
 	private Long reviewNo;
 
 	@Column(nullable = false)
-	private String buyer;
+	private String sender;
 
 	@ManyToOne
-	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
-	private Member seller;
+	@JoinColumn(name = "MEMBER_ID", updatable = false)
+	private Member receiver;
 
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_PNO", nullable = false, updatable = false)
@@ -45,7 +47,7 @@ public class Review {
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	@ColumnDefault("UP")
+	@ColumnDefault("'UP'")
 	private Rating review;
 
 	@Temporal(TemporalType.DATE)
@@ -53,9 +55,9 @@ public class Review {
 	private Date regdate = new Date();
 
 	// 연관관계 설정
-	public void getSellerId(Member id) { // Member
-		this.seller = id;
-		seller.getReviewList().add(this);
+	public void getReceiver(Member id) { // Member
+		this.receiver = id;
+		receiver.getReviewList().add(this);
 	}
 
 	public void getPNo(Product pNo) { // Product
