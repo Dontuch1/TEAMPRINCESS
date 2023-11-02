@@ -89,7 +89,7 @@ input#bid[type='number'] {
 				                        <div th:if="${product.sold.toString() == 'N'}">
 					                        <div th:if="${product.salesId.id != currentUser.id}" th:align="right">
 					                        	<button th:align="center" class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();" style="height: 35px;">
-					                                <img id="like" th:if="${currentUser." alt="..." src="/images/empty_heart.png" style="width: 15px;">
+					                                <img id="like" th:if="${currentUser.id != product.salesId.id}" alt="..." src="/images/empty_heart.png" style="width: 15px;">
 					                            </button>
 						                            <a class="btn btn-outline-dark flex-shrink-0" id="navbarDropdown" href="#"
 															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -136,6 +136,8 @@ input#bid[type='number'] {
 				<hr>
 				<br>
 				<div th:align="center">
+					<a th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="button" class="btn btn-outline-dark flex-shrink-0"
+						onclick="delConfirm();">삭제</a>
 					<a th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
 						onclick="delConfirm();">삭제</a>
 					<a type="button" class="btn btn-outline-dark flex-shrink-0"
