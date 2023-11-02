@@ -22,9 +22,10 @@
 			<!-- Page content-->
 			<div class="container-fluid">
 				<h4 class="mt-4">
-					🏠 <span th:text="${userPage.nickName}" style="font-weight: bold">id</span>님의
+					🏠 <span th:text="${currentUser.nickName}" style="font-weight: bold"></span>님의
 					마이페이지
 				</h4>
+
 				<div id="mypage-main-view">
 					<div id="mypage-main-view-inner">
 						<!-- 배터리 -->
@@ -34,10 +35,11 @@
 								th:align="center">
 								<span
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;">battery:
-									<span style="font-family: VT323; font-weight: bold; font-size: 25pt;" th:text="${userPage.battery}"></span>%
+									<span
+									style="font-family: VT323; font-weight: bold; font-size: 25pt;"
+									th:text="${userPage.battery}"></span>%
 								</span>
-								<div
-									th:if="${userPage.battery >= 0 and userPage.battery <= 20}">
+								<div th:if="${userPage.battery >= 0 and userPage.battery <= 20}">
 									<!-- 0~20 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_red.png">
@@ -81,7 +83,7 @@
 										<th style="width: 20px;">No.</th>
 										<th>Review</th>
 										<th style="width: 80px;">Date</th>
-										<th style="width: 20px;">Thumb</th>
+										<th style="width: 20px;">Review</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -89,12 +91,13 @@
 										<td colspan="4">받은 리뷰가 없습니다.</td>
 									</tr>
 
-									<tr th:each="review: ${reviewList}">
-										<td th:text="${review.reviewNo}">
+									<tr th:each="review, iterStat: ${reviewList}"
+										th:if="${iterStat.index < 3}">
+										<td th:text="${iterStat.count}">
 										<td th:text="${review.content}">
 										<td th:text="${review.regdate}">
 										<td th:switch="${review.review.toString()}"><span
-											th:case="UP">👍</span> <span th:case="DOWN">👎</span></td>
+											th:case="UP">🔋👍</span> <span th:case="DOWN">🪫👎</span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -108,16 +111,18 @@
 						<div
 							style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; padding: 10px; margin-left: 30px">
 							<h5>
-								<a style="text-decoration: none; color: #333; font-weight: bolder;"
-									th:href="@{/mypage/myProductList(id=${userPage.id})}">
-									🛍️ 최근 업로드한 상품</a>
+								<a
+									style="text-decoration: none; color: #333; font-weight: bolder;"
+									th:href="@{/mypage/myProductList(id=${userPage.id})}"> 🛍️
+									최근 업로드한 상품</a>
 							</h5>
 							<div></div>
 							<div th:if="${productList.empty}">
 								<p>업로드한 상품이 없습니다.</p>
 							</div>
 							<div class="card" th:each="product, iterStat : ${productList}"
-								th:if="${iterStat.index < 2}" style="width: 240px; height: 350px">
+								th:if="${iterStat.index < 2}"
+								style="width: 240px; height: 350px">
 								<div class="card-img-square">
 									<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
 										th:src="@{${product.upload}}" class="card-img-top" alt="..."
@@ -152,22 +157,24 @@
 								<!-- 업로드한 상품 끝 -->
 							</div>
 						</div>
+
 					</div>
+
 					<!-- 최근 게시글 -->
 					<div>
 						<h5>
 							<a style="text-decoration: none; color: #333;"
-								th:href="@{/mypage/myPostList(id=${userPage.id})}">📜 최근 게시글</a>
+								th:href="@{/mypage/myPostList(id=${userPage.id})}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📜 최근 게시글</a>
 						</h5>
-
-						<table class="table">
+						<table class="table" style="width: 1100px;" th:align="center">
 							<thead>
 								<tr>
-									<th width="30px">No.</th>
-									<th width="130px">category</th>
-									<th>title</th>
-									<th>like</th>
-									<th style="width: 100px;">date</th>
+									<th width="40px">&nbsp;No.</th>
+									<th width="150px">Category</th>
+									<th width="150px">Writer</th>
+									<th>Title</th>
+									<th width="50px">Like</th>
+									<th style="width: 120px;">Date</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -176,27 +183,29 @@
 								</tr>
 								<tr th:each="board, iterStat: ${boardList}"
 									th:if="${iterStat.index < 5}">
-									<td th:text="${board.postNum}" />
+									<td th:text="${iterStat.count}" th:align="center" />
 									<td th:switch="${board.cmCategory.toString()}"><span
 										th:case="NOTICE">🚨공지사항</span> <span th:case="LOST">😥잃어버렸어요
 									</span> <span th:case="FOOD">🍔여기맛나요</span> <span th:case="TMI">🔉알려드려요</span>
 										<span th:case="QNA">❓궁금해요</span> <span th:case="MEET">🙋‍♀우리만나요</span></td>
+									<td th:text="${board.userId.nickName}"
+										style="width: 150px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" />
 									<td>
 										<div
-											style="width: 220px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+											style="width: 600px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 											<a style="text-decoration: none; color: #333"
 												th:href="@{/board/getBoard(postNum=${board.postNum})}"
 												th:text="${board.title}"></a>
 										</div>
-									<td>💜<span th:text="${board.great}"></span> </td>
+									<td>💌 <span th:text="${board.great}"></span>
+									</td>
 									<td th:text="${board.regdate}">
 								</tr>
 							</tbody>
 						</table>
 						<br> <br> <br> <br>
-						<!-- 최근 게시글 끝-->
-
 					</div>
+					<!-- 최근 게시글 끝-->
 
 				</div>
 			</div>
