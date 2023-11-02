@@ -34,35 +34,35 @@
 								th:align="center">
 								<span
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;">battery:
-									<span style="font-family: VT323; font-weight: bold; font-size: 25pt;" th:text="${currentUser.battery}"></span>%
+									<span style="font-family: VT323; font-weight: bold; font-size: 25pt;" th:text="${userPage.battery}"></span>%
 								</span>
 								<div
-									th:if="${currentUser.battery >= 0 and currentUser.battery <= 20}">
+									th:if="${userPage.battery >= 0 and userPage.battery <= 20}">
 									<!-- 0~20 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_red.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 21 and currentUser.battery <= 40}">
+									th:if="${userPage.battery >= 21 and userPage.battery <= 40}">
 									<!-- 21~40 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_orange.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 41 and currentUser.battery <= 60}">
+									th:if="${userPage.battery >= 41 and userPage.battery <= 60}">
 									<!-- 41~60 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_yellow.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 61 and currentUser.battery <= 80}">
+									th:if="${userPage.battery >= 61 and userPage.battery <= 80}">
 
 									<!-- 61~80 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_green.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 81 and currentUser.battery <= 100}">
+									th:if="${userPage.battery >= 81 and userPage.battery <= 100}">
 									<!-- 81~100 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_mini"
 										src="/images/battery_blue.png">
@@ -108,7 +108,7 @@
 						<div
 							style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; padding: 10px; margin-left: 30px">
 							<h5>
-								<a style="text-decoration: none; color: #333;"
+								<a style="text-decoration: none; color: #333; font-weight: bolder;"
 									th:href="@{/mypage/myProductList(id=${userPage.id})}">
 									🛍️ 최근 업로드한 상품</a>
 							</h5>
@@ -163,8 +163,8 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>No.</th>
-									<th>category</th>
+									<th width="30px">No.</th>
+									<th width="130px">category</th>
 									<th>title</th>
 									<th>like</th>
 									<th style="width: 100px;">date</th>
