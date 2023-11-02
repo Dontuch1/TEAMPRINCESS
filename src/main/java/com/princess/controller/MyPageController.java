@@ -86,19 +86,25 @@ public class MyPageController {
 
 	@GetMapping("/myReviewList")
 	public void myReviewList(Model model, @RequestParam(name = "id") String id, Review review, Member member,
-			@PageableDefault(page = 0, size = 10, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
+			@PageableDefault(page = 0, size = 5, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		member.setId(id);
 		Page<Review> reviewListPage = myService.getReviewList(pageable, member);
 		int nowPage = reviewListPage.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage - 4, 1);
 		int endPage = Math.min(nowPage + 5, reviewListPage.getTotalPages());
-
 		model.addAttribute("reviewList", reviewListPage);
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("userPage", myService.getMember(member));
 
+		Page<Review> sentReviewListPage = myService.getSentReviewList(pageable, id);
+		int nowPage1 = reviewListPage.getPageable().getPageNumber() + 1;
+		int startPage1 = Math.max(nowPage1 - 4, 1);
+		int endPage1 = Math.min(nowPage1 + 5, reviewListPage.getTotalPages());
+		model.addAttribute("sentReviewList", sentReviewListPage);
+		model.addAttribute("nowPage1", nowPage1);
+		model.addAttribute("startPage1", startPage1);
+		model.addAttribute("endPage1", endPage1);
 	}
 
 	@GetMapping("/myWishList")
@@ -115,7 +121,7 @@ public class MyPageController {
 		member.setId(securityUser.getUsername());
 		System.out.println("/myBuyList에서 setId한 멤버 //" + member.toString());
 		model.addAttribute("buyList", myService.getBuyList(member));
-	
+
 	}
 
 	@GetMapping("/myDeposit")
@@ -135,23 +141,26 @@ public class MyPageController {
 	@PostMapping("/insertReview")
 	public String insertReview(Review review, @AuthenticationPrincipal SecurityUser securityUser,
 			@RequestParam(name = "rating") String rating, @RequestParam("receiver") String receiver, Product product) {
-		System.out.println("product : " + product.toString());
-		System.out.println("rating : " + rating);
-		System.out.println("컨트롤러 receiver: "+receiver);
 
 		review.setSender(securityUser.getUsername());
 		review.setPNo(product);
 		Member mem = new Member();
 		mem.setId(receiver);
 		review.setReceiver(mem);
-		if (rating.equals("UP"))
+		System.out.println(mem.toString());
+		mem = myService.getMember(mem);
+		System.out.println(mem.toString());
+		if (rating.equals("UP")) {
 			review.setReview(Rating.UP);
-		else
+			// 배터리 올리기
+			mem.setBattery(mem.getBattery() + 1);
+		} else {
 			review.setReview(Rating.DOWN);
-
-		System.out.println("컨트롤러 review : " + review.toString());
-	
+			// 배터리 내리기
+			mem.setBattery(mem.getBattery() - 1);
+		}
 		myService.insertReview(review, product);
+		myService.updateBattery(mem);
 
 		return "redirect:myBuyList";
 	}

@@ -5,7 +5,7 @@
 <style type="text/css">
 .btn-outline-secondary, .btn-outline-primary {
 	width: 100px;
-	margin-top: 8px;
+	margin-top: 3px;
 }
 </style>
 </head>
@@ -16,6 +16,7 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
+
 
 				<!-- 폼 시작 -->
 				<form action="/mypage/insertReview" method="post">
@@ -80,34 +81,43 @@
 				</form>
 				<!-- 폼 끝 -->
 
-
 				<h4 class="mt-4">🛍️ 구매 목록</h4>
 				<br>
-				<div th:if="${buyList.empty}">
-					<p>구매한 상품이 없습니다.</p>
-				</div>
 				<div id="mypage-product-list">
-					<div class="card" th:each="product, state : ${buyList}">
+					<div th:if="${buyList.empty}">
+						<p>구매한 상품이 없습니다.</p>
+					</div>
+
+					<div class="card" th:each="product, state : ${buyList}"
+						style="width: 250px; height: 380px; margin-bottom: 20px;">
 						<div class="card-img-square">
 							<a th:href="@{/product/getProduct(pNo=${product.key.pNo})}"><img
 								th:src="@{${product.key.upload}}" class="card-img-top" alt="..."
-								onerror="this.src='https://buly.kr/9BSKdMj'"></a>
+								onerror="this.src='https://buly.kr/9BSKdMj'"
+								style="width: 100%; height: 100%; object-fit: cover;"></a>
 						</div>
-						<div class="card-body">
-							<h5 class="card-title" th:text="${product.key.title}"></h5>
-							<h5 class="card-text" th:text="${product.key.price}">원</h5>
-							<p class="card-text"
-								th:switch="${product.key.pCategory.toString()}">
-								<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
-								<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
-								<span th:case="ETC">기타</span>
-							</p>
-							<hr style="border: 1px dashed gray">
-							<div th:align="center"
+						<div class="card-body" style="width: 250px; margin-bottom: 0px;">
+							<span class="card-text" style="font-size: small;"
+								th:switch="${product.key.pCategory.toString()}"> <span
+								th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span> <span
+								th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span> <span
+								th:case="ETC">기타</span>
+							</span> <br> <span class="card-title"
+								style="font-size: 12pt; font-weight: bold;"
+								th:text="${product.key.title}"></span><br> <span
+								class="card-text"
+								th:text="${#numbers.formatInteger(product.key.price, 3, 'COMMA') + '원'}">원</span>
+							<br> <small class="card-text"
+								th:text="${product.key.salesId.nickName}"></small>
+							<div th:align="center" style="margin-bottom: 5px;">
+								<hr
+									style="border: 1px dashed gray; width: 200px; align-self: center;  margin-bottom: 4	px;">
+								<strong>후기 보내기</strong>
+							</div>
+							<div th:align="center" style="margin-top: 10px;"
 								th:attr="style=${product.key.delevery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
 								<div>
-
-									<span>판매자</span> <br>
+									<small>판매자</small><br>
 									<button class="btn btn-outline-primary"
 										th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[1]}]]);"
 										th:if="${!product.value[1].isEmpty()}"
@@ -118,22 +128,26 @@
 										disabled>완료</button>
 								</div>
 								<div th:if="${product.key.delevery.toString() == 'Y'}">
-									<span>천둥맨</span><br>
-									<button class="btn btn-outline-primary"
-										th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[0]}]]);"
-										th:if="${!product.value[0].isEmpty()}"
-										data-bs-target="#exampleModalToggle" data-bs-toggle="modal">작성</button>
-									<button th:if="${product.value[0].isEmpty()}"
-										class="btn btn-outline-secondary"
-										data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-										disabled>완료</button>
+									<small>천둥맨<small><br>
+											<button class="btn btn-outline-primary"
+												th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[0]}]]);"
+												th:if="${!product.value[0].isEmpty()}"
+												data-bs-target="#exampleModalToggle" data-bs-toggle="modal">작성</button>
+											<button th:if="${product.value[0].isEmpty()}"
+												class="btn btn-outline-secondary"
+												data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+												disabled>완료</button>
 								</div>
+
 							</div>
+
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 <script th:inline="javascript">

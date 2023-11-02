@@ -2,6 +2,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
+<style>
+.depositBtn:hover {
+	transition: 0.2s;
+	transform: scale(1.2);
+}
+
+</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -9,52 +16,85 @@
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
-			<div class="container-fluid">
+			<div class="container-fluid" id="backgroundDiv"
+				style="height: 600px; background-image: url('/images/pay1.jpg'); background-position: center; background-size: 80%">
 				<h4 class="mt-4">⚡썬더 페이</h4>
-				<br>
-				<div class="thunderForm">
-					<p>
-						<b th:text="${loginUser.nickName}"></b>님의 보유 썬더: <span
-							th:text="${loginUser.deposit}"></span>⚡
-					</p>
-					<br>
 
-					<form th:action="@{updateDeposit}" method="post" onsubmit="subConfirm()">
-						<input type="hidden" th:value="${loginUser.id}" name="id">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" value="10000"
-								name="deposit" id="flexRadioDefault2" checked> <label
-								class="form-check-label" for="flexRadioDefault2"> 10000원
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" value="30000"
-								name="deposit" id="flexRadioDefault1"> <label
-								class="form-check-label" for="flexRadioDefault1"> 30000원
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" value="50000"
-								name="deposit" id="flexRadioDefault1"> <label
-								class="form-check-label" for="flexRadioDefault1"> 50000원
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" value="100000"
-								name="deposit" id="flexRadioDefault1"> <label
-								class="form-check-label" for="flexRadioDefault1">
-								100000원 </label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" value="500000"
-								name="deposit" id="flexRadioDefault1"> <label
-								class="form-check-label" for="flexRadioDefault1">
-								500000원 </label>
-						</div>
-						<br>
-						<button type="submit" class="btn btn-primary">충전</button>
+				<div class="thunderForm" th:align="center">
+
+					<div
+						style="border: 1px solid #f8f9fa; background-color:f8f9fa; border-radius: 20px; padding-top: 20px; width: 750px;">
+						<span
+							style="font-size: large; padding: 10px; border-radius: 10px;">
+							<b th:text="${loginUser.nickName}"></b>님의 보유 썬더: <span
+							style="font-weight: bold;" id="userDeposit"
+							th:text="${loginUser.deposit}"></span>⚡
+						</span> <br> <br>
+
+						<form th:action="@{updateDeposit}" method="post"
+							id="updateDepositForm">
+							<input type="hidden" th:value="${loginUser.id}" name="id">
+							<div class="row" th:align="left"
+								style="justify-content: center; width: 800px; margin-bottom: 15px;">
+								<div class="col-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" value="10000"
+											onchange="changeBackground(this)" name="deposit"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											10000원 </label>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" value="30000"
+											onchange="changeBackground(this)" name="deposit"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											30000원 </label>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" value="50000"
+											onchange="changeBackground(this)" name="deposit"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											50000원 </label>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" value="100000"
+											onchange="changeBackground(this)" name="deposit"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											100000원 </label>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" value="500000"
+											onchange="changeBackground(this)" name="deposit"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											500000원 </label>
+									</div>
+								</div>
+							</div>
+					</div>
+
+					<br> <br> <br> <br>
+					<button type="button" class="btn btn-outline-primary depositBtn"
+						style="position: relative; left: -10%;" onclick="subConfirm()">충전</button>
+					<button type="button" class="btn btn-outline-primary depositBtn"
+						style="position: relative; left: 10%;" onclick="changeValue()">출금</button>
+
 
 					</form>
+
+
+
 				</div>
 			</div>
 		</div>
@@ -62,11 +102,56 @@
 </body>
 <script th:inline="javascript">
 	function subConfirm() {
+		if (document.querySelector("input[name='deposit']:checked") == null) {
+			alert("금액을 선택하세요");
+			return;
+		}
 		if (confirm("정말 충전하시겠습니까?")) {
-			return true;
+			document.getElementById('updateDepositForm').submit();
 		} else {
 			return false;
 		}
+	}
+	function changeValue() {
+
+		let userDeposit = document.getElementById('userDeposit').textContent;
+		if (document.querySelector("input[name='deposit']:checked") == null) {
+			alert("금액을 선택하세요");
+			return;
+		}
+		let depositValue = document
+				.querySelector("input[name='deposit']:checked").value;
+		console.log("선택" + depositValue);
+		console.log("유저" + userDeposit);
+		let change = userDeposit - depositValue;
+
+		if (change >= 0) {
+			if (confirm("정말 출금하시겠습니까?")) {
+				document.querySelector("input[name='deposit']:checked").value = -depositValue;
+
+				document.getElementById('updateDepositForm').submit();
+			} else {
+				return false;
+			}
+		} else {
+			alert("잔액이 부족합니다.");
+		}
+	}
+
+	function changeBackground(radio) {
+		const backgroundDiv = document.getElementById("backgroundDiv");
+		if (radio.value === "10000") {
+			backgroundDiv.style.backgroundImage = 'url("/images/pay2.jpg")';
+		} else if (radio.value === "30000") {
+			backgroundDiv.style.backgroundImage = 'url("/images/pay3.jpg")';
+		} else if (radio.value === "50000") {
+			backgroundDiv.style.backgroundImage = 'url("/images/pay4.jpg")';
+		} else if (radio.value === "100000") {
+			backgroundDiv.style.backgroundImage = 'url("/images/pay5.jpg")';
+		} else if (radio.value === "500000") {
+			backgroundDiv.style.backgroundImage = 'url("/images/pay6.jpg")';
+		}
+
 	}
 </script>
 </html>
