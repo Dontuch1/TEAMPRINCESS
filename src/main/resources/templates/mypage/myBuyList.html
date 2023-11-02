@@ -4,8 +4,9 @@
 <title>마이 페이지</title>
 <style type="text/css">
 .btn-outline-secondary, .btn-outline-primary {
-   width: 100px;
-   margin-top: 8px;
+	width: 100px;
+	margin-top: 8px;
+}
 </style>
 </head>
 <body th:align="center">
@@ -22,7 +23,7 @@
 					<!-- 모달 시작 -->
 					<div class="modal fade" id="exampleModalToggle"
 						aria-labelledby="exampleModalToggleLabel" tabindex="-1"
-						aria-hidden="true" style="display:none">
+						aria-hidden="true" style="display: none">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -68,7 +69,7 @@
 									</span>
 								</div>
 								<div class="modal-footer">
-									<button class="btn btn-primary" type="submit" >후기 보내기</button>
+									<button class="btn btn-primary" type="submit">후기 보내기</button>
 								</div>
 							</div>
 						</div>
@@ -133,17 +134,13 @@
 				</div>
 			</div>
 		</div>
-<<<<<<< HEAD
 	</div>
-=======
-	</div>
->>>>>>> refs/heads/main
 </body>
 <script th:inline="javascript">
 	function whoIsReceiver(pNo, receiver) {
 		let pnoinput = document.getElementById('pNoInput');
 		let receiverinput = document.getElementById('receiverInput');
-		
+
 		pnoinput.setAttribute('value', pNo);
 		receiverinput.setAttribute('value', receiver);
 

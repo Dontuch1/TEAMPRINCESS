@@ -117,7 +117,8 @@ input#bid[type='number'] {
 												<button th:align="center"
 													class="btn btn-outline-dark flex-shrink-0" type="button"
 													onclick="like();" style="height: 35px;">
-													<img id="like" th:if="${currentUser." alt="..."
+													<img id="like"
+														th:if="${currentUser.id != product.salesId.id}" alt="..."
 														src="/images/empty_heart.png" style="width: 15px;">
 												</button>
 												<a class="btn btn-outline-dark flex-shrink-0"
@@ -185,6 +186,10 @@ input#bid[type='number'] {
 				<div th:align="center">
 					<a
 						th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
+						style="display: block;" type="button"
+						class="btn btn-outline-dark flex-shrink-0" onclick="delConfirm();">삭제</a>
+					<a
+						th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
 						style="display: block;" type="submit"
 						class="btn btn-outline-dark flex-shrink-0" onclick="delConfirm();">삭제</a>
 					<a type="button" class="btn btn-outline-dark flex-shrink-0"
@@ -201,11 +206,11 @@ input#bid[type='number'] {
  * 게시물 삭제
  *=============================================*/
 function delConfirm() {
-	if (confirm("정말 삭제하시겠습니까?")) {
-		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
-	} else {
-		return false;
-	}
+   if (confirm("정말 삭제하시겠습니까?")) {
+      window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+   } else {
+      return false;
+   }
 }
 
 /*=============================================
@@ -214,27 +219,27 @@ function delConfirm() {
 let Target = document.getElementById("clock");
 
 function clock() {
-	if ([[${product.auction.toString() == 'Y'}]]) {
-		let regdate = new Date([[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]).getTime();
-		let aucDuration = [[${product.aucDuration}]];
-		let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
-		let currentTime = new Date().getTime();
-	    
-	    let time = parseInt(regdate) + parseInt(aucDuToTime) - parseInt(currentTime);
-	
-	    if (time < 0) {
-	    	Target.innerText = `경매 종료`;
-	    	return
-	    }
-	    
-	    let days = Math.floor(time / (1000 * 60 * 60 * 24));
-	    let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	    let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-	    let seconds = Math.floor((time % (1000 * 60)) / 1000);
-	
-	    Target.innerText = `남은 시간 ${days >= 1 ? days + '일' : ''} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+   if ([[${product.auction.toString() == 'Y'}]]) {
+      let regdate = new Date([[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]).getTime();
+      let aucDuration = [[${product.aucDuration}]];
+      let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
+      let currentTime = new Date().getTime();
+       
+       let time = parseInt(regdate) + parseInt(aucDuToTime) - parseInt(currentTime);
+   
+       if (time < 0) {
+          Target.innerText = `경매 종료`;
+          return
+       }
+       
+       let days = Math.floor(time / (1000 * 60 * 60 * 24));
+       let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+       let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+       let seconds = Math.floor((time % (1000 * 60)) / 1000);
+   
+       Target.innerText = `남은 시간 ${days >= 1 ? days + '일' : ''} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 
-	}
+   }
 }
 clock();
 setInterval(clock, 1000); // 1초마다 실행
@@ -255,71 +260,71 @@ function like() {
  * 마지막 입찰자인지 확인
  *=============================================*/
 function isCurrBid() {
-	if ([[${currBid.auctionId != null && currBid.auctionId.id == currentUser.id}]]) {
-		alert('연속으로 입찰할 수 없습니다.');
-		$("#dropdown").remove();
-	}
+   if ([[${currBid.auctionId != null && currBid.auctionId.id == currentUser.id}]]) {
+      alert('연속으로 입찰할 수 없습니다.');
+      $("#dropdown").remove();
+   }
 }
 
 /*=============================================
  * 구매 버튼
  *=============================================*/
 function buyBtn() {
-	if (confirm("구매하시겠습니까?")) {
-		if ($('#delevery').length) {
-			if([[${product.price + 1500 < currentUser.deposit}]]) {
-				$('#buyForm').submit();
-			} else {
-				alert('썬더페이 잔액이 부족합니다!');
-				if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
-					$('#bid').val('');
-					window.location.href = '/mypage/myDeposit';
-				} else {
-					$('#bid').val('');
-					return false;
-				}
-			}
-		} else {
-			$('#buyForm').submit();
-		}
-	} else {
-		$('#bid').val('');
-		return false;
-	}
+   if (confirm("구매하시겠습니까?")) {
+      if ($('#delevery').length) {
+         if([[${product.price + 1500 < currentUser.deposit}]]) {
+            $('#buyForm').submit();
+         } else {
+            alert('썬더페이 잔액이 부족합니다!');
+            if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+               $('#bid').val('');
+               window.location.href = '/mypage/myDeposit';
+            } else {
+               $('#bid').val('');
+               return false;
+            }
+         }
+      } else {
+         $('#buyForm').submit();
+      }
+   } else {
+      $('#bid').val('');
+      return false;
+   }
 }
 
 /*=============================================
  * 입찰하기
  *=============================================*/
  function bid() {
-	if($('#bid').val() <= [[${auction.auctionPrice}]]) {
-		alert("입찰가는 현재 경매가보다 높은 가격만 가능합니다!");
-	} else if ([[${auctionCnt > 2}]]){
-		alert("더이상 입찰할 수 없습니다!");
-		$('#bid').val('');
-	} else {
-		if(confirm('정말 입찰하시겠습니까?')) {
-			let deposit;
-			if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
-				deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
-			} else {
-				deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];
-			}
-			if($('#bid').val() <= deposit) { // 입찰가 < 잔액
-				$('#bidForm').submit();	
-				return false;
-			} else { // 입찰가 > 잔액
-				alert('썬더페이 잔액이 부족합니다!');
-				if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
-					$('#bid').val('');
-					window.location.href = '/mypage/myDeposit';
-				} else {
-					$('#bid').val('');
-					return false;
-				}
-			}
-		}
-	}
+   if($('#bid').val() <= [[${auction.auctionPrice}]]) {
+      alert("입찰가는 현재 경매가보다 높은 가격만 가능합니다!");
+   } else if ([[${auctionCnt > 2}]]){
+      alert("더이상 입찰할 수 없습니다!");
+      $('#bid').val('');
+   } else {
+      if(confirm('정말 입찰하시겠습니까?')) {
+         let deposit;
+         if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
+            deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
+         } else {
+            deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];
+         }
+         if($('#bid').val() <= deposit) { // 입찰가 < 잔액
+            $('#bidForm').submit();   
+            return false;
+         } else { // 입찰가 > 잔액
+            alert('썬더페이 잔액이 부족합니다!');
+            if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+               $('#bid').val('');
+               window.location.href = '/mypage/myDeposit';
+            } else {
+               $('#bid').val('');
+               return false;
+            }
+         }
+      }
+   }
 }
 </script>
 </html>
