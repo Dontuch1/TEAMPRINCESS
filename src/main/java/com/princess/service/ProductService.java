@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Auction;
+import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Search;
@@ -40,4 +42,16 @@ public interface ProductService {
 	Member getMember(Member member);
 	
 	List<Auction> getBidList(Member member, Product product);
+	
+	void editProduct(Product product, MultipartFile file);
+	
+	List<LikeWish> getWishList(Product product, Type type);
+	
+	boolean isWished(String id, Product product, Type type);
+	
+	void insertLike(LikeWish likeWish);
+	
+	void deleteLike(Product product, Type type, Member member);
+	
+	int countWishes(Product product, Type type);
 }

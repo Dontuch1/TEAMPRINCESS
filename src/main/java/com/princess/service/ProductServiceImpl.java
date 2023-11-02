@@ -16,12 +16,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.princess.domain.Auction;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.YorN;
+import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.AuctionRepository;
+import com.princess.persistence.LikeWishRepository;
 import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ProductRepository;
 import com.princess.persistence.SalesRepository;
@@ -41,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private MemberRepository memberRepo;
+	
+	@Autowired
+	private LikeWishRepository likewishRepo;
 	
 	@Value("${file.direc}")
 	private String path;
@@ -188,4 +194,56 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return list; 
 	}
+	
+	public void editProduct(Product product, MultipartFile file) {
+		Product findProduct = productRepo.findById(product.getPNo()).get();
+		
+		if (!file.isEmpty()) {
+			String filename = UUID.randomUUID().toString() + file.getOriginalFilename();
+			try {
+				file.transferTo(new File(path + filename));
+				findProduct.setUpload("/upload/" + filename);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		findProduct.setPCategory(product.getPCategory());
+		findProduct.setTitle(product.getTitle());
+		findProduct.setContent(product.getContent());
+		findProduct.setPrice(product.getPrice());
+		findProduct.setDelevery(product.getDelevery());
+		productRepo.save(findProduct);
+	}
+	
+	public List<LikeWish> getWishList(Product product, Type type) {
+		return likewishRepo.findBypNoAndType(product.getPNo(), type);
+	}
+	
+	public boolean isWished(String id, Product product, Type type) {
+		boolean isWished = false;
+		for(LikeWish like : likewishRepo.findBypNoAndType(product.getPNo(), type)) {
+			if(like.getLikeId().getId().equals(id)) {
+				isWished = true;
+				break;
+			}
+		}
+		return isWished;
+	}
+	
+	public void insertLike(LikeWish likeWish) {
+		System.out.println("라이크 인서트");
+		likewishRepo.save(likeWish);
+	}
+	
+	public void deleteLike(Product product, Type type, Member member) {
+		LikeWish findWish = likewishRepo.findBypNoAndTypeAndLikeId(product.getPNo(), type, member);
+		System.out.println("findWish : " + findWish);
+		likewishRepo.delete(findWish);
+	}
+	
+	public int countWishes(Product product, Type type) {
+		return likewishRepo.countBypNoAndType(product.getPNo(), type);
+	}
+	
 }

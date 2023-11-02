@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
+import java.util.List;	
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.config.SecurityUser;
 import com.princess.domain.Auction;
+import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.CheckCondition.YorN;
+import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Search;
@@ -104,19 +106,23 @@ public class ProductController {
 		int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
 		model.addAttribute("auctionCnt", auctionCnt);
 		
+		int wishCnt = productService.countWishes(product, Type.PRODUCT);
+		model.addAttribute("wishCnt", wishCnt);
+		
+		model.addAttribute("isWished", productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
+
 		return "product/getProduct";
 	}
 
 	@GetMapping("/insertProduct")
-	public void insertProduct() {
-
+	public void insertProduct(Model model) {
+		model.addAttribute("product", null);
 	}
 
 	@PostMapping("/insertProduct")
 	public String insertProduct(Product product, @RequestParam MultipartFile file,
 			@RequestParam("strPrice") String strPrice) {
 		product.setPrice(Integer.parseInt(strPrice.replaceAll("^0+", "")));
-		System.out.println("price : " + product.getPrice());
 		productService.insertProduct(product, file);
 		if (product.getAuction().equals(YorN.Y)) {
 			return "redirect:getProductList?type=Auc";
@@ -161,6 +167,39 @@ public class ProductController {
 		} else buyer.setDeposit(buyer.getDeposit() - bid);
 		productService.setMemberDepoist(buyer);
 		productService.insertAuction(product, id, bid);
+		return "redirect:getProduct?pNo=" + product.getPNo();
+	}
+	
+	@GetMapping("/updateProduct")
+	public void updateProduct(Model model, Product product) {
+		System.out.println("get-pre-product : " + product);
+		model.addAttribute("product", productService.getProduct(product));
+		System.out.println("get-post-product : " + productService.getProduct(product));
+	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(Product product, @RequestParam String strPrice, @RequestParam MultipartFile file) {
+		product.setPrice(Integer.parseInt(strPrice));
+		System.out.println("post-product : " + product);
+		System.out.println("file : file");
+		productService.editProduct(product, file);
+		return "redirect:getProduct?pNo=" + product.getPNo();
+	}
+	
+	@GetMapping("/updateWish")
+	public String updateWish(Product product, @AuthenticationPrincipal SecurityUser securityUser) {
+		LikeWish likeWish = new LikeWish();
+		Member member = new Member();
+		member.setId(securityUser.getUsername());
+		likeWish.setLikeId(member);
+		System.out.println("update cont : " + productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
+		if (!productService.isWished(securityUser.getUsername(), product, Type.PRODUCT)) {
+			likeWish.setPNo(product.getPNo());
+			likeWish.setType(Type.PRODUCT);
+			productService.insertLike(likeWish);
+		} else {
+			productService.deleteLike(product, Type.PRODUCT, member);
+		}
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
 }
