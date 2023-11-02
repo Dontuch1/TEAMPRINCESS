@@ -219,24 +219,23 @@ function isCurrBid() {
  *=============================================*/
 function buyBtn() {
 	if (confirm("구매하시겠습니까?")) {
-		if ($('#delevery').length) {
-			if([[${product.price + 1500 < currentUser.deposit}]]) {
-				$('#buyForm').submit();
-			} else {
-				alert('썬더페이 잔액이 부족합니다!');
-				if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
-					$('#bid').val('');
-					window.location.href = '/mypage/myDeposit';
-				} else {
-					$('#bid').val('');
-					return false;
-				}
-			}
+		let deposit;
+		if ($('#delevery').length) { // 내 잔액이 가격보다 클까?
+			deposit = [[${currentUser.deposit - product.price - 1500}]];
 		} else {
+			deposit = [[${currentUser.deposit - product.price}]];
+		}
+		if(deposit >= 0) {
 			$('#buyForm').submit();
+		} else {
+			alert('썬더페이 잔액이 부족합니다!');
+			if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+				window.location.href = '/mypage/myDeposit';
+			} else {
+				return false;
+			}
 		}
 	} else {
-		$('#bid').val('');
 		return false;
 	}
 }
