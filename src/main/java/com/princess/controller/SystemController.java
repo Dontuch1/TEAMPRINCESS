@@ -16,9 +16,7 @@ public class SystemController {
 	@Autowired
 	private MemberService memberService;
 
-	@GetMapping("/accessDenied")
-	public void accessDenied() {
-	}
+	
 
 	@GetMapping("/logout")
 	public void logout() {

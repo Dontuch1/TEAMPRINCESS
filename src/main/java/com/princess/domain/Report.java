@@ -40,6 +40,8 @@ public class Report {
 	
 	private String rptCon;
 	
+	private Long battery;
+	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("SYSDATE")
 	private Date regdate = new Date();

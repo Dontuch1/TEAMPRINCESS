@@ -39,7 +39,7 @@
 									class="form-control" id="date" name="date" required>
 							</div>
 							<button type="submit" class="btn btn-success">등록</button>
-							
+
 						</form>
 					</div>
 				</div>
@@ -62,8 +62,9 @@
 							<td class="left" th:text="${member.nickName}"></td>
 							<td class="left" th:text="${member.phone}"></td>
 							<td class="left" th:text="${member.regdate}"></td>
-							<td><a th:href="@{/admin/deleteMember(id=${member.id})}">❌</a> </td>
-</tr>
+							<td><a th:href="@{/admin/deleteMember(id=${member.id})}">❌</a>
+							</td>
+						</tr>
 
 					</tbody>
 				</table>

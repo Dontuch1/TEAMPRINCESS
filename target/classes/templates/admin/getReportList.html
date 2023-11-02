@@ -16,77 +16,36 @@
 
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 
-				<table class="table">
+
+	<div class="panel panel-default">
+				
+				</div>
+				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th scope="col">신고번호</th>
-							<th scope="col">신고자</th>
-							<th scope="col">글 종류</th>
-							<th scope="col">글 번호</th>
-							<th scope="col">신고 내용</th>
-							<th scope="col">신고일자</th>
 
+							<th>신고번호</th>
+							<th>신고자</th>
+							<th>글 종류</th>
+							<th>신고 내용</th>
+							<th>신고 일자</th>
 						</tr>
 					</thead>
-					
 					<tbody>
-				
-					
-						<tr>
-							<th scope="row">1</th>
-							<td>jojo</td>
-							<td>COMMUNITY</td>
-							<td>23</td>
-							<td>집밖에서 팬티를 잃어버렸다니 말도 안돼요.</td>
-							<td>2023-10-20</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>jiyi</td>
-							<td>PRODUCT</td>
-							<td>12</td>
-							<td>사진올린게 불쾌해요 내렸으면 좋겠어요</td>
-							<td>2023-10-20</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>jiyi</td>
-							<td>PRODUCT</td>
-							<td>22</td>
-							<td>3분의1이라고했는데 3분의2 먹은거 같아요</td>
-							<td>2023-10-25</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td>jiyi</td>
-							<td>PRODUCT</td>
-							<td>20</td>
-							<td>쿠션 2호여서 구매했는데 받아보니 1호예요</td>
-							<td>2023-10-25</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td>jojo</td>
-							<td>PRODUCT</td>
-							<td>24</td>
-							<td>제목은 할리갈리인데 들어가면 젠가 팔아요</td>
-							<td>2023-10-25</td>
-						</tr>
+						<tr th:each="report: ${reportList}">
+							<td class="center" th:text="${report.rptNo}"></td>
+							<td class="left" th:text="${report.rptId.id}"></td>
+							<td class="left" th:text="${report.type}"></td>
+							<td class="left" th:text="${report.rptCon}"></td>
+							<td class="left" th:text="${report.regdate}"></td>
+</tr>
+
 					</tbody>
 				</table>
-		<!-- Add this at the beginning of your HTML code -->
-       <div th:with="pageSize=6, currentPage=2">
-
-<p style="color: blue"><a href="getReportList2">1 2 3 4 5</a></p>
-<p style="color: white">Make sure to keep all page content within the The top navbar is optional,
- and just for demonstration. Just create an element with the ID which will toggle the menu when clicked.clicked.clicked.</p>
-
-
-
-
+			</div>
 				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
 			</div>
-		</div>
-	</div>
+	
+
 </body>
 </html>

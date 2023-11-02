@@ -22,6 +22,8 @@ public class QReport extends EntityPathBase<Report> {
 
     public static final QReport report = new QReport("report");
 
+    public final NumberPath<Long> battery = createNumber("battery", Long.class);
+
     public final NumberPath<Long> postNo = createNumber("postNo", Long.class);
 
     public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);

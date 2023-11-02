@@ -12,13 +12,15 @@
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
+
 <body>
 	<div th:class="container">
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card card-signin my-5">
 					<div class="card-body">
-						<h5 class="card-title text-center" style="font-weight: bold">Sign In</h5>
+						<h5 class="card-title text-center" style="font-weight: bold">로그인
+							페이지</h5>
 						<form class="form-signin" method="post">
 							<div class="form-label-group">
 								<label for="username">Id</label> <input type="text"
@@ -37,10 +39,15 @@
 									id="customCheck1"> <label class="custom-control-label"
 									for="customCheck1">Remember password</label>
 							</div>
-							<button class="btn btn-lg btn-primary btn-block text-uppercase"
-								type="submit">Sign in</button>
-							<a class="btn btn-lg btn-primary btn-block text-uppercase"
-								type="button" th:href="@{/system/register}">Sign up</a>
+							<div style="text-align: center;">
+								<button class="btn btn-lg btn-primary btn-block text-uppercase"
+									type="submit" style="width: 50%; background-color: orange;">로그인</button>
+								<br> <br> <a
+									class="btn btn-lg btn-primary btn-block text-uppercase"
+									type="button" th:href="@{/system/register}"
+									style="width: 50%; background-color: green;">회원가입</a>
+
+							</div>
 
 						</form>
 					</div>
