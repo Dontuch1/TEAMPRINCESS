@@ -88,21 +88,22 @@
 							th:text="${product.salesId.nickName}"></small><br> <small
 							class="card-text"
 							th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small>
+							<hr style="border: 1px dashed gray">
 						<div th:align="center" style="margin-top: 10px" th:if="${product.auction.toString() == 'N'}">
 							<a th:if="${product.sold.toString() == 'N'}"
 								th:href="@{/product/getProduct(pNo=${product.pNo})}"
-								class="btn btn-primary">판매중</a> <a
+								class="btn btn-outline-primary">판매중</a> <a
 								th:if="${product.sold.toString() == 'Y'}"
 								th:href="@{/product/getProduct(pNo=${product.pNo})}"
-								class="btn btn-secondary">거래완료</a>
+								class="btn btn-outline-secondary">거래완료</a>
 						</div>
 						<div th:align="center" style="margin-top: 10px" th:if="${product.auction.toString() == 'Y'}">
 							<a th:if="${product.sold.toString() == 'N'}"
 								th:href="@{/product/getProduct(pNo=${product.pNo})}"
-								class="btn btn-primary">경매중</a> <a
+								class="btn btn-outline-primary">경매중</a> <a
 								th:if="${product.sold.toString() == 'Y'}"
 								th:href="@{/product/getProduct(pNo=${product.pNo})}"
-								class="btn btn-secondary">경매기간종료</a>
+								class="btn btn-outline-secondary">경매기간종료</a>
 						</div>
 					</div>
 				</div>
