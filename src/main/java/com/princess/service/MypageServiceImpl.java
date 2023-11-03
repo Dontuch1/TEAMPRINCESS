@@ -60,7 +60,7 @@ public class MypageServiceImpl implements MypageService {
 			findMember.setAgree(member.getAgree());
 		}
 		findMember.setBirth(member.getBirth());
-		System.out.println(findMember.toString());
+
 		memberRepo.save(findMember);
 	}
 
@@ -68,7 +68,7 @@ public class MypageServiceImpl implements MypageService {
 	public void updateDeposit(Member member) {
 		Member findMember = memberRepo.findById(member.getId()).get();
 		findMember.setDeposit(findMember.getDeposit() + member.getDeposit());
-		System.out.println(findMember.toString());
+
 		memberRepo.save(findMember);
 	}
 
@@ -115,8 +115,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Map<Product, String[]> getBuyList(Member member) {
 		List<Sales> sales = salesRepo.findByBuyer(member);
-		// List<Product> buyList = new ArrayList<Product>();
-		System.out.println("sales : " + sales.toString());
+
 		Map<Product, String[]> buyList = new LinkedHashMap<Product, String[]>();
 		String thun = "";
 		String tra = "";
