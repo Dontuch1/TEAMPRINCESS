@@ -15,18 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Auction;
 import com.princess.domain.CheckCondition.Display;
-import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
+import com.princess.domain.Report;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.AuctionRepository;
 import com.princess.persistence.LikeWishRepository;
 import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ProductRepository;
+import com.princess.persistence.ReportRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
 
@@ -47,6 +49,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private LikeWishRepository likewishRepo;
+	
+	@Autowired
+	private ReportRepository reportRepo;
 	
 	@Value("${file.direc}")
 	private String path;
@@ -246,4 +251,15 @@ public class ProductServiceImpl implements ProductService {
 		return likewishRepo.countBypNoAndType(product.getPNo(), type);
 	}
 	
+	public boolean isReported(Member member, Product product, Type type) {
+		int result = reportRepo.countByRptIdAndPostNoAndType(member, product.getPNo(), Type.PRODUCT);
+		if (result == 1)
+			return true;
+		else
+			return false;
+	}
+	
+	public void insertReport(Report report) {
+		reportRepo.save(report);
+	}
 }

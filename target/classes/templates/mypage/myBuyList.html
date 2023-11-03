@@ -128,7 +128,7 @@
 										disabled>완료</button>
 								</div>
 								<div th:if="${product.key.delevery.toString() == 'Y'}">
-									<small>천둥맨<small><br>
+									<small>천둥맨</small><br>
 											<button class="btn btn-outline-primary"
 												th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[0]}]]);"
 												th:if="${!product.value[0].isEmpty()}"

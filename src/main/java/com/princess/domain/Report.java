@@ -28,7 +28,7 @@ public class Report {
 	@Id @GeneratedValue
 	private Long rptNo;
 	
-	@ManyToOne
+	@ManyToOne	
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	private Member rptId;
 	

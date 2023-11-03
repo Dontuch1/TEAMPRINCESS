@@ -11,6 +11,7 @@ import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
+import com.princess.domain.Report;
 import com.princess.domain.Search;
 
 public interface ProductService {
@@ -54,4 +55,8 @@ public interface ProductService {
 	void deleteLike(Product product, Type type, Member member);
 	
 	int countWishes(Product product, Type type);
+	
+	boolean isReported(Member member, Product product, Type type);
+	
+	void insertReport(Report report);
 }
