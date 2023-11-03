@@ -23,7 +23,9 @@ public interface ProductService {
 
 	Page<Product> getProductList(String type, Search search, Pageable pageable);
 	
-	Page<Product> myThunderList(Search search, Pageable pageable);
+	Page<Product> myThunderList(Search search, Pageable pageable, Member member);
+	
+	void thunderDelivery(Long productPno, Member member);
 	
 	List<Auction> getAuctionList(Product product);
 	

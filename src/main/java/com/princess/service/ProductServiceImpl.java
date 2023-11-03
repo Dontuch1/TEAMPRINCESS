@@ -19,6 +19,7 @@ import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
+import com.princess.domain.QSales;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.AuctionRepository;
@@ -26,6 +27,7 @@ import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ProductRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -85,6 +87,7 @@ public class ProductServiceImpl implements ProductService {
 		BooleanBuilder builder = new BooleanBuilder();
 
 		QProduct qProduct = QProduct.product;
+		
 
 		if (type.equals("prod")) {
 			builder.and(qProduct.auction.eq(YorN.N));
@@ -100,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		builder.and(qProduct.display.eq(Display.Y));
+		
 
 		// Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 
@@ -109,11 +113,12 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	// THUNDER Controller
-	@Override
-	public Page<Product> myThunderList(Search search, Pageable pageable) {
+	public Page<Product> myThunderList(Search search, Pageable pageable, Member member) {
 		BooleanBuilder builder = new BooleanBuilder();
 		
 		QProduct qProduct = QProduct.product;
+		QSales qsales = QSales.sales;
+		
 		if (search.getSearchCondition().equals("TITLE")) {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
@@ -124,9 +129,20 @@ public class ProductServiceImpl implements ProductService {
 		builder.and(qProduct.display.eq(Display.Y));
 		builder.and(qProduct.delevery.eq(YorN.Y));
 		
+		JPAQuery<?> subQuery = new JPAQuery<Void>()
+				.from(qsales).where(qsales.thunderId.isNull().and(qsales.pNo.pNo.eq(qProduct.pNo)));
+		builder.and(subQuery.exists());
+		
+		
 		return productRepo.findAll(builder, pageable);
 	}
-
+	
+	public void thunderDelivery(Long productPno, Member member) {
+		Sales thunderSales = saleseRepo.findByProductPNo(productPno);
+		thunderSales.setThunderId(member.getId());
+		System.out.println("thunderSales :"+thunderSales.toString());
+		saleseRepo.save(thunderSales);
+	}
 	
 
 	public Auction getAuctionMaxPrice(Product product) {

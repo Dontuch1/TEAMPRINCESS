@@ -147,25 +147,6 @@ input#bid[type='number'] {
 															<small>입찰은 최대 3번까지 가능합니다.</small>
 														</form>
 													</div>
-<<<<<<< HEAD
-													
-						                            <button class="btn btn-outline-dark flex-shrink-0" th:if="${product.auction.toString() == 'N'}" type="button" onclick="buyBtn()">
-						                                <span style="font-size: 15px; padding: 0px;">🛒</span>
-						                            </button>
-						                            
-					                            </div>
-		                       				</div>
-		                       			<form id="buyForm" th:action="@{/product/buyProduct}" method="post">
-		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
-		                       				<input th:value="${currentUser.id}" name="id" type="hidden">
-		                       			</form>
-			                        </div>
-		                        </div>
-		                        
-		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
-		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="box" onclick="thunder()">
-=======
->>>>>>> branch 'main' of https://github.com/Dontuch1/TeamPrincess.git
 												</div>
 
 												<button class="btn btn-outline-dark flex-shrink-0"
