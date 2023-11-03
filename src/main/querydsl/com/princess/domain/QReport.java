@@ -22,8 +22,6 @@ public class QReport extends EntityPathBase<Report> {
 
     public static final QReport report = new QReport("report");
 
-    public final NumberPath<Long> battery = createNumber("battery", Long.class);
-
     public final NumberPath<Long> postNo = createNumber("postNo", Long.class);
 
     public final DatePath<java.util.Date> regdate = createDate("regdate", java.util.Date.class);
@@ -33,6 +31,8 @@ public class QReport extends EntityPathBase<Report> {
     public final QMember rptId;
 
     public final NumberPath<Long> rptNo = createNumber("rptNo", Long.class);
+
+    public final EnumPath<CheckCondition.Display> submit = createEnum("submit", CheckCondition.Display.class);
 
     public final EnumPath<CheckCondition.Type> type = createEnum("type", CheckCondition.Type.class);
 

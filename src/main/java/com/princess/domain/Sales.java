@@ -3,8 +3,6 @@ package com.princess.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,8 +12,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-
-import com.princess.domain.CheckCondition.YorN;
 
 import lombok.Data;
 import lombok.ToString;
@@ -38,10 +34,6 @@ public class Sales {
 	private Product pNo;
 	
 	private String thunderId;
-	
-	@Enumerated(EnumType.STRING)
-	@ColumnDefault("'N'")
-	private YorN rated;
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("SYSDATE")

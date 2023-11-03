@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Top navigation-->
+
 <th:block th:fragment="header">
 	<nav class="navbar navbar-expand-lg navbar-light border-bottom"
 		style="width: 1200px; background-color: transparent;">
@@ -16,9 +17,9 @@
 						aria-expanded="false">일반/경매</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/product/getProductList?type=prod">일반
+							<a class="dropdown-item" href="/product/getProductList?type=prod">🏺 일반
 								상품</a> <a class="dropdown-item"
-								href="/product/getProductList?type=auc">경매 상품</a>
+								href="/product/getProductList?type=auc">🙋 경매 상품</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
@@ -35,18 +36,35 @@
 								href="/board/getBoardList?type=tmi">🔉 알려드려요</a> <a
 								class="dropdown-item" href="/board/getBoardList?type=qna">❓
 								&nbsp;궁금해요</a> <a class="dropdown-item"
-								href="/board/getBoardList?type=meet">🙋‍♀️ 우리만나요</a>
+								href="/board/getBoardList?type=meet">🏕 우리만나요</a>
 						</div></li>
 
 
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+					<li class="nav-item dropdown">
+					
+					<a th:if="${currentUser.auth.toString() == 'MEMBER'}" class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">천둥맨</a>
+						aria-expanded="false" onclick="modalOpen()">천둥맨</a>
+					<a th:unless="${currentUser.auth.toString() == 'MEMBER'}" class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">천둥맨</a>	
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#!">천둥맨 전환</a> <a
-								class="dropdown-item" href="/thunder/myThunderList">📤 대기중인
+							
+						<!-- thunder modal -->
+							<div id="modalContainer" class="hidden">
+								<div id="modalContent">
+									<h2 class="center" style="margin:20px 0px 20px 0px"> ⚡천둥맨이 아니시군요!</h2>
+									<p style="margin-bottom:30px"> 배터리 잔량이 🔋60% 이상인 회원만 천둥맨으로 전환이 가능합니다. 당신도 천둥맨이 될 수 있어요!!</p>
+									<div class="center">
+										<button type="button" data-toggle="modal" data-target="#login" style="padding:20px 40px; margin-right:10px">🌠 천둥맨 되어보기</button>
+										<button type="button" data-toggle="modal" onclick="modalClose()" style="padding:20px 40px">👦 일반인으로 살기</button>
+									</div>
+								</div>
+							</div>
+						<!-- thunder modal end -->
+							
+							<a class="dropdown-item" href="/thunder/myThunderList">📤 대기중인
 								상품보기</a><a class="dropdown-item" href="/thunder/standByList">📦
 								내 배달 내역</a>
 						</div></li>
@@ -140,9 +158,13 @@
 		</div>
 	</nav>
 	<!-- Css -->
-	<link
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 		rel="stylesheet">
+	<link th:href="@{/css/standByList.css}" rel="stylesheet">	
 	<link th:href="@{/css/main.css}" rel="stylesheet">
 	<link th:href="@{/css/product.css}" rel="stylesheet">
 	<!-- Bootstrap core JS-->
@@ -167,6 +189,17 @@
 		}
 		blink();
 		setInterval(blink, 500);
+		
+		
+		function modalOpen() { // modal창 열기
+		    const modal = document.getElementById('modalContainer');
+		    modal.classList.remove('hidden');
+		}
+		
+		function modalClose() { // modal창 닫기
+		    const modal = document.getElementById('modalContainer');
+		    modal.classList.add('hidden');
+		}
 	</script>
 </th:block>
 </html>

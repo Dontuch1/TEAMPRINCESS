@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Type;
 
 import lombok.Data;
@@ -40,7 +41,9 @@ public class Report {
 	
 	private String rptCon;
 	
-	private Long battery;
+	@Enumerated(EnumType.STRING)
+	@ColumnDefault("'H'")
+	private Display submit;
 	
 	@Temporal(TemporalType.DATE)
 	@ColumnDefault("SYSDATE")

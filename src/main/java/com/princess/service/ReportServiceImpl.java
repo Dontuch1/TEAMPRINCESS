@@ -5,10 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Report;
-import com.princess.domain.Search;
 import com.princess.persistence.ReportRepository;
-import com.querydsl.core.BooleanBuilder;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -40,14 +39,14 @@ public class ReportServiceImpl implements ReportService {
     }
     
     @Override
-    public Page<Report> getReportList( Search search,Pageable pageable) {
-    	BooleanBuilder builder = new BooleanBuilder();
-         return reportRepository.findAll(builder,pageable);
+    public Page<Report> getReportList(Pageable pageable, Display submit) {
+
+         return reportRepository.findBySubmit(pageable,submit);
      }
     
     public void submitReport(Report report) {
         // 배터리를 5씩 감소
-        report.setBattery(report.getBattery() - 5);
-        reportRepository.save(report);
+//        report.setBattery(report.getBattery() - 5);
+//        reportRepository.save(report);
     }
 }

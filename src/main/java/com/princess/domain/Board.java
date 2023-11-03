@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,6 +47,7 @@ public class Board {
 	@Column(nullable = false)
 	private String content;
 	
+	@Column(length = 1000)
 	private String photoPath;
 	
 	private Long great;

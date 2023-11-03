@@ -2,6 +2,7 @@ package com.princess.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -129,16 +130,14 @@ public class ProductServiceImpl implements ProductService {
 	
 
 	public Auction getAuctionMaxPrice(Product product) {
-		if (auctionRepo.findBypNoOrderByAuctionNoDesc(product).isEmpty()) {
-			System.out.println("empty");
+		if (auctionRepo.findBypNo(product.getPNo()).isEmpty()) {
 			return null;
 		} else
-			System.out.println("nnot empty");
-			return auctionRepo.findBypNoOrderByAuctionNoDesc(product).get(0);
+			return auctionRepo.findBypNo(product.getPNo()).get(0);
 	}
 
 	public List<Auction> getAuctionList(Product product) {
-		return auctionRepo.findBypNoOrderByAuctionNoDesc(product);
+			return auctionRepo.findBypNo(product.getPNo());
 	}
 
 	public void buyProduct(Product product, String buyer) {
@@ -176,7 +175,17 @@ public class ProductServiceImpl implements ProductService {
 		return memberRepo.findById(member.getId()).get();
 	}
 	
-	public List<Auction> getBidList(Member member) {
-		return auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member);
+	public List<Auction> getBidList(Member member, Product product) {
+		List<Auction> list = new ArrayList<Auction>();
+		if(auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member).isEmpty()) {
+			list.add(new Auction());
+		} else {
+			for (Auction auc : auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member)) {
+				if(auc.getPNo().getPNo() == product.getPNo()) {
+				list.add(auc);
+				}
+			}
+		}
+		return list; 
 	}
 }

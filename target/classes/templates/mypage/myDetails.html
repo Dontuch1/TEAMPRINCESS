@@ -2,7 +2,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
-
 </head>
 <body>
 	<div class="d-flex" id="wrapper">
@@ -12,7 +11,7 @@
 				<div th:insert="~{fragment/header :: header}"></div>
 				<!-- Page content-->
 				<div class="container-fluid">
-				<h4 class="mt-4">ℹ️ 회원정보 수정</h4>
+				<h4 class="mt-4" style="font-family:VT323 ">ℹ️ 회원정보 수정</h4>
 				<br>
 					
 					<form th:action="@{/mypage/updateDetails}" method="post"

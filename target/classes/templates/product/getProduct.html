@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>🥕당근나라 번개공주</title>
 <style>
-#navbarDropdown{
-	cursor:pointer;
+#navbarDropdown {
+	cursor: pointer;
 }
 /* Chrome, Safari, Edge, Opera */
 input#bid::-webkit-outer-spin-button, input#bid::-webkit-inner-spin-button
@@ -18,6 +18,7 @@ input#bid::-webkit-outer-spin-button, input#bid::-webkit-inner-spin-button
 input#bid[type='number'] {
 	-moz-appearance: textfield;
 }
+
 .box {
 	width: 100%;
 	border: 4px #eee solid;
@@ -26,6 +27,7 @@ input#bid[type='number'] {
 	padding: 5px;
 	transition: 0.2s;
 }
+
 .box:hover {
 	transform: scale(1.05);
 	transition: 0.3s;
@@ -40,103 +42,156 @@ input#bid[type='number'] {
 			<div class="container-fluid">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 				<section class="py-5" style="width: 1200px;">
-		            <div class="container px-4 px-lg-5 my-5">
-		                <div class="row gx-4 gx-lg-5 align-items-center">
-		                <div class="small mb-1" th:switch="${product.pCategory.toString()}">
-		                <span th:text="${product.auction.toString() == 'N'} ? '&nbsp;일반 ' : '&nbsp;경매 '" style="font-weight: bold; border-left: 4px solid #eee"></span>
-						    <span th:case="DIGI">디지털/가전</span>
-						    <span th:case="FURN">가구</span>
-						    <span th:case="CLOT">의류/잡화</span>
-						    <span th:case="BEAU">뷰티</span>
-						    <span th:case="ETC">기타</span>
-						</div>
-		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
-		                    
-		                    <div class="col-md-6">
-		                        <div class="" th:if="${product.auction.toString() == 'Y'}"><span id="clock" style="color: red; font-weight: bold;"></span></div>
-		                        <h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"th:text="${product.title}"></h2>
-		                        
-		                        <div style="display: flex; margin-bottom: 20px;">
-			                        <table th:cellpadding="0" style="flex-grow: 1;">
-				                        <tr>
-				                        	<td rowspan="2" style="width: 60px;"><img src="/images/prcs-profile.png" alt="..." style="width: 50px;"></td>
-				                        	<td style="vertical-align: bottom">
-					                        	<a  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" style="font-size: 18px; margin-top: 10px;">
-															<span th:text="${product.salesId.nickName}"></span></a>
-					                        		
-						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-														<div class="dropdown-item">
-														<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지 방문</a>
-														</div>
+					<div class="container px-4 px-lg-5 my-5">
+						<div class="row gx-4 gx-lg-5 align-items-center">
+							<div class="small mb-1"
+								th:switch="${product.pCategory.toString()}">
+								<span
+									th:text="${product.auction.toString() == 'N'} ? '&nbsp;일반 ' : '&nbsp;경매 '"
+									style="font-weight: bold; border-left: 4px solid #eee"></span>
+								<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
+								<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
+								<span th:case="ETC">기타</span>
+							</div>
+							<div class="col-md-6" th:align="center">
+								<img class="card-img-top mb-5 mb-md-0"
+									style="max-height: 400px; max-width: 400px; object-fit: contain;"
+									th:src="${product.upload}"
+									onerror="this.src='/images/carrot.png'" alt="...">
+							</div>
+
+							<div class="col-md-6">
+								<div class="" th:if="${product.auction.toString() == 'Y'}">
+									<span id="clock" style="color: red; font-weight: bold;"></span>
+								</div>
+								<h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"
+									th:text="${product.title}"></h2>
+
+								<div style="display: flex; margin-bottom: 20px;">
+									<table th:cellpadding="0" style="flex-grow: 1;">
+										<tr>
+											<td rowspan="2" style="width: 60px;"><img
+												src="/images/prcs-profile.png" alt="..."
+												style="width: 50px;"></td>
+											<td style="vertical-align: bottom"><a
+												id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false"
+												style="font-size: 18px; margin-top: 10px;"> <span
+													th:text="${product.salesId.nickName}"></span></a>
+
+												<div class="dropdown-menu dropdown-menu-end"
+													aria-labelledby="navbarDropdown">
+													<div class="dropdown-item">
+														<a class="dropdown-item"
+															th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지
+															방문</a>
 													</div>
-					                    
-					                    
-				                        	</td>
-				                        </tr>
-				                        <tr>
-				                        	<td>&nbsp;<label style="font-size: 15px; margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
-				                        </tr>
-			                         </table>
-			                         <div style="flex-grow: 1; height: 80px;">
-			                       		<div th:if="${product.auction.toString() == 'Y'}" th:align="right">
-				                            <div class="small" style="color: #aaa;"> 시작가 <span style="color: #aaa; text-decoration: line-through;" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span></div>
-				                           현재가 <span id="price" style="font-weight: bold;" th:align="center" th:text="${#numbers.formatInteger(auction.auctionPrice, 3, 'COMMA') + '원'}"></span>
-				                        </div>
-				                        <div th:align="right" style="margin-bottom: 5px;"th:if="${product.auction.toString() == 'N'}">
-				                            <span id="price" style="font-weight: bold;" th:align="right" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
-				                        </div>
-				                        <div th:if="${product.sold.toString() == 'N'}">
-					                        <div th:if="${product.salesId.id != currentUser.id}" th:align="right">
-					                        	<button th:align="center" class="btn btn-outline-dark flex-shrink-0" type="button" onclick="like();" style="height: 35px;">
-					                                <img id="like" alt="..." src="/images/empty_heart.png" style="width: 15px;">
-					                            </button>
-						                            <a class="btn btn-outline-dark flex-shrink-0" id="navbarDropdown" href="#"
-															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false"  th:if="${product.auction.toString() == 'Y'}" type="button">
-						                                <span style="font-size: 15px; padding: 0px;">💰</span>
-						                                
-						                            </a>
-						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-														<div class="dropdown-item">
-														<form id="bidForm" th:action="@{/product/bidProduct}" method="post">
-						                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
-						                       				<input th:value="${currentUser.id}" name="id" type="hidden">
-						                       				<input id="bid" name="bid" style="width: 100px; vertical-align: middle;" type="number" min="${auction.auctionPrice}">&nbsp;<a class="btn btn-outline-dark flex-shrink-0" type="button" onclick="bid();">입찰하기</a>
-						                       				<br><small>입찰은 최대 3번까지 가능합니다.</small>
-						                       			</form>
-														</div>
+												</div></td>
+										</tr>
+										<tr>
+											<td>&nbsp;<label
+												style="font-size: 15px; margin-bottom: 10px; color: #aaa;"
+												class="small" th:text="${product.salesId.location}"></label></td>
+										</tr>
+									</table>
+									<div style="flex-grow: 1; height: 80px;">
+										<div th:if="${product.auction.toString() == 'Y'}"
+											th:align="right">
+											<div class="small" style="color: #aaa;">
+												시작가 <span
+													style="color: #aaa; text-decoration: line-through;"
+													th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span>
+											</div>
+											현재가 <span id="price" style="font-weight: bold;"
+												th:align="center"
+												th:text="${#numbers.formatInteger(auction.auctionPrice, 3, 'COMMA') + '원'}"></span>
+										</div>
+										<div th:align="right" style="margin-bottom: 5px;"
+											th:if="${product.auction.toString() == 'N'}">
+											<span id="price" style="font-weight: bold;" th:align="right"
+												th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+										</div>
+										<div th:if="${product.sold.toString() == 'N'}">
+											<div th:if="${product.salesId.id != currentUser.id}"
+												th:align="right">
+												<button th:align="center"
+													class="btn btn-outline-dark flex-shrink-0" type="button"
+													onclick="like();" style="height: 35px;">
+													<img id="like"
+														th:if="${currentUser.id != product.salesId.id}" alt="..."
+														src="/images/empty_heart.png" style="width: 15px;">
+												</button>
+												<a class="btn btn-outline-dark flex-shrink-0"
+													id="navbarDropdown" href="#" role="button"
+													data-bs-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false"
+													th:if="${product.auction.toString() == 'Y'}" type="button"
+													onclick="isCurrBid();"> <span
+													style="font-size: 15px; padding: 0px;">💰</span>
+
+												</a>
+												<div id="dropdown" class="dropdown-menu dropdown-menu-end"
+													aria-labelledby="navbarDropdown"
+													style="-bs-dropdown-link-active-bg: none;">
+													<div class="dropdown-item">
+														<form id="bidForm" th:action="@{/product/bidProduct}"
+															method="post">
+															<input th:value="${product.pNo}" name="pNo" type="hidden">
+															<input th:value="${currentUser.id}" name="id"
+																type="hidden"> <input id="bid" name="bid"
+																style="width: 100px; vertical-align: middle;"
+																type="number" min="${auction.auctionPrice}">&nbsp;<a
+																class="btn btn-outline-dark flex-shrink-0" type="button"
+																onclick="bid();">입찰하기</a> <input type="text"
+																style="display: none"> <br>
+															<small>입찰은 최대 3번까지 가능합니다.</small>
+														</form>
 													</div>
-													
-						                            <button class="btn btn-outline-dark flex-shrink-0" th:if="${product.auction.toString() == 'N'}" type="button" onclick="buyBtn()">
-						                                <span style="font-size: 15px; padding: 0px;">🛒</span>
-						                            </button>
-						                            
-					                            </div>
-		                       				</div>
-		                       			<form id="buyForm" th:action="@{/product/buyProduct}" method="post">
-		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
-		                       				<input th:value="${currentUser.id}" name="id" type="hidden">
-		                       			</form>
-			                        </div>
-		                        </div>
-		                        
-		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: var(--bs-body-font-family);" class="lead" th:text="${product.content}"></pre>
-		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="box" onclick="thunder()">
+												</div>
+
+												<button class="btn btn-outline-dark flex-shrink-0"
+													th:if="${product.auction.toString() == 'N'}" type="button"
+													onclick="buyBtn()">
+													<span style="font-size: 15px; padding: 0px;">🛒</span>
+												</button>
+
+											</div>
+										</div>
+										<form id="buyForm" th:action="@{/product/buyProduct}"
+											method="post">
+											<input th:value="${product.pNo}" name="pNo" type="hidden">
+											<input th:value="${currentUser.id}" name="id" type="hidden">
+										</form>
+									</div>
+								</div>
+
+								<pre
+									style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;"
+									class="lead" th:text="${product.content}"></pre>
+								<div id="thunderBtn"
+									th:if="${product.delevery.toString() == 'Y'}" th:align="center"
+									class="box" onclick="thunder()">
 									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delevery"
 										style="display: none;" type="checkbox" name="delevery"
-										value="1"><br> <small>배달비 1,500원이 추가적으로 차감됩니다.</small>
+										value="1"><br> <small>배달비 1,500원이 추가적으로
+										차감됩니다.</small>
 								</div>
-		                    </div>
-		                </div>
-		            </div>
-		        </section>
+							</div>
+						</div>
+					</div>
+				</section>
 				<br>
 				<hr>
 				<br>
 				<div th:align="center">
-					<a th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
-						onclick="delConfirm();">삭제</a>
+					<a
+						th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
+						style="display: block;" type="button"
+						class="btn btn-outline-dark flex-shrink-0" onclick="delConfirm();">삭제</a>
+					<a
+						th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
+						style="display: block;" type="submit"
+						class="btn btn-outline-dark flex-shrink-0" onclick="delConfirm();">삭제</a>
 					<a type="button" class="btn btn-outline-dark flex-shrink-0"
 						onclick="history.back();">이전</a>
 				</div>
@@ -151,11 +206,11 @@ input#bid[type='number'] {
  * 게시물 삭제
  *=============================================*/
 function delConfirm() {
-	if (confirm("정말 삭제하시겠습니까?")) {
-		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
-	} else {
-		return false;
-	}
+   if (confirm("정말 삭제하시겠습니까?")) {
+      window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+   } else {
+      return false;
+   }
 }
 
 /*=============================================
@@ -164,27 +219,27 @@ function delConfirm() {
 let Target = document.getElementById("clock");
 
 function clock() {
-	if (/*[[${product.auction.toString() == 'Y'}]]*/) {
-		let regdate = new Date(/*[[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]*/).getTime();
-		let aucDuration = /*[[${product.aucDuration}]]*/;
-		let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
-		let currentTime = new Date().getTime();
-	    
-	    let time = parseInt(regdate) + parseInt(aucDuToTime) - parseInt(currentTime);
-	
-	    if (time < 0) {
-	    	Target.innerText = `경매 종료`;
-	    	return
-	    }
-	    
-	    let days = Math.floor(time / (1000 * 60 * 60 * 24));
-	    let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	    let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-	    let seconds = Math.floor((time % (1000 * 60)) / 1000);
-	
-	    Target.innerText = `남은 시간 ${days >= 1 ? days + '일' : ''} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+   if ([[${product.auction.toString() == 'Y'}]]) {
+      let regdate = new Date([[${#dates.format(product.regdate, 'yyyy-MM-dd HH:mm:ss')}]]).getTime();
+      let aucDuration = [[${product.aucDuration}]];
+      let aucDuToTime = aucDuration * 1000 * 60 * 60 * 24;
+      let currentTime = new Date().getTime();
+       
+       let time = parseInt(regdate) + parseInt(aucDuToTime) - parseInt(currentTime);
+   
+       if (time < 0) {
+          Target.innerText = `경매 종료`;
+          return
+       }
+       
+       let days = Math.floor(time / (1000 * 60 * 60 * 24));
+       let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+       let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+       let seconds = Math.floor((time % (1000 * 60)) / 1000);
+   
+       Target.innerText = `남은 시간 ${days >= 1 ? days + '일' : ''} ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 
-	}
+   }
 }
 clock();
 setInterval(clock, 1000); // 1초마다 실행
@@ -202,62 +257,74 @@ function like() {
     }
 }
 /*=============================================
- * 천둥맨 데이터 갖고오기
+ * 마지막 입찰자인지 확인
  *=============================================*/
-
+function isCurrBid() {
+   if ([[${currBid.auctionId != null && currBid.auctionId.id == currentUser.id}]]) {
+      alert('연속으로 입찰할 수 없습니다.');
+      $("#dropdown").remove();
+   }
+}
 
 /*=============================================
  * 구매 버튼
  *=============================================*/
 function buyBtn() {
-	if (confirm("구매하시겠습니까?")) {
-		if ($('#delevery').length) {
-			if(/*[[${product.price + 1500 < currentUser.deposit}]]*/) {
-				console.log('2');
-				$('#thunder').val(1);
-				$('#buyForm').submit();
-			} else {
-				console.log('3');
-				alert('썬더페이 잔액이 부족합니다!');
-				return false;
-			}
-		} else {
-			console.log('4');
-			$('#thunder').val(0);
-			$('#buyForm').submit();
-		}
-	} else {
-		return false;
-	}
+   if (confirm("구매하시겠습니까?")) {
+      if ($('#delevery').length) {
+         if([[${product.price + 1500 < currentUser.deposit}]]) {
+            $('#buyForm').submit();
+         } else {
+            alert('썬더페이 잔액이 부족합니다!');
+            if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+               $('#bid').val('');
+               window.location.href = '/mypage/myDeposit';
+            } else {
+               $('#bid').val('');
+               return false;
+            }
+         }
+      } else {
+         $('#buyForm').submit();
+      }
+   } else {
+      $('#bid').val('');
+      return false;
+   }
 }
 
 /*=============================================
  * 입찰하기
  *=============================================*/
  function bid() {
-	if($('#bid').val() <= /*[[${auction.auctionPrice}]]*/) {
-		alert("입찰가는 현재 경매가보다 높은 가격만 가능합니다!");
-	} else if (/*[[${auctionCnt > 3}]]*/){
-		alert("더이상 입찰할 수 없습니다!");
-	} else {
-		if(confirm('정말 입찰하시겠습니까?')) {
-			if ($('#delevery').length) {
-				if($('#bid').val() + 1500 <= /*[[${currentUser.deposit}]]*/) {
-					$('#bidForm').submit();
-				} else {
-					alert('썬더페이 잔액이 부족합니다!');
-					return false;
-				}
-			} else {
-				if($('#bid').val() <= /*[[${currentUser.deposit}]]*/) {
-					$('#bidForm').submit();
-				} else {
-					alert('썬더페이 잔액이 부족합니다!');
-					return false;
-				}
-			}
-		}
-	}
+   if($('#bid').val() <= [[${auction.auctionPrice}]]) {
+      alert("입찰가는 현재 경매가보다 높은 가격만 가능합니다!");
+   } else if ([[${auctionCnt > 2}]]){
+      alert("더이상 입찰할 수 없습니다!");
+      $('#bid').val('');
+   } else {
+      if(confirm('정말 입찰하시겠습니까?')) {
+         let deposit;
+         if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
+            deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
+         } else {
+            deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];
+         }
+         if($('#bid').val() <= deposit) { // 입찰가 < 잔액
+            $('#bidForm').submit();   
+            return false;
+         } else { // 입찰가 > 잔액
+            alert('썬더페이 잔액이 부족합니다!');
+            if (confirm('썬더페이 충전 페이지로 이동하시겠습니까?')) {
+               $('#bid').val('');
+               window.location.href = '/mypage/myDeposit';
+            } else {
+               $('#bid').val('');
+               return false;
+            }
+         }
+      }
+   }
 }
 </script>
 </html>

@@ -11,41 +11,111 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">신고 게시물</h1>	
-				</div>
-
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-
-
-	<div class="panel panel-default">
-				
-				</div>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-
-							<th>신고번호</th>
-							<th>신고자</th>
-							<th>글 종류</th>
-							<th>신고 내용</th>
-							<th>신고 일자</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="report: ${reportList}">
-							<td class="center" th:text="${report.rptNo}"></td>
-							<td class="left" th:text="${report.rptId.id}"></td>
-							<td class="left" th:text="${report.type}"></td>
-							<td class="left" th:text="${report.rptCon}"></td>
-							<td class="left" th:text="${report.regdate}"></td>
-</tr>
-
-					</tbody>
-				</table>
+				<h1 class="mt-4">신고 게시물</h1>
 			</div>
-				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
-			</div>
-	
 
+			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+			<!-- 상태가 H -->
+			<h4>신고 완료</h4>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>신고번호</th>
+						<th>신고자</th>
+						<th>글 종류</th>
+						<th>신고 내용</th>
+						<th>신고 일자</th>
+						<th>상태</th>
+						<th>상태 변경</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="report: ${reportListH}">
+						<td class="center" th:text="${report.rptNo}"></td>
+						<td class="left" th:text="${report.rptId.id}"></td>
+						<td class="left" th:text="${report.type}"></td>
+						<td class="left" th:text="${report.rptCon}"></td>
+						<td class="left" th:text="${report.regdate}"></td>
+						<td class="left" th:text="${report.submit}"></td>
+						<td><a th:href="@{/admin/reportListY}">신고 완료</a></td>
+						<td><a th:href="@{/admin/reportListN}">신고 반려</a></td>
+
+
+					</tr>
+
+				</tbody>
+			</table>
+			<script>
+				function displayText(reportId) {
+					var textDiv = document.getElementById(reportId);
+					textDiv.style.display = "block";
+				}
+			</script>
+			<!-- 상태가 H끝 -->
+
+
+
+
+			<!-- 상태가 Y -->
+			<h4>신고 완료</h4>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>신고번호</th>
+						<th>신고자</th>
+						<th>글 종류</th>
+						<th>신고 내용</th>
+						<th>신고 일자</th>
+						<th>상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="report: ${reportListY}">
+						<td class="center" th:text="${report.rptNo}"></td>
+						<td class="left" th:text="${report.rptId.id}"></td>
+						<td class="left" th:text="${report.type}"></td>
+						<td class="left" th:text="${report.rptCon}"></td>
+						<td class="left" th:text="${report.regdate}"></td>
+						<td class="left" th:text="${report.submit}"></td>
+
+					</tr>
+
+				</tbody>
+			</table>
+			<!-- 상태가 Y끝 -->
+
+			<!-- 상태가 N -->
+			<h4>신고 반려</h4>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>신고번호</th>
+						<th>신고자</th>
+						<th>글 종류</th>
+						<th>신고 내용</th>
+						<th>신고 일자</th>
+						<th>상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="report: ${reportListN}">
+						<td class="center" th:text="${report.rptNo}"></td>
+						<td class="left" th:text="${report.rptId.id}"></td>
+						<td class="left" th:text="${report.type}"></td>
+						<td class="left" th:text="${report.rptCon}"></td>
+						<td class="left" th:text="${report.regdate}"></td>
+						<td class="left" th:text="${report.submit}"></td>
+
+					</tr>
+
+				</tbody>
+			</table>
+			<!-- 상태가 N끝 -->
+
+
+			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+		</div>
+	</div>
 </body>
 </html>

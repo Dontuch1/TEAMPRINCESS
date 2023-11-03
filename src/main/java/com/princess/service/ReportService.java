@@ -3,8 +3,8 @@ package com.princess.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Report;
-import com.princess.domain.Search;
 
 public interface ReportService {
 
@@ -17,9 +17,7 @@ public interface ReportService {
 	void submitReport(Report report);
 
 	Report getReport(Report report);
-	
-	
 
-	Page<Report> getReportList( Search search, Pageable pageable);
+	Page<Report> getReportList(Pageable pageable, Display submit);
 
 }
