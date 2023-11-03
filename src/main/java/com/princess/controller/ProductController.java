@@ -27,6 +27,7 @@ import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
+import com.princess.domain.Report;
 import com.princess.domain.Search;
 import com.princess.service.ProductService;
 
@@ -36,7 +37,6 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
-
 
 	@RequestMapping("/getProductList")
 	public String getProductList(@RequestParam String type, Model model, Search search,
@@ -111,6 +111,8 @@ public class ProductController {
 		
 		model.addAttribute("isWished", productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
 
+		model.addAttribute("isReported", productService.isReported(securityUser.getMember(), product, Type.PRODUCT));
+		System.out.println("isReproted : " + productService.isReported(securityUser.getMember(), product, Type.PRODUCT));
 		return "product/getProduct";
 	}
 
@@ -201,5 +203,16 @@ public class ProductController {
 			productService.deleteLike(product, Type.PRODUCT, member);
 		}
 		return "redirect:getProduct?pNo=" + product.getPNo();
+	}
+	
+	@GetMapping("/reportProduct")
+	public String reportProduct(Report report, @RequestParam String id) {
+		Member member = new Member();
+		System.out.println("report : " + report);
+		System.out.println("id : " + id);
+		member.setId(id);
+		report.setRptId(member);
+		productService.insertReport(report);
+		return "redirect:getProduct?pNo=" + report.getPostNo();
 	}
 }

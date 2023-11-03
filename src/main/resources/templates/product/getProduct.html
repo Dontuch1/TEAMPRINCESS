@@ -84,7 +84,9 @@ input#bid[type='number'] {
 							    <span th:case="BEAU">뷰티</span>
 							    <span th:case="ETC">기타</span>
 						    </div>
-						    <button class="btn-report" style="margin-left: auto; margin-botton: auto;"><small style="line-height: 35px;">🚨 신고</small></button>
+						    <button class="btn-report" style="margin-left: auto; margin-botton: auto;" onclick="report()">
+						    	<small style="line-height: 35px;">🚨 신고</small>
+						    </button>
 						</div>
 		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
 		                    <div class="col-md-6">
@@ -102,6 +104,7 @@ input#bid[type='number'] {
 															aria-expanded="false" style="font-size: 18px; margin-top: 10px;">
 													<span th:text="${product.salesId.nickName}"></span>
 												</a>
+<<<<<<< HEAD
 						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 														<div class="dropdown-item">
 														<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지 방문</a>
@@ -156,14 +159,60 @@ input#bid[type='number'] {
 		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
 		                       				<input th:value="${currentUser.id}" name="id" type="hidden">
 		                       			</form>
-		                       			<form id="updateForm" th:action="@{/product/updateProduct}" method="post">
-		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
+		                       			<form id="reportForm" th:action="@{/product/reportProduct}" method="get">
+		                       				<input type="hidden" name="id" th:value="${currentUser.id}">
+		                       				<input type="hidden" name="type" value="PRODUCT">
+		                       				<input type="hidden" name="postNo" th:value="${product.pNo}">
+		                       				<input id="reportInput" type="hidden" name="rptCon">
 		                       			</form>
 			                        </div>
 		                        </div>
 		                        
 		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
 		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
+=======
+												<div id="dropdown" class="dropdown-menu dropdown-menu-end"
+													aria-labelledby="navbarDropdown"
+													style="-bs-dropdown-link-active-bg: none;">
+													<div class="dropdown-item">
+														<form id="bidForm" th:action="@{/product/bidProduct}"
+															method="post">
+															<input th:value="${product.pNo}" name="pNo" type="hidden">
+															<input th:value="${currentUser.id}" name="id"
+																type="hidden"> <input id="bid" name="bid"
+																style="width: 100px; vertical-align: middle;"
+																type="number" min="${auction.auctionPrice}">&nbsp;<a
+																class="btn btn-outline-dark flex-shrink-0" type="button"
+																onclick="bid();">입찰하기</a> <input type="text"
+																style="display: none"> <br>
+															<small>입찰은 최대 3번까지 가능합니다.</small>
+														</form>
+													</div>
+												</div>
+
+												<button class="btn btn-outline-dark flex-shrink-0"
+													th:if="${product.auction.toString() == 'N'}" type="button"
+													onclick="buyBtn()">
+													<span style="font-size: 15px; padding: 0px;">🛒</span>
+												</button>
+
+											</div>
+										</div>
+										<form id="buyForm" th:action="@{/product/buyProduct}"
+											method="post">
+											<input th:value="${product.pNo}" name="pNo" type="hidden">
+											<input th:value="${currentUser.id}" name="id" type="hidden">
+										</form>
+									</div>
+								</div>
+
+								<pre
+									style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;"
+									class="lead" th:text="${product.content}"></pre>
+								<div id="thunderBtn"
+									th:if="${product.delevery.toString() == 'Y'}" th:align="center"
+									class="box" onclick="thunder()">
+>>>>>>> refs/heads/ganji
 									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delevery"
 										style="display: none;" type="checkbox" name="delevery"
 										value="1"><br> <small>배달비 1,500원이 추가적으로 차감됩니다.</small>
@@ -201,11 +250,32 @@ input#bid[type='number'] {
 	}
 }
  /*=============================================
-  * 찜버튼
+  * 찜 버튼
   *=============================================*/
   function wish() {
 	 location.href="/product/updateWish?pNo=[[${product.pNo}]]";
  }
+ /*=============================================
+  * 신고 버튼
+  *=============================================*/
+  function report() {
+	 if([[${isReported}]]) {
+		 alert('이미 신고하셨네요?');
+		 return;
+	 } else{
+		 if (confirm("정말 신고하실 건가요?")) {
+			    let promptResult = prompt("사유가 뭘까요?");
+			    if (promptResult == null) {
+			    	return;
+			    } else if (promptResult == "") {
+			    	alert("신고 사유를 입력해주세요.");
+			    } else {
+			    	$('#reportInput').val(promptResult);
+			      	$('#reportForm').submit();
+			    }
+			}
+	 }
+}
 /*=============================================
  * 게시물 삭제
  *=============================================*/

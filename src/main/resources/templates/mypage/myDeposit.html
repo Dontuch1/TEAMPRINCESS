@@ -7,7 +7,6 @@
 	transition: 0.2s;
 	transform: scale(1.2);
 }
-
 </style>
 </head>
 <body th:align="center">
@@ -23,7 +22,7 @@
 				<div class="thunderForm" th:align="center">
 
 					<div
-						style="border: 1px solid #f8f9fa; background-color:f8f9fa; border-radius: 20px; padding-top: 20px; width: 750px;">
+						style="border: 1px solid #f8f9fa; background-color: f8f9fa; border-radius: 20px; padding-top: 20px; width: 750px;">
 						<span
 							style="font-size: large; padding: 10px; border-radius: 10px;">
 							<b th:text="${loginUser.nickName}"></b>님의 보유 썬더: <span
@@ -93,9 +92,15 @@
 
 					</form>
 
-
-
 				</div>
+
+			</div>
+			<div th:align="center">
+				<a type="button" class="btn btn-dark flex-shrink-0"
+					onclick="history.back();">이전</a><br>
+				<br>
+				<br>
+				<br>
 			</div>
 		</div>
 	</div>
