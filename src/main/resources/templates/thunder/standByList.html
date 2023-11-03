@@ -5,13 +5,127 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<!-- 스타일 -->
+ <style>
+h2 {
+	font-weight: border;
+}
+
+.hr1 {
+	border: 0;
+	height: 2px;
+	background: #d3d3d3;
+}
+
+.grey {
+	color: #727272;
+}
+
+#strong {
+	font-weight: 900;
+}
+
+table {
+	width: 100%;
+	border-top: 1px solid #d3d3d3;
+	border-collapse: collapse;
+}
+
+th {
+	background-color: wihte;
+	border-top: 3px solid #727272;
+}
+
+th, td {
+	border-bottom: 1px solid #d3d3d3;
+	padding: 10px;
+}
+
+.greylist {
+	width: 50px;
+	height: 30px;
+	font-weight: 900;
+	color: white;
+	text-align: center;
+	background: grey;
+	border: solid 2px white;
+	border-radius: 5px;
+}
+
+.gradient {
+	width: 80px;
+	height: 30px;
+	font-weight: 900;
+	color: white;
+	text-align: center;
+	background: linear-gradient(to bottom, grey, black);
+	border: solid 2px white;
+	border-radius: 5px;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	float: right;
+}
+
+.center {
+	text-align: center;
+}
+
+a {
+	color: black;
+	text-decoration-line: none;
+}
+
+/* wrapper */
+#wrapper {
+	justify-content: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(1);
+	grid-template-areas: "box2 box2 box2 box2";
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.box {
+	padding: 15px;
+}
+
+.box1 {
+	grid-area: box1
+}
+
+.box2 {
+	grid-area: box2
+}
+
+.flex-right {
+	display: flex;
+	justify-content: right;
+}
+</style>
+
+
 <link th:href="@{/css/main.css}" rel="stylesheet">
 <link th:href="@{/css/standByList.css}" rel="stylesheet">
 </head>
-<body th:align="center">
+
+<!-- 배터리 60 아래인 천둥맨이 들어오면 Qualification() 실행 -->
+<th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery < 60}">
+    <th:block th:if="${isThunderAndLowBattery}">
+		<body th:align="center" onload="Qualification()">
+		<input type="hidden" id="memberId" th:value="${currentUser.id}" />
+	</th:block></th:block>
+<th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery >= 60}">
+    <th:block th:if="${isThunderAndLowBattery}">
+		<body th:align="center">
+	</th:block></th:block>
+<!-- 끝 -->	
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
@@ -24,18 +138,18 @@
 				<div id="wrapper">
 					<div class="box box2">
 
-						<h2>물품 수배 후기</h2>
+						<h2 style="margin:30px 0px 0px 30px;">📦물품 수배 후기</h2>
 
-						<hr class="hr1" noshade>
-
-						<form>
-							<span> ▷ 총 2개의 게시물이 있습니다. </span> <span class="right"> <span
-								class="grey" id="strong">SELECT</span> <select>
-									<option value="제목" name="제목">제목</option>
-									<option value="작성자" name="작성자">작성자</option>
-							</select> <input type="text"> <input type="button" name="검색"
-								class="gradient" value="검색">
-							</span>
+						<form th:action="@{/thunder/standByList}" method="get">
+							<div class="input-group mb-3 right w-25">
+								<select class="form-select flex-right " aria-label="Default" name="searchCondition">
+										  <option value="TITLE">제목</option>
+										  <option value="CONTENT">내용</option>
+											  <option value="NICKNAME">닉네임</option>
+								</select>
+							    <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
+							    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+							</div>
 						</form>
 
 						<br>
@@ -82,13 +196,30 @@
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JS-->
-<!-- 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+</body>	
+<script type="text/javascript">
+function Qualification() {
+    console.log("hi");
+	
+	 let replyData = {
+		"memberId" : $('#memberId').val()
+	 };
+	
+	$.ajax({
+       type: "POST",
+       url: "/thunder/myThunderQualification",
+       data: JSON.stringify(replyData),
+       contentType: "application/json",
+       success: function(response) {
+       	   alert("배터리가 부족하여 천둥맨자격이 박탈됩니다.");
+       	   location.href='http://localhost:8081/product/getProductList?type=prod';
+       },
+       error: function(error) {
+           alert("thunder 임 ㅋㅋ");
+       }
+   });
+	
+}
+</script>
 
-	<!--  JS  -->
-	<script type="text/javascript">
-
-	</script>
-</body>
 </html>

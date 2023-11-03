@@ -6,87 +6,114 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <!-- 스타일 -->
  <style>
-h2 { font-weight: border; }
-.hr1 { border: 0;
-height: 2px;
-background:  #d3d3d3;}
-    .grey { 
-     color: #727272;}
-     #strong { font-weight: 900;}
+h2 {
+	font-weight: border;
+}
 
-            table {
-            width: 100%;
-            border-top: 1px solid #d3d3d3;
-            border-collapse: collapse;
-            }
-            th { background-color: wihte ; 
-            border-top: 3px solid #727272;
-            }
-            th, td {
-            border-bottom: 1px solid #d3d3d3;
-            padding: 10px;
-            }
+.hr1 {
+	border: 0;
+	height: 2px;
+	background: #d3d3d3;
+}
 
-  .greylist {
-  width: 50px;
-  height: 30px;
-  font-weight: 900;
-  color: white;
-  text-align: center;
-  background: grey;
-  border: solid 2px white;
-  border-radius: 5px;
-  }
-  .gradient {
-  width: 80px;
-  height: 30px;
-  font-weight: 900;
-  color: white;
-  text-align: center;
-  background: linear-gradient( to bottom, grey, black );
-  border: solid 2px white;
-  border-radius: 5px;
-  }
+.grey {
+	color: #727272;
+}
 
-  .left {text-align: left;}
-  .right {  float: right;}
-  .center { text-align: center;}
+#strong {
+	font-weight: 900;
+}
 
-	a {color:black;
-	text-decoration-line : none;}
+table {
+	width: 100%;
+	border-top: 1px solid #d3d3d3;
+	border-collapse: collapse;
+}
+
+th {
+	background-color: wihte;
+	border-top: 3px solid #727272;
+}
+
+th, td {
+	border-bottom: 1px solid #d3d3d3;
+	padding: 10px;
+}
+
+.greylist {
+	width: 50px;
+	height: 30px;
+	font-weight: 900;
+	color: white;
+	text-align: center;
+	background: grey;
+	border: solid 2px white;
+	border-radius: 5px;
+}
+
+.gradient {
+	width: 80px;
+	height: 30px;
+	font-weight: 900;
+	color: white;
+	text-align: center;
+	background: linear-gradient(to bottom, grey, black);
+	border: solid 2px white;
+	border-radius: 5px;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	float: right;
+}
+
+.center {
+	text-align: center;
+}
+
+a {
+	color: black;
+	text-decoration-line: none;
+}
 
 /* wrapper */
-	#wrapper{
-		justify-content: center;
-		width:100%;
-		display:grid;
-		grid-template-columns:repeat(4, 1fr);
-		grid-template-rows:repeat(1);
-		grid-template-areas:
-			"box2 box2 box2 box2";
-		margin: 0px auto;
-		padding: 0px;	
-	}
-	.box{
-		padding:15px;
-	}
-	.box1{
-		grid-area:box1
-	}
-	.box2{
-		grid-area:box2
-	}
-	.flex-right{
-		display: flex;
-		justify-content: right;
-	}
-    </style>
+#wrapper {
+	justify-content: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(1);
+	grid-template-areas: "box2 box2 box2 box2";
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.box {
+	padding: 15px;
+}
+
+.box1 {
+	grid-area: box1
+}
+
+.box2 {
+	grid-area: box2
+}
+
+.flex-right {
+	display: flex;
+	justify-content: right;
+}
+</style>
     
 <link th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
 
-<!-- Qualification() 마무리되면 실행 -->
+<!-- 배터리 60 아래인 천둥맨이 들어오면 Qualification() 실행 -->
 <th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery < 60}">
     <th:block th:if="${isThunderAndLowBattery}">
 		<body th:align="center" onload="Qualification()">
@@ -105,23 +132,29 @@ background:  #d3d3d3;}
 					<div class="box box2">	
 							
 							    <h2 style="margin:30px 0px 0px 30px;"> 📤물품 수배서 </h2> 
-						
-						<form th:action="@{/thunder/myThunderList}">
+							    
+						<!-- 체크박스 테스트 -->	    
+
+						<!--  	    
+						<input type="checkbox" class="btn-check" id="danger-outlined" checked autocomplete="off">
+						<label class="btn btn-outline-primary link-danger" for="danger-outlined"><img alt="no images" src="/images/red-heart.png" /></label><br>
+						-->
+						<!-- 체크박스 테스트 -->
+
+						<form th:action="@{/thunder/myThunderList}" method="get">
 							<div class="input-group mb-3 right w-25">
 								<select class="form-select flex-right " aria-label="Default" name="searchCondition">
-									  <option value="제목">제목</option>
-									  <option value="내용">내용</option>
-									  <option value="닉네임">닉네임</option>
+										  <option value="TITLE">제목</option>
+										  <option value="CONTENT">내용</option>
+											  <option value="NICKNAME">닉네임</option>
 								</select>
-								  <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyboard">
-								  <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+							    <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
+							    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
 							</div>
-						</form>	
+						</form>
 
 					<br>
 					<input type="hidden" id="memberId" th:value="${currentUser.id}" />
-					
-					<p th:text="${currentUser.id}"></p>
 				<table>
 				    <tr>
 				        <th class="center">No.</th>
@@ -130,6 +163,7 @@ background:  #d3d3d3;}
 				        <th class="center">order</th>
 				        <th class="center">price</th>
 				        <th class="center">date</th>
+				        <th class="center">thunder</th>
 				    </tr>											
 				    <tr th:each="thunder, state : ${thunderList1}">
 				        <td class="center" th:text="${state.count}"></td>
@@ -137,7 +171,19 @@ background:  #d3d3d3;}
 				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.salesId.nickName}" th:href="@{/mypage/myPageMain(id=${thunder.salesId.id})}"></a></td>
  				        <td class="center" th:text="${thunder.pNo}"></td>
 				        <td class="center" th:text="${thunder.price}"></td>
-				        <td class="center" th:text="${thunder.regdate}"></td> 
+				        <td class="center" th:text="${#dates.format(thunder.regdate, 'yyyy.MM.dd')}"></td> 
+				        <th:block th:if="${currentUser.id} == ${thunder.salesId.id}">
+				        <td class="center">
+				        	<button type="button" class="btn btn-danger"
+				        	id="thunderDelivery" th:value="${thunder.pNo}" disabled>⛔잠 김</button>
+				        </td>
+				        </th:block>
+				        <th:block th:if="${currentUser.id} != ${thunder.salesId.id}">
+				        <td class="center">
+				        	<button type="button" class="btn btn-outline-warning link-dark"
+				        	id="thunderDelivery" th:value="${thunder.pNo}" onclick='thunderDelivery(this)'>다녀오기1</button>
+				        </td>
+				        </th:block>
 				    </tr>
 				</table>
 				
@@ -169,10 +215,45 @@ function Qualification() {
        	   location.href='http://localhost:8081/product/getProductList?type=prod';
        },
        error: function(error) {
-           alert("thunder 임 ㅋㅋ");
+           alert("문제가 생겼어요!");
        }
-   });
-	
+   });	
 }
+
+function thunderDelivery(ele) {
+	let thunder = ele.value;
+	console.log(thunder);
+	
+	let thunderData = {
+		"thunder" : thunder,
+		"id" : $('#memberId').val	()
+	};
+	
+	if (confirm("이곳으로 물건을 전송하는 것이 확실한가요?")) {
+		console.log("전송");
+		$.ajax({
+			type: "POST",
+			url: "/thunder/thunderDelivery",
+			data: JSON.stringify(thunderData),
+			contentType: "application/json",
+			success: function(response) {
+				alert("천둥맨님 신속! 정확! 전송 부탁드려요!");
+				document.location.reload();
+			},
+			error: function(error) {
+				alert("천둥맨 배정에 문제가 생겼어요.");
+			}
+		});
+	} else {
+		console.log("취소");
+		alert("좀 더 나은 전송지를 찾으셨나요?");
+		}
+	}	
+	
+	
+	
+	
+
 </script>
+
 </html>
