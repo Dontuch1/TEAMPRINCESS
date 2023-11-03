@@ -7,8 +7,7 @@
 	width: 50px;
 }
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link
 	href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
 	rel="stylesheet">
@@ -22,8 +21,8 @@
 			<!-- Page content-->
 			<div class="container-fluid">
 				<h4 class="mt-4">
-					🏠 <span th:text="${currentUser.nickName}" style="font-weight: bold"></span>님의
-					마이페이지
+					🏠 <span th:text="${currentUser.nickName}"
+						style="font-weight: bold"></span>님의 마이페이지
 				</h4>
 
 				<div id="mypage-main-view">
@@ -37,34 +36,34 @@
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;">battery:
 									<span
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;"
-									th:text="${userPage.battery}"></span>%
+									th:text="${currentUser.battery}"></span>%
 								</span>
-								<div th:if="${userPage.battery >= 0 and userPage.battery <= 20}">
+								<div th:if="${currentUser.battery >= 0 and currentUser.battery <= 20}">
 									<!-- 0~20 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_red.png">
 								</div>
 								<div
-									th:if="${userPage.battery >= 21 and userPage.battery <= 40}">
+									th:if="${currentUser.battery >= 21 and currentUser.battery <= 40}">
 									<!-- 21~40 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_orange.png">
 								</div>
 								<div
-									th:if="${userPage.battery >= 41 and userPage.battery <= 60}">
+									th:if="${currentUser.battery >= 41 and currentUser.battery <= 60}">
 									<!-- 41~60 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_yellow.png">
 								</div>
 								<div
-									th:if="${userPage.battery >= 61 and userPage.battery <= 80}">
+									th:if="${currentUser.battery >= 61 and currentUser.battery <= 80}">
 
 									<!-- 61~80 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_green.png">
 								</div>
 								<div
-									th:if="${userPage.battery >= 81 and userPage.battery <= 100}">
+									th:if="${currentUser.battery >= 81 and currentUser.battery <= 100}">
 									<!-- 81~100 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_mini"
 										src="/images/battery_blue.png">
@@ -74,7 +73,7 @@
 							<br>
 							<h5>
 								<a style="text-decoration: none; color: #333;"
-									th:href="@{/mypage/myReviewList(id=${userPage.id})}">🎭 거래
+									th:href="@{/mypage/myReviewList(id=${currentUser.id})}">🎭 거래
 									후기 </a>
 							</h5>
 							<table class="table">
@@ -82,7 +81,7 @@
 									<tr>
 										<th style="width: 20px;">No.</th>
 										<th>Review</th>
-										<th style="width: 80px;">Date</th>
+										<th style="width: 120px;">Date</th>
 										<th style="width: 20px;">Review</th>
 									</tr>
 								</thead>
@@ -92,7 +91,8 @@
 									</tr>
 
 									<tr th:each="review, iterStat: ${reviewList}"
-										th:if="${iterStat.index < 3}">
+										th:if="${iterStat.index < 3}"
+										style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 										<td th:text="${iterStat.count}">
 										<td th:text="${review.content}">
 										<td th:text="${review.regdate}">
@@ -101,7 +101,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<!-- 받은 리뷰 -->
+							<!-- 받은 리뷰 끝 -->
 
 						</div>
 						<!-- 배터리 끝 -->
@@ -113,7 +113,7 @@
 							<h5>
 								<a
 									style="text-decoration: none; color: #333; font-weight: bolder;"
-									th:href="@{/mypage/myProductList(id=${userPage.id})}"> 🛍️
+									th:href="@{/mypage/myProductList(id=${currentUser.id})}"> 🛍️
 									최근 업로드한 상품</a>
 							</h5>
 							<div></div>
@@ -164,17 +164,18 @@
 					<div>
 						<h5>
 							<a style="text-decoration: none; color: #333;"
-								th:href="@{/mypage/myPostList(id=${userPage.id})}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📜 최근 게시글</a>
+								th:href="@{/mypage/myPostList(id=${currentUser.id})}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								📜 최근 게시글</a>
 						</h5>
 						<table class="table" style="width: 1100px;" th:align="center">
 							<thead>
 								<tr>
 									<th width="40px">&nbsp;No.</th>
-									<th width="150px">Category</th>
+									<th width="200px">Category</th>
 									<th width="150px">Writer</th>
 									<th>Title</th>
-									<th width="50px">Like</th>
-									<th style="width: 120px;">Date</th>
+									<th width="100px">Like</th>
+									<th style="width: 150px;">Date</th>
 								</tr>
 							</thead>
 							<tbody>

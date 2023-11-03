@@ -33,7 +33,6 @@ public class MyPageController {
 			@PageableDefault(page = 0, size = 10, sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		member.setId(id);
-		model.addAttribute("userPage", myService.getMember(member));
 		model.addAttribute("boardList", myService.getBoardList(pageable, member));
 		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
 		model.addAttribute("productList", myService.getProductList(pageable, member));
@@ -41,9 +40,9 @@ public class MyPageController {
 
 	@GetMapping("/myDetails")
 	public void myDetails(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
+
 		member.setId(securityUser.getUsername());
 		model.addAttribute("loginUser", myService.getMember(member));
-		System.out.println("마페컨트롤러/마이서비스" + myService.getMember(member).toString());
 	}
 
 	@PostMapping("/updateDetails")
@@ -65,7 +64,6 @@ public class MyPageController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("userPage", myService.getMember(member));
 	}
 
 	@GetMapping("/myProductList")
@@ -77,7 +75,6 @@ public class MyPageController {
 		int startPage = Math.max(nowPage - 4, 1);
 		int endPage = Math.min(nowPage + 5, productList.getTotalPages());
 
-		model.addAttribute("userPage", myService.getMember(member));
 		model.addAttribute("productList", productList);
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
@@ -109,31 +106,30 @@ public class MyPageController {
 
 	@GetMapping("/myWishList")
 	public void myWishList(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
-		System.out.println("/myWishList에서 매개변수로 넘어온 멤버 //" + member.toString());
+
 		member.setId(securityUser.getUsername());
-		System.out.println("/myWishList에서 setId한 멤버 //" + member.toString());
 		model.addAttribute("wishList", myService.getLikeWishList(member));
 
 	}
 
 	@GetMapping("/myBuyList")
 	public void myBuyList(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
+
 		member.setId(securityUser.getUsername());
-		System.out.println("/myBuyList에서 setId한 멤버 //" + member.toString());
 		model.addAttribute("buyList", myService.getBuyList(member));
 
 	}
 
 	@GetMapping("/myDeposit")
 	public void myDeposit(Model model, Member member, @AuthenticationPrincipal SecurityUser securityUser) {
+
 		member.setId(securityUser.getUsername());
 		model.addAttribute("loginUser", myService.getMember(member));
-		System.out.println("myDeposit 컨트롤러 : " + myService.getMember(member));
 	}
 
 	@PostMapping("/updateDeposit")
 	public String updateDeposit(Member member) {
-		System.out.println("updateDeposit 컨트롤러 : " + member.toString());
+
 		myService.updateDeposit(member);
 		return "redirect:myDeposit";
 	}
@@ -147,9 +143,8 @@ public class MyPageController {
 		Member mem = new Member();
 		mem.setId(receiver);
 		review.setReceiver(mem);
-		System.out.println(mem.toString());
 		mem = myService.getMember(mem);
-		System.out.println(mem.toString());
+
 		if (rating.equals("UP")) {
 			review.setReview(Rating.UP);
 			// 배터리 올리기
