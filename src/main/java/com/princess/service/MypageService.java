@@ -40,5 +40,10 @@ public interface MypageService {
 	// 리뷰 등록
 	void insertReview(Review review, Product product);
 
+	// 배터리 변경
+	void updateBattery(Member member);
+
+	// 보낸 리뷰
+	Page<Review> getSentReviewList(Pageable pageable, String sender);
 		
 }

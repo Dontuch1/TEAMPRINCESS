@@ -11,26 +11,15 @@
 <link th:href="@{/css/main.css}" rel="stylesheet">
 <link th:href="@{/css/standByList.css}" rel="stylesheet">
 </head>
-<body th:align="center" onload="#modalOpenbutton">
+<body th:align="center">
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 <h1 style="font-size:12rem">⚡</h1>---------------->
 
-				<button class="buttondisp" id="modalOpenButton">모달창 열기</button>
-
-				<div id="modalContainer" class="hidden">
-					<div id="modalContent">
-						<h2 class="center" style="margin:20px 0px 20px 0px"> ⚡천둥맨이 아니시군요!</h2>
-						<p style="margin-bottom:30px"> 배터리 잔량이 🔋60% 이상인 회원만 천둥맨으로 전환이 가능합니다. </p>
-						<div class="center">
-							<button type="button" data-toggle="modal" data-target="#login" style="padding:20px 40px; margin-right:10px">천둥맨 되어보기</button>
-							<button type="button" data-toggle="modal" onclick="history.back()" style="padding:20px 40px">일반인으로 살기</button>
-						</div>
-					</div>
-				</div>
+				
 
 				<div id="wrapper">
 					<div class="box box2">
@@ -99,22 +88,7 @@
 
 	<!--  JS  -->
 	<script type="text/javascript">
-	window.onload = function(){
-		modal.classList.remove('hidden');
-	}
-	 
-	const modalOpenButton = document.getElementById('modalOpenButton');
-	const modalCloseButton = document.getElementById('modalCloseButton');
-	const modal = document.getElementById('modalContainer');
 
-	modalOpenButton.addEventListener('click', () => {
-	  modal.classList.remove('hidden');
-	});
-
-	modalCloseButton.addEventListener('click', () => {
-	  modal.classList.add('hidden');
-	});
-		
 	</script>
 </body>
 </html>

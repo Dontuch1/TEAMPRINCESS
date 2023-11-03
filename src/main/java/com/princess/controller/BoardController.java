@@ -35,7 +35,7 @@ public class BoardController {
 	@RequestMapping("/getBoardList")
 	public String getBoardList (@RequestParam String type, Model model, Search search,
 			@PageableDefault(page = 0, size = 10, sort = "postNum", direction = Sort.Direction.DESC) Pageable pageable) {
-		System.out.println("getBoardList1 : " + type);
+		System.out.println("getBoardList : " + type);
 		if(search.getSearchCondition()==null) {
 			search.setSearchCondition("TITLE");
 		} 
@@ -112,8 +112,23 @@ public class BoardController {
 	}
 	
 	@GetMapping("/deleteBoard")
-	public void deleteBoard() {
-		
+	public String deleteBoard(Board board) {
+		String type = board.getCmCategory().toString();
+		boardservice.deleteBoard(board);
+		System.out.println("type : "+type);
+		if(type=="NOTICE") {
+			return "redirect:getBoardList?type=notice";
+		} else if(type=="LOST") {
+			return "redirect:getBoardList?type=lost";
+		} else if(type=="FOOD") {
+			return "redirect:getBoardList?type=food";
+		} else if(type=="TMI") {
+			return "redirect:getBoardList?type=tmi";
+		} else if(type=="QNA") {
+			return "redirect:getBoardList?type=qna";
+		} else {
+			return "redirect:getBoardList?type=meet";
+		}
 	}
 	
 	@GetMapping("/updateBoard")

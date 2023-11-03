@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Member;
+import com.princess.domain.CheckCondition.Role;
 import com.princess.persistence.MemberRepository;
 
 @Service
@@ -39,5 +40,18 @@ public class MemberServiceImpl implements MemberService {
 	public Member getMember(Member member) {
 		return memberRepo.findById(member.getId()).get();
 	}
-
+	
+	public void deleteThunder(Member member) {
+		Member findmember = memberRepo.findById(member.getId()).get();
+		System.out.println("findmember : "+findmember.toString());
+		findmember.setAuth(Role.MEMBER);
+		memberRepo.save(findmember);
+	}
+	
+	public void updateThunder(Member member) {
+		Member findmember = memberRepo.findById(member.getId()).get();
+		System.out.println("findmember : "+findmember.toString());
+		findmember.setAuth(Role.THUNDER);
+		memberRepo.save(findmember);
+	}
 }

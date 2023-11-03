@@ -20,4 +20,10 @@ public interface ReportService {
 
 	Page<Report> getReportList(Pageable pageable, Display submit);
 
+	void changeReportStatus(Long rptNo, String type);
+
+	
+
+	
+
 }

@@ -71,6 +71,17 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role auth;
 	
+	// 배터리 0~100 제한
+	public void setBattery(int battery) {
+        if (battery >= 0 && battery <= 100) {
+            this.battery = battery;
+        } else if(battery<0){
+        	this.battery = 0;
+        }else if(battery>100){
+        	this.battery = 100;
+        }
+    }
+	
 	// 연관관계 설정
 	
 	@OneToMany(mappedBy = "salesId") // Product
@@ -96,5 +107,7 @@ public class Member {
 	
 	@OneToMany(mappedBy = "userId") // Reply
 	private List<Reply> replyList = new ArrayList<Reply>();
+	
+	
 	
 }

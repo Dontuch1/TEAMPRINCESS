@@ -38,20 +38,18 @@
 						<td class="left" th:text="${report.rptCon}"></td>
 						<td class="left" th:text="${report.regdate}"></td>
 						<td class="left" th:text="${report.submit}"></td>
-						<td><a th:href="@{/admin/reportListY}">신고 완료</a></td>
-						<td><a th:href="@{/admin/reportListN}">신고 반려</a></td>
-
+						<td><a
+							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=Y)}">신고
+								완료</a></td>
+						<td><a
+							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=N)}">신고
+								반려</a></td>
 
 					</tr>
 
 				</tbody>
 			</table>
-			<script>
-				function displayText(reportId) {
-					var textDiv = document.getElementById(reportId);
-					textDiv.style.display = "block";
-				}
-			</script>
+
 			<!-- 상태가 H끝 -->
 
 
@@ -68,6 +66,7 @@
 						<th>신고 내용</th>
 						<th>신고 일자</th>
 						<th>상태</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -96,6 +95,7 @@
 						<th>신고 내용</th>
 						<th>신고 일자</th>
 						<th>상태</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>

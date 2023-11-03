@@ -8,7 +8,7 @@
 	justify-content: space-around;
 }
 
-.box {
+.inputbox {
 	width: 100%;
 	border: 4px #eee solid;
 	border-radius: 20px;
@@ -16,7 +16,7 @@
 	padding: 5px;
 	transition: 0.2s;
 }
-.box:hover {
+.inputbox:hover {
 	transform: scale(1.05);
 	transition: 0.3s;
 }
@@ -54,7 +54,8 @@ input#price[type='number'] {
 							<div>
 								<div class="row gx-4 gx-lg-5 align-items-center">
 									<input type="file" onchange='readURL(this);' name="file"
-										id="file" style="display: none;" accept="image/*" /> <input
+										id="file" style="display: none;" accept="image/*" />
+									<input
 										type="hidden" name="salesId.id"
 										th:value="${#authentication.principal.username}" />
 									<div th:align="center" class="col-md-6">
@@ -67,7 +68,7 @@ input#price[type='number'] {
 									<table class="col-md-6" style="padding-bottom: 20px;">
 										<tr>
 											<td>제목&nbsp;</td>
-											<td><input class="box" type="text" name="title" id="title" onchange="titleChange();"/></td>
+											<td><input class="inputbox" type="text" name="title" id="title" onchange="titleChange();"/></td>
 										</tr>
 										<tr>
 											<td>카테고리</td>
@@ -82,7 +83,7 @@ input#price[type='number'] {
 										</tr>
 										<tr>
 											<td rowspan="2">가격</td>
-											<td><input id="price" class="box" type="number"
+											<td><input id="price" class="inputbox" type="number"
 												name="strPrice" min="1000" required="required" onchange="priceChange();"/>
 										</tr>
 										<tr>
@@ -98,7 +99,7 @@ input#price[type='number'] {
 										</tr>
 										<tr>
 											<td>내용</td>
-											<td><textarea class="box" name="content"
+											<td><textarea class="inputbox" name="content"
 													style="resize: none; width: 100%;" rows="10"></textarea></td>
 										</tr>
 										<tr>
@@ -106,7 +107,7 @@ input#price[type='number'] {
 												style="font-weight: strong; font-size: 15px; color: #eee"></span></td>
 											<td style="text-align: center; margin-top: 10px;">
 											<div
-												id="thunderBtn" class="box" onclick="thunder()">
+												id="thunderBtn" class="inputbox" onclick="thunder()">
 												<b>⚡ 도와줘요 천둥맨! ⚡</b> <input id="delevery"
 													style="display: none;" type="checkbox" name="delevery"
 													th:align="center" value="Y"><br> <small

@@ -1,0 +1,238 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>🥕당근나라 번개공주</title>
+<style type="text/css">
+.align {
+	display: flex;
+	justify-content: space-around;
+}
+
+.inputbox {
+	width: 100%;
+	border: 4px #eee solid;
+	border-radius: 20px;
+	margin: 10px 5px;
+	padding: 5px 5px 5px -10px;
+	transition: 0.2s;
+}
+.inputbox:hover {
+	transform: scale(1.05);
+	transition: 0.3s;
+}
+/* Chrome, Safari, Edge, Opera */
+input#price::-webkit-outer-spin-button, input#price::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox  */
+input#price[type='number'] {
+	-moz-appearance: textfield;
+}
+
+#imgShow, #thunderBtn{
+	cursor:pointer;
+}
+
+
+</style>
+</head>
+<body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<th:block th:replace="~{fragment/header :: header}"></th:block>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+				<section class="py-5">
+					<form class="" id="productForm"
+						th:action="@{/product/updateProduct}" method="post"
+						enctype="multipart/form-data">
+						<div class="container px-4 px-lg-5 my-5">
+							<div>
+								<div class="row gx-4 gx-lg-5 align-items-center">
+								<input type="hidden" id="pNo" name="pNo" th:value="${product.pNo}"/>
+								<input type="file" onchange='readURL(this);' name="file"
+										id="file" style="display: none;" accept="image/*" />
+									<input
+										type="hidden" name="salesId.id"
+										th:value="${#authentication.principal.username}" />
+									<div th:align="center" class="col-md-6">
+										<img style="width: 25em;" class="card-img-top mb-5 mb-md-0" id="imgShow" th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."
+											onclick="imgclick();">
+									</div>
+									<table class="col-md-6" style="padding-bottom: 20px;">
+										<tr>
+											<td>제목&nbsp;</td>
+											<td><input class="inputbox" type="text" name="title" id="title" th:value="${product.title}" onchange="titleChange();"/></td>
+										</tr>
+										<tr>
+											<td>카테고리</td>
+											<td style="display: flex; justify-content: space-around;">
+												<label><input type="radio" name="pCategory"
+													value="DIGI"> 디지털/가전</label> <label><input
+													type="radio" name="pCategory" value="FURN" th:checked="${product.pCategory.toString() == 'FURN'}"> 가구</label> <label><input
+													type="radio" name="pCategory" value="CLOT" th:checked="${product.pCategory.toString() == 'CLOT'}"> 의류/잡화</label> <label><input
+													type="radio" name="pCategory" value="BEAU" th:checked="${product.pCategory.toString() == 'BEAU'}"> 뷰티</label> <label><input
+													type="radio" name="pCategory" value="ETC" th:checked="${product.pCategory.toString() == 'ETC'}"> 기타</label>
+											</td>
+										</tr>
+										<tr>
+											<td rowspan="2">가격</td>
+											<td><input id="price" class="inputbox" type="number"
+												name="strPrice" min="1000" required="required" onchange="priceChange();" th:value="${product.price}"/>
+										</tr>
+										<tr>
+											<td th:align="center" style="padding-bottom: 10px;"><span id="warn" style=" font-weight: small; color: #bbb">가격은 최소 3000원부터 가능합니다.</span></td>
+										</tr>
+										<tr id="auc">
+											<td>종류</td>
+											<td	style="display: flex; justify-content: space-around;">
+												<label><input type="radio" name="" value="N" onclick="prodSelect(this);" th:checked="${product.auction.toString() == 'N'}" disabled> 중고</label>
+												<label><input id="auctionRadio" type="radio" name="" value="Y" onclick='auctionSelect(this);' th:checked="${product.auction.toString() == 'Y'}" disabled> 경매</label>
+												<input type="hidden" name="auction" value="" onclick="prodSelect(this);" th:attr="value=${product.auction.toString() == 'N' ? 'N' : 'Y'}">
+											</td>
+										</tr>
+										<tr>
+											<td>내용</td>
+											<td><textarea class="inputbox" name="content"
+													style="resize: none; width: 100%;" rows="10" th:text="${product.content}"></textarea></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="text-align: center; margin-top: 10px;">
+												<div th:attr="style=${product.delevery.toString() == 'Y' ? 'background-color: #eee;' : 'background-color: transparent;'}"
+													id="thunderBtn" class="inputbox" onclick="thunder()">
+													<b>⚡ 도와줘요 천둥맨! ⚡</b>
+													<input id="delevery"
+														style="display: none;" type="text" name="delevery"
+														th:value="${product.delevery.toString()}">
+													<br>
+													<small th:align="center">천둥맨 이용시 배달비 1,500원이 차감됩니다.</small>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="container" th:align="center">
+					<a class="btn btn-outline-dark flex-shrink-0" type="submit"
+						onclick="formsubmit();">등록</a>&nbsp;&nbsp;<a
+						class="btn btn-outline-dark flex-shrink-0" type="button"
+						onclick="history.back();">취소</a>
+					<div style="height: 30px;"></div>
+					<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+				</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	/*=============================================
+	 * 폼 제출
+	 *=============================================*/
+	function formsubmit() {
+		if ($("#title").val() == "") {
+			$("#title").attr('style', 'border-color: #ed4b4b');
+			return false;
+		}
+		if ($("#imgShow").attr('src') == '/images/upload.png') {
+			$("#imgShow").attr('src', '/images/noupload_text.png');
+			return false;
+		}
+		if ($("#price").val() >= 3000) {
+			$("#productForm").submit();
+		}
+		else {
+			$("#warn").css('color', '#ed4b4b');
+			$("#price").attr('style', 'border-color: #ed4b4b');
+			return false;
+		} 
+
+	}
+	/*=============================================
+	 * 제목 변동
+	 *=============================================*/
+	function titleChange() {
+			$("#title").attr('style', 'border-color: #eee');
+	}
+	/*=============================================
+	 * 가격 변동
+	 *=============================================*/
+	function priceChange() {
+			$("#price").attr('style', 'border-color: #eee');
+			$("#warn").css('color', '#bbb');
+	}
+	/*=============================================
+	 * 이미지 등록 이미지 클릭
+	 *=============================================*/
+	function imgclick() {
+		$("#file").click();
+	}
+	/*=============================================
+	 * 이미지 미리보기
+	 *=============================================*/
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				document.getElementById('imgShow').src = e.target.result;
+			};
+			reader.readAsDataURL(input.files[0]);
+			$("#content").val("");
+		}
+	}
+	/*=============================================
+	 * 천둥맨 버튼
+	 *=============================================*/
+	function thunder() {
+		let thunder = $("#delevery");
+	    if (thunder.val() == 'N') {
+	        $("#thunderBtn").attr('style', 'background-color: #eee');
+	        thunder.val('Y');
+	    } else {
+	        $("#thunderBtn").attr('style', 'background-color: transparent');
+	        thunder.val('N');
+	    }
+	}
+	/*=============================================
+	 * 경매 버튼 및 하위 항목 출력
+	 *=============================================*/
+	function auctionSelect(checkbox) {
+		 var addedTagExists = $('#auctionTag').length > 0;
+		 console.log(addedTagExists);
+		if (checkbox.checked && !addedTagExists == true) {
+			addAuctionTag();
+		}
+	}
+	
+	function prodSelect(checkbox) {
+		 var addedTagExists = $('#auctionTag').length > 0;
+		 console.log(addedTagExists);
+		if (checkbox.checked && addedTagExists == true) {
+			removeAuctionTag();
+		}
+	}
+
+	function addAuctionTag() {
+	    let auctionTag = document.createElement('tr');
+	    auctionTag.id = 'auctionTag';
+	    auctionTag.innerHTML = "<td></td><td style='text-align: center; border-right: 3px dotted #efefef;'>경매 기간 <input class='inputbox' style='width: 15%; text-align: center; border: #eee 1px solid' type='number' name='aucDuration' value='1' min='1' max='3'><small style='color: #aaa;'>(경매 기간은 최대 3일입니다.)</small></td>";
+	    var referenceElement = document.getElementById('auc');
+	    referenceElement.parentNode.insertBefore(auctionTag, referenceElement.nextSibling);
+	}
+
+	function removeAuctionTag() {
+		// 경매 버튼이 해제되었을 때 실행될 동작
+		let auctionTag = document.getElementById('auctionTag');
+		if (auctionTag) {
+			auctionTag.remove(); // 태그를 제거합니다.
+		}
+	}
+</script>
+</html>

@@ -67,10 +67,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</div>
 							<div th:align="center">
 									<th:block th:if="${board.photoPath} == null">
-										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:300px; margin-top:50px;">
+										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:250px; margin:50px;">
 									</th:block>
 									<th:block th:if="${board.photoPath} != null">
-										<img th:src="@{${board.photoPath}}" alt="사진 출력에 오류가 있습니다."  style="width:500px;">
+										<img th:src="@{${board.photoPath}}" alt="사진 출력에 오류가 있습니다."  style="width:600px;">
 									</th:block>
 								</div>
 							<br><br>
@@ -84,7 +84,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				  		<!-- 댓글 작성 폼 -->	
 						<form id="replyForm">
 							<div th:align="center">
-								
 							 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
 							 	<input type="hidden" id="memberId" th:value="${#authentication.principal.username}" />
 							   	
@@ -102,7 +101,12 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.nickName}"></td>
 							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
 							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
-							        <td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
+						    	<th:block th:if="${#authentication.principal.username} == ${reply.userId.id}">
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
+						    	</th:block>
+							    <th:block th:if="${#authentication.principal.username} != ${reply.userId.id}">
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply">신고</button></td>
+						    	</th:block>
 							    </tr>
 							</table>
 							
@@ -119,9 +123,17 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 						</div>
 
 			<div th:align="center">		
-			<a style="margin:5px" th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary">새 게시글</button></a>
-			<button type="button" class="btn btn-outline-secondary" style="margin:20px" onclick="history.back()">글 목록</button>
-			<a sec:authorize = "hasAuthority('ROLE_ADMIN')" th:href="@{/board/deleteBoard(postNum=${board.postNum})}">글삭제</a>
+			<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px">새 게시글</button></a>
+			<button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px" onclick="history.back()">글 목록</button>
+			<th:block th:if="${#authentication.principal.username} == ${board.userId.id}">
+				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px" class="btn btn-outline-secondary">글삭제</a>
+			</th:block>
+			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN'">
+				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary">글삭제</a>
+			</th:block>
+			
+			
+			
 			</div>
 			<br><br><br>		
 	</div>	
@@ -133,6 +145,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	</div>
 </body>
 <script type="text/javascript">
+
+//=======================================
+//==  댓글 삭제
+//=======================================
+
 function deleteReply(ele){	
 	console.log(ele);
 	console.log("value="+ele.value);
@@ -156,6 +173,9 @@ function deleteReply(ele){
         }
     });
 }
+//=======================================
+//==  댓글 작성
+//=======================================
 
 let boardId = $('#boardId').val();
 console.log(boardId);
@@ -186,9 +206,6 @@ $(document).ready(function() {
         });
 	});
 });
-
-//=======================================
-
 
 </script>
 </html>

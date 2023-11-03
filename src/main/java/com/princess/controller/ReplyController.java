@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.princess.domain.Board;
 import com.princess.domain.Member;
 import com.princess.domain.Reply;
-import com.princess.service.BoardService;
 import com.princess.service.ReplyService;
 
 @RestController
@@ -23,8 +22,6 @@ public class ReplyController {
 	@Autowired
     private ReplyService replyService;
 	
-	@Autowired
-	private BoardService boardService;
 	
 	
 	

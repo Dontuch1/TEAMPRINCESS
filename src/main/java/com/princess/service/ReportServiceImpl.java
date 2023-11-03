@@ -12,41 +12,51 @@ import com.princess.persistence.ReportRepository;
 @Service
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ReportRepository reportRepository;
-    
-    
-   
-    
-    @Override
-    public void insertReport(Report report) {
-        reportRepository.save(report);
-    }
+	@Autowired
+	private ReportRepository reportRepository;
 
-    @Override
-    public void updateReport(Report report) {
-        reportRepository.save(report);
-    }
+	@Override
+	public void insertReport(Report report) {
+		reportRepository.save(report);
+	}
 
-    @Override
-    public void deleteReport(Report report) {
-        reportRepository.deleteById(report.getRptNo());
-    }
+	@Override
+	public void updateReport(Report report) {
+		reportRepository.save(report);
+	}
 
-    @Override
-    public Report getReport(Report report) {
-        return reportRepository.findById(report.getRptNo()).orElse(null);
-    }
-    
-    @Override
-    public Page<Report> getReportList(Pageable pageable, Display submit) {
+	@Override
+	public void deleteReport(Report report) {
+		reportRepository.deleteById(report.getRptNo());
+	}
 
-         return reportRepository.findBySubmit(pageable,submit);
-     }
-    
-    public void submitReport(Report report) {
-        // 배터리를 5씩 감소
+	@Override
+	public Report getReport(Report report) {
+		return reportRepository.findById(report.getRptNo()).orElse(null);
+	}
+
+	@Override
+	public Page<Report> getReportList(Pageable pageable, Display submit) {
+
+		return reportRepository.findBySubmit(pageable, submit);
+	}
+
+	public void submitReport(Report report) {
+		// 배터리를 5씩 감소
 //        report.setBattery(report.getBattery() - 5);
 //        reportRepository.save(report);
-    }
+	}
+
+	@Override
+	public void changeReportStatus(Long rptNo, String type) {
+		Report report = new Report();
+		report = reportRepository.findById(rptNo).get();
+		if(type.equals("Y")) {
+			report.setSubmit(Display.Y);
+		} else {
+			report.setSubmit(Display.N);
+		}
+		reportRepository.save(report);		
+	}
+
 }

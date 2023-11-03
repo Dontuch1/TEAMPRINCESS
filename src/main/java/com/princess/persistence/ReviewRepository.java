@@ -14,4 +14,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long>{
 
 	int countBypNoAndSenderAndReceiver(Product product, String sender, Member member);
 
+	Page<Review> findBySender(String sender, Pageable pageable);
+
 }

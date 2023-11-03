@@ -93,6 +93,13 @@ public class MypageServiceImpl implements MypageService {
 		return reviewRepo.findByReceiver(member, pageable);
 	}
 
+	// 내가 보낸 후기
+	@Override
+	public Page<Review> getSentReviewList(Pageable pageable, String sender) {
+
+		return reviewRepo.findBySender(sender, pageable);
+	}
+
 	// 찜 목록
 	@Override
 	public List<Product> getLikeWishList(Member member) {
@@ -109,7 +116,7 @@ public class MypageServiceImpl implements MypageService {
 	public Map<Product, String[]> getBuyList(Member member) {
 		List<Sales> sales = salesRepo.findByBuyer(member);
 		// List<Product> buyList = new ArrayList<Product>();
-		System.out.println("sales : "+sales.toString());
+		System.out.println("sales : " + sales.toString());
 		Map<Product, String[]> buyList = new LinkedHashMap<Product, String[]>();
 		String thun = "";
 		String tra = "";
@@ -117,47 +124,36 @@ public class MypageServiceImpl implements MypageService {
 
 		for (Sales sale : sales) {
 			int thunder = 1;
-			if (sale.getThunderId()!=null) {// 썬더맨 이용 상품
-				receiver.setId(sale.getThunderId()); 
+			if (sale.getThunderId() != null) {// 썬더맨 이용 상품
+				receiver.setId(sale.getThunderId());
 				thunder = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(), receiver);
-				System.out.println("for문 안에 있는 thunder : "+thunder);
-				if(thunder==0) { // 썬더맨 이용상품 + 썬더맨 후기를 작성안했을때
+				if (thunder == 0) { // 썬더맨 이용상품 + 썬더맨 후기를 작성안했을때
 					thun = sale.getThunderId();
-				}else {
+				} else {
 					thun = "";
 				}
-			} 
-			
+			}
 			int trade = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(),
 					sale.getPNo().getSalesId());
-			
-			if (trade == 0) {
-				tra = sale.getPNo().getSalesId().getId();	
-			}else {
+			if (trade == 0)
+				tra = sale.getPNo().getSalesId().getId();
+			else
 				tra = "";
-			}
-				
-			System.out.println("sale: "+sale.toString());
-			System.out.println(" tra : "+tra);
-			System.out.println(" thun : "+thun);
-
 			String[] str = { thun, tra };
 			buyList.put(productRepo.findById(sale.getPNo().getPNo()).get(), str);
-
 		}
-
 		return buyList;
 	}
 
 	// 리뷰 등록
 	@Override
 	public void insertReview(Review review, Product product) {
-		product = productRepo.findById(product.getPNo()).get();
-
-		System.out.println("서비스"+review.toString());
-		System.out.println("getReceiver : " + review.getReceiver());
-		
 		reviewRepo.save(review);
 	}
 
+	// 배터리 수정
+	public void updateBattery(Member member) {
+		memberRepo.save(member);
+
+	}
 }

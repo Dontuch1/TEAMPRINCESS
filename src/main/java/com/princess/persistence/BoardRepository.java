@@ -16,9 +16,4 @@ public interface BoardRepository extends CrudRepository<Board, Long>, QuerydslPr
 	@Query("SELECT b FROM Board b")
 	Page<Board> getBoardList(Pageable pageable);
 
-
-
-
-	
-
 }

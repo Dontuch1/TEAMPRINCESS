@@ -49,7 +49,6 @@ public class AdminController {
 		model.addAttribute("memberList", memberService.getMemberList(member));
 	}
 
-	
 	@GetMapping("/getReportList")
 	public void getReportList(Model model,
 			@PageableDefault(page = 0, size = 10, sort = "rptNo", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -60,10 +59,13 @@ public class AdminController {
 		model.addAttribute("reportListH", reportListH);
 		model.addAttribute("reportListY", reportListY);
 		model.addAttribute("reportListN", reportListN);
-		
-		
 	}
-	  
+
+	@GetMapping("/changeStatus")
+	public String changeStatus( Long rptNo,String	type ) {
+		reportService.changeReportStatus(rptNo, type);
+		return "redirect:getReportList";
+	}
 
 	// 로그아웃
 	@RequestMapping("/logout")
