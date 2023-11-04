@@ -68,7 +68,7 @@ public class Product {
 	
 	@Enumerated(EnumType.STRING)
 	@ColumnDefault("'N'")
-	private YorN delevery;
+	private YorN delivery;
 	
 	@Enumerated(EnumType.STRING)
 	@ColumnDefault("'Y'")

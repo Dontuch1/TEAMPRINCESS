@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 		findProduct.setContent(product.getContent());
 		findProduct.setPrice(product.getPrice());
 		findProduct.setUpload(product.getUpload());
-		findProduct.setDelevery(product.getDelevery());
+		findProduct.setDelivery(product.getDelivery());
 		productRepo.save(findProduct);
 	}
 
@@ -128,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
 		}
 		builder.and(qProduct.display.eq(Display.Y));
-		builder.and(qProduct.delevery.eq(YorN.Y));
+		builder.and(qProduct.delivery.eq(YorN.Y));
 		
 		return productRepo.findAll(builder, pageable);
 	}
@@ -212,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
 		findProduct.setTitle(product.getTitle());
 		findProduct.setContent(product.getContent());
 		findProduct.setPrice(product.getPrice());
-		findProduct.setDelevery(product.getDelevery());
+		findProduct.setDelivery(product.getDelivery());
 		productRepo.save(findProduct);
 	}
 	

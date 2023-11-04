@@ -84,7 +84,7 @@ input#bid[type='number'] {
 							    <span th:case="BEAU">뷰티</span>
 							    <span th:case="ETC">기타</span>
 						    </div>
-						    <button class="btn-report" style="margin-left: auto; margin-botton: auto;"><small style="line-height: 35px;">🚨 신고</small></button>
+						    <button class="btn-report" style="margin-left: auto; margin-bottom: auto;"><small style="line-height: 35px;">🚨 신고</small></button>
 						</div>
 		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
 		                    <div class="col-md-6">
@@ -163,9 +163,9 @@ input#bid[type='number'] {
 		                        </div>
 		                        
 		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
-		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
-									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delevery"
-										style="display: none;" type="checkbox" name="delevery"
+		                        <div id="thunderBtn" th:if="${product.delivery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
+									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delivery"
+										style="display: none;" type="checkbox" name="delivery"
 										value="1"><br> <small>배달비 1,500원이 추가적으로 차감됩니다.</small>
 								</div>
 		                    </div>
@@ -211,7 +211,7 @@ input#bid[type='number'] {
  *=============================================*/
 function delConfirm() {
 	if (confirm("정말 삭제하시겠습니까?")) {
-		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+		window.location.href = '/product/deliteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
 	} else {
 		return false;
 	}
@@ -263,7 +263,7 @@ function isCurrBid() {
 function buyBtn() {
 	if (confirm("구매하시겠습니까?")) {
 		let deposit;
-		if ($('#delevery').length) { // 내 잔액이 가격보다 클까?
+		if ($('#delivery').length) { // 내 잔액이 가격보다 클까?
 			deposit = [[${currentUser.deposit - product.price - 1500}]];
 		} else {
 			deposit = [[${currentUser.deposit - product.price}]];
@@ -295,7 +295,7 @@ function buyBtn() {
 	} else {
 		if(confirm('정말 입찰하시겠습니까?')) {
 			let deposit;
-			if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
+			if ($('#delivery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
 				deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
 			} else {
 				deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];

@@ -30,7 +30,7 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath content = createString("content");
 
-    public final EnumPath<CheckCondition.YorN> delevery = createEnum("delevery", CheckCondition.YorN.class);
+    public final EnumPath<CheckCondition.YorN> delivery = createEnum("delivery", CheckCondition.YorN.class);
 
     public final EnumPath<CheckCondition.Display> display = createEnum("display", CheckCondition.Display.class);
 

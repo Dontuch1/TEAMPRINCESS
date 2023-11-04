@@ -81,9 +81,9 @@ public class MypageServiceImpl implements MypageService {
 
 	// 내가 올린 상품 리스트
 	@Override
-	public Page<Product> getProductList(Pageable pageable, Member member) {
+	public List<Product> getProductList(Member member) {
 
-		return productRepo.findBySalesId(member, pageable);
+		return productRepo.findBySalesId(member);
 	}
 
 	// 내가 받은 후기
@@ -155,4 +155,16 @@ public class MypageServiceImpl implements MypageService {
 		memberRepo.save(member);
 
 	}
+
+	// 썬더 아이디
+	public String thunderId(Product product) {
+		Sales sales=salesRepo.findBypNo(product);
+		if(sales != null && sales.getThunderId() != null) {
+			return sales.getThunderId();
+		}else {
+			return "";
+		}
+	
+	}
+
 }

@@ -1,5 +1,8 @@
 package com.princess.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.princess.config.SecurityUser;
 import com.princess.domain.Board;
 import com.princess.domain.CheckCondition.Rating;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Review;
@@ -35,7 +39,7 @@ public class MyPageController {
 		member.setId(id);
 		model.addAttribute("boardList", myService.getBoardList(pageable, member));
 		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
-		model.addAttribute("productList", myService.getProductList(pageable, member));
+		model.addAttribute("productList", myService.getProductList(member));
 	}
 
 	@GetMapping("/myDetails")
@@ -67,18 +71,40 @@ public class MyPageController {
 	}
 
 	@GetMapping("/myProductList")
-	public void myProductList(Model model, @RequestParam(name = "id") String id, Product product, Member member,
-			@PageableDefault(page = 0, size = 8, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
+	public void myProductList(Model model, @RequestParam(name = "id") String id, Product product, Member member) {
 		member.setId(id);
-		Page<Product> productList = myService.getProductList(pageable, member);
-		int nowPage = productList.getPageable().getPageNumber() + 1;
-		int startPage = Math.max(nowPage - 4, 1);
-		int endPage = Math.min(nowPage + 5, productList.getTotalPages());
+		List<Product> productList = myService.getProductList(member);
 
-		model.addAttribute("productList", productList);
-		model.addAttribute("nowPage", nowPage);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+		List<Product> soldProduct = new ArrayList<Product>();
+		List<Product> ingProduct = new ArrayList<Product>();
+		List<Product> standByProduct = new ArrayList<Product>();
+		String thunderId = "";
+		for (Product pro : productList) {
+			if (pro.getDelivery().equals(YorN.Y)) {
+				if (pro.getSold().equals(YorN.N)) {
+					ingProduct.add(pro);
+				} else {
+					thunderId = myService.thunderId(pro);
+					if (thunderId.isEmpty()) {
+						standByProduct.add(pro);
+					} else {
+						soldProduct.add(pro);
+					}
+				}
+			} else {
+				if (pro.getSold().equals(YorN.Y)) {
+					soldProduct.add(pro);
+				} else {
+					ingProduct.add(pro);
+				}
+			}
+
+		}
+		model.addAttribute("ingProduct", ingProduct);
+		model.addAttribute("standByProduct", standByProduct);
+		model.addAttribute("soldProduct", soldProduct);
+		model.addAttribute("thunderId", thunderId);
+
 	}
 
 	@GetMapping("/myReviewList")

@@ -2,6 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
+<style type="text/css">
+</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -10,81 +12,125 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				
-				<h4 class="mt-4">
-					🧥 <span style="font-weight: bold" th:text="${currentUser.nickName}"></span>님의
-					판매물폼
-				</h4>
-				<br>
-				<div id="mypage-product-list">
 
-					<div class="card" th:each="product: ${productList}"
-						style="width: 250px; margin-bottom: 20px;">
-						<a href="#">
-							<div class="card-img-square">
-								<a th:href="@{/product/getProduct(pNo=${product.pNo})}"><img
-									th:src="@{${product.upload}}" class="card-img-top" alt="..."
-									onerror="this.src='https://buly.kr/9BSKdMj'"
-									style="width: 100%; height: 100%; object-fit: cover;"></a>
-							</div>
-							<div class="card-body" style="width: 250px;">
-								<div
-									style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 5px;">
-									<span class="card-text" style="font-size: small;"
-										th:switch="${product.pCategory.toString()}"> <span
-										th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span> <span
-										th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span> <span
-										th:case="ETC">기타</span>
-									</span> <br>
-									<p class="card-title"
-										style="font-size: 12pt; font-weight: bold;"
-										th:text="${product.title}"></p>
-									<span class="card-text"
-										th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">원</span>
-									<br> <small class="card-text"
-										th:text="${#dates.format(product.regdate, 'yyyy-MM-dd (hh:mm)')}"></small><br>
-								</div>
-								<div th:align="center"
-									th:if="${product.auction.toString() == 'N'}">
-									<a th:if="${product.sold.toString() == 'N'}"
-										class="btn btn-outline-primary">판매중</a> <a
-										th:if="${product.sold.toString() == 'Y'}"
-										class="btn btn-outline-secondary">거래완료</a>
-								</div>
-								<div th:align="center"
-									th:if="${product.auction.toString() == 'Y'}">
-									<a th:if="${product.sold.toString() == 'N'}"
-										class="btn btn-outline-primary">경매중</a> <a
-										th:if="${product.sold.toString() == 'Y'}"
-										class="btn btn-outline-secondary">경매기간종료</a>
+				<h4 class="mt-4">
+					🧥 <span style="font-weight: bold"
+						th:text="${currentUser.nickName}"></span>님의 판매물폼
+				</h4>
+				<br> <br>
+
+
+				<div
+					style="display: grid; grid-template-columns: 1fr 1fr 1fr; justify-items: center;">
+					<div th:align="center">
+						<p style="font-size: 16pt; font-weight: bolder">판매중인 상품</p>
+					</div>
+					<div th:align="center">
+						<p style="font-size: 16pt; font-weight: bolder">천둥맨 대기중</p>
+					</div>
+					<div th:align="center">
+						<p style="font-size: 16pt; font-weight: bolder">판매완료된 상품</p>
+					</div>
+					<!-- 1번 캐러셀 -->
+					<div id="carouselExampleCaptions"
+						class="carousel slide pointer-event carousel-fade"
+						style="width: 350px; height: 400px; padding: 10px;">
+
+						<div class="carousel-inner" th:align="center">
+							<div class="carousel-item"
+								th:each="product, iterStat: ${ingProduct}"
+								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+								<img alt="No Image" th:src="@{${product.upload}}"
+									style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="carousel-caption d-none d-md-block">
+									<h5
+										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
+										th:text="${product.title}"></h5>
+									<a class="btn btn-dark"
+										th:href="@{/product/getProduct(pNo=${product.pNo})}">판매중</a>
 								</div>
 							</div>
-						</a>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
 					</div>
 
+					<!-- 2번 캐러셀 -->
+					<div id="carouselExampleCaptions2"
+						class="carousel slide pointer-event carousel-fade"
+						style="width: 350px; height: 400px; padding: 10px;">
+
+						<div class="carousel-inner">
+							<div class="carousel-item"
+								th:each="product, iterStat: ${standByProduct}"
+								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+								<img alt="No Image" th:src="@{${product.upload}}"
+									style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="carousel-caption d-none d-md-block">
+									<h5
+										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
+										th:text="${product.title}"></h5>
+									<a class="btn btn-dark"
+										th:href="@{/product/getProduct(pNo=${product.pNo})}">대기중</a>
+								</div>
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+
+					<!-- 3번 캐러셀 -->
+					<div id="carouselExampleCaptions3"
+						class="carousel slide pointer-event"
+						style="width: 350px; height: 400px; padding: 10px;">
+
+						<div class="carousel-inner">
+							<div class="carousel-item"
+								th:each="product, iterStat: ${soldProduct}"
+								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+								<img alt="No Image" th:src="@{${product.upload}}"
+									style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="carousel-caption d-none d-md-block">
+									<h5
+										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
+										th:text="${product.title}"></h5>
+									<a class="btn btn-dark"
+										th:href="@{/product/getProduct(pNo=${product.pNo})}">판매완료</a>
+								</div>
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+
+
 				</div>
-				<hr>
-<!-- 				<th:block th:align="center"
-					th:each="page : ${#numbers.sequence(startPage, endPage)}">
-					<a th:if="${page != nowPage}"
-						th:href="@{/mypage/myProductList(id=${#authentication.principal.username}, page=${page - 1})}"
-						th:text="${page}"> </a>
 
-					<strong th:if="${page == nowPage}" th:text="${page}"
-						style="color: red"></strong>
-				</th:block> -->
 
-				<nav>
-					<ul class="pagination">
-						<li th:each="page : ${#numbers.sequence(startPage, endPage)}" class="page-item">
-						<a th:if="${page != nowPage}" class="page-link" th:href="@{/mypage/myProductList(id=${#authentication.principal.username}, page=${page - 1})}"
-							th:text="${page}"></a>
-						<strong class="page-link" th:if="${page == nowPage}" th:text="${page}" style="font-weight:bolder;"></strong>	
-						</li>
-
-					</ul>
-				</nav>
-				<br> <br> <br> <br> <br> <br>
 
 			</div>
 		</div>
