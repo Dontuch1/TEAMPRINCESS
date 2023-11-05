@@ -22,6 +22,7 @@ import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.service.MemberService;
 import com.princess.service.ProductService;
+import com.princess.service.ThunderService;
 
 @Controller
 @RequestMapping("/thunder")
@@ -32,6 +33,9 @@ public class ThunderController {
 	
 	@Autowired
 	private MemberService memberService; 
+	
+	@Autowired
+	private ThunderService thunderservice;
 	
 	@RequestMapping("/myThunderList")
 	public String myThunderList(@AuthenticationPrincipal SecurityUser securityUser, Model model, Search search, Member member,
@@ -49,7 +53,7 @@ public class ThunderController {
 		System.out.println(sales.toString());
 	// sales 끝
 		
-		Page<Product> thunderList = productService.myThunderList(search, pageable, member);
+		Page<Product> thunderList = thunderservice.myThunderList(search, pageable, member);
 		
 		int nowPage = thunderList.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage - 4, 1);
@@ -78,7 +82,7 @@ public class ThunderController {
 		product.setPNo(productPno);
 		System.out.println("productPno : "+productPno);
 		System.out.println("thunderId : "+member.toString());
-		productService.thunderDelivery(productPno, member);
+		thunderservice.thunderDelivery(productPno, member);
 		return "redirect:/thunder/myThunderList";
 	}
 	
