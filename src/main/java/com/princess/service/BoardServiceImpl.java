@@ -12,13 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.LikeWish;
 import com.princess.domain.CheckCondition.CmCategory;
 import com.princess.domain.CheckCondition.Display;
+import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.Member;
+import com.princess.domain.Product;
 import com.princess.domain.QBoard;
+import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
+import com.princess.persistence.LikeWishRepository;
 import com.princess.persistence.MemberRepository;
+import com.princess.persistence.ReportRepository;
 import com.querydsl.core.BooleanBuilder;
 
 @Service
@@ -28,6 +34,10 @@ public class BoardServiceImpl implements BoardService {
 	private BoardRepository boardRepo;
 	@Autowired
 	private MemberRepository memberRepo;
+	@Autowired
+	private ReportRepository reportRepo;
+	@Autowired
+	private LikeWishRepository likewishRepo;
 	
 	@Value("${file.direc}")
 	private String path;
@@ -98,6 +108,27 @@ public class BoardServiceImpl implements BoardService {
 		boardRepo.save(findboard);
 	}
 	
+	public boolean isReported(Member member, Board board, Type type) {
+		Product product = new Product();
+		product.setPNo(board.getPostNum());
+		System.out.println(product.getPNo());
+		int result = reportRepo.countByRptIdAndPostNoAndType(member, product.getPNo(), Type.COMMUNITY);
+		if (result == 1)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isGreated(String id, Board board, Type type) {
+		boolean isGreated = false;
+		for(LikeWish like : likewishRepo.findBypNoAndType(board.getPostNum(), type)) {
+			if(like.getLikeId().getId().equals(id)) {
+				isGreated = true;
+				break;
+			}
+		}
+		return isGreated;
+	}
 	
 
 
