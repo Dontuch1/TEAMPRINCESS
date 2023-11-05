@@ -97,6 +97,7 @@ public class BoardServiceImpl implements BoardService {
 		boardRepo.save(findboard);
 	}
 	
+
 	
 
 
