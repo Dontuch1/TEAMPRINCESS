@@ -107,19 +107,24 @@
 						</div>
 					</div>
 				</div>
+				
+				<div id="ajaxInsert"></div>
 			</div>
-
-			<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-				<a th:if="${page != nowPage}"
-					th:href="@{/product/getProductList?type=prod(page=${page - 1})}"
-					th:text="${page}"> </a>
-				<strong th:if="${page == nowPage}" th:text="${page}"
-					style="color: red"></strong>
-			</th:block>
+			<ul th:align="center" class="pagination">
+				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+					<li class="page-item" ><a class="page-link" th:if="${page != nowPage}"
+						th:href="@{/product/getProductList?type=prod(page=${page - 1})}"
+						th:text="${page}"> </a></li>
+					<li class="page-item active"><span th:if="${page == nowPage}" th:text="${page}"></span><li>
+				</th:block>
+			</ul>
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
+/*=============================================
+ * 경매기간 만료 계산
+ *=============================================*/
 	function clock(regdate, duration) {
 		regdate = new Date(regdate).getTime();
 		let aucDuToTime = duration * 1000 * 60 * 60 * 24;
@@ -132,9 +137,11 @@
 		}
 		return true
 	}
-	
-	function searching() {
-		$('#searchFrm').submit();
-	}
+/*=============================================
+ * 검색창
+ *=============================================*/
+function searching() {
+	$('#searchFrm').submit();
+}
 </script>
 </html>

@@ -34,6 +34,7 @@ import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -94,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	public Page<Product> getProductList(String type, Search search, Pageable pageable) {
+	public Page<Product> getProductList(String type, Search search,	Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 
 		QProduct qProduct = QProduct.product;
