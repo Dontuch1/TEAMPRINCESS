@@ -69,12 +69,12 @@ public class ProductController {
 		int nowPage = productList.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage - 4, 1);
 		int endPage = Math.min(nowPage + 5, productList.getTotalPages());
-
 		model.addAttribute("productList", productList);
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("type", type);
+		model.addAttribute("search", search);
 		return "product/getProductList";
 
 	}

@@ -85,7 +85,7 @@ input#bid[type='number'] {
 							    <span th:case="ETC">기타</span>
 						    </div>
 						    <button class="btn-report" style="margin-left: auto; margin-botton: auto;" onclick="report()">
-						    	<small style="line-height: 35px;">🚨 신고</small>
+						    	<small th:if="${currentUser.id != product.salesId.id}" style="line-height: 35px;">🚨 신고</small>
 						    </button>
 						</div>
 		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>

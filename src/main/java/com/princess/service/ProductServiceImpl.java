@@ -32,6 +32,7 @@ import com.princess.persistence.ReportRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
 
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -92,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	public Page<Product> getProductList(String type, Search search, Pageable pageable) {
+	public Page<Product> getProductList(String type, Search search,	Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 
 		QProduct qProduct = QProduct.product;
@@ -111,8 +112,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		builder.and(qProduct.display.eq(Display.Y));
-
-		// Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
+//		Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 
 		return productRepo.findAll(builder, pageable);
 	}
