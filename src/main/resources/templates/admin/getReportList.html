@@ -16,7 +16,7 @@
 
 			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 			<!-- 상태가 H -->
-			<h4>신고 완료</h4>
+			<h4>신고 대기</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -39,11 +39,12 @@
 						<td class="left" th:text="${report.regdate}"></td>
 						<td class="left" th:text="${report.submit}"></td>
 						<td><a
-							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=Y)}">신고
-								완료</a></td>
+							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=Y)}"
+							class="btn btn-outline-primary"> 신고 완료 </a>
 						<td><a
-							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=N)}">신고
-								반려</a></td>
+							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=N)}"
+							class="btn btn-outline-info">신고 반려</a></td>
+
 
 					</tr>
 
@@ -56,6 +57,7 @@
 
 
 			<!-- 상태가 Y -->
+
 			<h4>신고 완료</h4>
 			<table class="table table-hover">
 				<thead>
@@ -80,8 +82,31 @@
 
 					</tr>
 
+
+
+					<!-- 추가적인 신고 대상들을 나열할 수 있습니다 -->
 				</tbody>
 			</table>
+			<div style="text-align: right">
+				<p>
+					신고 당한 사람은 배터리 5씩 깍입니다 <span id="battery"></span></p>
+			</div>
+			
+			<script>
+				function updateBattery() {
+					const batteryElement = document.getElementById("battery");
+					batteryElement.textContent = batteryValue + "%";
+				}
+
+				// 배터리 값을 초기화하고 업데이트합니다.
+				updateBattery();
+
+				// 신고를 받으면 배터리를 5씩 깍는 함수를 호출합니다.
+				function reduceBattery() {
+					batteryValue -= 5;
+					updateBattery();
+				}
+			</script>
 			<!-- 상태가 Y끝 -->
 
 			<!-- 상태가 N -->
@@ -112,6 +137,32 @@
 				</tbody>
 			</table>
 			<!-- 상태가 N끝 -->
+
+			<!-- 신고 당한 사람은 배터리 -5씩 깍이는 페 -->
+			<!-- 배터리 감소 HTML -->
+
+
+			<script>
+				function decreaseBattery(targetId) {
+					// 현재 배터리 수치 가져오기
+					var batteryElement = document.getElementById('battery');
+					var currentBattery = parseInt(batteryElement.innerText);
+
+					// 배터리가 5 미만으로 내려갈 경우 예외 처리
+					if (!isNaN(currentBattery) && currentBattery >= 5) {
+						// 배터리 5씩 감소
+						currentBattery -= 5;
+
+						// 신고 대상에 대한 실제 처리 로직을 여기에 추가할 수 있습니다.
+						// 이 예제에서는 배터리만 감소시킵니다.
+
+						// 감소된 배터리를 화면에 업데이트
+						batteryElement.innerText = currentBattery;
+					} else {
+						alert('배터리가 부족합니다. 더 이상 신고할 수 없습니다.');
+					}
+				}
+			</script>
 
 
 			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->

@@ -35,7 +35,7 @@ public class BoardController {
 	@RequestMapping("/getBoardList")
 	public String getBoardList (@RequestParam String type, Model model, Search search,
 			@PageableDefault(page = 0, size = 10, sort = "postNum", direction = Sort.Direction.DESC) Pageable pageable) {
-		System.out.println("getBoardList : " + type);
+		
 		if(search.getSearchCondition()==null) {
 			search.setSearchCondition("TITLE");
 		} 

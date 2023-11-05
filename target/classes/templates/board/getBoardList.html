@@ -128,6 +128,7 @@ a {
 			<div class="container-fluid">
 
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+				<!-- type에 따라 게시글 상단에 출력 -->
 				<div id="wrapper"   class="scroll" >
 					<div class="box box2">
 						<th:block th:if="${type}=='notice'"> <h2 style="margin:30px 0px 0px 30px;">🚨 공지사항</h2> </th:block>
@@ -137,17 +138,20 @@ a {
 						<th:block th:if="${type}=='qna'"> <h2 style="margin:30px 0px 0px 30px;">❓ &nbsp;궁금해요</h2> </th:block>
 						<th:block th:if="${type}=='meet'"> <h2 style="margin:30px 0px 0px 30px;">🙋‍♀️ 우리만나요</h2> </th:block>
 						
-						<form th:action="@{/board/getBoardList}">
+						<!-- 검색 -->
+						<form th:action="@{/board/getBoardList}" method="get">
 							<div class="input-group mb-3 right w-25">
 								<select class="form-select flex-right " aria-label="Default" name="searchCondition">
-									  <option value="제목">제목</option>
-									  <option value="내용">내용</option>
-									  <option value="닉네임">닉네임</option>
+										  <option value="TITLE">제목</option>
+										  <option value="CONTENT">내용</option>
+										  <option value="NICKNAME">닉네임</option>
 								</select>
-								  <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyboard">
-								  <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+							    <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
+							    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+								<input type="hidden" name="type" th:value="${type}"/>
 							</div>
-						</form>	
+						</form>
+						
 							
 						<table>
 							<tr>

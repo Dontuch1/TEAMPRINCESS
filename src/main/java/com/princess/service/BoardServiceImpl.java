@@ -76,7 +76,7 @@ public class BoardServiceImpl implements BoardService {
 			builder.and(qboard.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
 			builder.and(qboard.content.like("%" + search.getSearchKeyword() + "%"));
-		} else if (search.getSearchCondition().equals("ID")) {
+		} else if (search.getSearchCondition().equals("NICKNAME")) {
 			builder.and(qboard.userId.nickName.like("%" + search.getSearchKeyword() + "%"));
 		}
 		

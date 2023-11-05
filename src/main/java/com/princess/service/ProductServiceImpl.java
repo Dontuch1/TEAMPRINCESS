@@ -15,20 +15,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Auction;
 import com.princess.domain.CheckCondition.Display;
-import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
+import com.princess.domain.Report;
+import com.princess.domain.QSales;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.AuctionRepository;
 import com.princess.persistence.LikeWishRepository;
 import com.princess.persistence.MemberRepository;
 import com.princess.persistence.ProductRepository;
+import com.princess.persistence.ReportRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -47,6 +51,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private LikeWishRepository likewishRepo;
+	
+	@Autowired
+	private ReportRepository reportRepo;
 	
 	@Value("${file.direc}")
 	private String path;
@@ -91,6 +98,7 @@ public class ProductServiceImpl implements ProductService {
 		BooleanBuilder builder = new BooleanBuilder();
 
 		QProduct qProduct = QProduct.product;
+		
 
 		if (type.equals("prod")) {
 			builder.and(qProduct.auction.eq(YorN.N));
@@ -106,6 +114,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		builder.and(qProduct.display.eq(Display.Y));
+		
 
 		// Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 
@@ -115,11 +124,12 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	// THUNDER Controller
-	@Override
-	public Page<Product> myThunderList(Search search, Pageable pageable) {
+	public Page<Product> myThunderList(Search search, Pageable pageable, Member member) {
 		BooleanBuilder builder = new BooleanBuilder();
 		
 		QProduct qProduct = QProduct.product;
+		QSales qsales = QSales.sales;
+		
 		if (search.getSearchCondition().equals("TITLE")) {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
@@ -130,9 +140,20 @@ public class ProductServiceImpl implements ProductService {
 		builder.and(qProduct.display.eq(Display.Y));
 		builder.and(qProduct.delivery.eq(YorN.Y));
 		
+		JPAQuery<?> subQuery = new JPAQuery<Void>()
+				.from(qsales).where(qsales.thunderId.isNull().and(qsales.pNo.pNo.eq(qProduct.pNo)));
+		builder.and(subQuery.exists());
+		
+		
 		return productRepo.findAll(builder, pageable);
 	}
-
+	
+	public void thunderDelivery(Long productPno, Member member) {
+		Sales thunderSales = saleseRepo.findByProductPNo(productPno);
+		thunderSales.setThunderId(member.getId());
+		System.out.println("thunderSales :"+thunderSales.toString());
+		saleseRepo.save(thunderSales);
+	}
 	
 
 	public Auction getAuctionMaxPrice(Product product) {
@@ -246,4 +267,15 @@ public class ProductServiceImpl implements ProductService {
 		return likewishRepo.countBypNoAndType(product.getPNo(), type);
 	}
 	
+	public boolean isReported(Member member, Product product, Type type) {
+		int result = reportRepo.countByRptIdAndPostNoAndType(member, product.getPNo(), Type.PRODUCT);
+		if (result == 1)
+			return true;
+		else
+			return false;
+	}
+	
+	public void insertReport(Report report) {
+		reportRepo.save(report);
+	}
 }

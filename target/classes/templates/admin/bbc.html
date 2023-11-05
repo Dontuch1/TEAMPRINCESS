@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>신고 대상</title>
+</head>
+<body>
+    <h1>신고 대상</h1>
+    
+    <ul>
+        <li>
+            <span>jiyi</span>
+            <button onclick="decreaseBattery(1)">신고</button>
+        </li>
+        <li>
+            <span>jojo</span>
+            <button onclick="decreaseBattery(2)">신고</button>
+        </li>
+        <li>
+            <span>ganji</span>
+            <button onclick="decreaseBattery(1)">신고</button>
+        </li>
+        <li>
+            <span>hoy</span>
+            <button onclick="decreaseBattery(1)">신고</button>
+        </li>
+        <!-- 추가적인 신고 대상들을 나열할 수 있습니다 -->
+    </ul>
+    
+    <p>현재 배터리: <span id="battery">100</span></p>
+
+    <script>
+        function decreaseBattery(targetId) {
+            // 현재 배터리 수치 가져오기
+            var batteryElement = document.getElementById('battery');
+            var currentBattery = parseInt(batteryElement.innerText);
+
+            // 배터리가 5 미만으로 내려갈 경우 예외 처리
+            if (!isNaN(currentBattery) && currentBattery >= 5) {
+                // 배터리 5씩 감소
+                currentBattery -= 5;
+
+                // 신고 대상에 대한 실제 처리 로직을 여기에 추가할 수 있습니다.
+                // 이 예제에서는 배터리만 감소시킵니다.
+
+                // 감소된 배터리를 화면에 업데이트
+                batteryElement.innerText = currentBattery;
+            } else {
+                alert('배터리가 부족합니다. 더 이상 신고할 수 없습니다.');
+            }
+        }
+    </script>
+</body>
+</html>

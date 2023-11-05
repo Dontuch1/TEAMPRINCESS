@@ -127,7 +127,7 @@ input#bid[type='number'] {
 												aria-haspopup="true" aria-expanded="false"
 												style="font-size: 18px; margin-top: 10px;"> <span
 													th:text="${product.salesId.nickName}"></span>
-											</a> <<<<<<< HEAD
+											</a>
 												<div class="dropdown-menu dropdown-menu-end"
 													aria-labelledby="navbarDropdown">
 													<div class="dropdown-item">
@@ -223,60 +223,11 @@ input#bid[type='number'] {
 								<pre
 									style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;"
 									class="lead" th:text="${product.content}"></pre>
-								<<<<<<< HEAD
-								<div id="thunderBtn"
-									th:if="${product.delevery.toString() == 'Y'}" th:align="center"
-									class="inputbox" onclick="thunder()">
-									=======
-									<div id="dropdown" class="dropdown-menu dropdown-menu-end"
-										aria-labelledby="navbarDropdown"
-										style="-bs-dropdown-link-active-bg: none;">
-										<div class="dropdown-item">
-											<form id="bidForm" th:action="@{/product/bidProduct}"
-												method="post">
-												<input th:value="${product.pNo}" name="pNo" type="hidden">
-												<input th:value="${currentUser.id}" name="id" type="hidden">
-												<input id="bid" name="bid"
-													style="width: 100px; vertical-align: middle;" type="number"
-													min="${auction.auctionPrice}">&nbsp;<a
-													class="btn btn-outline-dark flex-shrink-0" type="button"
-													onclick="bid();">입찰하기</a> <input type="text"
-													style="display: none"> <br> <small>입찰은
-													최대 3번까지 가능합니다.</small>
-											</form>
-										</div>
-									</div>
-
-									<button class="btn btn-outline-dark flex-shrink-0"
-										th:if="${product.auction.toString() == 'N'}" type="button"
-										onclick="buyBtn()">
-										<span style="font-size: 15px; padding: 0px;">🛒</span>
-									</button>
-
-								</div>
-							</div>
-							<form id="buyForm" th:action="@{/product/buyProduct}"
-								method="post">
-								<input th:value="${product.pNo}" name="pNo" type="hidden">
-								<input th:value="${currentUser.id}" name="id" type="hidden">
-							</form>
-						</div>
-					</div>
-
-					<pre
-						style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;"
-						class="lead" th:text="${product.content}"></pre>
-					<div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}"
-						th:align="center" class="box" onclick="thunder()">
-						>>>>>>> refs/heads/ganji <b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input
-							id="delevery" style="display: none;" type="checkbox"
-							name="delevery"=======
-		                        
+							                
 						<div id="thunderBtn" th:if="${product.delivery.toString() == 'Y'}"
 							th:align="center" class="inputbox" onclick="thunder()">
 							<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delivery"
-								style="display: none;" type="checkbox" name="delivery">>>>>>>
-							refs/heads/jojo value="1"><br> <small>배달비 1,500원이
+								style="display: none;" type="checkbox" name="delivery" value="1"><br> <small>배달비 1,500원이
 								추가적으로 차감됩니다.</small>
 						</div>
 					</div>
