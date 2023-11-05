@@ -42,8 +42,6 @@ public class BoardController {
 		if (search.getSearchKeyword()==null) {
 			search.setSearchKeyword("");
 		}
-		System.out.println("type : " + type);
-		System.out.println("search : " + search.toString());
 		
 		Page<Board> boardList = boardservice.getBoardList(type, search, pageable);
 		

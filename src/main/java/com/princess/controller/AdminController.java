@@ -22,18 +22,9 @@ import com.princess.service.ReportService;
 public class AdminController {
 
 	@Autowired
-	private MemberService memberService;
-	
+	private MemberService memberService;	
 	@Autowired
 	private ReportService reportService;
-	
-	
-	
-    //@Autowired
-   // private BoardService boardService;
-    
-    //@Autowired
-    //private ProductService productService;
 
 	@RequestMapping("/adminMain")
 	public void adminMain() {
@@ -75,30 +66,7 @@ public class AdminController {
 		reportService.changeReportStatus(rptNo, type);
 		return "redirect:getReportList";
 	}
-   
-	
-     
-            
-    
-
-    
-
-
-	
-	
-	//@PostMapping("/reportComplete")
-    //public  String handleReportComplete(  Long rptNo,String	type ) {
-        // 신고 완료 시 board 또는 product의 display 속성을 'H'로 변경
-       // if ("board".equals(type)) {
-           // boardService.updateBoardDisplay(rptNo, "H");
-        //} else if ("product".equals(type)) {
-          //  productService.updateProductDisplay(rptNo, "H");
-       // }
-
-        // 클라이언트에 응답을 보냅니다.
-        //return ResponseEntity.ok("신고가 완료되었습니다.");
-    //}
-
+  
 	// 로그아웃
 	@RequestMapping("/logout")
 	public void logout() {

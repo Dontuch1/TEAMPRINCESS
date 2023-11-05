@@ -23,7 +23,7 @@ public interface MypageService {
 	Page<Board> getBoardList(Pageable pageable, Member member);
 
 	// 내 등록 상품 리스트
-	Page<Product> getProductList(Pageable pageable, Member member);
+	List<Product> getProductList(Member member);
 
 	// 내가 받은 후기
 	Page<Review> getReviewList(Pageable pageable, Member member);
@@ -35,7 +35,7 @@ public interface MypageService {
 	void updateDeposit(Member member);
 
 	// 구매 목록
-	Map<Product,String[]> getBuyList(Member member);
+	Map<Product, String[]> getBuyList(Member member);
 
 	// 리뷰 등록
 	void insertReview(Review review, Product product);
@@ -45,5 +45,7 @@ public interface MypageService {
 
 	// 보낸 리뷰
 	Page<Review> getSentReviewList(Pageable pageable, String sender);
-		
+
+	//썬더맨 아이디
+	String thunderId(Product product);
 }

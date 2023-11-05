@@ -1,12 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>🥕당근나라 번개공주</title>
 <style>
-#navbarDropdown{
-	cursor:pointer;
+#navbarDropdown {
+	cursor: pointer;
 }
+
 #thunderBtn {
 	margin: 0;
 }
@@ -21,6 +22,7 @@ input#bid::-webkit-outer-spin-button, input#bid::-webkit-inner-spin-button
 input#bid[type='number'] {
 	-moz-appearance: textfield;
 }
+
 .inputbox {
 	width: 100%;
 	border: 4px #eee solid;
@@ -29,10 +31,12 @@ input#bid[type='number'] {
 	padding: 5px;
 	transition: 0.2s;
 }
+
 .inputbox:hover {
 	transform: scale(1.05);
 	transition: 0.3s;
 }
+
 .btn-custom {
 	background-color: transparent;
 	width: 50px;
@@ -42,23 +46,28 @@ input#bid[type='number'] {
 	margin: 0;
 	transition: 0.2s;
 }
+
 .btn-custom:hover {
 	transform: scale(1.05);
 	transition: 0.2s;
 	box-shadow: 0 0 8px 1px #eee;
 }
+
 .btn-report {
 	background-color: transparent;
 	border: none;
 	transition: 0.2s;
 }
+
 .btn-report:hover {
 	text-shadow: 0 0 2px grey;
 	transition: 0.2s;
 }
+
 .btn-wish {
 	width: 80px;
 }
+
 .btn-img {
 	width: 20px;
 	height: 20px;
@@ -73,104 +82,102 @@ input#bid[type='number'] {
 			<div class="container-fluid">
 				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 				<section class="py-5" style="width: 1200px;">
-		            <div class="container px-4 px-lg-5 my-5">
-		                <div class="row gx-4 gx-lg-5 align-items-center">
-		                <div class="" style="display: flex;" th:switch="${product.pCategory.toString()}">
-		                	<div>
-			                	<span th:text="${product.auction.toString() == 'N'} ? '&nbsp;일반 ' : '&nbsp;경매 '" style="font-weight: bold; border-left: 4px solid #eee"></span>
-							    <span th:case="DIGI">디지털/가전</span>
-							    <span th:case="FURN">가구</span>
-							    <span th:case="CLOT">의류/잡화</span>
-							    <span th:case="BEAU">뷰티</span>
-							    <span th:case="ETC">기타</span>
-						    </div>
-						    <button class="btn-report" style="margin-left: auto; margin-botton: auto;" onclick="report()">
-						    	<small style="line-height: 35px;">🚨 신고</small>
-						    </button>
-						</div>
-		                    <div class="col-md-6" th:align="center"><img class="card-img-top mb-5 mb-md-0" style="max-height: 400px; max-width: 400px; object-fit:contain;"th:src="${product.upload}" onerror="this.src='/images/carrot.png'" alt="..."></div>
-		                    <div class="col-md-6">
-		                    <div style="display: flex;">
-		                        <span id="clock" th:if="${product.auction.toString() == 'Y'}" style="color: red; font-weight: bold; margin-right: auto;"></span>
-		                    </div>
-		                        <h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"th:text="${product.title}"></h2>
-		                        
-		                        <div style="display: flex; margin-bottom: 20px;">
-			                        <table th:cellpadding="0" style="flex-grow: 1;">
-				                        <tr>
-				                        	<td rowspan="2" style="width: 60px;"><img src="/images/prcs-profile.png" alt="..." style="width: 50px;"></td>
-				                        	<td style="vertical-align: bottom">
-					                        	<a  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false" style="font-size: 18px; margin-top: 10px;">
-													<span th:text="${product.salesId.nickName}"></span>
+					<div class="container px-4 px-lg-5 my-5">
+						<div class="row gx-4 gx-lg-5 align-items-center">
+							<div class="" style="display: flex;"
+								th:switch="${product.pCategory.toString()}">
+								<div>
+									<span
+										th:text="${product.auction.toString() == 'N'} ? '&nbsp;일반 ' : '&nbsp;경매 '"
+										style="font-weight: bold; border-left: 4px solid #eee"></span>
+									<span th:case="DIGI">디지털/가전</span> <span th:case="FURN">가구</span>
+									<span th:case="CLOT">의류/잡화</span> <span th:case="BEAU">뷰티</span>
+									<span th:case="ETC">기타</span>
+								</div>
+								
+								<button class="btn-report"
+									style="margin-left: auto; margin-botton: auto;"
+									onclick="report()">
+									<small style="line-height: 35px;">🚨 신고</small>
+								</button>
+
+							</div>
+							<div class="col-md-6" th:align="center">
+								<img class="card-img-top mb-5 mb-md-0"
+									style="max-height: 400px; max-width: 400px; object-fit: contain;"
+									th:src="${product.upload}"
+									onerror="this.src='/images/carrot.png'" alt="...">
+							</div>
+							<div class="col-md-6">
+								<div style="display: flex;">
+									<span id="clock" th:if="${product.auction.toString() == 'Y'}"
+										style="color: red; font-weight: bold; margin-right: auto;"></span>
+								</div>
+								<h2 class="display-8 fw-bolder" style="margin-bottom: 0.8em"
+									th:text="${product.title}"></h2>
+
+								<div style="display: flex; margin-bottom: 20px;">
+									<table th:cellpadding="0" style="flex-grow: 1;">
+										<tr>
+											<td rowspan="2" style="width: 60px;"><img
+												src="/images/prcs-profile.png" alt="..."
+												style="width: 50px;"></td>
+											<td style="vertical-align: bottom"><a
+												id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false"
+												style="font-size: 18px; margin-top: 10px;"> <span
+													th:text="${product.salesId.nickName}"></span>
+											</a>
+												<div class="dropdown-menu dropdown-menu-end"
+													aria-labelledby="navbarDropdown">
+													<div class="dropdown-item">
+														<a class="dropdown-item"
+															th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지
+															방문</a>
+													</div>
+												</div></td>
+										</tr>
+										<tr>
+											<td>&nbsp;<label
+												style="font-size: 15px; margin-bottom: 10px; color: #aaa;"
+												class="small" th:text="${product.salesId.location}"></label></td>
+										</tr>
+									</table>
+									<div style="flex-grow: 1; height: 80px;">
+										<div th:if="${product.auction.toString() == 'Y'}"
+											th:align="right">
+											<div class="small" style="color: #aaa;">
+												시작가 <span
+													style="color: #aaa; text-decoration: line-through;"
+													th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span>
+											</div>
+											현재가 <span id="price" style="font-weight: bold;"
+												th:align="center"
+												th:text="${#numbers.formatInteger(auction.auctionPrice, 3, 'COMMA') + '원'}"></span>
+										</div>
+										<div th:align="right" style="margin-bottom: 5px;"
+											th:if="${product.auction.toString() == 'N'}">
+											<span id="price" style="font-weight: bold;" th:align="right"
+												th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+										</div>
+										<div th:if="${product.sold.toString() == 'N'}">
+											<div style="display: flex; justify-content: right; gap: 8px;"
+												th:if="${product.salesId.id != currentUser.id}"
+												th:align="right">
+												<button th:align="center" class="btn-custom btn-wish"
+													type="button" onclick="wish()">
+													<img id="like" class="btn-img"
+														th:if="${currentUser.id != product.salesId.id}" alt="..."
+														th:src="${isWished == false ? '/images/empty_heart.png' : '/images/full_heart.png'}">
+													<span th:text="${wishCnt}"></span>
+												</button>
+												<a class="btn-custom" id="navbarDropdown" href="#"
+													role="button" data-bs-toggle="dropdown"
+													aria-haspopup="true" aria-expanded="false"
+													th:if="${product.auction.toString() == 'Y'}" type="button"
+													onclick="isCurrBid();"> <img class="btn-img" alt="..."
+													src="/images/bid.png">
 												</a>
-<<<<<<< HEAD
-						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-														<div class="dropdown-item">
-														<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지 방문</a>
-														</div>
-													</div>
-					                    
-					                    
-				                        	</td>
-				                        </tr>
-				                        <tr>
-				                        	<td>&nbsp;<label style="font-size: 15px; margin-bottom: 10px; color: #aaa;" class="small" th:text="${product.salesId.location}"></label></td>
-				                        </tr>
-			                         </table>
-			                         <div style="flex-grow: 1; height: 80px;">
-			                       		<div th:if="${product.auction.toString() == 'Y'}" th:align="right">
-				                            <div class="small" style="color: #aaa;"> 시작가 <span style="color: #aaa; text-decoration: line-through;" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원 '}"></span></div>
-				                           현재가 <span id="price" style="font-weight: bold;" th:align="center" th:text="${#numbers.formatInteger(auction.auctionPrice, 3, 'COMMA') + '원'}"></span>
-				                        </div>
-				                        <div th:align="right" style="margin-bottom: 5px;"th:if="${product.auction.toString() == 'N'}">
-				                            <span id="price" style="font-weight: bold;" th:align="right" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
-				                        </div>
-				                        <div th:if="${product.sold.toString() == 'N'}">
-					                        <div style="display: flex; justify-content: right; gap: 8px;" th:if="${product.salesId.id != currentUser.id}" th:align="right">
-					                        	<button th:align="center" class="btn-custom btn-wish" type="button" onclick="wish()">
-					                                <img id="like" class="btn-img" th:if="${currentUser.id != product.salesId.id}" alt="..." th:src="${isWished == false ? '/images/empty_heart.png' : '/images/full_heart.png'}">
-					                                <span th:text="${wishCnt}"></span>
-					                            </button>
-						                            <a class="btn-custom" id="navbarDropdown" href="#"
-															role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-															aria-expanded="false"  th:if="${product.auction.toString() == 'Y'}" type="button" onclick="isCurrBid();">
-						                                <img class="btn-img" alt="..." src="/images/bid.png">
-						                            </a>
-						                            <div id="dropdown" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="--bs-dropdown-link-active-bg: none;">
-														<div class="dropdown-item">
-														<form id="bidForm" th:action="@{/product/bidProduct}" method="post">
-						                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
-						                       				<input th:value="${currentUser.id}" name="id" type="hidden">
-						                       				<input id="bid" name="bid" style="width: 100px; vertical-align: middle;" type="number" min="${auction.auctionPrice}">&nbsp;<a class="btn btn-outline-dark flex-shrink-0" type="button" onclick="bid();">입찰하기</a>
-						                       				<input type="text" style="display:none">
-						                       				<br><small>입찰은 최대 3번까지 가능합니다.</small>
-						                       			</form>
-														</div>
-													</div>
-													
-						                            <button class="btn-custom" th:if="${product.auction.toString() == 'N'}" type="button" onclick="buyBtn()">
-						                                 <img class="btn-img" alt="..." src="/images/cart.png">
-						                            </button>
-						                            
-					                            </div>
-		                       				</div>
-		                       			<form id="buyForm" th:action="@{/product/buyProduct}" method="post">
-		                       				<input th:value="${product.pNo}" name="pNo" type="hidden">
-		                       				<input th:value="${currentUser.id}" name="id" type="hidden">
-		                       			</form>
-		                       			<form id="reportForm" th:action="@{/product/reportProduct}" method="get">
-		                       				<input type="hidden" name="id" th:value="${currentUser.id}">
-		                       				<input type="hidden" name="type" value="PRODUCT">
-		                       				<input type="hidden" name="postNo" th:value="${product.pNo}">
-		                       				<input id="reportInput" type="hidden" name="rptCon">
-		                       			</form>
-			                        </div>
-		                        </div>
-		                        
-		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
-		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
-=======
 												<div id="dropdown" class="dropdown-menu dropdown-menu-end"
 													aria-labelledby="navbarDropdown"
 													style="-bs-dropdown-link-active-bg: none;">
@@ -190,10 +197,10 @@ input#bid[type='number'] {
 													</div>
 												</div>
 
-												<button class="btn btn-outline-dark flex-shrink-0"
+												<button class="btn-custom"
 													th:if="${product.auction.toString() == 'N'}" type="button"
 													onclick="buyBtn()">
-													<span style="font-size: 15px; padding: 0px;">🛒</span>
+													<img class="btn-img" alt="..." src="/images/cart.png">
 												</button>
 
 											</div>
@@ -203,39 +210,49 @@ input#bid[type='number'] {
 											<input th:value="${product.pNo}" name="pNo" type="hidden">
 											<input th:value="${currentUser.id}" name="id" type="hidden">
 										</form>
+										<form id="reportForm" th:action="@{/product/reportProduct}"
+											method="get">
+											<input type="hidden" name="id" th:value="${currentUser.id}">
+											<input type="hidden" name="type" value="PRODUCT"> <input
+												type="hidden" name="postNo" th:value="${product.pNo}">
+											<input id="reportInput" type="hidden" name="rptCon">
+										</form>
 									</div>
 								</div>
 
 								<pre
 									style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;"
 									class="lead" th:text="${product.content}"></pre>
-								<div id="thunderBtn"
-									th:if="${product.delevery.toString() == 'Y'}" th:align="center"
-									class="box" onclick="thunder()">
->>>>>>> refs/heads/ganji
-									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delevery"
-										style="display: none;" type="checkbox" name="delevery"
-										value="1"><br> <small>배달비 1,500원이 추가적으로 차감됩니다.</small>
-								</div>
-		                    </div>
-		                </div>
-		            </div>
-		        </section>
-				<br>
-				<hr>
-				<br>
-				<div th:align="center">
-					<a th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="button" class="btn btn-outline-dark flex-shrink-0"
-						th:href="@{/product/updateProduct(pNo=${product.pNo})}">수정</a>
-					<a th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'" style="display: block;" type="submit" class="btn btn-outline-dark flex-shrink-0"
-						onclick="delConfirm();">삭제</a>
-					<a type="button" class="btn btn-outline-dark flex-shrink-0"
-  					 onclick="backBtn();">이전</a>
-				</div>
-				<div style="height: 30px;"></div>
-				<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+							                
+						<div id="thunderBtn" th:if="${product.delivery.toString() == 'Y'}"
+							th:align="center" class="inputbox" onclick="thunder()">
+							<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delivery"
+								style="display: none;" type="checkbox" name="delivery" value="1"><br> <small>배달비 1,500원이
+								추가적으로 차감됩니다.</small>
+						</div>
+					</div>
 			</div>
 		</div>
+		</section>
+		<br>
+		<hr>
+		<br>
+		<div th:align="center">
+			<a
+				th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
+				style="display: block;" type="button"
+				class="btn btn-outline-dark flex-shrink-0"
+				th:href="@{/product/updateProduct(pNo=${product.pNo})}">수정</a> <a
+				th:attr="style=${currentUser.id == product.salesId.id}? 'display: inline' : 'display: none'"
+				style="display: block;" type="submit"
+				class="btn btn-outline-dark flex-shrink-0" onclick="delConfirm();">삭제</a>
+			<a type="button" class="btn btn-outline-dark flex-shrink-0"
+				onclick="backBtn();">이전</a>
+		</div>
+		<div style="height: 30px;"></div>
+		<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+	</div>
+	</div>
 	</div>
 </body>
 <script th:inline="javascript">
@@ -281,7 +298,7 @@ input#bid[type='number'] {
  *=============================================*/
 function delConfirm() {
 	if (confirm("정말 삭제하시겠습니까?")) {
-		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+		window.location.href = '/product/deliteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
 	} else {
 		return false;
 	}
@@ -333,7 +350,7 @@ function isCurrBid() {
 function buyBtn() {
 	if (confirm("구매하시겠습니까?")) {
 		let deposit;
-		if ($('#delevery').length) { // 내 잔액이 가격보다 클까?
+		if ($('#delivery').length) { // 내 잔액이 가격보다 클까?
 			deposit = [[${currentUser.deposit - product.price - 1500}]];
 		} else {
 			deposit = [[${currentUser.deposit - product.price}]];
@@ -365,7 +382,7 @@ function buyBtn() {
 	} else {
 		if(confirm('정말 입찰하시겠습니까?')) {
 			let deposit;
-			if ($('#delevery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
+			if ($('#delivery').length) { // 천둥맨 이용시 deposit 설정 (내 잔액 + 내 최근 입찰금 - 1500원)
 				deposit = [[${currentUser.deposit + bidList[0].auctionPrice - 1500}]];
 			} else {
 				deposit = [[${currentUser.deposit + bidList[0].auctionPrice}]];

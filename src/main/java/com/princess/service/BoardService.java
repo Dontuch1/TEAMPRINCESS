@@ -23,4 +23,6 @@ public interface BoardService {
 	Page<Board> getBoardList(String type, Search search, Pageable pageable);
 
 	Board getBoardId(Long boardId);
+
+	
 }

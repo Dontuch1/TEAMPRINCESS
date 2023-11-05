@@ -124,7 +124,7 @@
 								<strong>후기 보내기</strong>
 							</div>
 							<div th:align="center" style="margin-top: 10px;"
-								th:attr="style=${product.key.delevery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
+								th:attr="style=${product.key.delivery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
 								<div>
 									<small>판매자</small><br>
 									<button class="btn btn-outline-primary"
@@ -136,7 +136,7 @@
 										data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
 										disabled>완료</button>
 								</div>
-								<div th:if="${product.key.delevery.toString() == 'Y'}">
+								<div th:if="${product.key.delivery.toString() == 'Y'}">
 									<small>천둥맨</small><br>
 									<button class="btn btn-outline-primary"
 										th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[0]}]]);"

@@ -64,6 +64,7 @@ public class ThunderController {
 	
 	@PostMapping("/myThunderQualification")
 	public String myThunderQualification(@RequestBody Map<String, Object> payload, Member member) {
+		
 		member.setId((String)payload.get("memberId"));
 		System.out.println("member : "+member.toString());
 		memberService.deleteThunder(member);

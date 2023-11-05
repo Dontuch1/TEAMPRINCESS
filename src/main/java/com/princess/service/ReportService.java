@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.princess.domain.CheckCondition.Display;
-import com.princess.domain.Member;
 import com.princess.domain.Report;
 
 public interface ReportService {

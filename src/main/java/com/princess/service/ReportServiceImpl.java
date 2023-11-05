@@ -69,17 +69,25 @@ public class ReportServiceImpl implements ReportService {
 				Product product = new Product();
 				product = productRepository.findById(postNum).get();
 				member = memberRepository.findById(product.getSalesId().getId()).get();
+
 			} else {
 				Board board = new Board();
 				board = boardRepository.findById(postNum).get();
 				member = memberRepository.findById(board.getUserId().getId()).get();
 			}
-			member.setBattery(member.getBattery() - 1);
-			memberRepository.save(member);
-		} else {
-			report.setSubmit(Display.N);
+			if (type.equals("Y")) {
+				report.setSubmit(Display.N);
+				report = reportRepository.findById(rptNo).get();
+
+				report.setPostNo(rptNo);
+				member.setBattery(member.getBattery() - 1);
+				memberRepository.save(member);
+			} else {
+				report.setSubmit(Display.N);
+
+			}
+			reportRepository.save(report);
 		}
-		reportRepository.save(report);
 	}
 
 }

@@ -2,12 +2,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 페이지</title>
-</head>
 <style>
+.container {
+	max-width: 400px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
 </style>
+</head>
 <body th:align="center">
 
-	<h2>회원 관리</h2>
+	<h2>회원 가입</h2>
 
 	<h4>회원정보를 위해서 정보를 입력해주세요</h4>
 </body>
@@ -29,7 +37,7 @@
 				<tr>
 					<td><label for="name">지역</label></td>
 					<td><input type="text" id="location" name="location"
-						placeholder="지역을 입력하세요"></td>
+						placeholder="예: OO구 OO동"></td>
 				<tr>
 
 					<td><label for="name">이름</label></td>
@@ -70,7 +78,7 @@
 					id="flexRadioDefault2" checked> <label
 					class="form-check-label" for="flexRadioDefault2">수신미동의</label>
 			</div>
-<br>
+			<br>
 			<tr>
 				<td><button type="submit">등록</button></td>
 				<td><button type="button" id="deleteButton">삭제</button></td>

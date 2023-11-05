@@ -38,6 +38,7 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
+
 	@RequestMapping("/getProductList")
 	public String getProductList(@RequestParam String type, Model model, Search search,
 			@PageableDefault(page = 0, size = 12, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -144,7 +145,7 @@ public class ProductController {
 	@PostMapping("/buyProduct")
 	public String buyProduct(Product product, @RequestParam String id) {
 		product = productService.getProduct(product);
-		if (product.getDelevery().equals(YorN.Y)) {
+		if (product.getDelivery().equals(YorN.Y)) {
 			Member buyer = new Member();
 			buyer.setId(id);
 			buyer = productService.getMember(buyer);
@@ -164,7 +165,7 @@ public class ProductController {
 		if (productService.getBidList(buyer, product) != null) {
 			buyer.setDeposit(buyer.getDeposit() + productService.getBidList(buyer, product).get(0).getAuctionPrice());
 		}
-		if (product.getDelevery().equals(YorN.Y)) {
+		if (product.getDelivery().equals(YorN.Y)) {
 			buyer.setDeposit(buyer.getDeposit() - bid - 1500);
 		} else buyer.setDeposit(buyer.getDeposit() - bid);
 		productService.setMemberDepoist(buyer);

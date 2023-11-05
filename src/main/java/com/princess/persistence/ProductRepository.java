@@ -1,6 +1,8 @@
 package com.princess.persistence;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,6 @@ public interface ProductRepository extends CrudRepository<Product, Long>, Queryd
 	@Query("SELECT b FROM Board b")
 	Page<Product> getBoardList(Pageable pageable);
 
-	Page<Product> findBySalesId(Member member, Pageable pageable);
+	List<Product> findBySalesId(Member member);
 	
 }
