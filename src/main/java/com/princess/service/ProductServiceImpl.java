@@ -123,37 +123,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
-	// THUNDER Controller
-	public Page<Product> myThunderList(Search search, Pageable pageable, Member member) {
-		BooleanBuilder builder = new BooleanBuilder();
-		
-		QProduct qProduct = QProduct.product;
-		QSales qsales = QSales.sales;
-		
-		if (search.getSearchCondition().equals("TITLE")) {
-			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
-		} else if (search.getSearchCondition().equals("CONTENT")) {
-			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
-		} else if (search.getSearchCondition().equals("ID")) {
-			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() +"%"));
-		}
-		builder.and(qProduct.display.eq(Display.Y));
-		builder.and(qProduct.delevery.eq(YorN.Y));
-		
-		JPAQuery<?> subQuery = new JPAQuery<Void>()
-				.from(qsales).where(qsales.thunderId.isNull().and(qsales.pNo.pNo.eq(qProduct.pNo)));
-		builder.and(subQuery.exists());
-		
-		
-		return productRepo.findAll(builder, pageable);
-	}
 	
-	public void thunderDelivery(Long productPno, Member member) {
-		Sales thunderSales = saleseRepo.findByProductPNo(productPno);
-		thunderSales.setThunderId(member.getId());
-		System.out.println("thunderSales :"+thunderSales.toString());
-		saleseRepo.save(thunderSales);
-	}
 	
 
 	public Auction getAuctionMaxPrice(Product product) {
