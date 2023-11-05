@@ -40,6 +40,7 @@ public class MyPageController {
 		model.addAttribute("boardList", myService.getBoardList(pageable, member));
 		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
 		model.addAttribute("productList", myService.getProductList(member));
+		System.out.println(myService.getProductList(member).toString());
 	}
 
 	@GetMapping("/myDetails")
