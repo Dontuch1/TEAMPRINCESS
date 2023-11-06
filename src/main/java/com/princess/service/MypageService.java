@@ -46,6 +46,12 @@ public interface MypageService {
 	// 보낸 리뷰
 	Page<Review> getSentReviewList(Pageable pageable, String sender);
 
-	//썬더맨 아이디
+	// 썬더맨 아이디
 	String thunderId(Product product);
+	
+	// 구매자 아이디
+	String buyerId(Product product);
+	
+	// 후기 작성 여부
+	boolean isReviewed(Product product, String sender, String receiver);
 }

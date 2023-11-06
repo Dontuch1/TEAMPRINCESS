@@ -117,27 +117,35 @@ public class MypageServiceImpl implements MypageService {
 		List<Sales> sales = salesRepo.findByBuyer(member);
 
 		Map<Product, String[]> buyList = new LinkedHashMap<Product, String[]>();
-		String thun = "";
-		String tra = "";
+
 		Member receiver = new Member();
 
 		for (Sales sale : sales) {
 			int thunder = 1;
-			if (sale.getThunderId() != null) {// 썬더맨 이용 상품
-				receiver.setId(sale.getThunderId());
-				thunder = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(), receiver);
-				if (thunder == 0) { // 썬더맨 이용상품 + 썬더맨 후기를 작성안했을때
-					thun = sale.getThunderId();
-				} else {
-					thun = "";
+			String thun = "";
+			String tra = "";
+
+			if (sale.getPNo().getDelivery().equals(YorN.Y)) {// 썬더맨 이용 상품
+				if (sale.getThunderId() != null) {// 배치가 됐을때
+					receiver.setId(sale.getThunderId());
+					thunder = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(), receiver);
+
+					if (thunder == 0) { // 썬더맨 이용상품 + 썬더맨 후기를 작성안했을때
+						thun = sale.getThunderId();
+					} else {// 썬더맨 이용상품 + 썬더맨 후기를 작성했을때
+						thun = "";
+					}
+				} else {// 배치 안됐을때
+					thun = "아직 썬더맨이 없어요 ㅋㅋㅎㅎㅠㅠ;;";
 				}
-			}
+			} // 썬더맨 이용상품이 아닐때
 			int trade = reviewRepo.countBypNoAndSenderAndReceiver(sale.getPNo(), member.getId(),
 					sale.getPNo().getSalesId());
 			if (trade == 0)
 				tra = sale.getPNo().getSalesId().getId();
 			else
 				tra = "";
+
 			String[] str = { thun, tra };
 			buyList.put(productRepo.findById(sale.getPNo().getPNo()).get(), str);
 		}
@@ -158,13 +166,26 @@ public class MypageServiceImpl implements MypageService {
 
 	// 썬더 아이디
 	public String thunderId(Product product) {
-		Sales sales=salesRepo.findBypNo(product);
-		if(sales != null && sales.getThunderId() != null) {
+		Sales sales = salesRepo.findBypNo(product);
+		if (sales != null && sales.getThunderId() != null) {
 			return sales.getThunderId();
-		}else {
+		} else {
 			return "";
 		}
-	
+
+	}
+	// 구매자 아이디
+	public String buyerId(Product product) {
+		Sales sales = salesRepo.findBypNo(product);
+		return sales.getBuyer().getId();
+	}
+	// 후기 작성여부
+	public boolean isReviewed(Product product, String sender, String receiver) {
+		Member member= new Member();
+		member.setId(receiver);
+		int cnt = reviewRepo.countBypNoAndSenderAndReceiver(product, sender, member);
+		if(cnt==0) return false;
+		else return true;
 	}
 
 }

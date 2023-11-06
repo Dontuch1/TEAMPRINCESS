@@ -1,6 +1,5 @@
 package com.princess.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.princess.domain.Member;
 import com.princess.service.MemberService;
@@ -35,13 +35,14 @@ public class SystemController {
 	}
 
 	@PostMapping("/register")
-	 public String register(Member member, @RequestBody Map<String, String> requestBody ) {
+	 public String register(Member member, @RequestParam Map<String, String> requestBody ) {
 	 String guInput = requestBody.get("guInput");
 	 String dongInput = requestBody.get("dongInput");
 	 
-	 
 		member.setLocation(guInput+ " " +dongInput);
-		System.out.println(member);
+		
+		System.out.println(member.toString());
+		
 		memberService.insertMember(member);
 		return "redirect:login";
 	}
