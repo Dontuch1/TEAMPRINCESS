@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 h2 {
 	font-weight: border;
 }
@@ -15,6 +16,22 @@ h2 {
 
 #strong {
 	font-weight: 900;
+}
+
+table {
+	width: 100%;
+	border-top: 1px solid #d3d3d3;
+	border-collapse: collapse;
+}
+
+th {
+	background-color: wihte;
+	border-top: 3px solid #727272;
+}
+
+th, td {
+	border-bottom: 1px solid #d3d3d3;
+	padding: 10px;
 }
 
 .greylist {
@@ -56,45 +73,6 @@ a {
 	text-decoration-line: none;
 }
 
-.flex-right {
-	display: flex;
-	justify-content: right;
-}
-
-/* 모달창 */
-.buttondisp {
-	display:none;
-}
-
-#modalOpenButton, #modalCloseButton {
-	cursor: pointer;
-}
-
-#modalContainer {
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-#modalContent {
-	position: absolute;
-	background-color: #ffffff;
-	width: 600px;
-	height: 300px;
-	padding: 30px;
-	border-radius: 15px
-}
-
-#modalContainer.hidden {
-	display: none;
-}
-
 /* wrapper */
 #wrapper {
 	justify-content: center;
@@ -117,4 +95,35 @@ a {
 
 .box2 {
 	grid-area: box2
+}
+
+.flex-right {
+	display: flex;
+	justify-content: right;
+}
+
+.btn-report {
+	background-color: transparent;
+	border: none;
+	transition: 0.2s;
+}
+
+.blockbox {
+	position: sticky;
+	top : 800px;
+	left: 1390px;
+	font-size:2rem;
+}
+
+.reportSpan {
+	font-size:1rem; 
+	margin-right:30px; 
+	flex-grow: 1; 
+	justify-content: space-between;
+}
+
+.reportBtn{
+	text-decoration: none; 
+	color: #333; 
+	margin-left:900px;
 }

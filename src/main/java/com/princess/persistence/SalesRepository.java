@@ -3,6 +3,7 @@ package com.princess.persistence;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -10,7 +11,7 @@ import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Sales;
 
-public interface SalesRepository extends CrudRepository<Sales, Long> {
+public interface SalesRepository extends CrudRepository<Sales, Long>, QuerydslPredicateExecutor<Sales> {
 	
 	List<Sales> findByBuyer(Member member);
 	

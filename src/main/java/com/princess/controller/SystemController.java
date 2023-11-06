@@ -1,6 +1,5 @@
 package com.princess.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,26 +34,9 @@ public class SystemController {
 	}
 
 	@PostMapping("/register")
-	 public String register(Member member, HashMap<String, String> requestBody ) {
-	 String guInput = requestBody.get("guInput");
-	 String dongInput = requestBody.get("dongInput");
-	 
-		member.setLocation(guInput+ " " +dongInput);
-		System.out.println(member);
+	public String register(Member member) {
 		memberService.insertMember(member);
 		return "redirect:login";
-	}
-	
-	@GetMapping("/accessDenied")
-	public void accessDenied() {
-	}
-	
-	@PostMapping("/transformThunder")
-	public String transformThunder(@RequestBody Map<String, Object> payload, Member member) {
-		System.out.println("천둥맨 변신 중");
-		member.setId((String)payload.get("memberThunderId"));
-		memberService.updateThunder(member);
-		return "redirect:/product/getProductList?type=prod";
 	}
 
 }

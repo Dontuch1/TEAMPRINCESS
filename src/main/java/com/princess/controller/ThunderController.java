@@ -1,5 +1,6 @@
 package com.princess.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.princess.config.SecurityUser;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
+import com.princess.domain.Review;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.service.MemberService;
 import com.princess.service.ProductService;
+import com.princess.service.SalesService;
 import com.princess.service.ThunderService;
 
 @Controller
@@ -29,31 +32,27 @@ import com.princess.service.ThunderService;
 public class ThunderController {
 	
 	@Autowired
-	private ProductService productService;
-	
-	@Autowired
-	private MemberService memberService; 
-	
-	@Autowired
 	private ThunderService thunderservice;
-	
+		
 	@RequestMapping("/myThunderList")
-	public String myThunderList(@AuthenticationPrincipal SecurityUser securityUser, Model model, Search search, Member member,
-			@PageableDefault(page = 0, size = 7, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
+	public String myThunderList(@AuthenticationPrincipal SecurityUser securityUser, Model model, Search search,
+			@PageableDefault(page = 0, size = 7, sort = "traNo", direction = Sort.Direction.DESC) Pageable pageable) {
 		if (search.getSearchCondition() == null)
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
 		
 	// sales 시작	
-		Sales sales = new Sales();
-		
-		member.setId(securityUser.getUsername());
-		sales.setBuyer(member);
-		System.out.println(sales.toString());
+//		Sales sales = new Sales();
+	//	member.setId(securityUser.getUsername());
+//		sales.setBuyer(member);
+	//	System.out.println(sales.toString());
 	// sales 끝
 		
-		Page<Product> thunderList = thunderservice.myThunderList(search, pageable, member);
+		System.out.println("thunderList 찾기 전");
+		Page<Sales> thunderList = thunderservice.myThunderList(search, pageable);
+	//	Page<Sales> thunderList = salesservice.myThunderList(search, pageable, member);
+		System.out.println("thunderList : " + thunderList.toString());
 		
 		int nowPage = thunderList.getPageable().getPageNumber() + 1;
 		int startPage = Math.max(nowPage - 4, 1);
@@ -71,7 +70,7 @@ public class ThunderController {
 		
 		member.setId((String)payload.get("memberId"));
 		System.out.println("member : "+member.toString());
-		memberService.deleteThunder(member);
+		thunderservice.deleteThunder(member);
 		return "redirect:/product/getProductList?type=prod";
 	}
 	
@@ -87,8 +86,25 @@ public class ThunderController {
 	}
 	
 	@GetMapping("/standByList")
-	public void standByList() {
+	public String standByList(Model model, Product product, Search search,
+			@PageableDefault(page = 0, size = 7, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
+		if (search.getSearchCondition() == null)
+			search.setSearchCondition("TITLE");
+		if (search.getSearchKeyword() == null)
+			search.setSearchKeyword("");
 		
+		List<Review> reviewList = thunderservice.getreviewList();	
+		System.out.println(reviewList.toString());
+		
+		model.addAttribute("reviewList", reviewList);
+		return "thunder/standByList";
 	}
 	
+	@PostMapping("/transformThunder")
+	public String transformThunder(@RequestBody Map<String, Object> payload, Member member) {
+		System.out.println("천둥맨 변신 중");
+		member.setId((String)payload.get("memberThunderId"));
+		thunderservice.updateThunder(member);
+		return "redirect:/product/getProductList?type=prod";
+	}
 }

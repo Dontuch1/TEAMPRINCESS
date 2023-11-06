@@ -16,7 +16,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository memberRepo;
 	
-
 	@Autowired
 	private PasswordEncoder encoder;
 
@@ -41,17 +40,5 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepo.findById(member.getId()).get();
 	}
 	
-	public void deleteThunder(Member member) {
-		Member findmember = memberRepo.findById(member.getId()).get();
-		System.out.println("findmember : "+findmember.toString());
-		findmember.setAuth(Role.MEMBER);
-		memberRepo.save(findmember);
-	}
-	
-	public void updateThunder(Member member) {
-		Member findmember = memberRepo.findById(member.getId()).get();
-		System.out.println("findmember : "+findmember.toString());
-		findmember.setAuth(Role.THUNDER);
-		memberRepo.save(findmember);
-	}
+
 }
