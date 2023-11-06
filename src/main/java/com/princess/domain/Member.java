@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Role;
 import com.princess.domain.CheckCondition.YorN;
 
@@ -70,6 +71,10 @@ public class Member {
 	@ColumnDefault("'MEMBER'")
 	@Enumerated(EnumType.STRING)
 	private Role auth;
+	
+	@ColumnDefault("'Y'")
+	@Enumerated(EnumType.STRING)
+	private Display enabled;
 	
 	// 배터리 0~100 제한
 	public void setBattery(int battery) {
