@@ -35,9 +35,10 @@ public class SystemController {
 	}
 
 	@PostMapping("/register")
-	 public String register(Member member, HashMap<String, String> requestBody ) {
+	 public String register(Member member, @RequestBody Map<String, String> requestBody ) {
 	 String guInput = requestBody.get("guInput");
 	 String dongInput = requestBody.get("dongInput");
+	 
 	 
 		member.setLocation(guInput+ " " +dongInput);
 		System.out.println(member);
