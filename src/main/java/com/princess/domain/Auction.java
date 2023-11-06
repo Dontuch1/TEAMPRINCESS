@@ -21,6 +21,7 @@ import lombok.ToString;
 @Data
 @ToString(exclude = {"pNo", "auctionId"})
 @Entity
+
 public class Auction {
 	
 	@Id @GeneratedValue

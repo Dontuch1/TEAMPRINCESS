@@ -32,7 +32,9 @@ public interface ProductService {
 	
 	void buyProduct(Product product, String buyer);
 	
-	int getAuctionCnt(Product product, String id);
+	boolean isAuctioned(Product product, String id);
+	
+	int countAuctions(Product product);
 	
 	void insertAuction(Product product, String id, int bid);
 	
