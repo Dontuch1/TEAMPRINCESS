@@ -2,7 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>신고리스트</title>
-
+<style>
+pre {
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+</style>
 </head>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
@@ -15,68 +19,70 @@
 			</div>
 			<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
 			<!-- 상태가 H -->
+			<br>
 			<h4>신고 대기</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>신고번호</th>
-						<th>신고자</th>
+						<th>번호</th>
+						<th>신고글 번호</th>
 						<th>글 종류</th>
 						<th>신고 내용</th>
 						<th>신고 일자</th>
-						<th>상태</th>
-						<th>상태 변경</th>
-						<th></th>
+						<th style="text-align: center;" colspan="2">상태 변경</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="report: ${reportListH}">
-						<td class="center" th:text="${report.rptNo}"></td>
-						<td class="left" th:text="${report.rptId.id}"></td>
-						<td class="left" th:text="${report.type}"></td>
-						<td class="left" th:text="${report.rptCon}"></td>
+					<tr th:each="report, state : ${reportListH}">
+						<td class="center" th:text="${state.count}"></td>
+						<td class="center" th:text="${report.postNo}"></td>
+						<td class="left" th:if="${report.type.toString() == 'PRODUCT'}" >일반/경매</td>
+						<td class="left" th:if="${report.type.toString() == 'COMMUNITY'}"> 커뮤니티</td>
+						<td style="width: 500px;" class="left"><pre style="white-space: pre-wrap" th:text="${report.rptCon}"></pre></td>
 						<td class="left" th:text="${report.regdate}"></td>
-						<td class="left" th:text="${report.submit}"></td>
 						<td><a
 							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=Y)}"
-							class="btn btn-outline-primary"> 신고 완료 </a>
+							class="btn btn-outline-primary right"> 신고 완료 </a>
 						<td><a
 							th:href="@{/admin/changeStatus(rptNo=${report.rptNo}, type=N)}"
-							class="btn btn-outline-info">신고 반려</a></td>
+							class="btn btn-outline-info left">신고 반려</a></td>
 					</tr>
 				</tbody>
 			</table>
 			<!-- 상태가 H끝 -->
 
 			<!-- 상태가 Y -->
+			<br>
 			<h4>신고 완료</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>신고번호</th>
-						<th>신고자</th>
+						<th>번호</th>
+						<th>신고글 번호</th>
 						<th>글 종류</th>
 						<th>신고 내용</th>
 						<th>신고 일자</th>
-						<th>상태</th>
-						<th></th>
+						<th style="text-align: center;" colspan="2">상태</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="report: ${reportListY}">
-						<td class="center" th:text="${report.rptNo}"></td>
-						<td class="left" th:text="${report.rptId.id}"></td>
-						<td class="left" th:text="${report.type}"></td>
-						<td class="left" th:text="${report.rptCon}"></td>
+					<tr th:each="report, state: ${reportListY}">
+						<td class="center" th:text="${state.count}"></td>
+						<td class="center" th:text="${report.postNo}"></td>
+						<td class="left" th:if="${report.type.toString() == 'PRODUCT'}" >일반/경매</td>
+						<td class="left" th:if="${report.type.toString() == 'COMMUNITY'}"> 커뮤니티</td>
+						<td class="left"><pre th:text="${report.rptCon}"></pre></td>
 						<td class="left" th:text="${report.regdate}"></td>
-						<td class="left" th:text="${report.submit}"></td>
+						<td class="center"><button
+							disabled style="background-color: #aaa; color: white; border: none;"
+							class="btn btn-outline-primary"> 신고 완료 </button>
 					</tr>
 					<!-- 추가적인 신고 대상들을 나열할 수 있습니다 -->
 				</tbody>
 			</table>
 			<div style="text-align: right">
 				<p>
-					신고 당한 사람은 배터리 5씩 깎입니다 <span id="battery"></span></p>
+					신고 완료 회원은 배터리가 5씩 깎입니다 <span id="battery"></span></p>
 			</div>
 			<!-- 상태가 Y끝 -->
 
@@ -85,23 +91,25 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>신고번호</th>
-						<th>신고자</th>
+						<th>번호</th>
+						<th>신고글 번호</th>
 						<th>글 종류</th>
 						<th>신고 내용</th>
 						<th>신고 일자</th>
-						<th>상태</th>
-						<th></th>
+						<th style="text-align: center;" colspan="2">상태</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="report: ${reportListN}">
-						<td class="center" th:text="${report.rptNo}"></td>
-						<td class="left" th:text="${report.rptId.id}"></td>
-						<td class="left" th:text="${report.type}"></td>
-						<td class="left" th:text="${report.rptCon}"></td>
+					<tr th:each="report, state: ${reportListN}">
+						<td class="center" th:text="${state.count}"></td>
+						<td class="center" th:text="${report.postNo}"></td>
+						<td class="left" th:if="${report.type.toString() == 'PRODUCT'}" >일반/경매</td>
+						<td class="left" th:if="${report.type.toString() == 'COMMUNITY'}"> 커뮤니티</td>
+						<td class="left"><pre th:text="${report.rptCon}"></pre></td>
 						<td class="left" th:text="${report.regdate}"></td>
-						<td class="left" th:text="${report.submit}"></td>
+						<td class="center"><button
+							disabled style="background-color: #aaa; color: white; border: none;"
+							class="btn btn-outline-info">신고 반려</button></td>
 					</tr>
 				</tbody>
 			</table>

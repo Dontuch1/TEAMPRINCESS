@@ -216,7 +216,11 @@ public class MyPageController {
 			mem.setBattery(mem.getBattery() - 1);
 		}
 		myService.insertReview(review, product);
+		if (mem.getBattery() <= 0) {
+			myService.disalbeMember(mem);
+		} else {
 		myService.updateBattery(mem);
+		}
 
 		return "redirect:myBuyList";
 	}
@@ -243,7 +247,11 @@ public class MyPageController {
 			mem.setBattery(mem.getBattery() - 1);
 		}
 		myService.insertReview(review, product);
+		if (mem.getBattery() <= 0) {
+			myService.disalbeMember(mem);
+		} else {
 		myService.updateBattery(mem);
+		}
 
 		return "redirect:myProductList?id="+securityUser.getUsername();
 	}

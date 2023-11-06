@@ -81,6 +81,7 @@
 									</div>
 								</div>
 							</div>
+						</form>
 					</div>
 
 					<br> <br> <br> <br>
@@ -88,22 +89,15 @@
 						style="position: relative; left: -10%;" onclick="subConfirm()">충전</button>
 					<button type="button" class="btn btn-outline-primary depositBtn"
 						style="position: relative; left: 10%;" onclick="changeValue()">출금</button>
-
-
-					</form>
-
 				</div>
-
 			</div>
 			<div th:align="center">
 				<a type="button" class="btn btn-dark flex-shrink-0"
-					onclick="history.back();">이전</a><br>
-				<br>
-				<br>
-				<br>
+					onclick="history.back();">이전</a><br> <br> <br> <br>
 			</div>
 		</div>
 	</div>
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 <script th:inline="javascript">
 	function subConfirm() {

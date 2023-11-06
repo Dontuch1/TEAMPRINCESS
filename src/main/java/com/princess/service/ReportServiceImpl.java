@@ -71,7 +71,12 @@ public class ReportServiceImpl implements ReportService {
 				member = memberRepository.findById(product.getSalesId().getId()).get();
 				product.setDisplay(Display.H);
 				member.setBattery(member.getBattery() - 5);
-				memberRepository.save(member);
+				if (member.getBattery() <= 0) {
+					member.setEnabled(Display.N);
+					memberRepository.save(member);
+				} else {
+					memberRepository.save(member);
+				}
 				productRepository.save(product);
 
 			} else {
@@ -80,7 +85,12 @@ public class ReportServiceImpl implements ReportService {
 				member = memberRepository.findById(board.getUserId().getId()).get();
 				board.setDisplay(Display.H);
 				member.setBattery(member.getBattery() - 5);
-				memberRepository.save(member);
+				if (member.getBattery() <= 0) {
+					member.setEnabled(Display.N);
+					memberRepository.save(member);
+				} else {
+					memberRepository.save(member);
+				}
 				boardRepository.save(board);
 			}
 		} else {

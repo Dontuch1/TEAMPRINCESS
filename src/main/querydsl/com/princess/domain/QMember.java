@@ -36,6 +36,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath email = createString("email");
 
+    public final EnumPath<CheckCondition.Display> enabled = createEnum("enabled", CheckCondition.Display.class);
+
     public final StringPath id = createString("id");
 
     public final ListPath<LikeWish, QLikeWish> likeWishList = this.<LikeWish, QLikeWish>createList("likeWishList", LikeWish.class, QLikeWish.class, PathInits.DIRECT2);

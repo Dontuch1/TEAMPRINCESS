@@ -248,6 +248,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	public void insertReport(Report report) {
+		Report findReport = reportRepo.findByPostNoAndType(report.getPostNo(), Type.PRODUCT);
+		if (findReport != null) {
+			findReport.setRptCon(findReport.getRptCon() + "\n" +"(" + report.getRptId().getId() + ") " + report.getRptCon());
+			reportRepo.save(findReport);
+		} else
 		reportRepo.save(report);
 	}
 
