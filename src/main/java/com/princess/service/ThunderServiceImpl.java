@@ -3,6 +3,7 @@ package com.princess.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.princess.domain.Member;
 import com.princess.domain.Product;
@@ -17,6 +18,7 @@ import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 
+@Service
 public class ThunderServiceImpl implements ThunderService {
 
 	@Autowired
