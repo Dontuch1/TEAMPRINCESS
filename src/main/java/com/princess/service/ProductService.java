@@ -57,4 +57,6 @@ public interface ProductService {
 	boolean isReported(Member member, Product product, Type type);
 	
 	void insertReport(Report report);
+
+	void updateReport(Report report);
 }

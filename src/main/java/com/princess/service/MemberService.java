@@ -16,8 +16,4 @@ public interface MemberService {
 	
 	Member getMember(Member meber);
 
-	void deleteThunder(Member member);
-	
-	void updateThunder(Member member);
-
 }

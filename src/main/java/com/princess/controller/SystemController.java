@@ -38,13 +38,5 @@ public class SystemController {
 		memberService.insertMember(member);
 		return "redirect:login";
 	}
-	
-	@PostMapping("/transformThunder")
-	public String transformThunder(@RequestBody Map<String, Object> payload, Member member) {
-		System.out.println("천둥맨 변신 중");
-		member.setId((String)payload.get("memberThunderId"));
-		memberService.updateThunder(member);
-		return "redirect:/product/getProductList?type=prod";
-	}
 
 }

@@ -5,78 +5,6 @@
 <!-- 스타일 -->
 
 <style>
-h2 {
-	font-weight: border;
-}
-
-.hr1 {
-	border: 0;
-	height: 2px;
-	background: #d3d3d3;
-}
-
-.grey {
-	color: #727272;
-}
-
-#strong {
-	font-weight: 900;
-}
-
-table {
-	width: 100%;
-	border-top: 1px solid #d3d3d3;
-	border-collapse: collapse;
-}
-
-th {
-	background-color: white;
-	border-top: 3px solid #727272;
-}
-
-th, td {
-	border-bottom: 1px solid #d3d3d3;
-	padding: 10px;
-}
-
-.greylist {
-	width: 50px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: grey;
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.gradient {
-	width: 80px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: linear-gradient(to bottom, grey, black);
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.left {
-	text-align: left;
-}
-
-.right {
-	float: right;
-}
-
-.center {
-	text-align: center;
-}
-
-a {
-	color: black;
-	text-decoration-line: none;
-}
 
       .scroll::-webkit-scrollbar { /* 스크롤 바 숨김 */
         display: none;
@@ -87,37 +15,12 @@ a {
       }
       
 
-/* wrapper */
-#wrapper {
-	justify-content: center;
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(1);
-	grid-template-areas: "box2 box2 box2 box2";
-	margin: 0px auto;
-	padding: 0px;
-}
 
-.box {
-	padding: 15px;
-}
-
-.box1 {
-	grid-area: box1
-}
-
-.box2 {
-	grid-area: box2
-}
-.flex-right{
-	display: flex;
-	justify-content: right;
-}
 
 </style>
 
-<link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/myThunderList.css}" rel="stylesheet">
+<link th:href="@{/css/wrapper.css}" rel="stylesheet">
 
 </head>
 <body th:align="center" style="width:100%; overflow-x:hidden;  overflow-y:hidden;">

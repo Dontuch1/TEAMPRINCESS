@@ -31,33 +31,27 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private BoardRepository boardRepository;
 
-	@Override
 	public void insertReport(Report report) {
 		reportRepository.save(report);
 	}
 
-	@Override
 	public void updateReport(Report report) {
 		reportRepository.save(report);
 	}
 
-	@Override
 	public void deleteReport(Report report) {
 		reportRepository.deleteById(report.getRptNo());
 	}
 
-	@Override
 	public Report getReport(Report report) {
 		return reportRepository.findById(report.getRptNo()).orElse(null);
 	}
 
-	@Override
 	public Page<Report> getReportList(Pageable pageable, Display submit) {
 
 		return reportRepository.findBySubmit(pageable, submit);
 	}
 
-	@Override
 	public void changeReportStatus(Long rptNo, String type) {
 		Report report = new Report();
 		report = reportRepository.findById(rptNo).get();

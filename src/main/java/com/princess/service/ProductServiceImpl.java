@@ -249,4 +249,8 @@ public class ProductServiceImpl implements ProductService {
 	public void insertReport(Report report) {
 		reportRepo.save(report);
 	}
+	
+	public void updateReport(Report report) {
+		reportRepo.save(report);
+	}
 }

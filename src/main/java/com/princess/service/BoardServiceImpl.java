@@ -119,6 +119,10 @@ public class BoardServiceImpl implements BoardService {
 			return false;
 	}
 	
+	public Board getGreat(Board board) {
+		return boardRepo.findBypostNum(board.getPostNum());
+	}
+	
 	public boolean isGreated(String id, Board board, Type type) {
 		boolean isGreated = false;
 		for(LikeWish like : likewishRepo.findBypNoAndType(board.getPostNum(), type)) {
@@ -128,6 +132,21 @@ public class BoardServiceImpl implements BoardService {
 			}
 		}
 		return isGreated;
+	}
+	
+	public void insertGreat(LikeWish likeWish, Long greatNum, Board board1) {
+		board1.setGreat(greatNum);
+		likewishRepo.save(likeWish);
+		boardRepo.save(board1);
+	}
+	
+	public void deleteGreat(Board board, Type type, Member member,Long greatNum) {
+		LikeWish findGreat = likewishRepo.findBypNoAndTypeAndLikeId(board.getPostNum(), type, member);
+		board.setGreat(greatNum);
+		System.out.println("findWish : " + findGreat);
+		System.out.println("delete great cnt : "+ board.getGreat());
+		likewishRepo.delete(findGreat);
+		boardRepo.save(board);
 	}
 	
 

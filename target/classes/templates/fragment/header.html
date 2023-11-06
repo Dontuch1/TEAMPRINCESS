@@ -4,6 +4,8 @@
 <!-- Top navigation-->
 
 <th:block th:fragment="header">
+	<input type="hidden" id="battery0" th:value="${currentUser.battery}">
+	
 	<nav class="navbar navbar-expand-lg navbar-light border-bottom"
 		style="width: 1200px; background-color: transparent;">
 		<div class="container-fluid" style="background-color: transparent;">
@@ -186,6 +188,34 @@
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 	<script type="text/javascript">
+	
+		/* window.onload = function battery() {
+			let battery = $('#battery0').val(); 
+			
+			let replyData = {
+						"memberThunderId" : $('#memberThunderId').val(),
+						"battery" : battery
+					 };
+			
+			if(battery==0) {
+				$.ajax({
+				       type: "POST",
+				       url: "/admin/0BatDeleteMember",
+				       data: JSON.stringify(replyData),
+				       contentType: "application/json",
+				       success: function(response) {
+				    	   alert("배터리 부족으로 당나번공이 종료됩니다.");
+				    	   location.href='http://localhost:8081/system/login';
+				       },
+				       error: function(error) {
+				           alert("에러");
+				       }
+				   });
+			} else {
+				return;
+			}
+		} */
+		
 		function transformThunder() { // 천둥맨 변신!
 		    console.log("thunderTrans!");
 			
@@ -195,7 +225,7 @@
 			 
 			$.ajax({
 		       type: "POST",
-		       url: "/system/transformThunder",
+		       url: "/thunder/transformThunder",
 		       data: JSON.stringify(replyData),
 		       contentType: "application/json",
 		       success: function(response) {

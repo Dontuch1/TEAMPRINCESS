@@ -1,3 +1,4 @@
+@charset "UTF-8";
 h2 {
 	font-weight: border;
 }
@@ -14,31 +15,6 @@ h2 {
 
 #strong {
 	font-weight: 900;
-}
-
-.table {
-	width: 100%;
-	
-	border-collapse: collapse;
-}
-
-.th {
-	background-color: white;
-	border-top: 3px solid #727272;
-	
-}
-
-.border1 {
-	border-top: 1px solid #d3d3d3;
-	border-bottom: 1px solid #d3d3d3;
-	height: 70px;
-}
-
-.textareahold {
-    width: 500px;
-    height: 3.25em;
-    border: none;
-    resize: none;
 }
 
 .greylist {
@@ -75,30 +51,14 @@ h2 {
 	text-align: center;
 }
 
-
-
-/* wrapper ,display: grid */
-#wrapper {
-	justify-content: center;
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(1);
-	grid-template-areas: "box2 box2 box2 box2";
-	margin: 0px auto;
-	padding: 0px;
+a {
+	color: black;
+	text-decoration-line: none;
 }
 
-.box {
-	padding: 15px;
-}
-
-.box1 {
-	grid-area: box1
-}
-
-.box2 {
-	grid-area: box2
+.flex-right {
+	display: flex;
+	justify-content: right;
 }
 
 /* 모달창 */
@@ -133,3 +93,28 @@ h2 {
 
 #modalContainer.hidden {
 	display: none;
+}
+
+/* wrapper */
+#wrapper {
+	justify-content: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(1);
+	grid-template-areas: "box2 box2 box2 box2";
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.box {
+	padding: 15px;
+}
+
+.box1 {
+	grid-area: box1
+}
+
+.box2 {
+	grid-area: box2
+}
