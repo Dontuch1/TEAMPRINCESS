@@ -18,10 +18,12 @@
 			<div class="container-fluid">
 				<h4 class="mt-4">🛒 찜목록</h4>
 				<br>
+				<div th:if="${wishList.empty}"
+					style="height: 500px; width: auto; background-image: url('/images/not_found_rabbit.jpg'); background-position: center;">
+					<p>찜한 상품이 없습니다.</p>
+				</div>
 				<div id="mypage-product-list">
-					<div th:if="${wishList.empty}">
-						<p>찜한 상품이 없습니다.</p>
-					</div>
+
 					<div class="card" th:each="product, state : ${wishList}"
 						style="width: 250px; height: 380px; margin-bottom: 20px;">
 						<div class="card-img-square">

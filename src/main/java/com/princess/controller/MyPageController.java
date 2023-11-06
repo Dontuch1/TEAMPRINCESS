@@ -73,6 +73,7 @@ public class MyPageController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("userPage",myService.getMember(member));
 	}
 
 	@GetMapping("/myProductList")
@@ -136,6 +137,7 @@ public class MyPageController {
 		model.addAttribute("standByProduct", standByProduct);
 		model.addAttribute("soldProduct", soldProduct);
 		model.addAttribute("reportedProduct", reportedProduct);
+		model.addAttribute("userPage",myService.getMember(member));
 
 	}
 
@@ -160,6 +162,7 @@ public class MyPageController {
 		model.addAttribute("nowPage1", nowPage1);
 		model.addAttribute("startPage1", startPage1);
 		model.addAttribute("endPage1", endPage1);
+		model.addAttribute("userPage", myService.getMember(member));
 	}
 
 	@GetMapping("/myWishList")

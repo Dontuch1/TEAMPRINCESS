@@ -117,8 +117,8 @@
 									최근 업로드한 상품</a>
 							</h5>
 							<div></div>
-							<div th:if="${productList.empty}">
-								<p>업로드한 상품이 없습니다.</p>
+							<div th:if="${productList.empty}" style="margin-left:100px">
+								<span> 업로드한 상품이 없습니다.</span>
 							</div>
 							<div class="card" th:each="product, iterStat : ${productList}"
 								th:if="${iterStat.index < 2}"
@@ -175,12 +175,12 @@
 									<th width="150px">Writer</th>
 									<th>Title</th>
 									<th width="100px">Like</th>
-									<th style="width: 150px;">Date</th>
+									<th width= "150px">Date</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:if="${productList.empty}">
-									<td colspan="5">게시글이 없습니다.</td>
+									<td colspan="6">게시글이 없습니다.</td>
 								</tr>
 								<tr th:each="board, iterStat: ${boardList}"
 									th:if="${iterStat.index < 5}">
