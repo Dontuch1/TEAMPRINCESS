@@ -7,6 +7,13 @@
 	width: 100px;
 	margin-top: 3px;
 }
+.no-thun {
+	height: 40px;
+	width: 200px;
+	background-color: #eee;
+	border: 1px solid #eee;
+	border-radius: 5px;
+}
 </style>
 </head>
 <body th:align="center">
@@ -123,7 +130,7 @@
 									style="border: 1px dashed gray; width: 200px; align-self: center; margin-bottom: 4 px;">
 								<strong>후기 보내기</strong>
 							</div>
-							<div th:align="center" style="margin-top: 10px;"
+							<div th:if="${product.value[0] != '아직 썬더맨이 없어요 ㅋㅋㅎㅎㅠㅠ;;'}" th:align="center" style="margin-top: 10px;"
 								th:attr="style=${product.key.delivery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
 								<div>
 									<small>판매자</small><br>
@@ -147,6 +154,10 @@
 										data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
 										disabled>완료</button>
 								</div>
+							</div>
+							<div th:align="center" th:if="${product.value[0] == '아직 썬더맨이 없어요 ㅋㅋㅎㅎㅠㅠ;;'}">
+								<button class=" no-thun"
+										data-bs-target="#exampleModalToggle" data-bs-toggle="modal" disabled>천둥맨 배치 대기중</button>
 							</div>
 						</div>
 					</div>

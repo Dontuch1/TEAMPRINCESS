@@ -298,7 +298,7 @@ input#bid[type='number'] {
  *=============================================*/
 function delConfirm() {
 	if (confirm("정말 삭제하시겠습니까?")) {
-		window.location.href = '/product/deliteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
+		window.location.href = '/product/deleteProduct?pNo=[[${product.pNo}]]&isAuc=[[${product.auction}]]';
 	} else {
 		return false;
 	}

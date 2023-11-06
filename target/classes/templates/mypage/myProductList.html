@@ -3,6 +3,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마이 페이지</title>
 <style type="text/css">
+.outlined-text {
+	color: black;
+	font-weight: bold;
+	text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px
+		1px 0 white;
+}
 </style>
 </head>
 <body th:align="center">
@@ -12,6 +18,69 @@
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
+				<!-- 폼 시작 -->
+				<form action="/mypage/sendReview" method="post">
+
+					<!-- 모달 시작 -->
+					<div class="modal fade" id="exampleModalToggle"
+						aria-labelledby="exampleModalToggleLabel" tabindex="-1"
+						aria-hidden="true" style="display: none">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+										후기 남기기</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="rating"
+											id="inlineRadio1" value="UP" checked /> <label
+											class="form-check-label" for="inlineRadio1">👍 좋아요</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="rating"
+											id="inlineRadio2" value="DOWN" /> <label
+											class="form-check-label" for="inlineRadio2">👎 별로에요</label>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-primary"
+										data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다음</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="exampleModalToggle2"
+						aria-labelledby="exampleModalToggleLabel2" tabindex="-1"
+						aria-hidden="true" style="display: none">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+										한 줄 평가</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<input type="text" name="content" size="30pt" maxlength="50"
+										required="required" /> <span style="color: gray"> <br>최대
+										50자
+									</span>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-primary" type="submit">후기 보내기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 모달 끝 -->
+					<input type="hidden" name="receiver" id="receiverInput"> <input
+						type="hidden" name="pNo" id="pNoInput">
+				</form>
+				<!-- 폼 끝 -->
+
 
 				<h4 class="mt-4">
 					🧥 <span style="font-weight: bold"
@@ -21,7 +90,7 @@
 
 
 				<div
-					style="display: grid; grid-template-columns: 1fr 1fr 1fr; justify-items: center;">
+					style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; justify-items: center;">
 					<div th:align="center">
 						<p style="font-size: 16pt; font-weight: bolder">판매중인 상품</p>
 					</div>
@@ -31,18 +100,26 @@
 					<div th:align="center">
 						<p style="font-size: 16pt; font-weight: bolder">판매완료된 상품</p>
 					</div>
+					<div th:align="center">
+						<p style="font-size: 16pt; font-weight: bolder">게시 중단 상품</p>
+					</div>
 					<!-- 1번 캐러셀 -->
 					<div id="carouselExampleCaptions"
 						class="carousel slide pointer-event carousel-fade"
-						style="width: 350px; height: 400px; padding: 10px;">
+						style="width: 300px; height: 400px; padding: 10px;">
 
 						<div class="carousel-inner" th:align="center">
+							<div class="carousel-item active" th:if="${ingProduct.size==0}">
+								<img src="/images/not_found_rabbit_resize.jpg"
+									style="width: 100%; height: 100%; object-fit: cover;">
+							</div>
 							<div class="carousel-item"
 								th:each="product, iterStat: ${ingProduct}"
 								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
 								<img alt="No Image" th:src="@{${product.upload}}"
 									style="width: 100%; height: 100%; object-fit: cover;">
-								<div class="carousel-caption d-none d-md-block">
+								<div class="carousel-caption d-none d-md-block"
+									style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 									<h5
 										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
 										th:text="${product.title}"></h5>
@@ -66,15 +143,21 @@
 					<!-- 2번 캐러셀 -->
 					<div id="carouselExampleCaptions2"
 						class="carousel slide pointer-event carousel-fade"
-						style="width: 350px; height: 400px; padding: 10px;">
+						style="width: 300px; height: 400px; padding: 10px;">
 
 						<div class="carousel-inner">
+							<div class="carousel-item active"
+								th:if="${standByProduct.size==0}">
+								<img src="/images/not_found_rabbit_resize.jpg"
+									style="width: 100%; height: 100%; object-fit: cover;">
+							</div>
 							<div class="carousel-item"
 								th:each="product, iterStat: ${standByProduct}"
 								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
 								<img alt="No Image" th:src="@{${product.upload}}"
 									style="width: 100%; height: 100%; object-fit: cover;">
-								<div class="carousel-caption d-none d-md-block">
+								<div class="carousel-caption d-none d-md-block"
+									style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 									<h5
 										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
 										th:text="${product.title}"></h5>
@@ -98,23 +181,50 @@
 					<!-- 3번 캐러셀 -->
 					<div id="carouselExampleCaptions3"
 						class="carousel slide pointer-event"
-						style="width: 350px; height: 400px; padding: 10px;">
+						style="width: 300px; height: 400px; padding: 10px;">
 
 						<div class="carousel-inner">
+							<div class="carousel-item active" th:if="${soldProduct.size==0}">
+								<img src="/images/not_found_rabbit_resize.jpg"
+									style="width: 100%; height: 100%; object-fit: cover;">
+							</div>
 							<div class="carousel-item"
 								th:each="product, iterStat: ${soldProduct}"
 								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
-								<img alt="No Image" th:src="@{${product.upload}}"
+								<img alt="No Image" th:src="@{${product.key.upload}}"
 									style="width: 100%; height: 100%; object-fit: cover;">
-								<div class="carousel-caption d-none d-md-block">
+								<div class="carousel-caption d-none d-md-block"
+									style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 									<h5
 										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
-										th:text="${product.title}"></h5>
-									<a class="btn btn-dark"
-										th:href="@{/product/getProduct(pNo=${product.pNo})}">판매완료</a>
+										th:text="${product.key.title}"></h5>
+									<div
+										th:attr="style=${product.key.delivery.toString() == 'Y'} ? 'display: grid; grid-template-columns: 1fr 1fr;' : 'display: grid; grid-template-columns: 1fr;'">
+										<div>
+											<button class="btn btn-dark btn-before-buyer"
+												th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[0]}]]);"
+												th:if="${!product.value[0].isEmpty()}"
+												data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onmouseover="reviewFun(1, 1)" onmouseout="reviewFun(1, 0)">구매자</button>
+											<button th:if="${product.value[0].isEmpty()}"
+												class="btn btn-dark btn-after-buyer" onmouseover="reviewFun(1, 2)" onmouseout="reviewFun(1, 0)"
+												>구매자</button>
+
+										</div>
+										<div th:if="${product.key.delivery.toString() == 'Y'}">
+											<button class="btn btn-dark btn-before-thunder"
+												th:onclick="whoIsReceiver([[${product.key.pNo}]], [[${product.value[1]}]]);"
+												th:if="${!product.value[1].isEmpty()}"
+												data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onmouseover="reviewFun(2, 1)" onmouseout="reviewFun(2, 0)">천둥맨</button>
+											<button class="btn btn-dark btn-after-thunder"
+												th:if="${product.value[1].isEmpty()}" onmouseover="reviewFun(2, 2)" onmouseout="reviewFun(2, 0)"
+												>천둥맨</button>
+										</div>
+									</div>
 								</div>
+
 							</div>
 						</div>
+
 						<button class="carousel-control-prev" type="button"
 							data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -122,6 +232,44 @@
 						</button>
 						<button class="carousel-control-next" type="button"
 							data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+
+					<!-- 4번 캐러셀 -->
+					<div id="carouselExampleCaptions4"
+						class="carousel slide pointer-event"
+						style="width: 300px; height: 400px; padding: 10px;">
+
+						<div class="carousel-inner">
+							<div class="carousel-item active"
+								th:if="${reportedProduct.size==0}">
+								<img src="/images/not_found_rabbit_resize.jpg"
+									style="width: 100%; height: 100%; object-fit: cover;">
+							</div>
+							<div class="carousel-item"
+								th:each="product, iterStat: ${reportedProduct}"
+								th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+								<img alt="No Image" th:src="@{${product.upload}}"
+									style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="carousel-caption d-none d-md-block"
+									style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+									<h5
+										style="color: white; -webkit-text-stroke: 1px black; background-color: white; text-shadow: 0 0 10px white;"
+										th:text="${product.title}"></h5>
+									<a class="btn btn-dark"
+										th:href="@{/product/getProduct(pNo=${product.pNo})}">게시중단</a>
+								</div>
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#carouselExampleCaptions4" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#carouselExampleCaptions4" data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Next</span>
 						</button>
@@ -136,4 +284,45 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function whoIsReceiver(pNo, receiver) {
+		console.log(pNo);
+		console.log(receiver);
+		let pnoinput = document.getElementById('pNoInput');
+		let receiverinput = document.getElementById('receiverInput');
+
+		pnoinput.setAttribute('value', pNo);
+		receiverinput.setAttribute('value', receiver);
+
+	}
+	function reviewFun(type, review) {
+		if (type == 1) {
+			if (review == 1) {
+				let btn = $(".btn-before-buyer");
+				btn.text('후기작성');
+			} else if (review == 2) {
+				let btn = $(".btn-after-buyer");
+				btn.text('작성완료');
+			} else {
+				let btn = $(".btn-before-buyer");
+				let btn1 = $(".btn-after-buyer");
+				btn.text('구매자');
+				btn1.text('구매자');
+			}
+		} else {
+			if (review == 1) {
+				let btn = $(".btn-before-thunder");
+				btn.text('후기작성');
+			} else if  (review == 2) {
+				let btn = $(".btn-after-thunder");
+				btn.text('작성완료');
+			} else {
+				let btn = $(".btn-before-thunder");
+				let btn1 = $(".btn-after-thunder");
+				btn.text('천둥맨');
+				btn1.text('천둥맨');
+			}
+		}
+	}
+</script>
 </html>
