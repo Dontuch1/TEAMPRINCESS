@@ -82,11 +82,14 @@ public class ReportServiceImpl implements ReportService {
 				report.setPostNo(rptNo);
 				member.setBattery(member.getBattery() - 1);
 				memberRepository.save(member);
+				productRepository.findById(postNum).get();
 			} else {
-				report.setSubmit(Display.N);
+				report.setSubmit(Display.H);
+				//Product.setDisplay(Display.H);
 
 			}
 			reportRepository.save(report);
+			//reportRepository.save(Product);
 		}
 	}
 

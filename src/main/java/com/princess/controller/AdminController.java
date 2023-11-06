@@ -8,12 +8,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Member;
 import com.princess.domain.Report;
+import com.princess.service.BoardService;
 import com.princess.service.MemberService;
 import com.princess.service.ReportService;
 
@@ -22,9 +24,11 @@ import com.princess.service.ReportService;
 public class AdminController {
 
 	@Autowired
-	private MemberService memberService;	
+	private MemberService memberService;
 	@Autowired
 	private ReportService reportService;
+	@Autowired
+	private BoardService boardService; 
 
 	@RequestMapping("/adminMain")
 	public void adminMain() {
@@ -62,11 +66,12 @@ public class AdminController {
 	}
 
 	@GetMapping("/changeStatus")
-	public String changeStatus( Long rptNo,String	type ) {
+	public String changeStatus(Long rptNo, String type) {
 		reportService.changeReportStatus(rptNo, type);
 		return "redirect:getReportList";
 	}
-  
+	
+
 	// 로그아웃
 	@RequestMapping("/logout")
 	public void logout() {

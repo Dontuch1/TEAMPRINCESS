@@ -2,20 +2,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>시스템 페이지</title>
-<style>
-.container {
-	max-width: 400px;
-	margin: 0 auto;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	background-color: #f9f9f9;
-}
-</style>
 </head>
+<style>
+</style>
 <body th:align="center">
 
-	<h2>회원 가입</h2>
+	<h2>회원 관리</h2>
 
 	<h4>회원정보를 위해서 정보를 입력해주세요</h4>
 </body>
@@ -25,19 +17,20 @@
 
 		<form action="/system/register" method="post">
 			<table th:align="center">
-				<tr>
 
-					<td><label for="name">아이디</label></td>
-					<td><input type="text" id="id" name="id"
-						placeholder="아이디를 입력하세요"></td>
-				<tr>
+				<label for="id">아이디</label>
+				<input type="text" class="form-control" name="id" id="id"
+					placeholder="아이디를 입력하세요">
+				</div>
+
+				
 					<td><label for="name">닉네임</label></td>
 					<td><input type="text" id="nickName" name="nickName"
 						placeholder="닉네임을 입력하세요"></td>
 				<tr>
 					<td><label for="name">지역</label></td>
 					<td><input type="text" id="location" name="location"
-						placeholder="예: OO구 OO동"></td>
+						placeholder="지역을 입력하세요"></td>
 				<tr>
 
 					<td><label for="name">이름</label></td>
