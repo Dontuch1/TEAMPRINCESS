@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 		saleseRepo.save(newSales);
 		productRepo.save(product);
 	}
-
+	// isAuctioned 추가 이거 변경
 	public int getAuctionCnt(Product product, String id) {
 		return auctionRepo.countByPNoAndId(product.getPNo(), id);
 	}

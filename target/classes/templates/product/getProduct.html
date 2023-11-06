@@ -65,6 +65,7 @@ input#bid[type='number'] {
 }
 </style>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <body th:align="center">
 	<div class="d-flex" id="wrapper">
 		<div id="page-content-wrapper">
@@ -166,7 +167,12 @@ input#bid[type='number'] {
 		                       			</form>
 			                        </div>
 		                        </div>
-		                        
+		                        <section id="section-chart">
+								    <div>
+								        <div id="legend-div" class="legend-div"></div>
+								        <canvas id="myChart"></canvas>
+								    </div>
+								</section>
 		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
 		                        <div id="thunderBtn" th:if="${product.delivery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
 									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delivery"
@@ -342,5 +348,32 @@ function buyBtn() {
 		}
 	}
 }
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script>
+ /*=============================================
+  * 경매 차트
+  *=============================================*/
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+			while(let i = 1; i <= [[${produc}]])],
+      datasets: [{
+        label: '# of Votes',
+        data: [10, 11],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
 </script>
 </html>
