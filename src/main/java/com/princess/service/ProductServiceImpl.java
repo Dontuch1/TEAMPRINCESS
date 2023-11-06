@@ -108,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
 			builder.and(qProduct.title.like("%" + search.getSearchKeyword() + "%"));
 		} else if (search.getSearchCondition().equals("CONTENT")) {
 			builder.and(qProduct.content.like("%" + search.getSearchKeyword() + "%"));
-		} else if (search.getSearchCondition().equals("ID")) {
+		} else if (search.getSearchCondition().equals("NICKNAME")) {
 			builder.and(qProduct.salesId.nickName.like("%" + search.getSearchKeyword() + "%"));
 		}
 
