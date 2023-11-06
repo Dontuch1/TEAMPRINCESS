@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+
+
+/* wrapper ,display: grid  (getBorad) */
+#wrapper1 {
+	justify-content: center;
+	width: 800px;
+	display: grid;
+	grid-template-columns: repeat(500px, 100px);
+	grid-template-rows: repeat(50px, 50px);
+	grid-template-areas: "box2 box1",
+						 "box2 box3";
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.boxx {
+	padding: 5px;
+}
+
+.boxx1 {
+	grid-area: box1
+}
+
+.boxx2 {
+	grid-area: box2
+}
+
+.boxx2 {
+	grid-area: box3
+}
+

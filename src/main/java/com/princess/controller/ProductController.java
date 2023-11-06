@@ -4,7 +4,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;	
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +40,6 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-
 	@RequestMapping("/getProductList")
 	public String getProductList(@RequestParam String type, Model model, Search search,
 			@PageableDefault(page = 0, size = 12, sort = "pNo", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -48,7 +49,7 @@ public class ProductController {
 			search.setSearchKeyword("");
 		System.out.println("search : " + search.toString());
 		System.out.println("type : " + type.toString());
-		
+
 		Page<Product> productList = productService.getProductList(type, search, pageable);
 
 		for (Product prod : productList) {
@@ -63,7 +64,7 @@ public class ProductController {
 				LocalDateTime expiredTime = localRegdate.plusDays(prod.getAucDuration()); // 7일 전 날짜 계산
 				if (expiredTime.isBefore(localNow))
 					prod.setSold(YorN.Y);
-					productService.updateProduct(prod);
+				productService.updateProduct(prod);
 			}
 		}
 
@@ -89,31 +90,47 @@ public class ProductController {
 		if (product.getAuction().equals(YorN.Y)) {
 			if (productService.getAuctionMaxPrice(product) == null)
 				auc.setAuctionPrice(product.getPrice());
-			else 
+			else
 				auc = (productService.getAuctionMaxPrice(product));
 		}
 		model.addAttribute("auction", auc);
-		
+
 		Auction currBid = new Auction();
 		System.out.println("currbid-raw : " + productService.getAuctionList(product));
 		if (!productService.getAuctionList(product).isEmpty())
-			productService.getAuctionList(product).get(0);
+			currBid = productService.getAuctionList(product).get(0);
 		System.out.println("currBid : " + currBid.toString());
 		model.addAttribute("currBid", currBid);
-		
+
 		List<Auction> bidList = productService.getBidList(securityUser.getMember(), product);
+		if(bidList.isEmpty()) {
+			Auction auctionTemp = new Auction();
+			auctionTemp.setAuctionPrice(0);
+			bidList.add(auctionTemp);
+		}
+		System.out.println("bidList : " + bidList);
 		model.addAttribute("bidList", bidList);
-		
-		int auctionCnt = productService.getAuctionCnt(product, securityUser.getUsername());
-		model.addAttribute("auctionCnt", auctionCnt);
-		
+
+		boolean isAuctioned = productService.isAuctioned(product, securityUser.getUsername());
+		model.addAttribute("isAuctioned", isAuctioned);
+
+		int countAuctions = productService.countAuctions(product);
+		model.addAttribute("countAuctions", countAuctions);
+
 		int wishCnt = productService.countWishes(product, Type.PRODUCT);
 		model.addAttribute("wishCnt", wishCnt);
-		
+
 		model.addAttribute("isWished", productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
 
 		model.addAttribute("isReported", productService.isReported(securityUser.getMember(), product, Type.PRODUCT));
-		System.out.println("isReproted : " + productService.isReported(securityUser.getMember(), product, Type.PRODUCT));
+
+		List<Auction> auctionList = productService.getAuctionList(product);
+		Map<Integer, Date> map = new HashMap<Integer, Date>();
+		for (Auction auct : auctionList) {
+			map.put(auct.getAuctionPrice(), auct.getRegdate());
+		}
+		model.addAttribute("map",map);
+
 		return "product/getProduct";
 	}
 
@@ -141,7 +158,7 @@ public class ProductController {
 		else
 			return "forward:getProductList?type=prod";
 	}
-	
+
 	@PostMapping("/buyProduct")
 	public String buyProduct(Product product, @RequestParam String id) {
 		product = productService.getProduct(product);
@@ -149,13 +166,13 @@ public class ProductController {
 			Member buyer = new Member();
 			buyer.setId(id);
 			buyer = productService.getMember(buyer);
-			buyer.setDeposit(buyer.getDeposit()-product.getPrice()-1500);
+			buyer.setDeposit(buyer.getDeposit() - product.getPrice() - 1500);
 			productService.setMemberDepoist(buyer);
 		}
 		productService.buyProduct(product, id);
 		return "redirect:/mypage/myBuyList";
 	}
-	
+
 	@PostMapping("/bidProduct")
 	public String bidProduct(Product product, @RequestParam String id, @RequestParam int bid) {
 		product = productService.getProduct(product);
@@ -167,19 +184,20 @@ public class ProductController {
 		}
 		if (product.getDelivery().equals(YorN.Y)) {
 			buyer.setDeposit(buyer.getDeposit() - bid - 1500);
-		} else buyer.setDeposit(buyer.getDeposit() - bid);
+		} else
+			buyer.setDeposit(buyer.getDeposit() - bid);
 		productService.setMemberDepoist(buyer);
 		productService.insertAuction(product, id, bid);
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
-	
+
 	@GetMapping("/updateProduct")
 	public void updateProduct(Model model, Product product) {
 		System.out.println("get-pre-product : " + product);
 		model.addAttribute("product", productService.getProduct(product));
 		System.out.println("get-post-product : " + productService.getProduct(product));
 	}
-	
+
 	@PostMapping("/updateProduct")
 	public String updateProduct(Product product, @RequestParam String strPrice, @RequestParam MultipartFile file) {
 		product.setPrice(Integer.parseInt(strPrice));
@@ -188,14 +206,15 @@ public class ProductController {
 		productService.editProduct(product, file);
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
-	
+
 	@GetMapping("/updateWish")
 	public String updateWish(Product product, @AuthenticationPrincipal SecurityUser securityUser) {
 		LikeWish likeWish = new LikeWish();
 		Member member = new Member();
 		member.setId(securityUser.getUsername());
 		likeWish.setLikeId(member);
-		System.out.println("update cont : " + productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
+		System.out
+				.println("update cont : " + productService.isWished(securityUser.getUsername(), product, Type.PRODUCT));
 		if (!productService.isWished(securityUser.getUsername(), product, Type.PRODUCT)) {
 			likeWish.setPNo(product.getPNo());
 			likeWish.setType(Type.PRODUCT);
@@ -205,7 +224,7 @@ public class ProductController {
 		}
 		return "redirect:getProduct?pNo=" + product.getPNo();
 	}
-	
+
 	@GetMapping("/reportProduct")
 	public String reportProduct(Report report, @RequestParam String id) {
 		Member member = new Member();
@@ -216,4 +235,52 @@ public class ProductController {
 		productService.insertReport(report);
 		return "redirect:getProduct?pNo=" + report.getPostNo();
 	}
+
+//	 /**
+//     * 통계 - 일별 매출 현황
+//     * 일일 매출 현황을 차트로 출력
+//     */
+//    @GetMapping("/chart")
+//    public String dailyProfit(Model model) {
+//        
+//        return "sttst/dailyProfit";
+//    }
+//    
+//    
+//    /**
+//     * 통계 - 일별 매출 현황 차트 출력
+//     * Post타입
+//     * ajax와 연결되어 chart.js출력 
+//     * @param json데이터
+//     */
+//    @ResponseBody
+//    @PostMapping("/chart")
+//    public String dailyPost(Model model) {
+//        
+//    List<SlsVO>list = sttstService.getDailyIncome();
+//    //gson객체 생성
+//        Gson gson = new Gson();
+//        JsonArray jArray = new JsonArray();
+//    //date타입을 string타입으로 바꾸기
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        
+//        Iterator<SlsVO> it = list.iterator();
+//        while(it.hasNext()) {
+//            SlsVO slsVO = it.next();
+//            JsonObject object = new JsonObject();
+//            int sale = slsVO.getSlsAmt();
+//            
+//            Date dt = slsVO.getSlsDt();
+//            String date =  df.format(dt);
+//            
+//            object.addProperty("sale", sale);
+//            object.addProperty("date", date);
+//            jArray.add(object);
+//        }
+//        
+//        String json = gson.toJson(jArray);
+//        logger.info("json변환: "+json);
+//        
+//        return json;
+//    }
 }

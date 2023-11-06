@@ -110,16 +110,32 @@
 				
 				<div id="ajaxInsert"></div>
 			</div>
-			<ul th:align="center" class="pagination">
+			<ul th:align="center" class="pagination justify-content-center">
+				<li class="page-item">
+					<a class="page-link" th:if="${nowPage != startPage}" th:href="@{/product/getProductList?type=prod(page=${nowPage -2})}" aria-label="Previous">
+		        		<span aria-hidden="true">&laquo;</span>
+		  	    	</a>
+		  	    </li>
 				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-					<li class="page-item" ><a class="page-link" th:if="${page != nowPage}"
+			  	    <li>
+						<a class="page-link" th:if="${page != nowPage}"
 						th:href="@{/product/getProductList?type=prod(page=${page - 1})}"
-						th:text="${page}"> </a></li>
-					<li class="page-item active"><span th:if="${page == nowPage}" th:text="${page}"></span><li>
+						th:text="${page}">
+						</a>
+					</li>
+					<li class="page-item active">
+						<span class="page-link" th:if="${page == nowPage}" th:text="${page}"></span>
+					<li>
 				</th:block>
+				<li class="page-item">
+					<a class="page-link" th:if="${nowPage != endPage}" th:href="@{/product/getProductList?type=prod(page=${nowPage})}" aria-label="Next">
+		        		<span aria-hidden="true">&raquo;</span>
+		  	    	</a>
+	  	    	</li>
 			</ul>
 		</div>
 	</div>
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 <script type="text/javascript">
 /*=============================================

@@ -19,4 +19,6 @@ public interface ProductRepository extends CrudRepository<Product, Long>, Queryd
 
 	List<Product> findBySalesId(Member member);
 	
+	int countBypNo(Long pNo);
+	
 }

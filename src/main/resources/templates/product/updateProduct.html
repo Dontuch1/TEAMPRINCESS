@@ -103,12 +103,12 @@ input#price[type='number'] {
 										<tr>
 											<td></td>
 											<td style="text-align: center; margin-top: 10px;">
-												<div th:attr="style=${product.delevery.toString() == 'Y' ? 'background-color: #eee;' : 'background-color: transparent;'}"
+												<div th:attr="style=${product.delivery.toString() == 'Y' ? 'background-color: #eee;' : 'background-color: transparent;'}"
 													id="thunderBtn" class="inputbox" onclick="thunder()">
 													<b>⚡ 도와줘요 천둥맨! ⚡</b>
-													<input id="delevery"
-														style="display: none;" type="text" name="delevery"
-														th:value="${product.delevery.toString()}">
+													<input id="delivery"
+														style="display: none;" type="text" name="delivery"
+														th:value="${product.delivery.toString()}">
 													<br>
 													<small th:align="center">천둥맨 이용시 배달비 1,500원이 차감됩니다.</small>
 												</div>
@@ -124,13 +124,13 @@ input#price[type='number'] {
 						onclick="formsubmit();">등록</a>&nbsp;&nbsp;<a
 						class="btn btn-outline-dark flex-shrink-0" type="button"
 						onclick="history.back();">취소</a>
-					<div style="height: 30px;"></div>
 					<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
 				</div>
 				</section>
 			</div>
 		</div>
 	</div>
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 <script type="text/javascript">
 	/*=============================================
@@ -191,7 +191,7 @@ input#price[type='number'] {
 	 * 천둥맨 버튼
 	 *=============================================*/
 	function thunder() {
-		let thunder = $("#delevery");
+		let thunder = $("#delivery");
 	    if (thunder.val() == 'N') {
 	        $("#thunderBtn").attr('style', 'background-color: #eee');
 	        thunder.val('Y');

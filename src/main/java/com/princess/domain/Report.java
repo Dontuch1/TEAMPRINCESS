@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Type;
@@ -21,6 +22,7 @@ import com.princess.domain.CheckCondition.Type;
 import lombok.Data;
 import lombok.ToString;
 
+@DynamicInsert
 @Data
 @ToString(exclude = "rptId")
 @Entity

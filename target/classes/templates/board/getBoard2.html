@@ -1,0 +1,308 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>커뮤니티 게시글</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/reply.css}" rel="stylesheet">
+<link th:href="@{/css/myThunderList.css}" rel="stylesheet">
+
+</head>
+<body th:align="center">
+	<div class="d-flex" id="wrapper">
+		<div id="page-content-wrapper">
+			<div th:insert="~{fragment/header :: header}"></div>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ------------- ---> 
+			<th:block th:if="${board.userId.id}==${currentUser.id}">
+				<button th:align="center" class="btn btn-outline-danger btn-lg blockbox" type="button" disabled>
+                     ❤ <span  th:text="${board.great}">
+                </span></button>
+			</th:block>		
+			<th:block th:if="${isGreated == false} and ${board.userId.id}!=${currentUser.id}">
+				<button th:align="center" class="btn btn-outline-danger btn-lg blockbox" type="button" onclick="Great()">
+                     ❤ <span  th:text="${board.great}">
+                </span></button>
+			</th:block>	
+			<th:block th:if="${isGreated != false} and ${board.userId.id}!=${currentUser.id}">
+            	<button th:align="center" class="btn btn-danger btn-lg blockbox" type="button" onclick="Great()">
+                     ❤ <span style="color: #FFFFFF; font-weight: 700;" th:text="${board.great}">
+                </span></button>
+            </th:block>
+			<div>
+					<div> 
+						<div th:align="center">
+							<form th:action="@{/board/insertBoard}" method="get"></form>	
+								<br>
+								<h2 th:align="center" style="font-weight:700" th:text="${board.title}"></h2>
+								<!-- NOTICE, LOST, FOOD, TMI, QNA, MEET if문 사용해서 해당하는 단어가 나오면 글자 띄우기 -->
+								<br>
+								<br>
+							<div style="display:flex; width:1100" class="mb-3" th:switch="${board.cmCategory.toString()}">
+								<span th:case="NOTICE" class="border-bottom left" style="flex-grow: 1;">🚨 공지사항</span>
+								<span th:case="LOST" class="border-bottom left" style="flex-grow: 1;">😥 잃어버렸어요</span>
+								<span th:case="FOOD" class="border-bottom left" style="flex-grow: 1;">🍔 여기 맛나요</span>
+								<span th:case="TMI" class="border-bottom left" style="flex-grow: 1;">🔉 알려드려요</span>
+								<span th:case="QNA" class="border-bottom left" style="flex-grow: 1;">❓ &nbsp;궁금해요</span>
+								<span th:case="MEET" class="border-bottom left" style="flex-grow: 1;">🙋‍♀️ 우리만나요</span>
+							
+						
+
+								<span th:align="center" class="border-bottom " style="flex-grow: 1;"><span style="margin-left:800px" th:text="${board.regdate}"></span></span>	
+							</div>	
+							<div style="display:flex; width:1100" class="mb-3">
+								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
+								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
+							<span  th:align="center"  class="reportSpan">
+							<button class="btn-report reportBtn" onclick="report()"><span>🚨신고</span></button></span>
+							</div>
+							<div th:align="center">
+									<th:block th:if="${board.photoPath} == null">
+										<img src="/images/bigcarrot.png" alt="사진 출력에 오류가 있습니다."  style="width:250px; margin:50px;">
+									</th:block>
+									<th:block th:if="${board.photoPath} != null">
+										<img th:src="@{${board.photoPath}}" alt="사진 출력에 오류가 있습니다."  style="width:600px;">
+									</th:block>
+								</div>
+							<br><br>
+							<div style="width:860px" align="left" th:align="center">
+								<p style="font-size:1.3rem" th:text="${board.content}">
+							</div>
+							
+							<!-- 신고 form -->
+							<form id="reportBoardForm" th:action="@{/board/reportBoard}" method="get">
+                   				<input type="hidden" name="id" th:value="${currentUser.id}">
+                   				<input type="hidden" name="type" value="COMMUNITY">
+                   				<input type="hidden" name="postNum" th:value="${board.postNum}">
+                   				<input id="reportBoardInput" type="hidden" name="rptCon">
+                   			</form>
+						</div>	
+						<br>
+
+				  		<!-- 댓글 작성 폼 -->	
+						<div th:align="center">
+						 	<ul class="comment1">
+								<li class="comment1-form">
+									<form id="replyForm">
+										<h4>댓글 <span class="spansmall">( <span th:text="${currentUser.nickName}" class="spansmall"></span>님 )</span></h4>
+											<input type="hidden" id="boardId" th:value="${board.postNum}" />
+									 		<input type="hidden" id="memberId" th:value="${#authentication.principal.username}" />
+												<span class="ps_box1">
+												<input type="text" placeholder="댓글을 입력해주세요." class="int1" name="content1" id="replyContent" />
+												</span>
+											<input type="submit" class="btn1" value="등록" />
+									</form>
+								</li>
+								<li id="comment1-list"></li>
+							</ul>
+						 </div>
+			
+						<!-- 댓글 목록 -->
+						<div th:align="center">
+							<table id="replyList" style="width:800px">
+								<tr th:each="reply, state : ${replies1}" class="border1">
+							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.nickName}"></td>
+							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
+							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
+							    	<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply"
+							    		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">답글</button>
+							    		<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+											<div class="dropdown-item">
+											<a class="dropdown-item">대댓글</a>
+											</div>
+										</div>
+										<!--  onclick="reReply(this)" -->
+							    	</td>
+						    	<th:block th:if="${#authentication.principal.username} == ${reply.userId.id}">
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
+						    	</th:block>
+							    <th:block th:if="${#authentication.principal.username} != ${reply.userId.id}">
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" disabled>삭제</button></td>
+						    	</th:block>
+							    </tr>    
+							</table>
+							
+							
+							<th:block th:if="${endPage == 0}">
+								 [ <strong style="color: red;">1</strong> ]
+							</th:block> 
+							<th:block th:if="${endPage != 0}" >
+								<span class="center" style="flex-grow:12; font-size:1.1rem;">
+							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" >
+								<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
+									th:href="@{/board/getBoard(postNum=${board.postNum}, id=${#authentication.principal.username}, page=${page - 1})}"
+									th:text="${page}"> </a>
+									<strong th:if="${page == nowPage}" th:text="${page}"
+									style="color: red"></strong> 
+								</th:block> ]
+							</span>
+							</th:block> 
+							
+						</div>
+
+			<div th:align="center" class="deleteBoard">		
+			<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px">새 게시글</button></a>
+			<button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px" onclick="history.back()">글 목록</button>
+			<th:block th:if="${#authentication.principal.username} == ${board.userId.id}">
+				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px" class="btn btn-outline-secondary deleteBoard">글삭제</a>
+			</th:block>
+			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN'">
+				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary deleteBoard">글삭제</a>
+			</th:block>
+			
+			
+			
+			</div>
+			<br><br><br>		
+	</div>	
+</div>
+
+	<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+			</div>
+		</div>
+	</div>
+</body>
+<script th:inline="javascript">
+
+
+//=======================================
+//==  댓글 작성
+//=======================================
+let boardId = $('#boardId').val();
+console.log(boardId);
+
+$(document).ready(function() { 
+	
+    $('#replyForm').submit(function(e) { // 댓글 작성
+        e.preventDefault();
+
+        let replyData = {
+            "replyContent": $('#replyContent').val(),
+            "memberId":  $('#memberId').val(),
+            "boardId": boardId
+        }
+		
+        if($('#replyContent').val() != ""){
+        	$.ajax({
+                type: "POST",
+                url: "/reply/insertReply",
+                data: JSON.stringify(replyData),
+                contentType: "application/json",
+                success: function(response) {
+                	document.location.reload();
+                },
+
+                error: function(error) {
+                    alert("댓글 작성 중 오류 발생");
+                    return;
+                }
+            });
+        } else {
+        	alert("댓글에 내용을 입력해주세요!");
+        	return;
+        }
+  	});
+});
+
+//=======================================
+//==  대댓글 작성
+//=======================================
+$('#replyForm').submit(function() { // 댓글 작성
+    e.preventDefault();
+    
+    let replyData = {
+        "replyContent": $('#replyContent').val(),
+        "memberId":  $('#memberId').val(),
+        "boardId": boardId,
+        "replyNum" : $('replyId').val()
+    }
+    console.log(replyNum);
+    if($('#replyContent').val() != ""){
+    	$.ajax({
+            type: "POST",
+            url: "/reply/insertreReply",
+            data: JSON.stringify(replyData),
+            contentType: "application/json",
+            success: function(response) {
+            	document.location.reload();
+            },
+
+            error: function(error) {
+                alert("대댓글 작성 중 오류 발생");
+                return;
+            }
+        });
+    } else {
+    	alert("대댓글에 내용을 입력해주세요!");
+    	return;
+    	}
+	});
+
+
+//=======================================
+//==  신고 버튼
+//=======================================
+
+function report() {
+	 if([[${isReportedboard}]]) {
+		 alert('이미 신고하셨네요!');
+		 return;
+	 } else {
+		 if (confirm("어떤 나쁜 일이 일어나고 있나요?")) {
+			    let promptResult = prompt("관리자에게 사유를 알려주세요!");
+			    if (promptResult == null) {
+			    	return;
+			    } else if (promptResult == "") {
+			    	alert("신고 사유를 적어주셔야 해요!");
+			    } else {
+			    	$('#reportBoardInput').val(promptResult);
+			      	$('#reportBoardForm').submit();
+			    }
+			}
+	 }
+}
+
+//=======================================
+//==  댓글 삭제
+//=======================================
+
+function deleteReply(ele) {	
+	console.log(ele);
+	console.log("value="+ele.value);
+	let no=ele.value;
+	console.log(no);
+	
+	 let replyData = {
+		"replyNum" : no 
+	 }
+	
+	$.ajax({
+        type: "POST",
+        url: "/reply/delete",
+        data: JSON.stringify(replyData),
+        contentType: "application/json",
+        success: function(response) {
+        	document.location.reload();
+        },
+        error: function(error) {
+            alert("댓글 삭제 중 오류 발생");
+        }
+    });
+}
+
+/*=============================================
+ * 좋아요 버튼
+ *=============================================*/
+ function Great() {
+	 location.href="/board/updateGreat?postNum=[[${board.postNum}]]";
+}
+
+
+ 
+
+
+
+</script>
+</html>
+

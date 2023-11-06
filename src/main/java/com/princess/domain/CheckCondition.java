@@ -15,7 +15,7 @@ public class CheckCondition {
 	}
 	
 	public enum Type {
-		PRODUCT, COMMUNITY
+		PRODUCT, COMMUNITY, H, Y, N
 	}
 	
 	public enum PCategory {
