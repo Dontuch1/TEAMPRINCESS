@@ -19,6 +19,7 @@ import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QBoard;
+import com.princess.domain.Report;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
@@ -148,6 +149,19 @@ public class BoardServiceImpl implements BoardService {
 		likewishRepo.delete(findGreat);
 		boardRepo.save(board);
 	}
+	
+	public void insertReport(Report report) {
+		
+	      Report findReport = reportRepo.findByPostNoAndType(report.getPostNo(), Type.COMMUNITY);
+	      if (findReport != null) {
+	    	  System.out.println(findReport.toString());
+	         findReport.setRptCon(findReport.getRptCon() + "\n" +"(" + report.getRptId().getId() + ") " + report.getRptCon());
+	         reportRepo.save(findReport);
+	      } else {
+	    	  System.out.println("null인가?");  
+	    	reportRepo.save(report);
+	      }
+	   }
 	
 
 

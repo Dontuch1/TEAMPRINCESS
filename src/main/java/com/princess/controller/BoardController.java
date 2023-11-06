@@ -163,75 +163,11 @@ public class BoardController {
 		Product product = new Product();
 		product.setPNo(board.getPostNum());
 		report.setPostNo(product.getPNo());
-		productService.insertReport(report);
+		System.out.println(report.getPostNo());
+		boardservice.insertReport(report);
 		return "redirect:getBoard?postNum="+postNum;
 	}
 	
-	/*
-	 * @GetMapping("reportBoard")
-	public String reportBoard(Report report,@RequestParam String postNum ,@RequestParam String id, Board board) {
-		Member member = new Member();
-		System.out.println("postNum"+postNum);
-		System.out.println("id"+id);
-		Product product = new Product();
-		product.setPNo(board.getPostNum());
-		
-		
-		String newCon = report.getRptCon();
-		
-		System.out.println("여기까지");
-		report.setPostNo(Long.valueOf(postNum));
-		report = reportservice.getReport(report);
-		
-		if(report.getPostNo()==Long.valueOf(postNum)) {
-			String rptCon = report.getRptCon();
-			rptCon = rptCon + "\n" + newCon;
-			productService.updateReport(report);
-			return "redirect:getBoard?postNum="+postNum;
-		} else {
-			report = new Report();
-			member.setId(id);
-			report.setRptId(member);
-			report.setSubmit(Display.H);
-			report.setPostNo(product.getPNo());
-			productService.insertReport(report);
-			return "redirect:getBoard?postNum="+postNum;
-		}
-		
-	}
-	
-	
-	
-	@GetMapping("reportBoard")
-	public String reportBoard(Report report,@RequestParam String postNum ,@RequestParam String id, Board board) {
-		Member member = new Member();
-		System.out.println("postNum"+postNum);
-		System.out.println("id"+id);
-		String newCon = report.getRptCon();
-		System.out.println(report.getRptCon());
-		report.setPostNo(Long.valueOf(postNum));
-		System.out.println(report.getPostNo());
-		if(reportService.getReport(report)==null) {
-			member.setId(id);
-			report.setRptId(member);
-			report.setSubmit(Display.H);
-			Product product = new Product();
-			product.setPNo(board.getPostNum());
-			report.setPostNo(product.getPNo());
-			productService.insertReport(report);
-			return "redirect:getBoard?postNum="+postNum;
-		} else {
-			String rptCon = report.getRptCon();
-			rptCon = rptCon + "\n" + newCon;
-			System.out.println(rptCon);
-			productService.insertReport(report);
-			return "redirect:getBoard?postNum="+postNum;	
-			
-		}
-		
-		
-	}
-	 * */
 	
 	@GetMapping("/updateGreat")
 	public String updateGreat(Board board, @AuthenticationPrincipal SecurityUser securityUser) {

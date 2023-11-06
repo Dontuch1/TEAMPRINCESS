@@ -8,6 +8,7 @@ import com.princess.domain.Board;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
+import com.princess.domain.Report;
 import com.princess.domain.Search;
 import com.princess.domain.CheckCondition.Type;
 
@@ -36,4 +37,6 @@ public interface BoardService {
 	void deleteGreat(Board board, Type type, Member member, Long greatNum);
 	
 	Board getGreat(Board board);
+	
+	void insertReport(Report report);
 }

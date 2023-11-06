@@ -54,8 +54,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							<div style="display:flex; width:1100" class="mb-3">
 								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
 								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
+							
+							<th:block th:if="${board.userId.nickName} != ${currentUser.nickName}">
 							<span  th:align="center"  class="reportSpan">
-							<button class="btn-report reportBtn" onclick="report()"><span>🚨신고</span></button></span>
+								<button class="btn-report reportBtn" onclick="report()"><span>🚨신고</span></button></span>
+							</th:block>
+							
+							<th:block th:if="${board.userId.nickName} == ${currentUser.nickName}">
+							<span  th:align="center"  class="reportSpan">
+								<button class="btn-report reportBtn"><span>🚨</span></button></span>
+							</th:block>
 							</div>
 							<div th:align="center">
 									<th:block th:if="${board.photoPath} == null">
@@ -117,9 +125,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</table>
 						</form>	
 						
-									
-						
-							
 							<th:block th:if="${endPage == 0}">
 								 [ <strong style="color: red;">1</strong> ]
 							</th:block> 
@@ -134,7 +139,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								</th:block> ]
 							</span>
 							</th:block> 
-							
 						</div>
 
 			<div th:align="center" class="deleteBoard">		
@@ -146,8 +150,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN'">
 				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary deleteBoard">글삭제</a>
 			</th:block>
-			
-			
 			
 			</div>
 			<br><br><br>		
