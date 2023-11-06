@@ -2,7 +2,63 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인</title>
-
+<style>
+.form-signin {
+	padding: 20px;
+	margin: 0;
+}
+img {
+	width: 40px;
+	margin-right: 10px;
+}
+.form-input {
+	border: none;
+	outline: none;
+	width: 200px;
+	font-size: 20px;
+}
+.form-label-group {
+	border: 1px solid #ccc;
+	padding: 15px;
+}
+.top-input {
+	border-radius: 25px 25px 0 0;
+}
+.bottom-input {
+	border-radius: 0 0 25px 25px;
+}
+.form-out {
+	border-radius: 25px;
+	border: 1px solid #ccc;
+	padding: 20px;
+	transition: 0.2s;
+	
+}
+.form-out:hover {
+	transition: 0.2s;
+	transform: scale(1.02);
+}
+.btns {
+	display: flex;
+	justify-content: space-around;
+}
+.btns button, .btns a {
+	color: grey;
+	border: 1px solid #ccc;
+	padding: 10px;
+	background-color: transparent;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 20px;
+	width: 45%;
+	border-radius: 25px;
+	transition: 0.2s;
+}
+.btns button:hover, .btns a:hover {
+	transition: 0.2s;
+	box-shadow: 0 0 10px 2px #eee;
+}
+</style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -17,36 +73,30 @@
 	<div th:class="container">
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-				<div class="card card-signin my-5">
-					<div class="card-body">
+			<div th:align="center">
+				<img style="width: 80%; margin: 0 auto;" alt="..." src="/images/login-banner.jpg">
+			</div>
+				<div class=" form-out">
+					<div>
 						<form class="form-signin" method="post">
-							<div class="form-label-group">
-								<label for="username">Id</label> <input type="text"
-									name="username" class="form-control" placeholder="Id" required
+							<div class="form-label-group top-input">
+							<img alt="..." src="/images/prcs-profile.png">
+								<input type="text"
+									name="username" class="form-input" placeholder="Id" required
 									autofocus>
 							</div>
-							<br>
-							<div class="form-label-group">
-								<label for="password">Password</label> <input type="password"
-									name="password" class="form-control" placeholder="Password"
+							<div class="form-label-group bottom-input">
+							<img alt="..." src="/images/key.png">
+								<input type="password"
+									name="password" class="form-input" placeholder="Password"
 									required>
 							</div>
-
-							<div class="custom-control custom-checkbox mb-3">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck1"> <label class="custom-control-label"
-									for="customCheck1">Remember password</label>
+							<br>
+							<div class="btns" style="text-align: center;">
+								<button
+									type="submit">로그인</button><a
+									type="button" th:href="@{/system/register}">회원가입</a>
 							</div>
-							<div style="text-align: center;">
-								<button class="btn btn-lg btn-primary btn-block text-uppercase"
-									type="submit" style="width: 50%; background-color: orange;">로그인</button>
-								<br> <br> <a
-									class="btn btn-lg btn-primary btn-block text-uppercase"
-									type="button" th:href="@{/system/register}"
-									style="width: 50%; background-color: green;">회원가입</a>
-
-							</div>
-
 						</form>
 					</div>
 				</div>

@@ -179,7 +179,7 @@ public class ProductController {
 		Member buyer = new Member();
 		buyer.setId(id);
 		buyer = productService.getMember(buyer);
-		if (productService.getBidList(buyer, product) != null) {
+		if (!productService.getBidList(buyer, product).isEmpty()) {
 			buyer.setDeposit(buyer.getDeposit() + productService.getBidList(buyer, product).get(0).getAuctionPrice());
 		}
 		if (product.getDelivery().equals(YorN.Y)) {
@@ -236,51 +236,4 @@ public class ProductController {
 		return "redirect:getProduct?pNo=" + report.getPostNo();
 	}
 
-//	 /**
-//     * 통계 - 일별 매출 현황
-//     * 일일 매출 현황을 차트로 출력
-//     */
-//    @GetMapping("/chart")
-//    public String dailyProfit(Model model) {
-//        
-//        return "sttst/dailyProfit";
-//    }
-//    
-//    
-//    /**
-//     * 통계 - 일별 매출 현황 차트 출력
-//     * Post타입
-//     * ajax와 연결되어 chart.js출력 
-//     * @param json데이터
-//     */
-//    @ResponseBody
-//    @PostMapping("/chart")
-//    public String dailyPost(Model model) {
-//        
-//    List<SlsVO>list = sttstService.getDailyIncome();
-//    //gson객체 생성
-//        Gson gson = new Gson();
-//        JsonArray jArray = new JsonArray();
-//    //date타입을 string타입으로 바꾸기
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        
-//        Iterator<SlsVO> it = list.iterator();
-//        while(it.hasNext()) {
-//            SlsVO slsVO = it.next();
-//            JsonObject object = new JsonObject();
-//            int sale = slsVO.getSlsAmt();
-//            
-//            Date dt = slsVO.getSlsDt();
-//            String date =  df.format(dt);
-//            
-//            object.addProperty("sale", sale);
-//            object.addProperty("date", date);
-//            jArray.add(object);
-//        }
-//        
-//        String json = gson.toJson(jArray);
-//        logger.info("json변환: "+json);
-//        
-//        return json;
-//    }
 }
