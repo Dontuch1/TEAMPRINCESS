@@ -1,7 +1,9 @@
 package com.princess.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.princess.config.SecurityUser;
 import com.princess.domain.Board;
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Rating;
 import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Member;
@@ -37,10 +40,11 @@ public class MyPageController {
 			@PageableDefault(page = 0, size = 10, sort = "regdate", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		member.setId(id);
+
 		model.addAttribute("boardList", myService.getBoardList(pageable, member));
 		model.addAttribute("reviewList", myService.getReviewList(pageable, member));
 		model.addAttribute("productList", myService.getProductList(member));
-		System.out.println(myService.getProductList(member).toString());
+		model.addAttribute("memberPage", myService.getMember(member));
 	}
 
 	@GetMapping("/myDetails")
@@ -76,27 +80,54 @@ public class MyPageController {
 		member.setId(id);
 		List<Product> productList = myService.getProductList(member);
 
-		List<Product> soldProduct = new ArrayList<Product>();
 		List<Product> ingProduct = new ArrayList<Product>();
 		List<Product> standByProduct = new ArrayList<Product>();
-		String thunderId = "";
+		List<Product> reportedProduct = new ArrayList<Product>();
+		Map<Product, String[]> soldProduct = new LinkedHashMap<Product, String[]>();
+
 		for (Product pro : productList) {
-			if (pro.getDelivery().equals(YorN.Y)) {
+			// 게시중단 상품
+			if (pro.getDisplay().equals(Display.H)) {
+				reportedProduct.add(pro);
+			} else {
+				// 판매중 / 천둥맨 대기중 / 판매완료
 				if (pro.getSold().equals(YorN.N)) {
 					ingProduct.add(pro);
 				} else {
-					thunderId = myService.thunderId(pro);
-					if (thunderId.isEmpty()) {
-						standByProduct.add(pro);
-					} else {
-						soldProduct.add(pro);
+					// delivery=n면 판완
+					if (pro.getDelivery().equals(YorN.N)) {
+						String buyer;
+						if (myService.isReviewed(pro, pro.getSalesId().getId(), myService.buyerId(pro))) {// 리뷰 써짐
+							buyer = "";
+
+						} else {// 리뷰 안써짐
+							buyer = myService.buyerId(pro);
+						}
+						String[] str = { buyer, "" };
+						soldProduct.put(pro, str);
+
+					} else {// sold면서 delivery=y
+						if (myService.thunderId(pro).isBlank()) {
+							standByProduct.add(pro);
+						} else {
+							String buyer;
+							String thunder;
+							if (myService.isReviewed(pro, pro.getSalesId().getId(), myService.buyerId(pro))) {
+								buyer = "";
+							} else {
+								buyer = myService.buyerId(pro);
+							}
+							if (myService.isReviewed(pro, pro.getSalesId().getId(), myService.thunderId(pro))) {
+								thunder = "";
+							} else {
+								thunder = myService.thunderId(pro);
+
+							}
+							String[] str = { buyer, thunder };
+							soldProduct.put(pro, str);
+
+						}
 					}
-				}
-			} else {
-				if (pro.getSold().equals(YorN.Y)) {
-					soldProduct.add(pro);
-				} else {
-					ingProduct.add(pro);
 				}
 			}
 
@@ -104,7 +135,7 @@ public class MyPageController {
 		model.addAttribute("ingProduct", ingProduct);
 		model.addAttribute("standByProduct", standByProduct);
 		model.addAttribute("soldProduct", soldProduct);
-		model.addAttribute("thunderId", thunderId);
+		model.addAttribute("reportedProduct", reportedProduct);
 
 	}
 
@@ -185,5 +216,32 @@ public class MyPageController {
 		myService.updateBattery(mem);
 
 		return "redirect:myBuyList";
+	}
+	@PostMapping("/sendReview")
+	public String sendReview(Review review, @AuthenticationPrincipal SecurityUser securityUser,
+			@RequestParam(name = "rating") String rating, @RequestParam("receiver") String receiver, Product product) {
+		System.out.println("컨트롤러 product: "+product.toString());
+		System.out.println("컨트롤러 rating: "+rating);
+		System.out.println("컨트롤러 receiver: "+receiver);
+		review.setSender(securityUser.getUsername());
+		review.setPNo(product);
+		Member mem = new Member();
+		mem.setId(receiver);
+		review.setReceiver(mem);
+		mem = myService.getMember(mem);
+
+		if (rating.equals("UP")) {
+			review.setReview(Rating.UP);
+			// 배터리 올리기
+			mem.setBattery(mem.getBattery() + 1);
+		} else {
+			review.setReview(Rating.DOWN);
+			// 배터리 내리기
+			mem.setBattery(mem.getBattery() - 1);
+		}
+		myService.insertReview(review, product);
+		myService.updateBattery(mem);
+
+		return "redirect:myProductList?id="+securityUser.getUsername();
 	}
 }
