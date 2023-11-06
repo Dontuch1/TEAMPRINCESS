@@ -107,20 +107,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
 							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
 							    	
-							    	<!-- 답글 -->
-							    	<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply"
-							    		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">답글</button>
-							    		<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-											<div class="dropdown-item">
-												<div class="input-group mb-3">
-											  	  <input type="hidden" id="boardId" th:value="${board.postNum}" />
-									 			  <input type="hidden" id="memberId" th:value="${#authentication.principal.username}" />
-												  <input type="text" class="form-control" id="reReplyContent" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" >
-												  <button class="btn btn-outline-secondary" type="submit" id="button-addon2" th:value="${reply.replyNum}">등록</button>
-												</div>
-											</div>
-										</div>
-							    	</td>
 							    <th:block th:if="${#authentication.principal.username} == ${reply.userId.id}">
 						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
 						    	</th:block>
@@ -130,6 +116,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							    </tr>
 							</table>
 						</form>	
+						
+									
+						
 							
 							<th:block th:if="${endPage == 0}">
 								 [ <strong style="color: red;">1</strong> ]
@@ -172,10 +161,16 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 </body>
 <script th:inline="javascript">
 
+function replyclick() {
+    document.getElementById('replydisplay').style.display = "block";
+}
+
 //=======================================
 //==  댓글 작성
 //=======================================
 let boardId = $('#boardId').val();
+let replycontent = $('#reReplyContent').text();
+console.log(replycontent);
 console.log(boardId);
 
 	 $('#replyForm').submit(function(e) {
@@ -216,6 +211,7 @@ $('#reReplyForm').submit(function(e) {
 	
 	let replycontent = $('#reReplyContent').val();
 	let reReplyNum=$('#button-addon2').val();
+
 	console.log(replycontent);
 	console.log(reReplyNum);
 	
@@ -225,7 +221,7 @@ $('#reReplyForm').submit(function(e) {
          "memberId":  $('#memberId').val(),
          "boardId": boardId
 	 }
-	 console.log(reReplyContent);
+	 
 	 if($('#reReplyContent').val() != ""){
 		$.ajax({
 	        type: "POST",
