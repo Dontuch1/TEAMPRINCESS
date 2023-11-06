@@ -34,6 +34,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 .boxx2 {
 	grid-area: box3
 }
+.btn-report {
+	background-color: transparent;
+	border: none;
+	transition: 0.2s;
+}
 </style>
 
 </head>
@@ -43,12 +48,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<div th:insert="~{fragment/header :: header}"></div>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->  
-				
+				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 --------------
+				<button th:align="center" class="btn-custom btn-wish" type="button" onclick="Great()">
+                     <img id="like" class="btn-img" th:if="${currentUser.id != board.userId.id}" alt="..." th:src="${isGreat == false ? '/images/empty_heart.png' : '/images/full_heart.png'}">
+                     <span th:text="${wishCnt}"></span>
+                 </button>-->  
 			<div >
 					<div> 
 						<div th:align="center">
-							<form th:action="@{/board/insertBoard}" method="post">
+							<form th:action="@{/board/insertBoard}" method="get"></form>	
 								<br>
 								<br>
 								<h2 th:align="center" style="font-weight:700" th:text="${board.title}">  </h2>
@@ -56,20 +64,22 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								<br>
 								
 							<div style="display:flex; width:1100" class="mb-3" th:switch="${board.cmCategory.toString()}">
-								<span th:case="NOTICE" th:align="left" class="border-bottom" style="flex-grow: 1;">🚨 공지사항</span>
-								<span th:case="LOST" th:align="left" class="border-bottom" style="flex-grow: 1;">😥 잃어버렸어요</span>
-								<span th:case="FOOD" th:align="left" class="border-bottom" style="flex-grow: 1;">🍔 여기 맛나요</span>
-								<span th:case="TMI" th:align="left" class="border-bottom" style="flex-grow: 1;">🔉 알려드려요</span>
-								<span th:case="QNA" th:align="left" class="border-bottom" style="flex-grow: 1;">❓ &nbsp;궁금해요</span>
-								<span th:case="MEET" th:align="left" class="border-bottom" style="flex-grow: 1;">🙋‍♀️ 우리만나요</span>
+								<span th:case="NOTICE" class="border-bottom left" style="flex-grow: 1;">🚨 공지사항</span>
+								<span th:case="LOST" class="border-bottom left" style="flex-grow: 1;">😥 잃어버렸어요</span>
+								<span th:case="FOOD" class="border-bottom left" style="flex-grow: 1;">🍔 여기 맛나요</span>
+								<span th:case="TMI" class="border-bottom left" style="flex-grow: 1;">🔉 알려드려요</span>
+								<span th:case="QNA" class="border-bottom left" style="flex-grow: 1;">❓ &nbsp;궁금해요</span>
+								<span th:case="MEET" class="border-bottom left" style="flex-grow: 1;">🙋‍♀️ 우리만나요</span>
 							
 						
 
-								<span th:align="right" class="border-bottom" style="flex-grow: 1;" th:text="${board.regdate}"></span>	
+								<span th:align="right" class="border-bottom " style="flex-grow: 1;" th:text="${board.regdate}"></span>	
 							</div>	
 							<div style="display:flex; width:1100" class="mb-3">
 								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
 								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
+							<span  th:align="right"  class="" style="font-size:1rem; margin-right:30px; flex-grow: 1; justify-content: space-between;">
+							<button class="btn-report" style="text-decoration: none; color: #333" onclick="report()"><span>🚨신고</span></button></span>
 							</div>
 							<div th:align="center">
 									<th:block th:if="${board.photoPath} == null">
@@ -81,13 +91,21 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								</div>
 							<br><br>
 							<div style="width:860px" align="left" th:align="center">
-								<p th:text="${board.content}">
+								<p style="font-size:1.3rem" th:text="${board.content}">
 							</div>
-							</form>	
+							
+							<!-- 신고 form -->
+							<form id="reportBoardForm" th:action="@{/board/reportBoard}" method="get">
+                   				<input type="hidden" name="id" th:value="${currentUser.id}">
+                   				<input type="hidden" name="type" value="COMMUNITY">
+                   				<input type="hidden" name="postNum" th:value="${board.postNum}">
+                   				<input id="reportBoardInput" type="hidden" name="rptCon">
+                   			</form>
 						</div>	
 						<br>
-								
+
 				  		<!-- 댓글 작성 폼 -->	
+<<<<<<< HEAD
 						<form id="replyForm">
 							<div th:align="center">
 							 	<input type="hidden" id="boardId" th:value="${board.postNum}" />
@@ -98,19 +116,39 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 										<h4>댓글<span></span></h4>
 											<span class="ps_box1">
 											<input type="text" placeholder="480" class="int1" name="content1" id="replyContent" /></span>
+=======
+						<div th:align="center">
+						 	<ul class="comment1">
+								<li class="comment1-form">
+									<form id="replyForm">
+										<h4>댓글 <span class="spansmall">( <span th:text="${currentUser.nickName}" class="spansmall"></span>님 )</span></h4>
+											<input type="hidden" id="boardId" th:value="${board.postNum}" />
+									 		<input type="hidden" id="memberId" th:value="${#authentication.principal.username}" />
+												<span class="ps_box1">
+												<input type="text" placeholder="댓글을 입력해주세요." class="int1" name="content1" id="replyContent" />
+												</span>
+>>>>>>> refs/heads/ganji
 											<input type="submit" class="btn1" value="등록" />
+<<<<<<< HEAD
 										</li>
 										<li id="comment1-list"></li>
 									</ul>
 								</div>
 						    </div>
 						</form>
+=======
+									</form>
+								</li>
+								<li id="comment1-list"></li>
+							</ul>
+						 </div>
+						
+>>>>>>> refs/heads/ganji
 						
 						<!-- 댓글 목록 -->
 						<div th:align="center">
 							<table id="replyList" style="width:800px">
 								<tr th:each="reply, state : ${replies1}" class="border1">
-							    	
 							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.nickName}"></td>
 							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
 							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
@@ -118,21 +156,27 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
 						    	</th:block>
 							    <th:block th:if="${#authentication.principal.username} != ${reply.userId.id}">
-						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply">신고</button></td>
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" disabled>삭제</button></td>
 						    	</th:block>
 							    </tr>
 							</table>
 							
-							<span class="center" style="flex-grow:12; font-size:1.1rem">
-							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
+							
+							<th:block th:if="${endPage == 0}">
+								 [ <strong style="color: red">1</strong> ]
+							</th:block> 
+							<th:block th:if="${endPage != 0}">
+								<span class="center" style="flex-grow:12; font-size:1.1rem">
+							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" >
 								<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
 									th:href="@{/board/getBoard(postNum=${board.postNum}, id=${#authentication.principal.username}, page=${page - 1})}"
 									th:text="${page}"> </a>
-			
-								<strong th:if="${page == nowPage}" th:text="${page}"
+									<strong th:if="${page == nowPage}" th:text="${page}"
 									style="color: red"></strong> 
-							</th:block> ]
+								</th:block> ]
 							</span>
+							</th:block> 
+							
 						</div>
 
 			<div th:align="center">		
@@ -157,13 +201,76 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
+<script th:inline="javascript">
+
+
+//=======================================
+//==  댓글 작성
+//=======================================
+let boardId = $('#boardId').val();
+console.log(boardId);
+
+$(document).ready(function() { 
+	
+    $('#replyForm').submit(function(e) { // 댓글 작성
+        e.preventDefault();
+
+        let replyData = {
+            "replyContent": $('#replyContent').val(),
+            "memberId":  $('#memberId').val(),
+            "boardId": boardId
+        }
+		
+        if($('#replyContent').val() != ""){
+        	$.ajax({
+                type: "POST",
+                url: "/reply/getBoard",
+                data: JSON.stringify(replyData),
+                contentType: "application/json",
+                success: function(response) {
+                	document.location.reload();
+                },
+
+                error: function(error) {
+                    alert("댓글 작성 중 오류 발생");
+                    return;
+                }
+            });
+        } else {
+        	alert("댓글에 내용을 입력해주세요!");
+        	return;
+        }
+  	});
+});
+
+//=======================================
+//==  신고 버튼
+//=======================================
+
+function report() {
+	 if([[${isReportedboard}]]) {
+		 alert('이미 신고하셨네요?');
+		 return;
+	 } else {
+		 if (confirm("정말 신고하실 건가요?")) {
+			    let promptResult = prompt("사유가 뭘까요?");
+			    if (promptResult == null) {
+			    	return;
+			    } else if (promptResult == "") {
+			    	alert("신고 사유를 입력해주세요.");
+			    } else {
+			    	$('#reportBoardInput').val(promptResult);
+			      	$('#reportBoardForm').submit();
+			    }
+			}
+	 }
+}
 
 //=======================================
 //==  댓글 삭제
 //=======================================
 
-function deleteReply(ele){	
+function deleteReply(ele) {	
 	console.log(ele);
 	console.log("value="+ele.value);
 	let no=ele.value;
@@ -171,7 +278,7 @@ function deleteReply(ele){
 	
 	 let replyData = {
 		"replyNum" : no 
-	 };
+	 }
 	
 	$.ajax({
         type: "POST",
@@ -186,39 +293,18 @@ function deleteReply(ele){
         }
     });
 }
-//=======================================
-//==  댓글 작성
-//=======================================
 
-let boardId = $('#boardId').val();
-console.log(boardId);
+/*=============================================
+ * 좋아요 버튼
+ *=============================================*/
+ function ㅎ() {
+	 location.href="/product/updateGreat?postNum=[[${board.postNum}]]";
+}
 
-$(document).ready(function() { 
-	
-    $('#replyForm').submit(function(e) { // 댓글 작성
-        e.preventDefault();
 
-        let replyData = {
-            "replyContent": $('#replyContent').val(),
-            "memberId":  $('#memberId').val(),
-            "boardId": boardId
-        };
+ 
 
-        $.ajax({
-            type: "POST",
-            url: "/reply/getBoard",
-            data: JSON.stringify(replyData),
-            contentType: "application/json",
-            success: function(response) {
-            	document.location.reload();
-            },
 
-            error: function(error) {
-                alert("댓글 작성 중 오류 발생");
-            }
-        });
-	});
-});
 
 </script>
 </html>

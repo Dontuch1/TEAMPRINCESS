@@ -52,8 +52,12 @@ flex-wrap: wrap;
 justify-content: space-between;
 }
 .comment1-form > form > h4 {
-width: 100%;
+width: 30%;
 margin: 14px 0 14px 0;
+}
+.spansmall{
+	width: 55%;
+	font-size:1rem;
 }
 .comment1-content1 {
 cursor: pointer;
@@ -64,7 +68,7 @@ padding-right: 25px;
 display: block;
 position: relative;
 width: 80%;
-height: 51px;
+height: 55px;
 border: solid 1px #dadada;
 padding: 10px 14px 10px 14px;
 background: #fff;
@@ -72,6 +76,7 @@ box-sizing: border-box;
 }
 .ps_box1 > input {
 outline: none;
+
 }
 .int1 {
 display: block;

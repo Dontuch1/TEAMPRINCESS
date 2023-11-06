@@ -104,6 +104,10 @@ input#bid[type='number'] {
 															aria-expanded="false" style="font-size: 18px; margin-top: 10px;">
 													<span th:text="${product.salesId.nickName}"></span>
 												</a>
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/heads/ganji
 						                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 														<div class="dropdown-item">
 														<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${product.salesId.id})}">페이지 방문</a>
@@ -168,9 +172,15 @@ input#bid[type='number'] {
 		                        </div>
 		                        
 		                        <pre style="margin-bottom: 50px; max-height: 500px; white-space: pre-line; font-family: 'Gowun Dodum', sans-serif;" class="lead" th:text="${product.content}"></pre>
+<<<<<<< HEAD
 		                        <div id="thunderBtn" th:if="${product.delivery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
 									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delivery"
 										style="display: none;" type="checkbox" name="delivery"
+=======
+		                        <div id="thunderBtn" th:if="${product.delevery.toString() == 'Y'}" th:align="center" class="inputbox" onclick="thunder()">
+									<b>⚡ 천둥맨 이용 상품입니다! ⚡</b> <input id="delevery"
+										style="display: none;" type="checkbox" name="delevery"
+>>>>>>> refs/heads/ganji
 										value="1"><br> <small>배달비 1,500원이 추가적으로 차감됩니다.</small>
 								</div>
 		                    </div>
