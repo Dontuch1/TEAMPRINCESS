@@ -1,21 +1,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-h2 {
-	font-family: 'Noto Sans CJK KR', sans-serif;
-	font-weight: 700;
+<style type="text/css">
+.form-signin {
+	padding: 20px;
+	margin: 0;
+}
+input {
+	display: inline;
+	width: 80px;
+}
+.flex-div {
+	display: flex;
+}
+
+.flex-div label {
+	flex-grow: 1;
+	width: 50px;
+}
+
+.form-input {
+	flex-grow: 4;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	padding: 5px 5px 5px 10px;
+}
+
+.form-out {
+	border-radius: 25px;
+	border: 1px solid #ccc;
+	padding: 40px;
+	transition: 0.2s;
+	width: 400px;
+	margin: 50px 0 50px 0;
+}
+.loca-input {
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	width: 80px;
+	padding: 5px 5px 5px 10px;
+}
+.btns {
+	margin-top: 40px;
+	color: grey;
+	border: 1px solid #ccc;
+	padding: 10px;
+	background-color: transparent;
+	text-decoration: none;
 	font-size: 20px;
-	line-height: 30px;
+	width: 45%;
+	border-radius: 25px;
+	transition: 0.2s;
 }
-
-/* 네모박스의 너비를 조절하여 크기를 줄입니다. */
-#guInput, #dongInput {
-	width: 80px; /* 원하는 너비로 조절하세요 */
-}
-
-.container {
-	float: left;
+.btns:hover {
+	transition: 0.2s;
+	box-shadow: 0 0 10px 2px #eee;
 }
 </style>
 <title>시스템 페이지</title>
@@ -23,112 +62,87 @@ h2 {
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<body th:align="center">
-	<div>
+<!-- Bootstrap core JS-->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+</head>
 
-		<h4>
-			회원가입을 위해<br>정보를 입력해주세요.
-		</h4>
-		<div class="container">
+<body>
+
+	<div th:align="center" style="margin: 0 auto; width: 1000px;">
+	
+		<div class="form-out">
+		<h3>회원가입</h3>
+		<br>
 			<form action="/system/register" method="post">
+			
+				<div class="flex-div mb-3">
+					<label for="id" class="">아이디 </label>
+					<input type="text" id="id"
+							class="form-input" name="id">
+				</div>
 
-				<div class="mb-3 row">
-					<label for="id" class="col-sm-2 col-form-label">* 아이디</label>
-					<div class="col-sm-10">
+				<div class="flex-div mb-3">
+					<label for="nickName" class="">닉네임 </label>
+					<input type="text" id="nickName"
+							class="form-input" name="nickName">
+				</div>
 
-						<input type="text" id="id" placeholder="아이디를 입력하세요"
-							class="form-control" name="id">
+				<div class="flex-div mb-3">
+					<label for="location" class="">지역 </label>
+					<div style="flex-grow: 1;">
+						<input class="loca-input" type="text" id="guInput" name="gu"> 구 
+						<input class="loca-input" type="text" id="dongInput" name="dong"> 동
 					</div>
 				</div>
 
-				<div class="mb-3 row">
-					<label for="nickName" class="col-sm-2 col-form-label">* 닉네임</label>
-					<div class="col-sm-10">
-
-						<input type="text" id="nickName" placeholder="닉네임을 입력하세요"
-							class="form-control" name="nickName">
-					</div>
+				<div class="flex-div mb-3">
+					<label for="userName" class="">이름 </label>
+					<input type="text" id="userName"
+							class="form-input" name="userName">
 				</div>
 
-
-				<div class="mb-3 row">
-    <label for="location" class="col-sm-2 col-form-label">* 지역</label>
-    <div class="col-sm-10">
-    
-        <input type="text" id="guInput" placeholder="구" 
-        class="form-control" style="width: 50%;">
-        <input type="text" id="dongInput" placeholder="동" 
-        class="form-control" style="width: 50%;" name="location">
-    </div>
-</div>
-
-
-				<div class="mb-3 row">
-					<label for="userName" class="col-sm-2 col-form-label">* 이름</label>
-					<div class="col-sm-10">
-
-						<input type="text" id="userName" placeholder="이름을 입력하세요"
-							class="form-control" name="userName">
-					</div>
+				<div class="flex-div mb-3">
+					<label for="birth" class="">생년월일 </label>
+					<input type="date" id="birth"
+							class="form-input" name="birth">
 				</div>
 
-
-				<div class="mb-3 row">
-					<label for="birth" class="col-sm-2 col-form-label">* 생년월일 </label>
-					<div class="col-sm-10">
-
-						<input type="date" id="birth" placeholder="생년월일을 입력하세요"
-							class="form-control" name="birth">
-					</div>
-				</div>
-
-
-				<div class="mb-3 row">
-					<label for="phone" class="col-sm-2 col-form-label">* 전화번호 </label>
-					<div class="col-sm-10">
-
-						<input type="text" id="phone" placeholder="전화번호를 입력하세요"
-							class="form-control" name="phone" pattern="010-[0-9]{4}-[0-9]{4}"
+				<div class="flex-div mb-3">
+					<label for="phone" class="">전화번호 </label>
+					<input type="text" id="phone"
+							class="form-input" name="phone" pattern="010-[0-9]{4}-[0-9]{4}"
 							title="전화번호는 010-0000-0000으로 입력해주세요">
-					</div>
 				</div>
 
-
-				<div class="mb-3 row">
-					<label for="password" class="col-sm-2 col-form-label">*비밀번호</label>
-					<div class="col-sm-10">
-
-						<input type="password" id="password" placeholder="비밀번호를 입력하세요"
-							class="form-control" name="password">
-					</div>
+				<div class="flex-div mb-3">
+					<label for="password" class="">비밀번호 </label>
+					<input type="password" id="password"
+							class="form-input" name="password">
 				</div>
 
-
-				<div class="mb-3 row">
-					<label for="email" class="col-sm-2 col-form-label">* 이메일 </label>
-					<div class="col-sm-10">
-
-						<input type="email" id="email" placeholder="이메일을 입력하세요"
-							class="form-control" name="email">
-					</div>
+				<div class="flex-div mb-3">
+					<label for="email" class="">이메일 </label>
+					<input type="email" id="email"
+							class="form-input" name="email">
 				</div>
 
-
-
-
-				<div class="mb-3 row">
-					<div class="col-sm-10">
-						<input th:if="form-check-input" type="radio"
-							name="flexRadioDefault" id="flexRadioDefault1"> <label
-							class="form-check-label" for="flexRadioDefault1">수신동의</label>
+				<div class="flex-div mb-3">
+					<div style="flex-grow: 1">
+						<input th:if="form-check-input" type="radio" style="width: 20px;"
+							name="flexRadioDefault"> <label style="width: 100px"
+							for="flexRadioDefault1">수신동의 </label>
 					</div>
-					<div th:if="form-check">
-						<input class="form-check-input" type="radio"
-							name="flexRadioDefault" id="flexRadioDefault2" checked> <label
-							class="form-check-label" for="flexRadioDefault2">수신미동의</label>
+					<div style="flex-grow: 1">
+						<input th:if="form-check" type="radio" style="width: 20px;"
+							name="flexRadioDefault" checked> <label style="width: 100px"
+							for="flexRadioDefault2">수신미동의 </label>
 					</div>
 				</div>
-				<button class="btn btn-primary" type="submit">가입</button>
+				
+				<button class="btns" type="submit">가입</button>
 			</form>
 		</div>
 	</div>

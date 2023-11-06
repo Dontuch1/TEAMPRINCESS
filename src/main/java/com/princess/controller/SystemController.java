@@ -35,12 +35,8 @@ public class SystemController {
 	}
 
 	@PostMapping("/register")
-	 public String register(Member member, @RequestParam Map<String, String> requestBody ) {
-	 String guInput = requestBody.get("guInput");
-	 String dongInput = requestBody.get("dongInput");
-	 
-		member.setLocation(guInput+ " " +dongInput);
-		
+	 public String register(Member member, @RequestParam String gu, @RequestParam String dong) {
+		member.setLocation(gu+ "구 " + dong + "동");
 		System.out.println(member.toString());
 		
 		memberService.insertMember(member);
