@@ -18,7 +18,7 @@
 				<div style="height: 280px;">
 					<h4 class="mt-4">
 						🕶️ <span style="font-weight: bold"
-							th:text="${currentUser.nickName}"></span>님이 받은 리뷰
+							th:text="${userPage.nickName}"></span>님이 받은 리뷰
 					</h4>
 					<br>
 					<table class="table reviewTable">
@@ -36,8 +36,8 @@
 							<tr th:if="${reviewList.empty}">
 								<td colspan="6">받은 리뷰가 없습니다.</td>
 							</tr>
-							<tr th:each="review: ${reviewList}">
-								<td th:text="${review.reviewNo}">
+							<tr th:each="review, state: ${reviewList}">
+								<td th:text="${state.count}">
 								<td th:text="${review.receiver.nickName}">
 								<td><div
 										style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -58,7 +58,7 @@
 				<div style="height: 280px;">
 					<h4 class="mt-4">
 						🕶️ <span style="font-weight: bold"
-							th:text="${currentUser.nickName}"></span>님이 보낸 리뷰
+							th:text="${userPage.nickName}"></span>님이 보낸 리뷰
 					</h4>
 					<br>
 					<table class="table reviewTable">
