@@ -3,93 +3,63 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원관리</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body th:align="center">
-	<div class="d-flex" id="wrapper">
-		<div id="page-content-wrapper">
-			<div th:insert="~{fragment/header :: header}"></div>
-			<div class="container-fluid">
-				<h2>회원관리 페이지</h2>
-				<div class="panel panel-default">
-					<div class="panel-heading">회원 정보 입력</div>
-					<div class="panel-body">
-						<form id="memberForm" onsubmit="addMember(event);">
-
-							<div class="form-group">
-								<label for="name">아이디:</label> <input type="text"
-									class="form-control" id="id" name="id" required>
-							</div>
-
-							<div class="form-group">
-								<label for="phone">전화번호:</label> <input type="text"
-									class="form-control" id="phone" name="phone" required>
-							</div>
-
-							<div class="form-group">
-								<label for="name">사용자이름:</label> <input type="text"
-									class="form-control" id="name" name="name" required>
-							</div>
-
-							<div class="form-group">
-								<label for="phone">등록일:</label> <input type="text"
-									class="form-control" id="date" name="date" required>
-							</div>
-							<button type="submit" class="btn btn-success">등록</button>
-
-						</form>
-					</div>
-				</div>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-
-							<th>아이디</th>
-							<th>이름</th>
-							<th>닉네임</th>
-							<th>전화번호</th>
-							<th>등록일</th>
-							<th>삭제</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="member: ${memberList}">
-							<td class="center" th:text="${member.id}"></td>
-							<td class="left" th:text="${member.userName}"></td>
-							<td class="left" th:text="${member.nickName}"></td>
-							<td class="left" th:text="${member.phone}"></td>
-							<td class="left" th:text="${member.regdate}"></td>
-							<td><a th:href="@{/admin/deleteMember(id=${member.id})}">❌</a>
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	<script>
+<div class="d-flex" id="wrapper">
+    <div id="page-content-wrapper">
+        <div th:insert="~{fragment/header :: header}"></div>
+        <div class="container-fluid">
+            <h2>회원관리 페이지</h2>
+            <div class="panel panel-default">
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>닉네임</th>
+                        <th>전화번호</th>
+                        <th>등록일</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="member: ${memberList}">
+                        <td class="left" th:text="${member.id}"></td>
+                        <td class="left" th:text="${member.userName}"></td>
+                        <td class="left" th:text="${member.nickName}"></td>
+                        <td class="left" th:text="${member.phone}"></td>
+                        <td class="left" th:text="${member.regdate}"></td>
+                        <td><a th:href="@{/admin/deleteMember(id=${member.id})}">❌</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
     function addMember(event) {
         event.preventDefault(); // Prevent the default form submission
 
         // Get the user input
         var id = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        var nickName = document.getElementById("nickName").value;
         var phone = document.getElementById("phone").value;
-        var username = document.getElementById("name").value; // Corrected ID
         var date = document.getElementById("date").value;
 
         // Create a new row and append it to the table
         var table = document.querySelector("table tbody");
         var newRow = table.insertRow(-1); // -1 to append at the end
         newRow.innerHTML = `
-            <td class="center">${table.rows.length}</td>
             <td class="left">${id}</td>
-            <td class="center">${username}</td> <!-- Corrected variable name -->
-            <td class="center">${phone}</td>
-            <td class="center">${date}</td>
+            <td class="left">${name}</td>
+            <td class="left">${nickName}</td>
+            <td class="left">${phone}</td>
+            <td class="left">${date}</td>
+            <td><a th:href="@{/admin/deleteMember(id=${id})}">❌</a></td>
         `;
 
         // Clear the form

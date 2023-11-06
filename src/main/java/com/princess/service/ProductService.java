@@ -26,17 +26,15 @@ public interface ProductService {
 
 	Page<Product> getProductList(String type, Search search, Pageable pageable);
 	
-	Page<Product> myThunderList(Search search, Pageable pageable, Member member);
-	
-	void thunderDelivery(Long productPno, Member member);
-	
 	List<Auction> getAuctionList(Product product);
 	
 	Auction getAuctionMaxPrice(Product product);
 	
 	void buyProduct(Product product, String buyer);
 	
-	int getAuctionCnt(Product product, String id);
+	boolean isAuctioned(Product product, String id);
+	
+	int countAuctions(Product product);
 	
 	void insertAuction(Product product, String id, int bid);
 	
@@ -61,4 +59,6 @@ public interface ProductService {
 	boolean isReported(Member member, Product product, Type type);
 	
 	void insertReport(Report report);
+
+	
 }

@@ -6,7 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
 import com.princess.domain.Member;
+import com.princess.domain.Product;
 import com.princess.domain.Search;
+import com.princess.domain.CheckCondition.Type;
 
 public interface BoardService {
 	
@@ -21,6 +23,12 @@ public interface BoardService {
 	Board getBoard(Board board);
 
 	Page<Board> getBoardList(String type, Search search, Pageable pageable);
+	
+	boolean isReported(Member member, Board board, Type type);
 
 	Board getBoardId(Long boardId);
+
+
+	boolean isGreated(String id, Board board, Type type);
+
 }

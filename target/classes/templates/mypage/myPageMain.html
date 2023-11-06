@@ -21,7 +21,7 @@
 			<!-- Page content-->
 			<div class="container-fluid">
 				<h4 class="mt-4">
-					🏠 <span th:text="${currentUser.nickName}"
+					🏠 <span th:text="${memberPage.nickName}"
 						style="font-weight: bold"></span>님의 마이페이지
 				</h4>
 
@@ -36,34 +36,34 @@
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;">battery:
 									<span
 									style="font-family: VT323; font-weight: bold; font-size: 25pt;"
-									th:text="${currentUser.battery}"></span>%
+									th:text="${memberPage.battery}"></span>%
 								</span>
-								<div th:if="${currentUser.battery >= 0 and currentUser.battery <= 20}">
+								<div th:if="${memberPage.battery >= 0 and memberPage.battery <= 20}">
 									<!-- 0~20 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_red.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 21 and currentUser.battery <= 40}">
+									th:if="${memberPage.battery >= 21 and memberPage.battery <= 40}">
 									<!-- 21~40 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_orange.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 41 and currentUser.battery <= 60}">
+									th:if="${memberPage.battery >= 41 and memberPage.battery <= 60}">
 									<!-- 41~60 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_yellow.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 61 and currentUser.battery <= 80}">
+									th:if="${memberPage.battery >= 61 and memberPage.battery <= 80}">
 
 									<!-- 61~80 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_big"
 										src="/images/battery_green.png">
 								</div>
 								<div
-									th:if="${currentUser.battery >= 81 and currentUser.battery <= 100}">
+									th:if="${memberPage.battery >= 81 and memberPage.battery <= 100}">
 									<!-- 81~100 범위에 해당하는 경우 -->
 									<img id="batt" class="battery_img_mini"
 										src="/images/battery_blue.png">
@@ -73,7 +73,7 @@
 							<br>
 							<h5>
 								<a style="text-decoration: none; color: #333;"
-									th:href="@{/mypage/myReviewList(id=${currentUser.id})}">🎭 거래
+									th:href="@{/mypage/myReviewList(id=${memberPage.id})}">🎭 거래
 									후기 </a>
 							</h5>
 							<table class="table">
@@ -113,12 +113,12 @@
 							<h5>
 								<a
 									style="text-decoration: none; color: #333; font-weight: bolder;"
-									th:href="@{/mypage/myProductList(id=${currentUser.id})}"> 🛍️
+									th:href="@{/mypage/myProductList(id=${memberPage.id})}"> 🛍️
 									최근 업로드한 상품</a>
 							</h5>
 							<div></div>
-							<div th:if="${productList.empty}">
-								<p>업로드한 상품이 없습니다.</p>
+							<div th:if="${productList.empty}" style="margin-left:100px">
+								<span> 업로드한 상품이 없습니다.</span>
 							</div>
 							<div class="card" th:each="product, iterStat : ${productList}"
 								th:if="${iterStat.index < 2}"
@@ -164,7 +164,7 @@
 					<div>
 						<h5>
 							<a style="text-decoration: none; color: #333;"
-								th:href="@{/mypage/myPostList(id=${currentUser.id})}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								th:href="@{/mypage/myPostList(id=${memberPage.id})}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								📜 최근 게시글</a>
 						</h5>
 						<table class="table" style="width: 1100px;" th:align="center">
@@ -175,12 +175,12 @@
 									<th width="150px">Writer</th>
 									<th>Title</th>
 									<th width="100px">Like</th>
-									<th style="width: 150px;">Date</th>
+									<th width= "150px">Date</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:if="${productList.empty}">
-									<td colspan="5">게시글이 없습니다.</td>
+									<td colspan="6">게시글이 없습니다.</td>
 								</tr>
 								<tr th:each="board, iterStat: ${boardList}"
 									th:if="${iterStat.index < 5}">

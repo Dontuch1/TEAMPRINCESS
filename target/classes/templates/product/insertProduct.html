@@ -100,7 +100,7 @@ input#price[type='number'] {
 										<tr>
 											<td>내용</td>
 											<td><textarea class="inputbox" name="content"
-													style="resize: none; width: 100%;" rows="10"></textarea></td>
+													style="resize: none; width: 100%;" maxlength="2000" rows="10"></textarea></td>
 										</tr>
 										<tr>
 											<td><span id="checkMark"
@@ -124,14 +124,13 @@ input#price[type='number'] {
 						onclick="formsubmit();">등록</a>&nbsp;&nbsp;<a
 						class="btn btn-outline-dark flex-shrink-0" type="button"
 						onclick="history.back();">취소</a>
-					<div style="height: 30px;"></div>
 					<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
 				</div>
 				</section>
-				
 			</div>
 		</div>
 	</div>
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 <script type="text/javascript">
 	/*=============================================
@@ -228,7 +227,7 @@ input#price[type='number'] {
 	function addAuctionTag() {
 	    let auctionTag = document.createElement('tr');
 	    auctionTag.id = 'auctionTag';
-	    auctionTag.innerHTML = "<td></td><td style='text-align: center; border-right: 3px dotted #efefef;'>경매 기간 <input class='box' style='width: 15%; text-align: center; border: #eee 1px solid' type='number' name='aucDuration' value='1' min='1' max='3'><small style='color: #aaa;'>(경매 기간은 최대 3일입니다.)</small></td>";
+	    auctionTag.innerHTML = "<td></td><td style='text-align: center; border-right: 3px dotted #efefef;'>경매 기간 <input class='inputbox' style='width: 15%; text-align: center; border: #eee 1px solid' type='number' name='aucDuration' value='1' min='1' max='3'><small style='color: #aaa;'>(경매 기간은 최대 3일입니다.)</small></td>";
 	    var referenceElement = document.getElementById('auc');
 	    referenceElement.parentNode.insertBefore(auctionTag, referenceElement.nextSibling);
 	}
