@@ -77,7 +77,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Page<Board> getBoardList(Pageable pageable, Member member) {
 
-		return boardRepo.findByUserId(member, pageable);
+		return boardRepo.findByUserIdAndDisplay(member, pageable, Display.Y);
 	}
 
 	// 내가 올린 상품 리스트
