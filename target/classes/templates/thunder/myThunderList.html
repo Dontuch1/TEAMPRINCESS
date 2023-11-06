@@ -6,110 +6,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <!-- 스타일 -->
  <style>
-h2 {
-	font-weight: border;
-}
 
-.hr1 {
-	border: 0;
-	height: 2px;
-	background: #d3d3d3;
-}
-
-.grey {
-	color: #727272;
-}
-
-#strong {
-	font-weight: 900;
-}
-
-table {
-	width: 100%;
-	border-top: 1px solid #d3d3d3;
-	border-collapse: collapse;
-}
-
-th {
-	background-color: wihte;
-	border-top: 3px solid #727272;
-}
-
-th, td {
-	border-bottom: 1px solid #d3d3d3;
-	padding: 10px;
-}
-
-.greylist {
-	width: 50px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: grey;
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.gradient {
-	width: 80px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: linear-gradient(to bottom, grey, black);
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.left {
-	text-align: left;
-}
-
-.right {
-	float: right;
-}
-
-.center {
-	text-align: center;
-}
-
-a {
-	color: black;
-	text-decoration-line: none;
-}
-
-/* wrapper */
-#wrapper {
-	justify-content: center;
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(1);
-	grid-template-areas: "box2 box2 box2 box2";
-	margin: 0px auto;
-	padding: 0px;
-}
-
-.box {
-	padding: 15px;
-}
-
-.box1 {
-	grid-area: box1
-}
-
-.box2 {
-	grid-area: box2
-}
-
-.flex-right {
-	display: flex;
-	justify-content: right;
-}
 </style>
     
-<link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/myThunderList.css}" rel="stylesheet">
 
 </head>
 
@@ -131,15 +31,7 @@ a {
     			<div id="wrapper">
 					<div class="box box2">	
 							
-							    <h2 style="margin:30px 0px 0px 30px;"> 📤물품 수배서 </h2> 
-							    
-						<!-- 체크박스 테스트 -->	    
-
-						<!--  	    
-						<input type="checkbox" class="btn-check" id="danger-outlined" checked autocomplete="off">
-						<label class="btn btn-outline-primary link-danger" for="danger-outlined"><img alt="no images" src="/images/red-heart.png" /></label><br>
-						-->
-						<!-- 체크박스 테스트 -->
+							    <h2 style="margin:30px 0px 0px 30px;"> 📤물품 수배서 </h2> 		
 
 						<form th:action="@{/thunder/myThunderList}" method="get">
 							<div class="input-group mb-3 right w-25">
@@ -159,29 +51,31 @@ a {
 				    <tr>
 				        <th class="center">No.</th>
 				        <th class="center">title</th>
+				        <th class="center">buyer</th>
 				        <th class="center">seller</th>
-				        <th class="center">order</th>
+				        <th class="center">region</th>
 				        <th class="center">price</th>
 				        <th class="center">date</th>
 				        <th class="center">thunder</th>
 				    </tr>											
 				    <tr th:each="thunder, state : ${thunderList1}">
 				        <td class="center" th:text="${state.count}"></td>
-				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.title}" th:href="@{/product/getProduct(pNo=${thunder.pNo})}"></a></td>
-				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.salesId.nickName}" th:href="@{/mypage/myPageMain(id=${thunder.salesId.id})}"></a></td>
- 				        <td class="center" th:text="${thunder.pNo}"></td>
-				        <td class="center" th:text="${thunder.price}"></td>
-				        <td class="center" th:text="${#dates.format(thunder.regdate, 'yyyy.MM.dd')}"></td> 
-				        <th:block th:if="${currentUser.id} == ${thunder.salesId.id}">
+				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.title}" th:href="@{/product/getProduct(pNo=${thunder.pNo.pNo})}"></a></td>
+				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.buyer.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
+				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.salesId.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
+ 				        <td class="center" th:text="${thunder.buyer.location}"></td>
+				        <td class="center" th:text="${thunder.pNo.price}"></td>
+				        <td class="center" th:text="${#dates.format(thunder.pNo.regdate, 'yyyy.MM.dd')}"></td> 
+				        <th:block th:if="${currentUser.id} == ${thunder.buyer.id} or ${currentUser.id} == ${thunder.pNo.salesId.id}">
 				        <td class="center">
 				        	<button type="button" class="btn btn-danger"
-				        	id="thunderDelivery" th:value="${thunder.pNo}" disabled>⛔잠 김</button>
+				        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" disabled>⛔잠 김</button>
 				        </td>
 				        </th:block>
-				        <th:block th:if="${currentUser.id} != ${thunder.salesId.id}">
+				        <th:block th:if="${currentUser.id} != ${thunder.buyer.id} and ${currentUser.id} != ${thunder.pNo.salesId.id}">
 				        <td class="center">
 				        	<button type="button" class="btn btn-outline-warning link-dark"
-				        	id="thunderDelivery" th:value="${thunder.pNo}" onclick='thunderDelivery(this)'>다녀오기1</button>
+				        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" onclick='thunderDelivery(this)'>다녀오기1</button>
 				        </td>
 				        </th:block>
 				    </tr>
@@ -262,10 +156,6 @@ function thunderDelivery(ele) {
 		}
 	}	
 	
-	
-	
-	
-
 </script>
 
 </html>

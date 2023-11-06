@@ -3,28 +3,12 @@
 <head>
 <title>천둥맨 이만큼 일했어요!</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/standByList.css}" rel="stylesheet">
 </head>
 
-<!-- 스타일 -->
- <style>
-h2 {
-	font-weight: border;
-}
-
-.hr1 {
-	border: 0;
-	height: 2px;
-	background: #d3d3d3;
-}
-
-.grey {
-	color: #727272;
-}
-
-#strong {
-	font-weight: 900;
-}
-
+<style>
 table {
 	width: 100%;
 	border-top: 1px solid #d3d3d3;
@@ -40,81 +24,7 @@ th, td {
 	border-bottom: 1px solid #d3d3d3;
 	padding: 10px;
 }
-
-.greylist {
-	width: 50px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: grey;
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.gradient {
-	width: 80px;
-	height: 30px;
-	font-weight: 900;
-	color: white;
-	text-align: center;
-	background: linear-gradient(to bottom, grey, black);
-	border: solid 2px white;
-	border-radius: 5px;
-}
-
-.left {
-	text-align: left;
-}
-
-.right {
-	float: right;
-}
-
-.center {
-	text-align: center;
-}
-
-a {
-	color: black;
-	text-decoration-line: none;
-}
-
-/* wrapper */
-#wrapper {
-	justify-content: center;
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(1);
-	grid-template-areas: "box2 box2 box2 box2";
-	margin: 0px auto;
-	padding: 0px;
-}
-
-.box {
-	padding: 15px;
-}
-
-.box1 {
-	grid-area: box1
-}
-
-.box2 {
-	grid-area: box2
-}
-
-.flex-right {
-	display: flex;
-	justify-content: right;
-}
 </style>
-
-
-<link th:href="@{/css/main.css}" rel="stylesheet">
-<link th:href="@{/css/standByList.css}" rel="stylesheet">
-</head>
-
 <!-- 배터리 60 아래인 천둥맨이 들어오면 Qualification() 실행 -->
 <th:block th:with="isThunderAndLowBattery=${currentUser.auth.toString().equals('THUNDER')} and ${currentUser.battery < 60}">
     <th:block th:if="${isThunderAndLowBattery}">
@@ -138,7 +48,7 @@ a {
 				<div id="wrapper">
 					<div class="box box2">
 
-						<h2 style="margin:30px 0px 0px 30px;">📦물품 수배 후기</h2>
+						<h2 style="margin:30px 0px 0px 30px;">📦전송된 물품</h2>
 
 						<form th:action="@{/thunder/standByList}" method="get">
 							<div class="input-group mb-3 right w-25">
@@ -149,43 +59,37 @@ a {
 								</select>
 							    <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
 							    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
-							</div>
+							</div>	
 						</form>
 
 						<br>
 						<table>
 							<tr>
-								<th class="center">순서</th>
-								<th class="center">후기</th>
-								<th class="center">천둥맨</th>
-								<th class="center">상품번호</th>
-								<th class="center">일시</th>
-								<th class="center">조회수</th>
+								<th class="center">no</th>
+								<th class="center">title</th><!-- (판매글 제목) -->
+								<th class="center">thunder</th>
+								<th class="center">sender</th><!-- (판매자) -->
+								<th class="center">buyer</th><!-- (구매자)-->
+								<th class="center">regdate</th>
 							</tr>
-							<tr>
-								<td class="center">1</td>
-								<td class="left">새 것 같은 게시물을 배달해주셨어요.</td>
-								<td class="center">천둥맨1</td>
-								<td class="center">431</td>
-								<td class="center">2023-10-18</td>
-								<td class="center">150</td>
-							</tr>
-							<tr>
-								<td class="center">5</td>
-								<td class="left">어디 하나 흠집없이 너무 잘 왔어요!</td>
-								<td class="center">천둥맨1</td>
-								<td class="center">520</td>
-								<td class="center">2023-10-22</td>
-								<td class="center">80</td>
+							
+							<tr th:each="review, state : ${reviewList}">
+							<th:block th:if="${currentUser.id} == ${review.receiver.id}">
+								<td class="center" th:text="${state.count}"></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:text="${review.pNo.title}" th:href="@{/product/getProduct(pNo=${review.pNo.pNo})}"></a></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:text="${review.receiver.id}" th:href="@{/mypage/myPageMain(id=${review.receiver.id})}"></a></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:text="${review.pNo.salesId.id}" th:href="@{/mypage/myPageMain(id=${review.pNo.salesId.id})}"></a></td>
+								<td class="center"><a style="text-decoration: none; color: #333;" th:text="${review.sender}" th:href="@{/mypage/myPageMain(id=${review.sender})}"></a></td>
+								<td class="center" th:text="${#dates.format(review.regdate, 'yyyy.MM.dd')}"></td>
+							</th:block>
+							<th:block th:if="${currentUser.id} != ${review.receiver.id}">
+								
+							</th:block>
 							</tr>
 						</table>
 						<br>
 						<div class="page">
-							<!-- <span><button type="button" id="thunder" name="thunder"
-									data-toggle="modal" data-target="#MyModal">모달창 활성화</button></span> 
-							<span><button
-									type="button" id="thunder" name="thunder" data-toggle="modal"
-									data-target="#modal">모달창 활성화2</button></span> -->
+						
 						</div>
 						<br> <br>
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.princess.domain.Board;
+import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.LikeWish;
@@ -186,6 +187,13 @@ public class MypageServiceImpl implements MypageService {
 		int cnt = reviewRepo.countBypNoAndSenderAndReceiver(product, sender, member);
 		if(cnt==0) return false;
 		else return true;
+	}
+	
+	// 캐삭
+	public void	disalbeMember(Member member) {
+		member = memberRepo.findById(member.getId()).get();
+		member.setEnabled(Display.N);
+		memberRepo.save(member);
 	}
 
 }

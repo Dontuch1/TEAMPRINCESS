@@ -54,4 +54,7 @@ public interface MypageService {
 	
 	// 후기 작성 여부
 	boolean isReviewed(Product product, String sender, String receiver);
+	
+	// 캐삭
+	void disalbeMember(Member member);
 }

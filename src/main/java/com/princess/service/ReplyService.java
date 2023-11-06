@@ -12,12 +12,12 @@ public interface ReplyService {
 	
 	Reply saveReply(Reply reply);
 	
-	Page<Reply> findByPostNum(Board board, Pageable pageable);
+	 Reply saveReReply(Reply reply);
+	
+	Page<Reply> getBoard(Board board, Pageable pageable);
 	
 	void deleteReply(Long id);
 
 	List<Reply> findByBoard(Board board);
-
-
 
 }

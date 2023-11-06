@@ -3,34 +3,9 @@
 <head>
 <title>새 게시글 입력</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-
-/* wrapper */
-#wrapper {
-	justify-content: center;
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(1);
-	grid-template-areas: "box2 box2 box2 box2";
-	margin: 0px auto;
-	padding: 0px;
-}
-
-.box {
-	padding: 15px;
-}
-
-.box1 {
-	grid-area: box1
-}
-
-.box2 {
-	grid-area: box2
-}
-</style>
 
 <link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/wrapper.css}" rel="stylesheet">
 
 </head>
 <body th:align="center">
@@ -51,26 +26,42 @@
 								<br>
 								<h2 th:align="center" style="font-weight:700"> 커뮤니티 게시물 등록란 </h2>
 								<br>
+								<br>
+								
 							<div class="input-group mb-3 w-75">
 								<span class="input-group-text boot">제목</span>
-								<input type="text" class="form-control" placeholder="제목을 작성해주세요." name="title">
+								<input type="text" class="form-control" placeholder="제목을 작성해주세요." name="title" required="required">
 							</div>
-							
+						<th:block th:if="${currentUser.auth.toString()} == 'ADMIN'">
 							<div class="input-group w-75 mb-3">
 								<span class="input-group-text">카테고리</span> <!-- ** 카테고리 무조건 선택하게 하기. -->
 								<span id="flex1" class="form-control">
-									<label><input type="radio" name="cmCategory" value="LOST"> 😥잃어버렸어요 &nbsp;</label> 
+									<label><input type="radio" name="cmCategory" value="NOTICE" checked> 🚨 공지사항 &nbsp;</label> 
+								</span>
+							</div>
+						</th:block>
+						<th:block th:if="${currentUser.auth.toString()} != 'ADMIN'">
+							<div class="input-group w-75 mb-3">
+								<span class="input-group-text">카테고리</span> <!-- ** 카테고리 무조건 선택하게 하기. -->
+								<span id="flex1" class="form-control">
+									<label><input type="radio" name="cmCategory" value="LOST" checked> 😥잃어버렸어요 &nbsp;</label> 
 									<label><input type="radio" name="cmCategory" value="FOOD"> 🍔여기 맛나요 &nbsp;</label>
 									<label><input type="radio" name="cmCategory" value="TMI">🔉 알려드려요 &nbsp;</label> 
 									<label><input type="radio" name="cmCategory" value="QNA">❓ 궁금해요 &nbsp;</label> 
 									<label><input type="radio" name="cmCategory" value="MEET"> 🙋‍♀️우리 만나요</label>
 								</span>
 							</div>
-								
-							<div class="input-group w-75 mb-3 h-75">
-								<span class="input-group-text">내용</span>
-								<textarea class="form-control" aria-label="With textarea" placeholder="내용을 작성하는 칸입니다." name=content></textarea>
+						</th:block>
+							
+							<div class="input-group mb-3 w-75">
+								<span class="input-group-text h-25">내용</span>
+								<textarea class="form-control " aria-label="With textarea" placeholder="내용을 작성하는 칸입니다." name=content required="required" maxlength="200"
+											style="height: 10em; resize: none;"></textarea>
 							</div>
+							
+							<img style="width: 25em; display:none;" id="imgShow"
+									class="" src="/images/upload.png" onclick='imgclick();' alt="...">
+							<br>
 							<div class="grid">
 								<button type="submit" value="게시글 등록" class="btn btn-outline-secondary mb-3">게시글 등록</button>
 								<button type="button" class="btn btn-outline-secondary mb-3" onclick="history.back()">이전 페이지</button>
@@ -81,7 +72,6 @@
 							</div>
 							</form>	
 						</div>
-						
 					</div>
 				</div>
 
@@ -96,6 +86,23 @@
 	 function imgclick() {
 		    document.getElementById('file').click();
 		}
+	
+	 /*=============================================
+	 * 이미지 미리보기
+	 *=============================================*/
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				document.getElementById('imgShow').style.display = "block";
+				document.getElementById('imgShow').src = e.target.result;
+			};
+			reader.readAsDataURL(input.files[0]);
+			$("#content").val("");
+		} else {
+			document.getElementById('imgShow').src = "/images/upload.png";
+		}
+	}
 	</script>
 </body>
 </html>

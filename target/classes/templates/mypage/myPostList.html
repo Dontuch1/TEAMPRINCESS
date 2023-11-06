@@ -36,7 +36,7 @@
 							<td th:text="${board.userId.nickName}">
 							<td><a style="text-decoration: none; color: #333"
 								th:href="@{/board/getBoard(postNum=${board.postNum})}"
-								th:text="${board.title}" />
+								th:text="${board.title}" /></a>
 							<td th:text="${board.great}">
 							<td th:text="${board.regdate}">
 						</tr>
@@ -67,5 +67,6 @@
 			</div>
 		</div>
 	</div>
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 </html>

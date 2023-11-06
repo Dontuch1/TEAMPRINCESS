@@ -16,4 +16,6 @@ public interface ReportRepository extends CrudRepository <Report, Long>, Queryds
 	Page<Report> findBySubmit(Pageable pageable, Display submit);
 	
 	int countByRptIdAndPostNoAndType(Member member, Long pNo, Type type);
+
+	Report findByPostNoAndType(Long postNo, Type product);
 }

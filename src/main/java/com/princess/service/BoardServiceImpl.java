@@ -19,6 +19,7 @@ import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QBoard;
+import com.princess.domain.Report;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
@@ -119,6 +120,10 @@ public class BoardServiceImpl implements BoardService {
 			return false;
 	}
 	
+	public Board getGreat(Board board) {
+		return boardRepo.findBypostNum(board.getPostNum());
+	}
+	
 	public boolean isGreated(String id, Board board, Type type) {
 		boolean isGreated = false;
 		for(LikeWish like : likewishRepo.findBypNoAndType(board.getPostNum(), type)) {
@@ -129,6 +134,34 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return isGreated;
 	}
+	
+	public void insertGreat(LikeWish likeWish, Long greatNum, Board board1) {
+		board1.setGreat(greatNum);
+		likewishRepo.save(likeWish);
+		boardRepo.save(board1);
+	}
+	
+	public void deleteGreat(Board board, Type type, Member member,Long greatNum) {
+		LikeWish findGreat = likewishRepo.findBypNoAndTypeAndLikeId(board.getPostNum(), type, member);
+		board.setGreat(greatNum);
+		System.out.println("findWish : " + findGreat);
+		System.out.println("delete great cnt : "+ board.getGreat());
+		likewishRepo.delete(findGreat);
+		boardRepo.save(board);
+	}
+	
+	public void insertReport(Report report) {
+		
+	      Report findReport = reportRepo.findByPostNoAndType(report.getPostNo(), Type.COMMUNITY);
+	      if (findReport != null) {
+	    	  System.out.println(findReport.toString());
+	         findReport.setRptCon(findReport.getRptCon() + "\n" +"(" + report.getRptId().getId() + ") " + report.getRptCon());
+	         reportRepo.save(findReport);
+	      } else {
+	    	  System.out.println("null인가?");  
+	    	reportRepo.save(report);
+	      }
+	   }
 	
 
 

@@ -21,7 +21,6 @@ import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QProduct;
-import com.princess.domain.QSales;
 import com.princess.domain.Report;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
@@ -32,7 +31,6 @@ import com.princess.persistence.ProductRepository;
 import com.princess.persistence.ReportRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
 
 
 @Service
@@ -122,10 +120,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findAll(builder, pageable);
 	}
 	
-	
-	
-	
-	
+	public int countAuctions(Product product) {
+		return productRepo.countBypNo(product.getPNo());
+	}
 
 	public Auction getAuctionMaxPrice(Product product) {
 		if (auctionRepo.findBypNo(product.getPNo()).isEmpty()) {
@@ -148,9 +145,11 @@ public class ProductServiceImpl implements ProductService {
 		saleseRepo.save(newSales);
 		productRepo.save(product);
 	}
-	// isAuctioned 추가 이거 변경
-	public int getAuctionCnt(Product product, String id) {
-		return auctionRepo.countByPNoAndId(product.getPNo(), id);
+
+	public boolean isAuctioned(Product product, String id) {
+		if (auctionRepo.countByPNoAndId(product.getPNo(), id) == 3) {
+			return true;
+		} else return false;
 	}
 	
 	public void insertAuction(Product product, String id, int bid) {
@@ -176,7 +175,9 @@ public class ProductServiceImpl implements ProductService {
 	public List<Auction> getBidList(Member member, Product product) {
 		List<Auction> list = new ArrayList<Auction>();
 		if(auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member).isEmpty()) {
-			list.add(new Auction());
+			Auction auction = new Auction();
+			auction.setAuctionPrice(0);
+			list.add(auction);
 		} else {
 			for (Auction auc : auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member)) {
 				if(auc.getPNo().getPNo() == product.getPNo()) {
@@ -247,6 +248,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	public void insertReport(Report report) {
+		Report findReport = reportRepo.findByPostNoAndType(report.getPostNo(), Type.PRODUCT);
+		if (findReport != null) {
+			findReport.setRptCon(findReport.getRptCon() + "\n" +"(" + report.getRptId().getId() + ") " + report.getRptCon());
+			reportRepo.save(findReport);
+		} else
 		reportRepo.save(report);
 	}
 

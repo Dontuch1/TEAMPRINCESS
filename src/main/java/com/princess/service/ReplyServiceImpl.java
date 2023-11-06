@@ -17,22 +17,23 @@ public class ReplyServiceImpl implements ReplyService {
     @Autowired
     private ReplyRepository replyRepository;
     
-	@Override
 	public Reply saveReply(Reply reply) {
 		return replyRepository.save(reply);
 	}
+	
+	public Reply saveReReply(Reply reply) {
+		reply.setReplyNum(null);
+		return replyRepository.save(reply);
+	}
 
-	@Override
-	public Page<Reply> findByPostNum(Board board, Pageable pageable) {
+	public Page<Reply> getBoard(Board board, Pageable pageable) {
 		return replyRepository.findByPostNum(board, pageable);
 	}
 
-	@Override
 	public List<Reply> findByBoard(Board board) {
 		return replyRepository.findByPostNum(board);
 	}
 
-	@Override
 	public void deleteReply(Long id) {
 		replyRepository.deleteById(id);
 

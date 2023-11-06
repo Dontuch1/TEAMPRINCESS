@@ -39,17 +39,5 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepo.findById(member.getId()).get();
 	}
 
-	@Override
-	public void deleteThunder(Member member) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateThunder(Member member) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

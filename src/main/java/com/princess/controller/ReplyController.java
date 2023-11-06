@@ -22,10 +22,7 @@ public class ReplyController {
 	@Autowired
     private ReplyService replyService;
 	
-	
-	
-	
-	@PostMapping("/getBoard")
+	@PostMapping("/insertReply")
     public String saveReply(@RequestBody Map<String, Object> payload,
                             Model model) {
 		
@@ -55,12 +52,46 @@ public class ReplyController {
 
         return "board/getBoard";
     }
+	
+	@PostMapping("/insertReReply")
+	public String saveReReply(@RequestBody Map<String, Object> payload, Model model) {
+		System.out.println("insertReReply");
+		String replyContent = (String) payload.get("reReplyContent");
+		String memberId = (String) payload.get("memberId");
+	    Long boardId = Long.valueOf((String) payload.get("boardId"));
+	    Long replyNum = Long.valueOf((String) payload.get("reReplyNum"));
+	    
+	    System.out.println("boardId : "+boardId);
+		System.out.println("replyContent : "+replyContent);
+		System.out.println("memberId : "+memberId);
+		System.out.println("memberId : "+replyNum);
+		
+	    Member member = new Member();
+		member.setId(memberId);
+		
+		Board board = new Board();
+        board.setPostNum(boardId);
+      
+        Reply reply = new Reply();
+        reply.setReplyNum(replyNum);
+        reply.setUserId(member);
+        reply.setReplyContent(replyContent);
+        reply.setPostNum(board);
+        reply.setReference(reply);
+	    
+        replyService.saveReReply(reply);
+        
+        List<Reply> replies = replyService.findByBoard(board);
+        model.addAttribute("replies", replies);
+        
+		return "board/getBoard";
+	}
 
 	@PostMapping("/delete")
     public String deleteReply(@RequestBody Map<String, Object> payload, Model model) {
-		Long boardId = Long.valueOf((String) payload.get("replyNum"));
-		System.out.println("boradID : "+boardId);
-        replyService.deleteReply(boardId);
+		Long replyNum = Long.valueOf((String) payload.get("replyNum"));
+		System.out.println("boradID : "+replyNum);
+        replyService.deleteReply(replyNum);
         return "redirect:/board/getBoard"; 
     }
 }

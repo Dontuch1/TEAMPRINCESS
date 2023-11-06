@@ -51,6 +51,7 @@ public class Product {
 	@Column(nullable = false)
 	private String title;
 	
+	@Column(length = 2000)
 	private String content;
 	
 	@Column(nullable = false)
