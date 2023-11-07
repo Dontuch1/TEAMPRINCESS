@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.Member;
 import com.princess.domain.Report;
-import com.princess.service.BoardService;
 import com.princess.service.MemberService;
 import com.princess.service.ReportService;
 
@@ -26,18 +25,12 @@ public class AdminController {
 	private MemberService memberService;
 	@Autowired
 	private ReportService reportService;
-	@Autowired
-	private BoardService boardService; 
 
 	@RequestMapping("/adminMain")
 	public void adminMain() {
 
 	}
 
-	@RequestMapping("/accessDenied")
-	public void accessDenied() {
-
-	}
 
 	@RequestMapping("/deleteMember")
 	public String deleteMember(Member member, @RequestParam String id) {

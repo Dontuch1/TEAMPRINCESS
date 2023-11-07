@@ -25,19 +25,14 @@ public class SecurityConfig {
       .defaultSuccessUrl("/product/getProductList?type=prod", true);
       http.exceptionHandling().accessDeniedPage("/system/accessDenied");   
       
-      
       http
       .logout()
       .logoutUrl("/system/logout") // 로그아웃 URL
       .logoutSuccessUrl("/system/login") // 로그아웃 성공 후 리디렉션할 URL
       .invalidateHttpSession(true) // 세션 무효화
-      .deleteCookies("JSESSIONID");// 세션 쿠키 삭제
-      
-      http.exceptionHandling().accessDeniedPage("/system/accessDenied");
-      
-     
-      
-      http.authorizeHttpRequests()
+      .deleteCookies("JSESSIONID");// 세션 쿠키 삭제   
+    
+      http.authorizeRequests()
          .antMatchers("/","/system/**").permitAll()
          .antMatchers("/board/**").authenticated()
          .antMatchers("/product/**").authenticated()
@@ -45,11 +40,9 @@ public class SecurityConfig {
          .antMatchers("/admin/**").hasAuthority("ADMIN")
          .antMatchers("/thunder/**").hasAnyAuthority("THUNDER","ADMIN");
    
-     
-
-
       return http.build();
    }
+   
    @Bean
    public PasswordEncoder passwordEncoder() {
       return PasswordEncoderFactories.createDelegatingPasswordEncoder();
