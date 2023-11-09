@@ -88,7 +88,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 						</div>	
 						<br>
 
-				  		<!-- 댓글 작성 폼 -->	
+				  	<!-- 댓글 작성 폼 -->	
 						<div th:align="center">
 						 	<ul class="comment1">
 								<li class="comment1-form">
@@ -106,24 +106,21 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 							</ul>
 						 </div>
 			
-						<!-- 댓글 목록 -->
-						<div th:align="center">
-						<form id="reReplyForm">
+				<div th:align="center">
 							<table id="replyList" style="width:800px">
 								<tr th:each="reply, state : ${replies1}" class="border1">
+							    	
 							    	<td style="width: 120px;" th:align="center"   th:text="${reply.userId.nickName}"></td>
 							    	<td style="width: 485px; padding:10px" th:text="${reply.replyContent}"></td>
 							    	<td style="width: 130px" th:text="${reply.regdate}"></td>
-							    	
-							    <th:block th:if="${#authentication.principal.username} == ${reply.userId.id}">
+						    	<th:block th:if="${#authentication.principal.username} == ${reply.userId.id}">
 						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" id="replyId" th:value="${reply.replyNum}" onclick="deleteReply(this)">삭제</button></td>
 						    	</th:block>
 							    <th:block th:if="${#authentication.principal.username} != ${reply.userId.id}">
-						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply" disabled>삭제</button></td>
+						    		<td><button style="width: 80px" class="btn btn-outline-secondary deleteReply">신고</button></td>
 						    	</th:block>
 							    </tr>
 							</table>
-						</form>	
 						
 							<th:block th:if="${endPage == 0}">
 								 [ <strong style="color: red;">1</strong> ]
@@ -144,10 +141,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<div th:align="center" class="deleteBoard">		
 			<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px" onclick="history.back()">글 목록</button>
-			<th:block th:if="${#authentication.principal.username} == ${board.userId.id}">
+			<th:block th:if="${#authentication.principal.username} == ${board.userId.id} and ${currentUser.auth.toString()} != 'ADMIN'">
 				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px" class="btn btn-outline-secondary deleteBoard">글삭제</a>
 			</th:block>
-			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN'">
+			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN' and ${#authentication.principal.username} == ${board.userId.id}">
 				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary deleteBoard">글삭제</a>
 			</th:block>
 			
@@ -204,45 +201,6 @@ console.log(boardId);
         	return;
         }
   	});
-
-
-//=======================================
-//==  대댓글 작성
-//=======================================
-$('#reReplyForm').submit(function(e) {
-	
-	let replycontent = $('#reReplyContent').val();
-	let reReplyNum=$('#button-addon2').val();
-
-	console.log(replycontent);
-	console.log(reReplyNum);
-	
-	 let replyData = {
-		 "replyNum" : reReplyNum,
-		 "reReplyContent": replycontent,
-         "memberId":  $('#memberId').val(),
-         "boardId": boardId
-	 }
-	 
-	 if($('#reReplyContent').val() != ""){
-		$.ajax({
-	        type: "POST",
-	        url: "/reply/insertReReply",
-	        data: JSON.stringify(replyData),
-	        contentType: "application/json",
-	        success: function(response) {
-	        	document.location.reload();
-	        },
-	        error: function(error) {
-	            alert("댓글 삭제 중 오류 발생");
-	            return;
-	        }
-	    });
-	 } else {
-     	alert("댓글에 내용을 입력해주세요!");
-     	return;
-     }
-});
 	
 
 //=======================================

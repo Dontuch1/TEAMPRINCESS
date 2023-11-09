@@ -22,13 +22,10 @@ import com.princess.domain.Product;
 import com.princess.domain.Review;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
-import com.princess.service.MemberService;
-import com.princess.service.ProductService;
-import com.princess.service.SalesService;
 import com.princess.service.ThunderService;
 
 @Controller
-@RequestMapping("/thunder")
+@RequestMapping("/thunder/")
 public class ThunderController {
 	
 	@Autowired
@@ -42,16 +39,8 @@ public class ThunderController {
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
 		
-	// sales 시작	
-//		Sales sales = new Sales();
-	//	member.setId(securityUser.getUsername());
-//		sales.setBuyer(member);
-	//	System.out.println(sales.toString());
-	// sales 끝
-		
 		System.out.println("thunderList 찾기 전");
 		Page<Sales> thunderList = thunderservice.myThunderList(search, pageable);
-	//	Page<Sales> thunderList = salesservice.myThunderList(search, pageable, member);
 		System.out.println("thunderList : " + thunderList.toString());
 		
 		int nowPage = thunderList.getPageable().getPageNumber() + 1;
@@ -104,6 +93,7 @@ public class ThunderController {
 	public String transformThunder(@RequestBody Map<String, Object> payload, Member member) {
 		System.out.println("천둥맨 변신 중");
 		member.setId((String)payload.get("memberThunderId"));
+		System.out.println(member.getId());
 		thunderservice.updateThunder(member);
 		return "redirect:/product/getProductList?type=prod";
 	}

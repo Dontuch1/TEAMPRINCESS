@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.princess.domain.Member;
 import com.princess.service.MemberService;
+import com.princess.service.ThunderService;
 
 @Controller
 @RequestMapping("/system/")
@@ -19,7 +20,8 @@ public class SystemController {
 	@Autowired
 	private MemberService memberService;
 
-	
+	@Autowired
+	private ThunderService thunderservice;
 
 	@GetMapping("/logout")
 	public void logout() {
@@ -37,6 +39,15 @@ public class SystemController {
 	public String register(Member member) {
 		memberService.insertMember(member);
 		return "redirect:login";
+	}
+	
+	@PostMapping("/transformThunder")
+	public String transformThunder(@RequestBody Map<String, Object> payload, Member member) {
+		System.out.println("천둥맨 변신 중");
+		member.setId((String)payload.get("memberThunderId"));
+		System.out.println(member.getId());
+		thunderservice.updateThunder(member);
+		return "redirect:/product/getProductList?type=prod";
 	}
 
 }

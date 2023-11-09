@@ -83,7 +83,6 @@ th, td {
 								<td class="center" th:text="${#dates.format(review.regdate, 'yyyy.MM.dd')}"></td>
 							</th:block>
 							<th:block th:if="${currentUser.id} != ${review.receiver.id}">
-								
 							</th:block>
 							</tr>
 						</table>

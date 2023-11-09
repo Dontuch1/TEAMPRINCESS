@@ -52,6 +52,8 @@ public class ThunderServiceImpl implements ThunderService {
 //				builder.and(qsales.buyer.id.like("%" + search.getSearchKeyword() +"%"));
 //			}
 			
+			builder.and(qsales.pNo.delivery.eq(YorN.Y));
+			
 			
 			return saleseRepo.findAll(builder, pageable);
 		}
