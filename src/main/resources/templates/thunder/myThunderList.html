@@ -59,25 +59,29 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				        <th class="center">thunder</th>
 				    </tr>											
 				    <tr th:each="thunder, state : ${thunderList1}">
-				        <td class="center" th:text="${state.count}"></td>
-				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.title}" th:href="@{/product/getProduct(pNo=${thunder.pNo.pNo})}"></a></td>
-				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.buyer.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
-				        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.salesId.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
- 				        <td class="center" th:text="${thunder.buyer.location}"></td>
-				        <td class="center" th:text="${thunder.pNo.price}"></td>
-				        <td class="center" th:text="${#dates.format(thunder.pNo.regdate, 'yyyy.MM.dd')}"></td> 
-				        <th:block th:if="${currentUser.id} == ${thunder.buyer.id} or ${currentUser.id} == ${thunder.pNo.salesId.id}">
-				        <td class="center">
-				        	<button type="button" class="btn btn-danger"
-				        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" disabled>⛔잠 김</button>
-				        </td>
+				    	<th:block th:if="${thunder.thunderId} == null">
+					        <td class="center" th:text="${state.count}"></td>
+					        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.title}" th:href="@{/product/getProduct(pNo=${thunder.pNo.pNo})}"></a></td>
+					        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.buyer.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
+					        <td class="center"><a style="text-decoration: none; color: #333;" th:text="${thunder.pNo.salesId.id}" th:href="@{/mypage/myPageMain(id=${thunder.buyer.id})}"></a></td>
+	 				        <td class="center" th:text="${thunder.buyer.location}"></td>
+					        <td class="center" th:text="${thunder.pNo.price}"></td>
+					        <td class="center" th:text="${#dates.format(thunder.pNo.regdate, 'yyyy.MM.dd')}"></td> 
+					        <th:block th:if="${currentUser.id} == ${thunder.buyer.id} or ${currentUser.id} == ${thunder.pNo.salesId.id}">
+					        <td class="center">
+					        	<button type="button" class="btn btn-danger"
+					        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" disabled>⛔잠 김</button>
+					        </td>
+					        </th:block>
+					        <th:block th:if="${currentUser.id} != ${thunder.buyer.id} and ${currentUser.id} != ${thunder.pNo.salesId.id}">
+					        <td class="center">
+					        	<button type="button" class="btn btn-outline-warning link-dark"
+					        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" onclick='thunderDelivery(this)'>다녀오기1</button>
+					        </td>
+					        </th:block>
 				        </th:block>
-				        <th:block th:if="${currentUser.id} != ${thunder.buyer.id} and ${currentUser.id} != ${thunder.pNo.salesId.id}">
-				        <td class="center">
-				        	<button type="button" class="btn btn-outline-warning link-dark"
-				        	id="thunderDelivery" th:value="${thunder.pNo.pNo}" onclick='thunderDelivery(this)'>다녀오기1</button>
-				        </td>
-				        </th:block>
+				        <th:block th:if="${thunder.thunderId} != null"></th:block>
+				        
 				    </tr>
 				</table>
 					<hr>
