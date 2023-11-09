@@ -1,9 +1,12 @@
 package com.princess.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,15 +21,8 @@ public class SystemController {
 	@Autowired
 	private MemberService memberService;
 
-<<<<<<< HEAD
-	@RequestMapping("/accessDenied")
-	public void accessDenied() {
-
-	}
-=======
 	@Autowired
 	private ThunderService thunderservice;
->>>>>>> refs/heads/ganji
 
 	@GetMapping("/logout")
 	public void logout() {
