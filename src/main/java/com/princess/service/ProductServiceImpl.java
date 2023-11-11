@@ -125,14 +125,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public Auction getAuctionMaxPrice(Product product) {
-		if (auctionRepo.findBypNo(product).isEmpty()) {
+		if (auctionRepo.findBypNo(product.getPNo()).isEmpty()) {
 			return null;
 		} else
-			return auctionRepo.findBypNo(product).get(0);
+			return auctionRepo.findBypNo(product.getPNo()).get(0);
 	}
 
 	public List<Auction> getAuctionList(Product product) {
-			return auctionRepo.findBypNo(product);
+			return auctionRepo.findBypNo(product.getPNo());
 	}
 
 	public void buyProduct(Product product, String buyer) {
