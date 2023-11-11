@@ -7,28 +7,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.princess.domain.CheckCondition.Role;
+import com.princess.domain.CheckCondition.YorN;
 import com.princess.domain.Member;
-import com.princess.domain.Product;
-import com.princess.domain.QProduct;
 import com.princess.domain.QSales;
 import com.princess.domain.Review;
 import com.princess.domain.Sales;
 import com.princess.domain.Search;
-import com.princess.domain.CheckCondition.Display;
-import com.princess.domain.CheckCondition.Role;
-import com.princess.domain.CheckCondition.YorN;
 import com.princess.persistence.MemberRepository;
-import com.princess.persistence.ProductRepository;
 import com.princess.persistence.ReviewRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
 
 @Service
 public class ThunderServiceImpl implements ThunderService {
-
-	@Autowired
-	private ProductRepository productRepo;
 	
 	@Autowired
 	private SalesRepository saleseRepo;
@@ -43,18 +35,10 @@ public class ThunderServiceImpl implements ThunderService {
 		public Page<Sales> myThunderList(Search search, Pageable pageable) {
 			BooleanBuilder builder = new BooleanBuilder();
 			
-			QProduct qProduct = QProduct.product;
 			QSales qsales = QSales.sales;
 			
-//			if (search.getSearchCondition().equals("thunderId")) {
-//				builder.and(qsales.thunderId.like("%" + search.getSearchKeyword() +"%"));
-//			} else if (search.getSearchCondition().equals("ID")) {
-//				builder.and(qsales.buyer.id.like("%" + search.getSearchKeyword() +"%"));
-//			}
-			
 			builder.and(qsales.pNo.delivery.eq(YorN.Y));
-			
-			
+				
 			return saleseRepo.findAll(builder, pageable);
 		}
 		

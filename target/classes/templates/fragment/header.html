@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+ㄴㄴ<html xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="/images/favicon.ico">
 <!-- Top navigation-->
@@ -7,7 +7,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light border-bottom"
 		style="width: 1200px; background-color: transparent;">
 		<div class="container-fluid" style="background-color: transparent;">
-			<b> 🥕당나번공</b>
+			<a href="/product/getProductList?type=prod"><b>🥕당나번공</b></a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent"
 				style="flex-grow: 10;">
 				<ul class="navbar-nav ms-auto mt-2 mt-lg-0"
@@ -122,7 +122,7 @@
 						aria-expanded="false"><span th:text="${currentUser.nickName}"></span>님</a>
 						<div class="dropdown-menu dropdown-menu-end"
 							aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/mypage/myPageMain">마이페이지</a> <a
+							<a class="dropdown-item" th:href="@{/mypage/myPageMain(id=${currentUser.id})}">마이페이지</a> <a
 								class="dropdown-item" href="/system/logout">로그아웃</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#!">문의하기</a> <a

@@ -130,6 +130,7 @@ public class ProductController {
 			map.put(auct.getAuctionPrice(), auct.getRegdate());
 		}
 		model.addAttribute("map",map);
+		System.out.println("현재 접속 계정 : " + securityUser.toString());
 
 		return "product/getProduct";
 	}

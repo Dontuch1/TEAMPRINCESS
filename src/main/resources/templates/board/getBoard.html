@@ -52,8 +52,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								<span th:align="center" class="border-bottom " style="flex-grow: 1;"><span style="margin-left:800px" th:text="${board.regdate}"></span></span>	
 							</div>	
 							<div style="display:flex; width:1100" class="mb-3">
-								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px;">
-								<a style="text-decoration: none; color: #333" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
+								<span th:align="left" style="font-weight:860; font-size:1.2rem; margin-left:30px; width: 500px;">
+								<a style="text-decoration: none; color: #333;" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></span>
 							
 							<th:block th:if="${board.userId.nickName} != ${currentUser.nickName}">
 							<span  th:align="center"  class="reportSpan">
@@ -142,15 +142,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px">새 게시글</button></a>
 			<button type="button" class="btn btn-outline-secondary" style="margin:20px 5px 10px 5px" onclick="history.back()">글 목록</button>
 			<th:block th:if="${#authentication.principal.username} == ${board.userId.id} and ${currentUser.auth.toString()} != 'ADMIN'">
-				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px" class="btn btn-outline-secondary deleteBoard">글삭제</a>
-			</th:block>
-			<th:block th:if="${currentUser.auth.toString()} == 'ADMIN' and ${#authentication.principal.username} == ${board.userId.id}">
-				<a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary deleteBoard">글삭제</a>
-			</th:block>
+            <a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px" class="btn btn-outline-secondary deleteBoard">글삭제</a>
+	         </th:block>
+	         <th:block th:if="${currentUser.auth.toString()} == 'ADMIN' and ${#authentication.principal.username} == ${board.userId.id}">
+	            <a th:href="@{/board/deleteBoard(postNum=${board.postNum}, cmCategory=${board.cmCategory})}" style="margin:20px 5px 10px 5px;" class=" btn btn-outline-secondary deleteBoard">글삭제</a>
+	         </th:block>
 			
-			</div>
-			<br><br><br>		
+			</div>		
 	</div>	
+	<th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </div>
 
 	<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->

@@ -5,12 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
+import com.princess.domain.CheckCondition.Type;
 import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
-import com.princess.domain.Product;
 import com.princess.domain.Report;
 import com.princess.domain.Search;
-import com.princess.domain.CheckCondition.Type;
 
 public interface BoardService {
 	

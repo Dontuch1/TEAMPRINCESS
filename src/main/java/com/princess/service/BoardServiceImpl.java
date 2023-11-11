@@ -12,15 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.domain.Board;
-import com.princess.domain.LikeWish;
 import com.princess.domain.CheckCondition.CmCategory;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.QBoard;
 import com.princess.domain.Report;
-import com.princess.domain.Sales;
 import com.princess.domain.Search;
 import com.princess.persistence.BoardRepository;
 import com.princess.persistence.LikeWishRepository;

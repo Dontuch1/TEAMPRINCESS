@@ -18,18 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.princess.config.SecurityUser;
 import com.princess.domain.Board;
-import com.princess.domain.LikeWish;
 import com.princess.domain.CheckCondition.Display;
 import com.princess.domain.CheckCondition.Type;
+import com.princess.domain.LikeWish;
 import com.princess.domain.Member;
 import com.princess.domain.Product;
 import com.princess.domain.Reply;
 import com.princess.domain.Report;
 import com.princess.domain.Search;
 import com.princess.service.BoardService;
-import com.princess.service.ProductService;
 import com.princess.service.ReplyService;
-import com.princess.service.ReportService;
 	
 @Controller
 @RequestMapping("/board/")
@@ -39,14 +37,7 @@ public class BoardController {
 	private BoardService boardservice; 
 	
 	@Autowired
-    private ReplyService replyService;
-	
-	@Autowired
-	private ProductService productService;
-	
-	@Autowired
-	private ReportService reportService;
-	
+    private ReplyService replyService;	
 	
 	@RequestMapping("/getBoardList")
 	public String getBoardList (@RequestParam String type, Model model, Search search,
