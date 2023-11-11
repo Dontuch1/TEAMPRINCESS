@@ -77,6 +77,7 @@ public class ProductController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("type", type);
+		
 		return "product/getProductList";
 
 	}
@@ -130,6 +131,7 @@ public class ProductController {
 			map.put(auct.getAuctionPrice(), auct.getRegdate());
 		}
 		model.addAttribute("map",map);
+		System.out.println("현재 접속 계정 : " + securityUser.toString());
 
 		return "product/getProduct";
 	}

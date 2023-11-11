@@ -1,8 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>커뮤니티 게시판</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 스타일 -->
+
 
 <style>
 
@@ -13,7 +15,7 @@
         overflow-y:auto;
         height: 1000px; /* 세로 스크롤바만 생성*/
       }
-      
+ 
 
 
 
@@ -24,84 +26,85 @@
 
 </head>
 <body th:align="center" style="width:100%; overflow-x:hidden;  overflow-y:hidden;">
-	<div class="d-flex" id="wrapper">
-		<div id="page-content-wrapper">
-			<div th:insert="~{fragment/header :: header}"></div>
-			<!-- Page content-->
-			<div class="container-fluid">
+   <div class="d-flex" id="wrapper">
+      <div id="page-content-wrapper">
+         <div th:insert="~{fragment/header :: header}"></div>
+         <!-- Page content-->
+         <div class="container-fluid">
 
-				<!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
-				<!-- type에 따라 게시글 상단에 출력 -->
-				<div id="wrapper"   class="scroll" >
-					<div class="box box2">
-						<th:block th:if="${type}=='notice'"> <h2 style="margin:30px 0px 0px 30px;">🚨 공지사항</h2> </th:block>
-						<th:block th:if="${type}=='lost'"> <h2 style="margin:30px 0px 0px 30px;">😥 잃어버렸어요</h2> </th:block>
-						<th:block th:if="${type}=='food'"> <h2 style="margin:30px 0px 0px 30px;">🍔 여기 맛나요</h2> </th:block>
-						<th:block th:if="${type}=='tmi'"> <h2 style="margin:30px 0px 0px 30px;">🔉 알려드려요</h2> </th:block>
-						<th:block th:if="${type}=='qna'"> <h2 style="margin:30px 0px 0px 30px;">❓ &nbsp;궁금해요</h2> </th:block>
-						<th:block th:if="${type}=='meet'"> <h2 style="margin:30px 0px 0px 30px;">🙋‍♀️ 우리만나요</h2> </th:block>
-						
-						<!-- 검색 -->
-						<form th:action="@{/board/getBoardList}" method="get">
-							<div class="input-group mb-3 right w-25">
-								<select class="form-select flex-right " aria-label="Default" name="searchCondition">
-										  <option value="TITLE">제목</option>
-										  <option value="CONTENT">내용</option>
-										  <option value="NICKNAME">닉네임</option>
-								</select>
-							    <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
-							    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
-								<input type="hidden" name="type" th:value="${type}"/>
-							</div>
-						</form>
-						
-							
-						<table>
-							<tr>
-								<th class="center">No.</th>
-								<th class="center">writer</th>
-								<th class="center" style="width:550px;">title</th>
-								<th class="center">like</th>
-								<th class="center">date</th>
-							</tr>
-							<tr th:each="board, state : ${boardList1}">
-								<td class="center" th:text="${state.count}"></td>
-								<td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></td>
-								<td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/board/getBoard(postNum=${board.postNum})}" th:text="${board.title}"></a></td>
-								<td class="center" th:text="${board.great}"></td>
-								<td class="center" th:text="${board.regdate}"></td>
-							</tr>
-						</table>
-						
-						<!--  -->
-						<br> 
-						<div style="display:flex">	
-						<span class="center" style="flex-grow:12; margin:5px 0px 0px 80px; font-size:1.1rem">
-						[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
-							<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
-								th:href="@{/board/getBoardList(type=${type}, id=${#authentication.principal.username}, page=${page - 1})}"
-								th:text="${page}"> </a>
-		
-							<strong th:if="${page == nowPage}" th:text="${page}"
-								style="color: red"></strong> 
-						</th:block> ]
-						</span>
-						<!--  @{/board/getBoardList?type=${type}(id=${#authentication.principal.username}, page=${page - 1})-->
-						<span class="left" style="flex-grow:1; width:50px; margin-bottom:20px">
-							<a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" >게시글 작성</button></a>
-						</span>
-						</div>
-						
-						
-					</div>
-				</div>
-			
+            <!------------ 여기부터 메인 바디! 여기부터 작성하면 됨 ---------------->
+            <!-- type에 따라 게시글 상단에 출력 -->
+            <div id="wrapper"   class="scroll" >
+               <div class="box box2">
+                  <th:block th:if="${type}=='notice'"> <h2 style="margin:30px 0px 0px 30px;">🚨 공지사항</h2> </th:block>
+                  <th:block th:if="${type}=='lost'"> <h2 style="margin:30px 0px 0px 30px;">😥 잃어버렸어요</h2> </th:block>
+                  <th:block th:if="${type}=='food'"> <h2 style="margin:30px 0px 0px 30px;">🍔 여기 맛나요</h2> </th:block>
+                  <th:block th:if="${type}=='tmi'"> <h2 style="margin:30px 0px 0px 30px;">🔉 알려드려요</h2> </th:block>
+                  <th:block th:if="${type}=='qna'"> <h2 style="margin:30px 0px 0px 30px;">❓ &nbsp;궁금해요</h2> </th:block>
+                  <th:block th:if="${type}=='meet'"> <h2 style="margin:30px 0px 0px 30px;">🙋‍♀️ 우리만나요</h2> </th:block>
+                  
+                  <!-- 검색 -->
+                  <form th:action="@{/board/getBoardList}" method="get">
+                     <div class="input-group mb-3 right w-25">
+                        <select class="form-select flex-right " aria-label="Default" name="searchCondition">
+                                <option value="TITLE">제목</option>
+                                <option value="CONTENT">내용</option>
+                                <option value="NICKNAME">닉네임</option>
+                        </select>
+                         <input type="text" class="form-control w-25" placeholder="검색 입력란" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchKeyword">
+                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2" name="검색" value="검색">검색</button>
+                        <input type="hidden" name="type" th:value="${type}"/>
+                     </div>
+                  </form>
+                  
+                     
+                  <table>
+                     <tr>
+                        <th class="center">No.</th>
+                        <th class="center">writer</th>
+                        <th class="center" style="width:550px;">title</th>
+                        <th class="center">like</th>
+                        <th class="center">date</th>
+                     </tr>
+                     <tr th:each="board, state : ${boardList1}">
+                        <td class="center" th:text="${state.count}"></td>
+                        <td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/mypage/myPageMain(id=${board.userId.id})}"  th:text="${board.userId.nickName}"></a></td>
+                        <td class="center"><a style="text-decoration: none; color: #333;" th:href="@{/board/getBoard(postNum=${board.postNum})}" th:text="${board.title}"></a></td>
+                        <td class="center" th:text="${board.great}"></td>
+                        <td class="center" th:text="${board.regdate}"></td>
+                     </tr>
+                  </table>
+                  
+                  <!--  -->
+                  <br> 
+                  <div style="display:flex">   
+                  <span class="center" style="flex-grow:12; margin:5px 0px 0px 80px; font-size:1.1rem">
+                  [ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
+                     <a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
+                        th:href="@{/board/getBoardList(type=${type}, id=${#authentication.principal.username}, page=${page - 1})}"
+                        th:text="${page}"> </a>
+      
+                     <strong th:if="${page == nowPage}" th:text="${page}"
+                        style="color: red"></strong> 
+                  </th:block> ]
+                  </span>
+                  <!--  @{/board/getBoardList?type=${type}(id=${#authentication.principal.username}, page=${page - 1})-->
+                  <span class="left" style="flex-grow:1; width:50px; margin-bottom:20px">
+                     <a th:href="@{/board/insertBoard}"><button type="button" class="btn btn-outline-secondary" >게시글 작성</button></a>
+                  </span>
+                  </div>
+                  
+                  
+               </div>
+            </div>
+         
 
 
-			<!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
-			</div>
-		</div>
-	</div>
+         <!------------ 여기까지 메인 바디! 여기까지 작성하면 됨 ---------------->
+         </div>
+      </div>
+   </div>
+   <th:block th:replace="~{fragment/footer :: footer}"></th:block>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){

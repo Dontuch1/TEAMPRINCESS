@@ -39,6 +39,8 @@
         </div>
     </div>
 </div>
+<th:block th:replace="~{fragment/footer :: footer}"></th:block>
+</body>
 <script>
     function addMember(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -75,5 +77,4 @@
         table.deleteRow(rowIndex - 1);
     }
 </script>
-</body>
 </html>
