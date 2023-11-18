@@ -86,10 +86,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 				</table>
 					<hr>
 			<div th:align="center">				
-				<span class="center" style="flex-grow:12; font-size:1.1rem">
+				<span th:if="${!thunderList1.isEmpty}" class="center" style="flex-grow:12; font-size:1.1rem">
 							[ <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}" > 
 								<a th:if="${page != nowPage}" style="text-decoration: none; color: #222;"
-									th:href="@{/thunder/myThunderList(pNo=${thunder.pNo}, id=${#authentication.principal.username}, page=${page - 1})}"
+									th:href="@{/thunder/myThunderList(id=${currentUser.id}, page=${page - 1})}"
 									th:text="${page}"> </a>
 			
 								<strong th:if="${page == nowPage}" th:text="${page}"

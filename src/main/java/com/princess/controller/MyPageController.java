@@ -73,7 +73,7 @@ public class MyPageController {
 		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("userPage",myService.getMember(member));
+		model.addAttribute("userPage", myService.getMember(member));
 	}
 
 	@GetMapping("/myProductList")
@@ -94,9 +94,12 @@ public class MyPageController {
 				// 판매중 / 천둥맨 대기중 / 판매완료
 				if (pro.getSold().equals(YorN.N)) {
 					ingProduct.add(pro);
-				} else {
-					// delivery=n면 판완
-					if (pro.getDelivery().equals(YorN.N)) {
+				} else { // sold=y 여기서 옥션 기간 종료 거르기
+					if (myService.buyerId(pro) == null) {
+						reportedProduct.add(pro);
+
+						// delivery=n면 판완
+					} else if (pro.getDelivery().equals(YorN.N)) {
 						String buyer;
 						if (myService.isReviewed(pro, pro.getSalesId().getId(), myService.buyerId(pro))) {// 리뷰 써짐
 							buyer = "";
@@ -137,7 +140,7 @@ public class MyPageController {
 		model.addAttribute("standByProduct", standByProduct);
 		model.addAttribute("soldProduct", soldProduct);
 		model.addAttribute("reportedProduct", reportedProduct);
-		model.addAttribute("userPage",myService.getMember(member));
+		model.addAttribute("userPage", myService.getMember(member));
 
 	}
 
@@ -219,17 +222,18 @@ public class MyPageController {
 		if (mem.getBattery() <= 0) {
 			myService.disalbeMember(mem);
 		} else {
-		myService.updateBattery(mem);
+			myService.updateBattery(mem);
 		}
 
 		return "redirect:myBuyList";
 	}
+
 	@PostMapping("/sendReview")
 	public String sendReview(Review review, @AuthenticationPrincipal SecurityUser securityUser,
 			@RequestParam(name = "rating") String rating, @RequestParam("receiver") String receiver, Product product) {
-		System.out.println("컨트롤러 product: "+product.toString());
-		System.out.println("컨트롤러 rating: "+rating);
-		System.out.println("컨트롤러 receiver: "+receiver);
+		System.out.println("컨트롤러 product: " + product.toString());
+		System.out.println("컨트롤러 rating: " + rating);
+		System.out.println("컨트롤러 receiver: " + receiver);
 		review.setSender(securityUser.getUsername());
 		review.setPNo(product);
 		Member mem = new Member();
@@ -250,9 +254,9 @@ public class MyPageController {
 		if (mem.getBattery() <= 0) {
 			myService.disalbeMember(mem);
 		} else {
-		myService.updateBattery(mem);
+			myService.updateBattery(mem);
 		}
 
-		return "redirect:myProductList?id="+securityUser.getUsername();
+		return "redirect:myProductList?id=" + securityUser.getUsername();
 	}
 }

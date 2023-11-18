@@ -23,7 +23,12 @@ public class SystemController {
 
 	@Autowired
 	private ThunderService thunderservice;
-
+	
+	@RequestMapping("/accessDenied")
+	public void accessDenied() {
+		
+	}
+	
 	@GetMapping("/logout")
 	public void logout() {
 	}

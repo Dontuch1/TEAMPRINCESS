@@ -178,6 +178,10 @@ public class MypageServiceImpl implements MypageService {
 	// 구매자 아이디
 	public String buyerId(Product product) {
 		Sales sales = salesRepo.findBypNo(product);
+		if (sales == null) {
+
+			return null;
+		}
 		return sales.getBuyer().getId();
 	}
 	// 후기 작성여부

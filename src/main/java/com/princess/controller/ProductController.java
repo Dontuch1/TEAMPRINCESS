@@ -62,8 +62,14 @@ public class ProductController {
 				LocalDateTime localNow = instant.atZone(ZoneId.systemDefault()).toLocalDateTime(); // Instant를
 																									// LocalDateTime로 변환
 				LocalDateTime expiredTime = localRegdate.plusDays(prod.getAucDuration()); // 7일 전 날짜 계산
-				if (expiredTime.isBefore(localNow))
-					prod.setSold(YorN.Y);
+				if (prod.getSold().equals(YorN.N)) {
+					if (expiredTime.isBefore(localNow)) {
+						if (!productService.getAuctionList(prod).isEmpty() && !productService.isAuctionSold(prod)) {
+							productService.buyAuction(prod);
+						}
+						prod.setSold(YorN.Y);
+					}
+				}
 				productService.updateProduct(prod);
 			}
 		}
@@ -103,7 +109,7 @@ public class ProductController {
 		model.addAttribute("currBid", currBid);
 
 		List<Auction> bidList = productService.getBidList(securityUser.getMember(), product);
-		if(bidList.isEmpty()) {
+		if (bidList.isEmpty()) {
 			Auction auctionTemp = new Auction();
 			auctionTemp.setAuctionPrice(0);
 			bidList.add(auctionTemp);
@@ -129,7 +135,7 @@ public class ProductController {
 		for (Auction auct : auctionList) {
 			map.put(auct.getAuctionPrice(), auct.getRegdate());
 		}
-		model.addAttribute("map",map);
+		model.addAttribute("map", map);
 		System.out.println("현재 접속 계정 : " + securityUser.toString());
 
 		return "product/getProduct";

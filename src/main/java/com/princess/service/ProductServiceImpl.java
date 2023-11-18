@@ -32,7 +32,6 @@ import com.princess.persistence.ReportRepository;
 import com.princess.persistence.SalesRepository;
 import com.querydsl.core.BooleanBuilder;
 
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -47,13 +46,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private MemberRepository memberRepo;
-	
+
 	@Autowired
 	private LikeWishRepository likewishRepo;
-	
+
 	@Autowired
 	private ReportRepository reportRepo;
-	
+
 	@Value("${file.direc}")
 	private String path;
 
@@ -80,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 		findProduct.setPrice(product.getPrice());
 		findProduct.setUpload(product.getUpload());
 		findProduct.setDelivery(product.getDelivery());
+		findProduct.setSold(product.getSold());
 		productRepo.save(findProduct);
 	}
 
@@ -93,11 +93,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(product.getPNo()).get();
 	}
 
-	public Page<Product> getProductList(String type, Search search,	Pageable pageable) {
+	public Page<Product> getProductList(String type, Search search, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 
 		QProduct qProduct = QProduct.product;
-		
 
 		if (type.equals("prod")) {
 			builder.and(qProduct.auction.eq(YorN.N));
@@ -113,13 +112,12 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		builder.and(qProduct.display.eq(Display.Y));
-		
 
 		// Pageable pageable = PageRequest.of(0, 4, Sort.Direction.DESC, "pNo");
 
 		return productRepo.findAll(builder, pageable);
 	}
-	
+
 	public int countAuctions(Product product) {
 		return productRepo.countBypNo(product.getPNo());
 	}
@@ -132,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public List<Auction> getAuctionList(Product product) {
-			return auctionRepo.findBypNo(product.getPNo());
+		return auctionRepo.findBypNo(product.getPNo());
 	}
 
 	public void buyProduct(Product product, String buyer) {
@@ -149,9 +147,10 @@ public class ProductServiceImpl implements ProductService {
 	public boolean isAuctioned(Product product, String id) {
 		if (auctionRepo.countByPNoAndId(product.getPNo(), id) == 3) {
 			return true;
-		} else return false;
+		} else
+			return false;
 	}
-	
+
 	public void insertAuction(Product product, String id, int bid) {
 		Auction auction = new Auction();
 		auction.setPNo(product);
@@ -161,36 +160,36 @@ public class ProductServiceImpl implements ProductService {
 		auction.setAuctionPrice(bid);
 		auctionRepo.save(auction);
 	}
-	
+
 	public void setMemberDepoist(Member member) {
 		Member findMember = memberRepo.findById(member.getId()).get();
 		findMember.setDeposit(member.getDeposit());
 		memberRepo.save(findMember);
 	}
-	
+
 	public Member getMember(Member member) {
 		return memberRepo.findById(member.getId()).get();
 	}
-	
+
 	public List<Auction> getBidList(Member member, Product product) {
 		List<Auction> list = new ArrayList<Auction>();
-		if(auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member).isEmpty()) {
+		if (auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member).isEmpty()) {
 			Auction auction = new Auction();
 			auction.setAuctionPrice(0);
 			list.add(auction);
 		} else {
 			for (Auction auc : auctionRepo.findByAuctionIdOrderByAuctionPriceDesc(member)) {
-				if(auc.getPNo().getPNo() == product.getPNo()) {
-				list.add(auc);
+				if (auc.getPNo().getPNo() == product.getPNo()) {
+					list.add(auc);
 				}
 			}
 		}
-		return list; 
+		return list;
 	}
-	
+
 	public void editProduct(Product product, MultipartFile file) {
 		Product findProduct = productRepo.findById(product.getPNo()).get();
-		
+
 		if (!file.isEmpty()) {
 			String filename = UUID.randomUUID().toString() + file.getOriginalFilename();
 			try {
@@ -200,7 +199,7 @@ public class ProductServiceImpl implements ProductService {
 				e.printStackTrace();
 			}
 		}
-		
+
 		findProduct.setPCategory(product.getPCategory());
 		findProduct.setTitle(product.getTitle());
 		findProduct.setContent(product.getContent());
@@ -208,37 +207,37 @@ public class ProductServiceImpl implements ProductService {
 		findProduct.setDelivery(product.getDelivery());
 		productRepo.save(findProduct);
 	}
-	
+
 	public List<LikeWish> getWishList(Product product, Type type) {
 		return likewishRepo.findBypNoAndType(product.getPNo(), type);
 	}
-	
+
 	public boolean isWished(String id, Product product, Type type) {
 		boolean isWished = false;
-		for(LikeWish like : likewishRepo.findBypNoAndType(product.getPNo(), type)) {
-			if(like.getLikeId().getId().equals(id)) {
+		for (LikeWish like : likewishRepo.findBypNoAndType(product.getPNo(), type)) {
+			if (like.getLikeId().getId().equals(id)) {
 				isWished = true;
 				break;
 			}
 		}
 		return isWished;
 	}
-	
+
 	public void insertLike(LikeWish likeWish) {
 		System.out.println("라이크 인서트");
 		likewishRepo.save(likeWish);
 	}
-	
+
 	public void deleteLike(Product product, Type type, Member member) {
 		LikeWish findWish = likewishRepo.findBypNoAndTypeAndLikeId(product.getPNo(), type, member);
 		System.out.println("findWish : " + findWish);
 		likewishRepo.delete(findWish);
 	}
-	
+
 	public int countWishes(Product product, Type type) {
 		return likewishRepo.countBypNoAndType(product.getPNo(), type);
 	}
-	
+
 	public boolean isReported(Member member, Product product, Type type) {
 		int result = reportRepo.countByRptIdAndPostNoAndType(member, product.getPNo(), Type.PRODUCT);
 		if (result == 1)
@@ -246,15 +245,29 @@ public class ProductServiceImpl implements ProductService {
 		else
 			return false;
 	}
-	
+
 	public void insertReport(Report report) {
 		Report findReport = reportRepo.findByPostNoAndType(report.getPostNo(), Type.PRODUCT);
 		if (findReport != null) {
-			findReport.setRptCon(findReport.getRptCon() + "\n" +"(" + report.getRptId().getId() + ") " + report.getRptCon());
+			findReport.setRptCon(
+					findReport.getRptCon() + "\n" + "(" + report.getRptId().getId() + ") " + report.getRptCon());
 			reportRepo.save(findReport);
 		} else
-		reportRepo.save(report);
+			reportRepo.save(report);
 	}
 
-	
+	public boolean isAuctionSold(Product product) {
+		if (saleseRepo.findBypNo(product) == null) {
+			return false;
+		} else
+			return true;
+	}
+
+	public void buyAuction(Product product) {
+		Sales sales = new Sales();
+		Auction auction = auctionRepo.findBypNo(product.getPNo()).get(0);
+		sales.setBuyer(auction.getAuctionId());
+		sales.setPNo(product);
+		saleseRepo.save(sales);
+	}
 }
